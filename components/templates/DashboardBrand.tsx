@@ -1,5 +1,12 @@
+import Layout from 'components/organisms/Layout'
+import { Container } from '@chakra-ui/react'
+
 function DashboardBrandTemplate(): JSX.Element {
-  return <div>{/* Navbar */}</div>
+  return (
+    <Layout>
+      <Container>hello</Container>
+    </Layout>
+  )
 }
 
 export default DashboardBrandTemplate
