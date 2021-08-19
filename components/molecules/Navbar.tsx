@@ -34,7 +34,7 @@ function Nav(): JSX.Element {
 function Logo(): JSX.Element {
   return (
     <Link href="/">
-      <Box position="relative" w={128} mr={8} h={10}>
+      <Box as="a" href="/" position="relative" w={128} mr={8} h={10}>
         <Image layout="fill" src="/logo-dark.png" objectFit="contain" />
       </Box>
     </Link>
