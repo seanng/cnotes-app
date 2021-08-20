@@ -1,5 +1,5 @@
 // TODO: add auth
-import { chakra, Box, Container, Flex, Center } from '@chakra-ui/react'
+import { Box, Flex } from '@chakra-ui/react'
 import Input from 'components/atoms/Input'
 
 export default function Login(): JSX.Element {
