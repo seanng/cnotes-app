@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import Image from 'next/image'
-import { Box, Container, Flex, Button } from '@chakra-ui/react'
+import LinkButton from 'components/atoms/LinkButton'
+import { Box, Container, Flex } from '@chakra-ui/react'
 
 const nav = [
   {
@@ -53,12 +54,12 @@ export default function Navbar(): JSX.Element {
           <Nav />
         </Flex>
         <Box>
-          <Button size="sm" bgColor="red" mr={3}>
+          <LinkButton href="/register" size="sm" bgColor="red" mr={3}>
             Register
-          </Button>
-          <Button size="sm" mr={3}>
+          </LinkButton>
+          <LinkButton href="/login" size="sm" mr={3}>
             Login
-          </Button>
+          </LinkButton>
         </Box>
       </Flex>
     </Container>
