@@ -56,7 +56,11 @@ function Nav(): JSX.Element {
   )
 }
 
-function UserMenu({ user }: { user: User }): JSX.Element {
+type UserProps = {
+  user: User
+}
+
+function UserMenu({ user }: UserProps): JSX.Element {
   return (
     <PopoverContent backgroundColor="white">
       <PopoverArrow
@@ -76,11 +80,7 @@ function UserMenu({ user }: { user: User }): JSX.Element {
   )
 }
 
-type NavbarProps = {
-  user: User
-}
-
-export default function Navbar({ user }: NavbarProps): JSX.Element {
+export default function Navbar({ user }: UserProps): JSX.Element {
   return (
     <Container py={5} as="header" borderBottom="1px" borderColor="neutrals6">
       <Flex align="center" justify="space-between" wrap="wrap">

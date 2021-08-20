@@ -3,7 +3,7 @@ import { User } from 'shared/types'
 
 type Props = {
   children: JSX.Element
-  user: User | undefined
+  user?: User
 }
 
 export default function Layout({ children, user }: Props): JSX.Element {
