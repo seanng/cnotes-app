@@ -1,8 +1,8 @@
 // This page is temporary and will be moved to pages/dashboard after fixing auth
-import DashboardBrandTemplate from 'components/templates/DashboardBrand'
+import BrandDashboardTemplate from 'components/templates/BrandDashboard'
 
 function DashboardBrand(): JSX.Element {
-  return <DashboardBrandTemplate />
+  return <BrandDashboardTemplate />
 }
 
 export default DashboardBrand

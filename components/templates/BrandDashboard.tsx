@@ -1,7 +1,7 @@
 import Layout from 'components/organisms/Layout'
 import { Container } from '@chakra-ui/react'
 
-function DashboardBrandTemplate(): JSX.Element {
+function BrandDashboardTemplate(): JSX.Element {
   return (
     <Layout>
       <Container>hello</Container>
@@ -9,4 +9,4 @@ function DashboardBrandTemplate(): JSX.Element {
   )
 }
 
-export default DashboardBrandTemplate
+export default BrandDashboardTemplate
