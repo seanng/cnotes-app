@@ -41,9 +41,14 @@ export default {
     lineHeight: '24px',
     fontFamily: 'body',
   },
-  caption: {
+  caption1: {
     fontSize: ['14px'],
     lineHeight: '24px',
+    fontFamily: 'body',
+  },
+  caption2: {
+    fontSize: ['12px'],
+    lineHeight: '20px',
     fontFamily: 'body',
   },
   hairline1: {

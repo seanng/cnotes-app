@@ -4,6 +4,7 @@ import textStyles from './foundations/text-styles'
 import colors from './foundations/colors'
 import Button from './components/button'
 import Container from './components/container'
+import Table from './components/table'
 
 const breakpoints = createBreakpoints({
   sm: '40em',
@@ -17,6 +18,7 @@ const fonts = { heading: 'DM Sans', body: 'Poppins' }
 const components = {
   Button,
   Container,
+  Table,
 }
 
 const theme = extendTheme({

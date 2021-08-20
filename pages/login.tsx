@@ -27,7 +27,10 @@ export default function Login(): JSX.Element {
           </Box>
           <Input name="email" type="email" mb={3} />
           <Input name="password" type="password" mb={3} />
-          <div>If you made an account before xxxx you will need to create a new account.</div>>
+          <div>
+            If you made an account before xxxx you will need to create a new
+            account.
+          </div>
         </Box>
       </Box>
     </Flex>

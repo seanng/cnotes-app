@@ -1,0 +1,1 @@
+export const CREATOR_AVATAR_TEXT_SPACING = 4
