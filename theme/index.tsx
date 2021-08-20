@@ -3,6 +3,7 @@ import { createBreakpoints } from '@chakra-ui/theme-tools'
 import textStyles from './foundations/text-styles'
 import colors from './foundations/colors'
 import Button from './components/button'
+import Popover from './components/popover'
 import Container from './components/container'
 import Table from './components/table'
 
@@ -19,6 +20,7 @@ const components = {
   Button,
   Container,
   Table,
+  Popover,
 }
 
 const theme = extendTheme({

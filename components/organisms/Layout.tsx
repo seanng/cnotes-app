@@ -1,14 +1,16 @@
 import Navbar from 'components/molecules/Navbar'
+import { User } from 'shared/types'
 
 type Props = {
   children: JSX.Element
+  user: User | undefined
 }
 
-export default function Layout(props: Props): JSX.Element {
+export default function Layout({ children, user }: Props): JSX.Element {
   return (
     <>
-      <Navbar />
-      {props.children}
+      <Navbar user={user} />
+      {children}
       {/* TODO: Footer */}
     </>
   )

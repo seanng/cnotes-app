@@ -1,4 +1,4 @@
-import { CREATOR_AVATAR_TEXT_SPACING } from 'utils/constants'
+import { CREATOR_AVATAR_TEXT_SPACING } from 'shared/constants'
 
 const AVATAR_WIDTH = 12 // avatar size="md" is 48px
 const DEFAULT_TH_PX = 6 // https://github.com/chakra-ui/chakra-ui/blob/main/packages/theme/src/components/table.ts#L134

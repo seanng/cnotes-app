@@ -50,6 +50,14 @@ export default {
   variants: {
     solid: variantSolid,
     tab: variantTab,
+    outline: {
+      border: '2px solid',
+      borderColor: 'neutrals6',
+      _hover: {
+        borderColor: 'blue',
+        backgroundColor: 'inherit',
+      },
+    },
   },
   defaultProps: {
     size: 'md',

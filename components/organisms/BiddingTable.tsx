@@ -9,8 +9,9 @@ import {
   Tr,
   Th,
 } from '@chakra-ui/react'
-import { CREATOR_AVATAR_TEXT_SPACING } from 'utils/constants'
+import { CREATOR_AVATAR_TEXT_SPACING } from 'shared/constants'
 
+// could move Data to shared/types
 type Props = {
   data: []
 }
@@ -26,7 +27,7 @@ const columns = [
 ]
 
 export default function BiddingTable({ data }: Props): JSX.Element {
-  console.log('data: ', data)
+  console.log('data: ', data) // use data variable so eslint doesnt complain
   return (
     <Table variant="brandDashboard">
       <Thead>

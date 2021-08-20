@@ -11,6 +11,7 @@ import {
   ButtonGroup,
   Button,
 } from '@chakra-ui/react'
+import { BRAND } from 'shared/constants'
 
 const tables = [
   {
@@ -31,12 +32,22 @@ const tables = [
   },
 ]
 
+// TODO: fetch user obj from getServerSideProps
+const FAKE_USER = {
+  type: BRAND,
+  firstName: 'Steve',
+  lastName: 'McKinney',
+  companyName: 'Razer',
+}
+
+// TODO: refactor tabs to use this https://chakra-ui.com/docs/disclosure/tabs
+
 function BrandDashboardTemplate(): JSX.Element {
   const [activeTabIdx, setActiveTabIdx] = useState<number>(0)
   const handleTabClick = (i: number) => (): void => setActiveTabIdx(i)
   const { component: Table } = tables[activeTabIdx]
   return (
-    <Layout>
+    <Layout user={FAKE_USER}>
       <Container>
         <c.h3 textStyle="h3" mt={20} mb={14}>
           My Deals

@@ -1,7 +1,7 @@
 import { ApolloServer } from 'apollo-server-micro'
 import { NextApiHandler } from 'next'
 import cors from 'micro-cors'
-import schema from 'backend/schema'
+import schema from 'api/schema'
 
 export const config = {
   api: {

@@ -1,7 +1,21 @@
 import Link from 'next/link'
 import Image from 'next/image'
 import LinkButton from 'components/atoms/LinkButton'
-import { Box, Container, Flex } from '@chakra-ui/react'
+import { User } from 'shared/types'
+import { CREATOR } from 'shared/constants'
+import {
+  Box,
+  Button,
+  Container,
+  Flex,
+  Popover,
+  PopoverTrigger,
+  PopoverContent,
+  PopoverArrow,
+  PopoverHeader,
+  PopoverBody,
+  Divider,
+} from '@chakra-ui/react'
 
 const nav = [
   {
@@ -9,6 +23,16 @@ const nav = [
     title: 'Contact',
   },
 ]
+
+function Logo(): JSX.Element {
+  return (
+    <Link href="/">
+      <Box as="a" href="/" position="relative" w={128} mr={8} h={10}>
+        <Image layout="fill" src="/logo-dark.png" objectFit="contain" />
+      </Box>
+    </Link>
+  )
+}
 
 function Nav(): JSX.Element {
   return (
@@ -32,19 +56,31 @@ function Nav(): JSX.Element {
   )
 }
 
-function Logo(): JSX.Element {
+function Menu({ user }: { user: User }): JSX.Element {
   return (
-    <Link href="/">
-      <Box as="a" href="/" position="relative" w={128} mr={8} h={10}>
-        <Image layout="fill" src="/logo-dark.png" objectFit="contain" />
-      </Box>
-    </Link>
+    <PopoverContent>
+      <PopoverArrow />
+      <PopoverHeader borderBottomWidth="0px">{user.firstName}</PopoverHeader>
+      <PopoverBody fontWeight="bold" letterSpacing="0.5px" color="neutrals4">
+        <Box>My Dashboard</Box>
+        <Divider />
+        <Box>Dark Mode</Box>
+        <Divider />
+        <Box>Log Out</Box>
+      </PopoverBody>
+    </PopoverContent>
   )
 }
 
-export default function Navbar(): JSX.Element {
-  // const [show, setShow] = useState(false)
+type NavbarProps = {
+  user: User
+}
+
+export default function Navbar({ user }: NavbarProps): JSX.Element {
+  // const [isDropdownVisible, setIsDropdownVisible] = useState(false)
   // const handleToggle = (): void => setShow(!show)
+
+  // const handleAvatarClick = (): void => setIsDropdownVisible(!isDropdownVisible)
 
   return (
     <Container py={5} as="header" borderBottom="1px" borderColor="neutrals6">
@@ -53,14 +89,35 @@ export default function Navbar(): JSX.Element {
           <Logo />
           <Nav />
         </Flex>
-        <Box>
-          <LinkButton href="/register" size="sm" bgColor="red" mr={3}>
-            Register
-          </LinkButton>
-          <LinkButton href="/login" size="sm" mr={3}>
-            Login
-          </LinkButton>
-        </Box>
+        {/* NavButtons */}
+        {user ? (
+          <Box>
+            <LinkButton
+              href={user.type === CREATOR ? '/create' : '/discover'}
+              size="sm"
+              mr={3}
+            >
+              {user.type === CREATOR ? 'Create Offer' : 'Discover'}
+            </LinkButton>
+            <Popover>
+              <PopoverTrigger>
+                <Button size="sm" variant="outline">
+                  {user.firstName}
+                </Button>
+              </PopoverTrigger>
+              <Menu user={user} />
+            </Popover>
+          </Box>
+        ) : (
+          <Box>
+            <LinkButton size="sm" href="/register" bgColor="red" mr={3}>
+              Register
+            </LinkButton>
+            <LinkButton size="sm" href="/login" mr={3}>
+              Login
+            </LinkButton>
+          </Box>
+        )}
       </Flex>
     </Container>
   )
