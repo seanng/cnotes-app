@@ -5,6 +5,7 @@ import colors from './foundations/colors'
 import Button from './components/button'
 import Popover from './components/popover'
 import Container from './components/container'
+import Tabs from './components/tabs'
 import Table from './components/table'
 
 const breakpoints = createBreakpoints({
@@ -21,6 +22,7 @@ const components = {
   Container,
   Table,
   Popover,
+  Tabs,
 }
 
 const theme = extendTheme({

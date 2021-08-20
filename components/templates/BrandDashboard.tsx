@@ -8,8 +8,11 @@ import {
   Flex,
   Container,
   chakra as c,
-  ButtonGroup,
-  Button,
+  Tabs,
+  Tab,
+  TabList,
+  TabPanels,
+  TabPanel,
 } from '@chakra-ui/react'
 import { BRAND } from 'shared/constants'
 
@@ -40,35 +43,41 @@ const FAKE_USER = {
   companyName: 'Razer',
 }
 
-// TODO: refactor tabs to use this https://chakra-ui.com/docs/disclosure/tabs
-
 function BrandDashboardTemplate(): JSX.Element {
-  const [activeTabIdx, setActiveTabIdx] = useState<number>(0)
-  const handleTabClick = (i: number) => (): void => setActiveTabIdx(i)
-  const { component: Table } = tables[activeTabIdx]
+  const [tabIdx, setTabIdx] = useState<number>(0)
+  const handleTabChange = (i: number): void => setTabIdx(i)
   return (
     <Layout user={FAKE_USER}>
       <Container>
         <c.h3 textStyle="h3" mt={20} mb={14}>
           My Deals
         </c.h3>
-        <Flex justify="space-between" align="center" mb={10}>
-          <c.div display={['none', 'block']}>
-            dropdown placeholder for tab idx: {activeTabIdx}
-          </c.div>
-          <ButtonGroup variant="tab" size="sm">
-            {tables.map(({ label }, i) => (
-              <Button
-                key={label}
-                onClick={handleTabClick(i)}
-                isActive={activeTabIdx === i}
-              >
-                {label}
-              </Button>
+        <Tabs
+          index={tabIdx}
+          variant="pill"
+          size="sm"
+          onChange={handleTabChange}
+          isLazy
+          lazyBehavior="keepMounted"
+        >
+          <Flex justify="space-between" align="center" mb={10}>
+            <c.div display={['none', 'block']}>
+              dropdown placeholder for tab idx: {tabIdx}
+            </c.div>
+            <TabList>
+              {tables.map(({ label }) => (
+                <Tab key={label}>{label}</Tab>
+              ))}
+            </TabList>
+          </Flex>
+          <TabPanels>
+            {tables.map(({ label, component: Table }) => (
+              <TabPanel key={label}>
+                <Table data={[]} />
+              </TabPanel>
             ))}
-          </ButtonGroup>
-        </Flex>
-        <Table data={[]} />
+          </TabPanels>
+        </Tabs>
       </Container>
     </Layout>
   )

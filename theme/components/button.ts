@@ -6,15 +6,6 @@ type Dict = Record<string, any>
 
 const DARKEN_AMOUNT = 10
 
-function variantTab(props: Dict): Dict {
-  const { isActive } = props
-  return {
-    color: isActive ? 'white' : 'neutrals4',
-    backgroundColor: isActive ? 'neutrals3' : 'transparent',
-    textTransform: 'capitalize',
-  }
-}
-
 function variantSolid(props: Dict): Dict {
   const { bgColor = 'blue', theme } = props
   const hoverBg = darken(bgColor, DARKEN_AMOUNT)(theme)
@@ -49,7 +40,6 @@ export default {
   },
   variants: {
     solid: variantSolid,
-    tab: variantTab,
     outline: {
       border: '2px solid',
       borderColor: 'neutrals6',
