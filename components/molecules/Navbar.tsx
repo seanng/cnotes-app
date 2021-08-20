@@ -56,10 +56,14 @@ function Nav(): JSX.Element {
   )
 }
 
-function Menu({ user }: { user: User }): JSX.Element {
+function UserMenu({ user }: { user: User }): JSX.Element {
   return (
-    <PopoverContent>
-      <PopoverArrow />
+    <PopoverContent backgroundColor="white">
+      <PopoverArrow
+        backgroundColor="white"
+        borderTopWidth={1}
+        borderLeftWidth={1}
+      />
       <PopoverHeader borderBottomWidth="0px">{user.firstName}</PopoverHeader>
       <PopoverBody fontWeight="bold" letterSpacing="0.5px" color="neutrals4">
         <Box>My Dashboard</Box>
@@ -77,11 +81,6 @@ type NavbarProps = {
 }
 
 export default function Navbar({ user }: NavbarProps): JSX.Element {
-  // const [isDropdownVisible, setIsDropdownVisible] = useState(false)
-  // const handleToggle = (): void => setShow(!show)
-
-  // const handleAvatarClick = (): void => setIsDropdownVisible(!isDropdownVisible)
-
   return (
     <Container py={5} as="header" borderBottom="1px" borderColor="neutrals6">
       <Flex align="center" justify="space-between" wrap="wrap">
@@ -105,7 +104,7 @@ export default function Navbar({ user }: NavbarProps): JSX.Element {
                   {user.firstName}
                 </Button>
               </PopoverTrigger>
-              <Menu user={user} />
+              <UserMenu user={user} />
             </Popover>
           </Box>
         ) : (
