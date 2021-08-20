@@ -1,14 +1,13 @@
-import { Box } from '@chakra-ui/react'
+import { chakra, Box, BoxProps } from '@chakra-ui/react'
 
-type Props = {
-  label: string
+interface Props extends BoxProps {
   name: string
   type: string
 }
 
-export default function Input({ label, name, type }: Props): JSX.Element {
+export default function Input({ name, type, ...props }: Props): JSX.Element {
   return (
-    <Box>
+    <Box position="relative" {...props}>
       <Box
         position="absolute"
         top="32px"
@@ -16,25 +15,30 @@ export default function Input({ label, name, type }: Props): JSX.Element {
         left="24px"
         textStyle="inputLabel"
       >
-        {label}
+        {name}
       </Box>
-      <Box>
-        <Box
-          as="input"
+      <div>
+        <chakra.input
           name={name}
           type={type}
-          sx={{
-            width: '100%',
-            height: '80px',
-            padding: '18px 22px 0',
-            borderRadius: '12px',
-            border: '2px solid transparent',
-            background: 'rgba(228, 228, 228, 0.3)',
-            fontFamily: 'Inter',
-            color: '#11142D',
+          w="100%"
+          h="80px"
+          p="18px 22px 0"
+          borderRadius="12px"
+          border="2px"
+          borderColor="transparent"
+          backgroundColor="rgba(228, 228, 228, 0.3)"
+          fontFamily="Inter"
+          fontWeight={600}
+          color="#11142D"
+          transition="all .2s"
+          outline="none"
+          _focus={{
+            borderColor: 'blue',
+            backgroundColor: 'white',
           }}
         />
-      </Box>
+      </div>
     </Box>
   )
 }
