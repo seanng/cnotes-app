@@ -1,24 +1,38 @@
 generator client {
-  provider = "prisma-client-js"
+  provider        = "prisma-client-js"
+  previewFeatures = ["mongoDb"]
 }
 
 datasource db {
-  provider = "sqlite"
-  url      = "file:./dev.db"
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+enum UserRole {
+  CREATOR
+  BRAND
 }
 
 model User {
+  id    String  @id @default(dbgenerated()) @map("_id") @db.ObjectId
   email String  @unique
-  id    Int     @default(autoincrement()) @id
-  name  String?
-  posts Post[]
+  password String
+  role UserRole
 }
 
-model Post {
-  authorId  Int?
-  content   String?
-  id        Int     @default(autoincrement()) @id
-  published Boolean @default(false)
-  title     String
-  author    User?   @relation(fields: [authorId], references: [id])
+model Creator {
+  id       String    @id @default(dbgenerated()) @map("_id") @db.ObjectId
+  userId   String    @db.ObjectId
+  firstName  String
+  lastName  String
+  email String
+}
+
+model Brand {
+  id       String    @id @default(dbgenerated()) @map("_id") @db.ObjectId
+  userId   String    @db.ObjectId
+  firstName  String
+  lastName  String
+  email String
+  companyName String @unique
 }
