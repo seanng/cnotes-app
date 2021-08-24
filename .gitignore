@@ -3,3 +3,4 @@ generated/
 .next/
 .vscode/
 .idea/
+.env*

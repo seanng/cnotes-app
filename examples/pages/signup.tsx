@@ -5,10 +5,8 @@ import { useMutation } from '@apollo/client'
 import Layout from '../components/Layout'
 
 const SignupMutation = gql`
-  mutation SignupMutation($name: String, $email: String!) {
-    signupUser(name: $name, email: $email) {
-      id
-      name
+  mutation SignupMutation($email: String!, $password: String!) {
+    signup(email: $email, password: $password) {
       email
     }
   }

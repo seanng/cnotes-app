@@ -1,6 +1,6 @@
 import { makeSchema } from 'nexus'
 import path from 'path'
-import types from './types'
+import * as types from './graphql'
 
 const schema = makeSchema({
   types,
