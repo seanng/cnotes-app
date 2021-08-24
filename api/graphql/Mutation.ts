@@ -1,9 +1,17 @@
 import { objectType, arg, inputObjectType } from 'nexus'
-import { hash } from 'bcryptjs'
-import { sign } from 'jsonwebtoken'
 import prisma from 'lib/prisma'
-import { AuthenticationError } from 'apollo-server-micro'
-import { EMAIL_TAKEN } from 'shared/constants'
+import { UserInputError, AuthenticationError } from 'apollo-server-micro'
+import {
+  EMAIL_TAKEN,
+  INCORRECT_PASSWORD,
+  USER_NOT_FOUND,
+} from 'shared/constants'
+import {
+  createPassword,
+  encryptToken,
+  isCorrectPassword,
+  serializeCookie,
+} from 'utils/auth'
 
 export const Mutation = objectType({
   name: 'Mutation',
@@ -13,7 +21,7 @@ export const Mutation = objectType({
       args: {
         input: arg({ type: 'SignupInput' }),
       },
-      resolve: async (_, { input }, __) => {
+      resolve: async (_, { input }, { res }) => {
         const { email, password, role, ...profileArgs } = input
         const foundUser = await prisma.user.findUnique({
           where: { email },
@@ -21,7 +29,7 @@ export const Mutation = objectType({
         if (foundUser) {
           throw new AuthenticationError(EMAIL_TAKEN)
         }
-        const hashedPassword = await hash(password, 10)
+        const hashedPassword = createPassword(password)
         const user = await prisma.user.create({
           data: {
             email,
@@ -41,10 +49,33 @@ export const Mutation = objectType({
 
         // todo: send welcome email.
 
-        return {
-          token: sign({ userId: user.id }, process.env.APP_SECRET),
-          user,
+        const token = encryptToken(user.id)
+        res.setHeader('Set-Cookie', serializeCookie(token))
+        return { token, user }
+      },
+    })
+    t.field('signin', {
+      type: 'AuthPayload',
+      args: {
+        input: arg({ type: 'SigninInput' }),
+      },
+      resolve: async (_, { input }, { res }) => {
+        const { email, password } = input
+        const user = await prisma.user.findUnique({
+          where: email,
+        })
+
+        if (!user) {
+          throw new AuthenticationError(USER_NOT_FOUND)
         }
+
+        if (!isCorrectPassword(password, user.password)) {
+          throw new UserInputError(INCORRECT_PASSWORD)
+        }
+
+        const token = encryptToken(user.id)
+        res.setHeader('Set-Cookie', serializeCookie(token))
+        return { token, user }
       },
     })
   },
@@ -59,5 +90,13 @@ export const SignupInput = inputObjectType({
     t.nonNull.string('firstName')
     t.nonNull.string('lastName')
     t.string('companyName')
+  },
+})
+
+export const SigninInput = inputObjectType({
+  name: 'SigninInput',
+  definition(t) {
+    t.nonNull.string('email')
+    t.nonNull.string('password')
   },
 })

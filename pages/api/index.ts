@@ -1,7 +1,9 @@
 import { ApolloServer } from 'apollo-server-micro'
 import { NextApiHandler } from 'next'
+import cookie from 'cookie'
 import cors from 'micro-cors'
 import schema from 'api/schema'
+import { decryptToken } from 'utils/auth'
 
 export const config = {
   api: {
@@ -9,7 +11,14 @@ export const config = {
   },
 }
 
-const apolloServer = new ApolloServer({ schema })
+const apolloServer = new ApolloServer({
+  schema,
+  context(ctx): Record<string, any> {
+    const { token } = cookie.parse(ctx.req.headers.cookie ?? '')
+    if (!token) return ctx
+    return { ...ctx, user: decryptToken(token) }
+  },
+})
 
 let apolloServerHandler: NextApiHandler
 
