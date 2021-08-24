@@ -33,8 +33,7 @@ export default {
     },
     md: {
       fontSize: '16px',
-      px: 6,
-      py: 4,
+      p: 6,
       borderRadius: '90px',
     },
   },
