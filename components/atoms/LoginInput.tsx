@@ -5,7 +5,7 @@ interface Props extends BoxProps {
   type: string
 }
 
-export default function Input({ name, type, ...props }: Props): JSX.Element {
+function LoginInput({ name, type, ...props }: Props): JSX.Element {
   return (
     <Box position="relative" {...props}>
       <Box
@@ -42,3 +42,5 @@ export default function Input({ name, type, ...props }: Props): JSX.Element {
     </Box>
   )
 }
+
+export default LoginInput
