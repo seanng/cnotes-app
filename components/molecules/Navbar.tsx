@@ -109,8 +109,8 @@ export default function Navbar({ user }: UserProps): JSX.Element {
           </Box>
         ) : (
           <Box>
-            <LinkButton size="sm" href="/register" bgColor="red" mr={3}>
-              Register
+            <LinkButton size="sm" href="/signup" bgColor="red" mr={3}>
+              Sign up
             </LinkButton>
             <LinkButton size="sm" href="/login" mr={3}>
               Login
