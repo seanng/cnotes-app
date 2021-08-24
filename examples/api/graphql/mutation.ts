@@ -1,5 +1,17 @@
-import { nonNull, objectType, stringArg } from 'nexus'
+import { objectType, nonNull, stringArg, inputObjectType } from 'nexus'
 import prisma from 'lib/prisma'
+
+export const SignupInput = inputObjectType({
+  name: 'SignupInput',
+  definition(t) {
+    t.nonNull.string('email')
+    t.nonNull.string('password')
+    t.nonNull.field('role', { type: 'UserRole' })
+    t.string('firstName')
+    t.string('lastName')
+    t.nullable.string('companyName')
+  },
+})
 
 const Mutation = objectType({
   name: 'Mutation',
