@@ -8,3 +8,5 @@ export const EMAIL_REGEX =
 export const URL_REGEX =
   // eslint-disable-next-line
   /(https?|http?):\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)/
+
+export const EMAIL_TAKEN = 'This email has already been registered.'

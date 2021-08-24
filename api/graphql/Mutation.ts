@@ -2,6 +2,8 @@ import { objectType, arg, inputObjectType } from 'nexus'
 import { hash } from 'bcryptjs'
 import { sign } from 'jsonwebtoken'
 import prisma from 'lib/prisma'
+import { AuthenticationError } from 'apollo-server-micro'
+import { EMAIL_TAKEN } from 'shared/constants'
 
 export const Mutation = objectType({
   name: 'Mutation',
@@ -13,6 +15,12 @@ export const Mutation = objectType({
       },
       resolve: async (_, { input }, __) => {
         const { email, password, role, ...profileArgs } = input
+        const foundUser = await prisma.user.findUnique({
+          where: { email },
+        })
+        if (foundUser) {
+          throw new AuthenticationError(EMAIL_TAKEN)
+        }
         const hashedPassword = await hash(password, 10)
         const user = await prisma.user.create({
           data: {

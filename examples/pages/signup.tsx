@@ -32,7 +32,7 @@ function Signup(): JSX.Element {
                 email: email,
               },
             })
-            Router.push('/')
+            // Router.push('/')
           }}
         >
           <h1>Signup user</h1>

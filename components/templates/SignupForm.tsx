@@ -14,7 +14,8 @@ import * as R from 'ramda'
 import gql from 'graphql-tag'
 import Layout from 'components/organisms/Layout'
 import { useForm } from 'react-hook-form'
-import { EMAIL_REGEX } from 'shared/constants'
+import { EMAIL_REGEX, EMAIL_TAKEN } from 'shared/constants'
+import { getErrorMessage } from 'utils/helpers'
 
 type FormInputProps = {
   label: string
@@ -67,6 +68,7 @@ function SignupFormTemplate({ isBrand }: TemplateProps): JSX.Element {
   const {
     handleSubmit,
     register,
+    setError,
     formState: { errors, isSubmitting },
     watch,
   } = useForm()
@@ -74,20 +76,27 @@ function SignupFormTemplate({ isBrand }: TemplateProps): JSX.Element {
   const password = watch('password')
 
   const onSubmit = async (data: OnSubmitProps): Promise<void> => {
-    const {
-      data: { signup: response },
-    } = await signup({
-      variables: {
-        input: {
-          role: isBrand ? 'BRAND' : 'CREATOR',
-          ...R.omit(['passwordConfirm'], data),
+    try {
+      const {
+        data: { signup: response },
+      } = await signup({
+        variables: {
+          input: {
+            role: isBrand ? 'BRAND' : 'CREATOR',
+            ...R.omit(['passwordConfirm'], data),
+          },
         },
-      },
-    })
-
-    // store token in localstorage?
-
-    console.log('response: ', response)
+      })
+      // store token in localstorage or cookie
+      console.log('response: ', response)
+    } catch (error) {
+      if (getErrorMessage(error) === EMAIL_TAKEN) {
+        setError('email', {
+          type: 'manual',
+          message: 'This email address is already registered.',
+        })
+      }
+    }
   }
 
   return (
