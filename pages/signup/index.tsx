@@ -1,5 +1,3 @@
-import { useMutation } from '@apollo/client'
-import gql from 'graphql-tag'
 import Layout from 'components/organisms/Layout'
 import NextImage from 'next/image'
 import NextLink from 'next/link'
@@ -19,14 +17,6 @@ type LinkCardProps = {
   label: string
   imgSrc: string
 }
-
-const SignupMutation = gql`
-  mutation SignupMutation($input: SignupInput!) {
-    signup(input: $input) {
-      token
-    }
-  }
-`
 
 const Image = c(NextImage)
 
@@ -62,28 +52,6 @@ function LinkCard({ href, label, imgSrc }: LinkCardProps): JSX.Element {
 }
 
 function SignupPage(): JSX.Element {
-  const [signup] = useMutation(SignupMutation)
-
-  const handleSignup = async e => {
-    e.preventDefault()
-    try {
-      await signup({
-        variables: {
-          // TODO: replace input
-          input: {
-            email: 'testabc@gmail.com',
-            password: 'helloworld',
-            firstName: 'sean',
-            lastName: 'sean',
-            role: 'CREATOR',
-          },
-        },
-      })
-    } catch (error) {
-      console.log('error in handleSignup: ', error)
-    }
-  }
-
   return (
     <Layout>
       <Container
@@ -92,9 +60,6 @@ function SignupPage(): JSX.Element {
         alignItems="center"
         py={[16, 20]}
       >
-        <Box display="none">
-          <Button onClick={handleSignup} />
-        </Box>
         <c.h2 textStyle="h2" mb={6}>
           Sign up
         </c.h2>
