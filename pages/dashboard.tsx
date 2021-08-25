@@ -1,17 +1,23 @@
 import { NextPage, GetServerSideProps } from 'next'
+import { BRAND } from 'shared/constants'
+import { User } from 'shared/types'
 import { getUserPayload } from 'utils/auth'
 import { redirTo } from 'utils/helpers'
+import BrandDashboard from 'components/templates/BrandDashboard'
+import CreatorDashboard from 'components/templates/CreatorDashboard'
+import Layout from 'components/organisms/Layout'
 
-const DashboardPage: NextPage = props => {
-  console.log('props: ', props)
+interface Props {
+  user: User
+}
+
+const DashboardPage: NextPage<Props> = ({ user }: Props) => {
+  const Dashboard = user.role === BRAND ? BrandDashboard : CreatorDashboard
+
   return (
-    <div>
-      <p>
-        eventually, we will remove /dashboard-creator and /dashboard-brand and
-        render the appropriate template for that user type.
-      </p>
-      <p>for now, this is just a placeholder page.</p>
-    </div>
+    <Layout user={user}>
+      <Dashboard />
+    </Layout>
   )
 }
 
