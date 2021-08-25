@@ -1,17 +1,18 @@
-import cookie from 'cookie'
+import cookieJS from 'cookie'
 import { UserInputError } from 'apollo-server-micro'
 import bcrypt from 'bcryptjs'
 import jwt from 'jsonwebtoken'
+import { User } from 'shared/types'
 
 type Token = {
-  id: string
+  user: User
   time: string
   iat: number
   exp: number
 }
 
 export function serializeCookie(token = '', maxAge = 6 * 60 * 60): string {
-  return cookie.serialize('token', token, {
+  return cookieJS.serialize('token', token, {
     httpOnly: true,
     path: '/',
     sameSite: 'lax',
@@ -31,17 +32,18 @@ export function isCorrectPassword(exposed: string, hashed: string): boolean {
   return bcrypt.compareSync(exposed, hashed)
 }
 
-export function encryptToken(id: string, role: string): string {
-  return jwt.sign({ id, role, time: new Date() }, process.env.JWT_SECRET, {
+export function encryptToken(user: User): string {
+  return jwt.sign({ user, time: new Date() }, process.env.JWT_SECRET, {
     expiresIn: '6h',
   })
 }
 
-export function decryptToken(token: string | undefined): Token | null {
+export function getUserPayload(cookie: string): User | null {
+  const { token } = cookieJS.parse(cookie ?? '')
   if (!token) return null
   try {
-    const decrypted = jwt.verify(token, process.env.JWT_SECRET) as Token
-    return decrypted
+    const { user } = jwt.verify(token, process.env.JWT_SECRET) as Token
+    return user
   } catch (error) {
     return null
   }

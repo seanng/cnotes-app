@@ -56,11 +56,11 @@ function Nav(): JSX.Element {
   )
 }
 
-type UserProps = {
+type Props = {
   user: User
 }
 
-function UserMenu({ user }: UserProps): JSX.Element {
+function UserMenu({ user }: Props): JSX.Element {
   return (
     <PopoverContent backgroundColor="white">
       <PopoverArrow
@@ -80,7 +80,7 @@ function UserMenu({ user }: UserProps): JSX.Element {
   )
 }
 
-export default function Navbar({ user }: UserProps): JSX.Element {
+export default function Navbar({ user }: Props): JSX.Element {
   return (
     <Container py={5} as="header" borderBottom="1px" borderColor="neutrals6">
       <Flex align="center" justify="space-between" wrap="wrap">
@@ -92,11 +92,11 @@ export default function Navbar({ user }: UserProps): JSX.Element {
         {user ? (
           <Box>
             <LinkButton
-              href={user.type === CREATOR ? '/create' : '/discover'}
+              href={user.role === CREATOR ? '/create' : '/discover'}
               size="sm"
               mr={3}
             >
-              {user.type === CREATOR ? 'Create Offer' : 'Discover'}
+              {user.role === CREATOR ? 'Create Offer' : 'Discover'}
             </LinkButton>
             <Popover>
               <PopoverTrigger>

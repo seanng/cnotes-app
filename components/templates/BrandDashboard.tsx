@@ -37,7 +37,9 @@ const tables = [
 
 // TODO: fetch user obj from getServerSideProps
 const FAKE_USER = {
-  type: BRAND,
+  id: 'abcdefg',
+  email: 'steve@steve.com',
+  role: BRAND,
   firstName: 'Steve',
   lastName: 'McKinney',
   companyName: 'Razer',

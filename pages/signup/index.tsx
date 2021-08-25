@@ -11,6 +11,7 @@ import {
   LinkBox,
   LinkOverlay,
 } from '@chakra-ui/react'
+import { NextPage } from 'next'
 
 type LinkCardProps = {
   href: string
@@ -51,7 +52,7 @@ function LinkCard({ href, label, imgSrc }: LinkCardProps): JSX.Element {
   )
 }
 
-function SignupPage(): JSX.Element {
+const SignupFoyer: NextPage = () => {
   return (
     <Layout>
       <Container
@@ -84,4 +85,4 @@ function SignupPage(): JSX.Element {
   )
 }
 
-export default SignupPage
+export default SignupFoyer

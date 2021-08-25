@@ -1,8 +1,11 @@
+import { GetServerSideProps, NextPage } from 'next'
 import Link from 'next/link'
 import Layout from 'components/organisms/Layout'
 import { Box, Container, Text } from '@chakra-ui/react'
+import { getUserPayload } from 'utils/auth'
+import { redirTo } from 'utils/helpers'
 
-function IndexPage(): JSX.Element {
+const IndexPage: NextPage = () => {
   return (
     <Layout>
       <Container>
@@ -20,6 +23,13 @@ function IndexPage(): JSX.Element {
       </Container>
     </Layout>
   )
+}
+
+export const getServerSideProps: GetServerSideProps = async ctx => {
+  if (getUserPayload(ctx.req.headers?.cookie)) {
+    return redirTo('/dashboard')
+  }
+  return { props: {} }
 }
 
 export default IndexPage

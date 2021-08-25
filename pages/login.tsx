@@ -8,7 +8,9 @@ import {
   INCORRECT_PASSWORD,
   USER_NOT_FOUND,
 } from 'shared/constants'
-import { getErrorMessage } from 'utils/helpers'
+import { getErrorMessage, redirTo } from 'utils/helpers'
+import { GetServerSideProps, NextPage } from 'next'
+import { getUserPayload } from 'utils/auth'
 
 type OnSubmitProps = {
   email: string
@@ -26,7 +28,7 @@ const LoginMutation = gql`
   }
 `
 
-export default function Login(): JSX.Element {
+const Login: NextPage = () => {
   const client = useApolloClient()
   const [login] = useMutation(LoginMutation)
 
@@ -47,6 +49,7 @@ export default function Login(): JSX.Element {
           input: data,
         },
       })
+      // navigate to dashboard
       console.log('data: ', response)
     } catch (error) {
       if (getErrorMessage(error) === USER_NOT_FOUND) {
@@ -134,3 +137,13 @@ export default function Login(): JSX.Element {
     </Flex>
   )
 }
+
+export const getServerSideProps: GetServerSideProps = async ctx => {
+  // Automatically navigate user to dashboard if already signed in
+  if (getUserPayload(ctx.req.headers?.cookie)) {
+    return redirTo('/dashboard')
+  }
+  return { props: {} }
+}
+
+export default Login

@@ -1,6 +1,8 @@
 export type User = {
-  type: string
-  companyName: string | undefined
+  id: string
+  role: string
   firstName: string
   lastName: string
+  email: string
+  companyName?: string
 }

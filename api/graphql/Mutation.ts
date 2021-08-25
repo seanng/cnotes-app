@@ -1,3 +1,4 @@
+import * as R from 'ramda'
 import { objectType, arg, inputObjectType } from 'nexus'
 import prisma from 'lib/prisma'
 import { UserInputError, AuthenticationError } from 'apollo-server-micro'
@@ -22,34 +23,23 @@ export const Mutation = objectType({
         input: arg({ type: 'SignupInput' }),
       },
       resolve: async (_, { input }, { res }) => {
-        const { email, password, role, ...profileArgs } = input
         const foundUser = await prisma.user.findUnique({
-          where: { email },
+          where: { email: input.email },
         })
         if (foundUser) {
           throw new AuthenticationError(EMAIL_TAKEN)
         }
-        const hashedPassword = createPassword(password)
         const user = await prisma.user.create({
           data: {
-            email,
-            role,
-            password: hashedPassword,
-          },
-        })
-
-        // create creator or brand profile.
-        await prisma[role.toLowerCase()].create({
-          data: {
-            userId: user.id,
-            email,
-            ...profileArgs,
+            ...input,
+            password: createPassword(input.password),
           },
         })
 
         // todo: send welcome email.
+        const userWithoutPassword = R.omit(['password'], user)
 
-        const token = encryptToken(user.id, user.role)
+        const token = encryptToken(userWithoutPassword)
         res.setHeader('Set-Cookie', serializeCookie(token))
         return { token, user }
       },
@@ -73,7 +63,7 @@ export const Mutation = objectType({
           throw new UserInputError(INCORRECT_PASSWORD)
         }
 
-        const token = encryptToken(user.id, user.role)
+        const token = encryptToken(user)
         res.setHeader('Set-Cookie', serializeCookie(token))
         return { token, user }
       },
