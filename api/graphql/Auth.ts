@@ -1,5 +1,5 @@
 import * as R from 'ramda'
-import { objectType, arg, inputObjectType, extendType } from 'nexus'
+import { objectType, arg, inputObjectType, mutationField } from 'nexus'
 import prisma from 'lib/prisma'
 import { UserInputError, AuthenticationError } from 'apollo-server-micro'
 import {
@@ -14,67 +14,68 @@ import {
   serializeCookie,
 } from 'utils/auth'
 
-export const AuthMutation = extendType({
-  type: 'Mutation',
-  definition(t) {
-    t.field('signup', {
-      type: 'AuthPayload',
-      args: {
-        input: arg({ type: 'SignupInput' }),
-      },
-      resolve: async (_, { input }, { res }) => {
-        const foundUser = await prisma.user.findUnique({
-          where: { email: input.email },
-        })
-        if (foundUser) {
-          throw new AuthenticationError(EMAIL_TAKEN)
-        }
-        const user = await prisma.user.create({
-          data: {
-            ...input,
-            password: createPassword(input.password),
-          },
-        })
-
-        // todo: send welcome email.
-        const userWithoutPassword = R.omit(['password'], user)
-
-        const token = encryptToken(userWithoutPassword)
-        res.setHeader('Set-Cookie', serializeCookie(token))
-        return { token, user }
+export const Signup = mutationField('signup', {
+  type: 'AuthPayload',
+  args: {
+    input: arg({ type: 'SignupInput' }),
+  },
+  resolve: async (_, { input }, { res }) => {
+    const foundUser = await prisma.user.findUnique({
+      where: { email: input.email },
+    })
+    if (foundUser) {
+      throw new AuthenticationError(EMAIL_TAKEN)
+    }
+    const user = await prisma.user.create({
+      data: {
+        ...input,
+        password: createPassword(input.password),
+        status: 'UNVERIFIED',
       },
     })
-    t.field('login', {
-      type: 'AuthPayload',
-      args: {
-        input: arg({ type: 'LoginInput' }),
-      },
-      resolve: async (_, { input }, { res }) => {
-        const { email, password } = input
-        const user = await prisma.user.findUnique({
-          where: { email },
-        })
 
-        if (!user) {
-          throw new AuthenticationError(USER_NOT_FOUND)
-        }
+    // todo: send welcome email.
+    const userWithoutPassword = R.omit(['password'], user)
 
-        if (!isCorrectPassword(password, user.password)) {
-          throw new UserInputError(INCORRECT_PASSWORD)
-        }
+    const token = encryptToken(userWithoutPassword)
+    res.setHeader('Set-Cookie', serializeCookie(token))
+    return { token, user }
+  },
+})
 
-        const token = encryptToken(user)
-        res.setHeader('Set-Cookie', serializeCookie(token))
-        return { token, user }
-      },
+export const Login = mutationField('login', {
+  type: 'AuthPayload',
+  args: {
+    input: arg({ type: 'LoginInput' }),
+  },
+  resolve: async (_, { input }, { res }) => {
+    const { email, password } = input
+    const user = await prisma.user.findUnique({
+      where: { email },
     })
-    t.field('signOut', {
-      type: 'Boolean',
-      resolve: async (_, __, { res }) => {
-        res.setHeader('Set-Cookie', serializeCookie('', -1))
-        return true
-      },
-    })
+
+    if (!user) {
+      throw new AuthenticationError(USER_NOT_FOUND)
+    }
+
+    if (!isCorrectPassword(password, user.password)) {
+      throw new UserInputError(INCORRECT_PASSWORD)
+    }
+
+    const token = encryptToken(user)
+    res.setHeader('Set-Cookie', serializeCookie(token))
+    return { token, user }
+  },
+})
+
+export const Signout = mutationField('signOut', {
+  type: 'Boolean',
+  args: {
+    input: arg({ type: 'LoginInput' }),
+  },
+  resolve: async (_, __, { res }) => {
+    res.setHeader('Set-Cookie', serializeCookie('', -1))
+    return true
   },
 })
 

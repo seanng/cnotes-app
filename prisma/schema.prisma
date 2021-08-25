@@ -12,7 +12,8 @@ model User {
   id    String  @id @default(dbgenerated()) @map("_id") @db.ObjectId
   email String  @unique
   password String
-  role String
+  role String // enum doesn't work :(
+  status String
   firstName  String
   lastName  String
   companyName String?
