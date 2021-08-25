@@ -10,6 +10,9 @@ import {
   Th,
 } from '@chakra-ui/react'
 import { CREATOR_AVATAR_TEXT_SPACING } from 'shared/constants'
+import { Input } from "@chakra-ui/react"
+import { LinkBox, LinkOverlay } from "@chakra-ui/react"
+import { Button, ButtonGroup } from "@chakra-ui/react"
 
 // could move Data to shared/types
 type Props = {
@@ -23,12 +26,13 @@ const columns = [
   'Highest Bid',
   'My Bid',
   'Status',
-  '', // reserve last column for any button actions
+  'Input', // reserve last column for any button actions
 ]
 
 export default function BiddingTable({ data }: Props): JSX.Element {
   console.log('data: ', data) // use data variable so eslint doesnt complain
   return (
+    <a href="./dashboard">
     <Table variant="brandDashboard">
       <Thead>
         <Tr>
@@ -58,8 +62,18 @@ export default function BiddingTable({ data }: Props): JSX.Element {
           <Td></Td>
           <Td></Td>
           <Td></Td>
+          <Td>
+            <LinkBox>
+            <LinkOverlay href="#">
+              <Input placeholder="Enter text here: " size="sm" w="60%">
+            </Input>
+            <Button size="sm">></Button>
+            </LinkOverlay>
+            </LinkBox>
+          </Td>
         </Tr>
       </Tbody>
     </Table>
+    </a>
   )
 }

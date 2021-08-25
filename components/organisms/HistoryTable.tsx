@@ -1,3 +1,72 @@
-export default function HistoryTable(): JSX.Element {
-  return <div />
+
+import {
+  Avatar,
+  Box,
+  Flex,
+  Table,
+  Td,
+  Thead,
+  Tbody,
+  Tr,
+  Th,
+} from '@chakra-ui/react'
+import { CREATOR_AVATAR_TEXT_SPACING } from 'shared/constants'
+import { Input } from "@chakra-ui/react"
+import { LinkBox, LinkOverlay } from "@chakra-ui/react"
+import { Button, ButtonGroup } from "@chakra-ui/react"
+
+// could move Data to shared/types
+type Props = {
+  data: []
+}
+
+const columns = [
+  'Creator',
+  'Deliverable',
+  'Date',
+  'Highest Bid',
+  'My Bid',
+  'Status',
+   // reserve last column for any button actions
+]
+
+export default function HistoryTable({ data }: Props): JSX.Element {
+  console.log('data: ', data) // use data variable so eslint doesnt complain
+  return (
+    <a href="./dashboard">
+    <Table variant="brandDashboard">
+      <Thead>
+        <Tr>
+          {columns.map(col => (
+            <Th key={col}>{col}</Th>
+          ))}
+        </Tr>
+      </Thead>
+      <Tbody>
+        <Tr>
+          <Td>
+            <Flex align="center">
+              <Avatar name="Linus Tech Tips" src="https://bit.ly/dan-abramov" />
+              <Flex direction="column" ml={CREATOR_AVATAR_TEXT_SPACING}>
+                <Box textStyle="body2">Linus Tech Tips</Box>
+                <Box textStyle="caption2">10k viewers</Box>
+              </Flex>
+            </Flex>
+          </Td>
+          <Td>
+            <Flex direction="column">
+              <Box textStyle="body2">Integration</Box>
+              <Box textStyle="caption2">TikTok</Box>
+            </Flex>
+          </Td>
+          <Td></Td>
+          <Td></Td>
+          <Td></Td>
+          <Td></Td>
+          
+        </Tr>
+      </Tbody>
+    </Table>
+    </a>
+  )
 }
