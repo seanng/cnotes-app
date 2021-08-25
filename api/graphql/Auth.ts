@@ -14,6 +14,18 @@ import {
   isCorrectPassword,
   serializeCookie,
 } from 'utils/auth'
+import { User } from 'shared/types'
+
+// should match up with User.
+const publicFields = [
+  'id',
+  'role',
+  'firstName',
+  'lastName',
+  'companyName',
+  'email',
+  'status',
+]
 
 export const Signup = mutationField('signup', {
   type: 'AuthPayload',
@@ -38,9 +50,8 @@ export const Signup = mutationField('signup', {
       },
     })
     // todo: send welcome email.
-    const userWithoutPassword = R.omit(['password'], user)
-
-    const token = encryptToken(userWithoutPassword)
+    const userObj = R.pick(publicFields, user) as User
+    const token = encryptToken(userObj)
     res.setHeader('Set-Cookie', serializeCookie(token))
     return { token, user }
   },
@@ -65,7 +76,8 @@ export const Login = mutationField('login', {
       throw new UserInputError(INCORRECT_PASSWORD)
     }
 
-    const token = encryptToken(user)
+    const userObj = R.pick(publicFields, user) as User
+    const token = encryptToken(userObj)
     res.setHeader('Set-Cookie', serializeCookie(token))
     return { token, user }
   },
