@@ -13,8 +13,10 @@ model User {
   email String  @unique
   password String
   role String // enum doesn't work :(
-  status String
+  status String @default("UNVERIFIED")
   firstName  String
   lastName  String
   companyName String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }

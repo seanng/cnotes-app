@@ -13,3 +13,6 @@ export const URL_REGEX =
 export const EMAIL_TAKEN = 'This email has already been registered.'
 export const USER_NOT_FOUND = 'User not found.'
 export const INCORRECT_PASSWORD = 'Invalid name and password combination.'
+
+// user statuses
+export const UNVERIFIED = 'UNVERIFIED'

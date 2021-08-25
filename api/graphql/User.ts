@@ -11,5 +11,11 @@ export const User = objectType({
     t.nonNull.string('lastName')
     t.string('status')
     t.string('companyName')
+    t.nonNull.field('createdAt', {
+      type: 'DateTime',
+    })
+    t.nonNull.field('updatedAt', {
+      type: 'DateTime',
+    })
   },
 })

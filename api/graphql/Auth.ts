@@ -5,6 +5,7 @@ import { UserInputError, AuthenticationError } from 'apollo-server-micro'
 import {
   EMAIL_TAKEN,
   INCORRECT_PASSWORD,
+  UNVERIFIED,
   USER_NOT_FOUND,
 } from 'shared/constants'
 import {
@@ -30,10 +31,12 @@ export const Signup = mutationField('signup', {
       data: {
         ...input,
         password: createPassword(input.password),
-        status: 'UNVERIFIED',
+        // until integrating with https://github.com/prisma/nexus-prisma/, prisma schema doesnt work
+        status: UNVERIFIED,
+        createdAt: new Date(),
+        updatedAt: new Date(),
       },
     })
-
     // todo: send welcome email.
     const userWithoutPassword = R.omit(['password'], user)
 
