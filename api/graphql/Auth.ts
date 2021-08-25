@@ -1,5 +1,5 @@
 import * as R from 'ramda'
-import { objectType, arg, inputObjectType } from 'nexus'
+import { objectType, arg, inputObjectType, extendType } from 'nexus'
 import prisma from 'lib/prisma'
 import { UserInputError, AuthenticationError } from 'apollo-server-micro'
 import {
@@ -14,8 +14,8 @@ import {
   serializeCookie,
 } from 'utils/auth'
 
-export const Mutation = objectType({
-  name: 'Mutation',
+export const AuthMutation = extendType({
+  type: 'Mutation',
   definition(t) {
     t.field('signup', {
       type: 'AuthPayload',
@@ -68,6 +68,21 @@ export const Mutation = objectType({
         return { token, user }
       },
     })
+    t.field('signOut', {
+      type: 'Boolean',
+      resolve: async (_, __, { res }) => {
+        res.setHeader('Set-Cookie', serializeCookie('', -1))
+        return true
+      },
+    })
+  },
+})
+
+export const AuthPayload = objectType({
+  name: 'AuthPayload',
+  definition(t) {
+    t.string('token')
+    t.field('user', { type: 'User' })
   },
 })
 

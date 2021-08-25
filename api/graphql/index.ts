@@ -1,4 +1,3 @@
 export * from './User'
-export * from './Mutation'
-export * from './AuthPayload'
+export * from './Auth'
 export * from './DateTime'

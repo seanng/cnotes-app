@@ -74,7 +74,9 @@ function UserMenu({ user }: Props): JSX.Element {
         <Divider />
         <Box>Dark Mode</Box>
         <Divider />
-        <Box>Log Out</Box>
+        <Box>
+          <Link href="/signout">Log Out</Link>
+        </Box>
       </PopoverBody>
     </PopoverContent>
   )
