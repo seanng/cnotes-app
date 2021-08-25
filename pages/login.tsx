@@ -9,6 +9,7 @@ import {
   USER_NOT_FOUND,
 } from 'shared/constants'
 import { getErrorMessage, redirTo } from 'utils/helpers'
+import { useRouter } from 'next/router'
 import { GetServerSideProps, NextPage } from 'next'
 import { getUserPayload } from 'utils/auth'
 
@@ -21,9 +22,6 @@ const LoginMutation = gql`
   mutation LoginMutation($input: LoginInput!) {
     login(input: $input) {
       token
-      user {
-        _id
-      }
     }
   }
 `
@@ -31,6 +29,7 @@ const LoginMutation = gql`
 const Login: NextPage = () => {
   const client = useApolloClient()
   const [login] = useMutation(LoginMutation)
+  const router = useRouter()
 
   const {
     handleSubmit,
@@ -42,15 +41,12 @@ const Login: NextPage = () => {
   const onSubmit = async (data: OnSubmitProps): Promise<void> => {
     try {
       await client.resetStore()
-      const {
-        data: { login: response },
-      } = await login({
+      await login({
         variables: {
           input: data,
         },
       })
-      // navigate to dashboard
-      console.log('data: ', response)
+      router.push('/dashboard')
     } catch (error) {
       if (getErrorMessage(error) === USER_NOT_FOUND) {
         setError('email', {
