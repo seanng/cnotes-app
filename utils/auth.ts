@@ -31,8 +31,8 @@ export function isCorrectPassword(exposed: string, hashed: string): boolean {
   return bcrypt.compareSync(exposed, hashed)
 }
 
-export function encryptToken(id: string): string {
-  return jwt.sign({ id, time: new Date() }, process.env.JWT_SECRET, {
+export function encryptToken(id: string, role: string): string {
+  return jwt.sign({ id, role, time: new Date() }, process.env.JWT_SECRET, {
     expiresIn: '6h',
   })
 }

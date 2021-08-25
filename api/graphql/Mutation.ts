@@ -49,7 +49,7 @@ export const Mutation = objectType({
 
         // todo: send welcome email.
 
-        const token = encryptToken(user.id)
+        const token = encryptToken(user.id, user.role)
         res.setHeader('Set-Cookie', serializeCookie(token))
         return { token, user }
       },
@@ -73,7 +73,7 @@ export const Mutation = objectType({
           throw new UserInputError(INCORRECT_PASSWORD)
         }
 
-        const token = encryptToken(user.id)
+        const token = encryptToken(user.id, user.role)
         res.setHeader('Set-Cookie', serializeCookie(token))
         return { token, user }
       },
