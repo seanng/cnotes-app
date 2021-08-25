@@ -54,15 +54,15 @@ export const Mutation = objectType({
         return { token, user }
       },
     })
-    t.field('signin', {
+    t.field('login', {
       type: 'AuthPayload',
       args: {
-        input: arg({ type: 'SigninInput' }),
+        input: arg({ type: 'LoginInput' }),
       },
       resolve: async (_, { input }, { res }) => {
         const { email, password } = input
         const user = await prisma.user.findUnique({
-          where: email,
+          where: { email },
         })
 
         if (!user) {
@@ -93,8 +93,8 @@ export const SignupInput = inputObjectType({
   },
 })
 
-export const SigninInput = inputObjectType({
-  name: 'SigninInput',
+export const LoginInput = inputObjectType({
+  name: 'LoginInput',
   definition(t) {
     t.nonNull.string('email')
     t.nonNull.string('password')

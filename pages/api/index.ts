@@ -15,8 +15,7 @@ const apolloServer = new ApolloServer({
   schema,
   context(ctx): Record<string, any> {
     const { token } = cookie.parse(ctx.req.headers.cookie ?? '')
-    if (!token) return ctx
-    return { ...ctx, user: decryptToken(token) }
+    return { ...ctx, token: decryptToken(token) }
   },
 })
 

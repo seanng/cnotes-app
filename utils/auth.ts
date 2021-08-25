@@ -3,6 +3,13 @@ import { UserInputError } from 'apollo-server-micro'
 import bcrypt from 'bcryptjs'
 import jwt from 'jsonwebtoken'
 
+type Token = {
+  id: string
+  time: string
+  iat: number
+  exp: number
+}
+
 export function serializeCookie(token = '', maxAge = 6 * 60 * 60): string {
   return cookie.serialize('token', token, {
     httpOnly: true,
@@ -30,6 +37,12 @@ export function encryptToken(id: string): string {
   })
 }
 
-export function decryptToken(token: string): string | jwt.JwtPayload {
-  return jwt.verify(token, process.env.JWT_SECRET)
+export function decryptToken(token: string | undefined): Token | null {
+  if (!token) return null
+  try {
+    const decrypted = jwt.verify(token, process.env.JWT_SECRET) as Token
+    return decrypted
+  } catch (error) {
+    return null
+  }
 }
