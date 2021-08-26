@@ -126,7 +126,7 @@ const BiddingTable: FC = () => {
               </Flex>
             </Td>
             <Td>$1,200</Td>
-            <Td>
+            <Td pr={0} textAlign="right">
               <BidInput offer={offer} />
             </Td>
           </LinkBox>
