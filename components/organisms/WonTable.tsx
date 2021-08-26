@@ -132,7 +132,7 @@ const WonTable: FC = () => {
             <Td>
               <Badge colorScheme="pink">OUTSTANDING</Badge>
             </Td>
-            <Td>
+            <Td pr={0}>
               <Button
                 type="button"
                 aria-label="Paid"
