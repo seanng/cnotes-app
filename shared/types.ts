@@ -7,4 +7,13 @@ export type User = {
   lastName: string
   email: string
   companyName?: string
+  viewerCount?: number
+}
+
+export type Offer = {
+  id: string
+  creator: User
+  platform: string
+  deliverable: string
+  // bids[]?
 }

@@ -1,9 +1,5 @@
 import { useState } from 'react'
-import BiddingTable from 'components/organisms/BiddingTable'
-import WonTable from 'components/organisms/WonTable'
 import Layout from 'components/organisms/Layout'
-import AwaitingTable from 'components/organisms/AwaitingTable'
-import HistoryTable from 'components/organisms/HistoryTable'
 import {
   Flex,
   Container,
@@ -16,23 +12,27 @@ import {
 } from '@chakra-ui/react'
 import { NextPage } from 'next'
 import { User } from 'shared/types'
+import BiddingTable from 'components/organisms/BiddingTable'
+import AwaitingTable from 'components/organisms/AwaitingTable'
+import WonTable from 'components/organisms/WonTable'
+import HistoryTable from 'components/organisms/HistoryTable'
 
 const tables = [
   {
     label: 'bidding',
-    component: BiddingTable,
+    Table: BiddingTable,
   },
   {
     label: 'awaiting',
-    component: AwaitingTable,
+    Table: AwaitingTable,
   },
   {
     label: 'won',
-    component: WonTable,
+    Table: WonTable,
   },
   {
     label: 'history',
-    component: HistoryTable,
+    Table: HistoryTable,
   },
 ]
 
@@ -40,9 +40,11 @@ interface Props {
   user: User
 }
 
-const BrandDashboardTemplate: NextPage<Props> = ({ user }: Props) => {
+const BrandDashboard: NextPage<Props> = ({ user }: Props) => {
   const [tabIdx, setTabIdx] = useState<number>(0)
-  const handleTabChange = (i: number): void => setTabIdx(i)
+  const handleTabChange = (i: number): void => {
+    setTabIdx(i)
+  }
   return (
     <Layout user={user}>
       <Container>
@@ -68,9 +70,9 @@ const BrandDashboardTemplate: NextPage<Props> = ({ user }: Props) => {
             </TabList>
           </Flex>
           <TabPanels>
-            {tables.map(({ label, component: Table }) => (
+            {tables.map(({ label, Table }) => (
               <TabPanel key={label}>
-                <Table data={[]} />
+                <Table />
               </TabPanel>
             ))}
           </TabPanels>
@@ -80,4 +82,4 @@ const BrandDashboardTemplate: NextPage<Props> = ({ user }: Props) => {
   )
 }
 
-export default BrandDashboardTemplate
+export default BrandDashboard

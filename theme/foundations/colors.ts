@@ -1,3 +1,4 @@
+// TODO: add color scale so badge displays properly
 export default {
   // primary
   blue: '#3772FF',
