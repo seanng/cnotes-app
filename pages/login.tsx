@@ -12,6 +12,9 @@ import { getErrorMessage, redirTo } from 'utils/helpers'
 import { useRouter } from 'next/router'
 import { GetServerSideProps, NextPage } from 'next'
 import { getUserPayload } from 'utils/auth'
+import NextLink from 'next/link'
+
+const Link = c(NextLink)
 
 type OnSubmitProps = {
   email: string
@@ -115,19 +118,42 @@ const Login: NextPage = () => {
               }),
             }}
           />
-          <Box textStyle="caption1" fontWeight="bold" my={8}>
+          <Box textStyle="caption1" fontWeight="bold" mt={8} mb={6}>
             If you made an account before xxxx you will need to create a new
             account.
           </Box>
+          <Box
+            textAlign="right"
+            textStyle="caption1"
+            fontFamily="Inter"
+            color="blue"
+            fontWeight="bold"
+            mb={4}
+          >
+            <Link href="forgot-password">Forgot Password?</Link>
+          </Box>
           <Button
-            borderRadius="md"
+            borderRadius="lg"
             type="submit"
             isLoading={isSubmitting}
             fontSize={14}
             isFullWidth
+            mb={6}
           >
             Sign in
           </Button>
+          <Flex
+            justify="center"
+            textStyle="caption1"
+            fontWeight="bold"
+            fontFamily="Inter"
+            color="blue"
+          >
+            <Box color="neutrals1" mr={4}>
+              Not a member?
+            </Box>
+            <Link href="/signup">Sign up now</Link>
+          </Flex>
         </c.form>
       </Box>
     </Flex>
