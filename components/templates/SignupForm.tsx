@@ -16,6 +16,7 @@ import Layout from 'components/organisms/Layout'
 import { useForm } from 'react-hook-form'
 import { EMAIL_REGEX, EMAIL_TAKEN } from 'shared/constants'
 import { getErrorMessage } from 'utils/helpers'
+import { useRouter } from 'next/router'
 
 type FormInputProps = {
   label: string
@@ -65,6 +66,7 @@ function FormInput({
 
 function SignupFormTemplate({ isBrand }: TemplateProps): JSX.Element {
   const [signup] = useMutation(SignupMutation)
+  const router = useRouter()
   const {
     handleSubmit,
     register,
@@ -77,9 +79,7 @@ function SignupFormTemplate({ isBrand }: TemplateProps): JSX.Element {
 
   const onSubmit = async (data: OnSubmitProps): Promise<void> => {
     try {
-      const {
-        data: { signup: response },
-      } = await signup({
+      await signup({
         variables: {
           input: {
             role: isBrand ? 'BRAND' : 'CREATOR',
@@ -87,8 +87,7 @@ function SignupFormTemplate({ isBrand }: TemplateProps): JSX.Element {
           },
         },
       })
-      // store token in localstorage or cookie
-      console.log('response: ', response)
+      router.push('/dashboard')
     } catch (error) {
       if (getErrorMessage(error) === EMAIL_TAKEN) {
         setError('email', {

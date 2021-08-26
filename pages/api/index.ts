@@ -2,6 +2,7 @@ import { ApolloServer } from 'apollo-server-micro'
 import { NextApiHandler } from 'next'
 import cors from 'micro-cors'
 import schema from 'api/schema'
+import { getUserPayload } from 'utils/auth'
 
 export const config = {
   api: {
@@ -9,7 +10,13 @@ export const config = {
   },
 }
 
-const apolloServer = new ApolloServer({ schema })
+const apolloServer = new ApolloServer({
+  schema,
+  context(ctx): Record<string, any> {
+    const user = getUserPayload(ctx.req.headers.cookie ?? '')
+    return { ...ctx, user }
+  },
+})
 
 let apolloServerHandler: NextApiHandler
 

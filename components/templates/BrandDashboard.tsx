@@ -1,7 +1,7 @@
 import { useState } from 'react'
-import Layout from 'components/organisms/Layout'
 import BiddingTable from 'components/organisms/BiddingTable'
 import WonTable from 'components/organisms/WonTable'
+import Layout from 'components/organisms/Layout'
 import AwaitingTable from 'components/organisms/AwaitingTable'
 import HistoryTable from 'components/organisms/HistoryTable'
 import {
@@ -14,7 +14,8 @@ import {
   TabPanels,
   TabPanel,
 } from '@chakra-ui/react'
-import { BRAND } from 'shared/constants'
+import { NextPage } from 'next'
+import { User } from 'shared/types'
 
 const tables = [
   {
@@ -35,19 +36,15 @@ const tables = [
   },
 ]
 
-// TODO: fetch user obj from getServerSideProps
-const FAKE_USER = {
-  type: BRAND,
-  firstName: 'Steve',
-  lastName: 'McKinney',
-  companyName: 'Razer',
+interface Props {
+  user: User
 }
 
-function BrandDashboardTemplate(): JSX.Element {
+const BrandDashboardTemplate: NextPage<Props> = ({ user }: Props) => {
   const [tabIdx, setTabIdx] = useState<number>(0)
   const handleTabChange = (i: number): void => setTabIdx(i)
   return (
-    <Layout user={FAKE_USER}>
+    <Layout user={user}>
       <Container>
         <c.h3 textStyle="h3" mt={20} mb={14}>
           My Deals

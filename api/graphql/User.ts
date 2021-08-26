@@ -1,4 +1,4 @@
-import { objectType, enumType } from 'nexus'
+import { objectType } from 'nexus'
 
 export const User = objectType({
   name: 'User',
@@ -6,13 +6,16 @@ export const User = objectType({
     t.nonNull.id('_id')
     t.nonNull.string('email')
     t.nonNull.string('password')
-    t.nonNull.field('role', {
-      type: 'UserRole', // from Enums
+    t.nonNull.string('role')
+    t.nonNull.string('firstName')
+    t.nonNull.string('lastName')
+    t.string('status')
+    t.string('companyName')
+    t.nonNull.field('createdAt', {
+      type: 'DateTime',
+    })
+    t.nonNull.field('updatedAt', {
+      type: 'DateTime',
     })
   },
-})
-
-export const UserRole = enumType({
-  name: 'UserRole',
-  members: ['CREATOR', 'BRAND'],
 })

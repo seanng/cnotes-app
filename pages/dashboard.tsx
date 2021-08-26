@@ -1,14 +1,36 @@
-function DashboardPage(): JSX.Element {
-  // if creator, display X, else display Y..
-  return (
-    <div>
-      <p>
-        eventually, we will remove /dashboard-creator and /dashboard-brand and
-        render the appropriate template for that user type.
-      </p>
-      <p>for now, this is just a placeholder page.</p>
-    </div>
-  )
+import { NextPage, GetServerSideProps } from 'next'
+import { BRAND, UNVERIFIED } from 'shared/constants'
+import { User } from 'shared/types'
+import { getUserPayload } from 'utils/auth'
+import { redirTo } from 'utils/helpers'
+import BrandDashboard from 'components/templates/BrandDashboard'
+import CreatorDashboard from 'components/templates/CreatorDashboard'
+import CreatorDashboardUnverified from 'components/templates/CreatorDashboardUnverified'
+
+interface Props {
+  user: User
+}
+
+const DashboardPage: NextPage<Props> = ({ user }: Props) => {
+  if (user.role === BRAND) {
+    return <BrandDashboard user={user} />
+  }
+  // User === CREATOR
+
+  if (user.status === UNVERIFIED) {
+    return <CreatorDashboardUnverified user={user} />
+  }
+
+  return <CreatorDashboard user={user} />
+}
+
+export const getServerSideProps: GetServerSideProps = async ctx => {
+  const user = getUserPayload(ctx.req.headers.cookie)
+  if (!user) {
+    return redirTo('/')
+  }
+
+  return { props: { user } }
 }
 
 export default DashboardPage

@@ -1,3 +1,5 @@
+import { GetServerSidePropsResult, Redirect } from 'next'
+
 export function getErrorMessage(error: Record<string, any>): string {
   if (error.graphQLErrors) {
     // eslint-disable-next-line no-restricted-syntax
@@ -11,4 +13,13 @@ export function getErrorMessage(error: Record<string, any>): string {
     }
   }
   return error.message
+}
+
+export function redirTo(location: string): GetServerSidePropsResult<Redirect> {
+  return {
+    redirect: {
+      destination: location,
+      permanent: false,
+    },
+  }
 }

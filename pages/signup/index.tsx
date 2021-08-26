@@ -11,6 +11,9 @@ import {
   LinkBox,
   LinkOverlay,
 } from '@chakra-ui/react'
+import { GetServerSideProps, NextPage } from 'next'
+import { getUserPayload } from 'utils/auth'
+import { redirTo } from 'utils/helpers'
 
 type LinkCardProps = {
   href: string
@@ -51,7 +54,7 @@ function LinkCard({ href, label, imgSrc }: LinkCardProps): JSX.Element {
   )
 }
 
-function SignupPage(): JSX.Element {
+const SignupFoyer: NextPage = () => {
   return (
     <Layout>
       <Container
@@ -84,4 +87,12 @@ function SignupPage(): JSX.Element {
   )
 }
 
-export default SignupPage
+export default SignupFoyer
+
+export const getServerSideProps: GetServerSideProps = async ctx => {
+  // Automatically navigate user to dashboard if already signed in
+  if (getUserPayload(ctx.req.headers?.cookie)) {
+    return redirTo('/dashboard')
+  }
+  return { props: {} }
+}
