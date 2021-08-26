@@ -134,14 +134,14 @@ const AwaitingTable: FC = () => {
               {/* TODO: add 50, 200, 400 etc to colors.ts so colors will show */}
               <Badge colorScheme="teal">WON</Badge>
             </Td>
-            <Td>
+            <Td pl={-2} textAlign="right">
               <IconButton
+                size="xs"
                 type="submit"
                 aria-label="Bid"
                 bgColor="red"
-                fontSize="xs"
                 onClick={handleClick}
-                icon={<CloseIcon />}
+                icon={<CloseIcon boxSize={2} />}
               />
             </Td>
           </LinkBox>
