@@ -16,6 +16,7 @@ import {
   PopoverBody,
   Divider,
 } from '@chakra-ui/react'
+import LinkText from 'components/atoms/Link'
 
 const nav = [
   {
@@ -62,21 +63,25 @@ type Props = {
 
 function UserMenu({ user }: Props): JSX.Element {
   return (
-    <PopoverContent backgroundColor="white">
+    <PopoverContent backgroundColor="white" mr={4} w={220} px={3} py={3}>
       <PopoverArrow
         backgroundColor="white"
         borderTopWidth={1}
         borderLeftWidth={1}
       />
-      <PopoverHeader borderBottomWidth="0px">{user.firstName}</PopoverHeader>
+      <PopoverHeader
+        textStyle="body2"
+        fontWeight="bold"
+        borderBottomWidth="0px"
+        mb={3}
+        color="neutrals3"
+      >
+        {user.firstName}
+      </PopoverHeader>
       <PopoverBody fontWeight="bold" letterSpacing="0.5px" color="neutrals4">
-        <Box>My Dashboard</Box>
-        <Divider />
-        <Box>Dark Mode</Box>
-        <Divider />
-        <Box>
-          <Link href="/signout">Log Out</Link>
-        </Box>
+        <LinkText href="/signout">My Dashboard</LinkText>
+        <Divider my={4} />
+        <LinkText href="/signout">Log Out</LinkText>
       </PopoverBody>
     </PopoverContent>
   )
@@ -100,7 +105,7 @@ export default function Navbar({ user }: Props): JSX.Element {
             >
               {user.role === CREATOR ? 'Create Offer' : 'Discover'}
             </LinkButton>
-            <Popover>
+            <Popover gutter={16}>
               <PopoverTrigger>
                 <Button size="sm" variant="outline">
                   {user.firstName}
