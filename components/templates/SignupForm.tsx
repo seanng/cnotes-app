@@ -1,15 +1,5 @@
 import { useMutation } from '@apollo/client'
-import {
-  Box,
-  Text,
-  chakra as c,
-  Container,
-  FormControl,
-  FormLabel,
-  FormErrorMessage,
-  Input,
-  Button,
-} from '@chakra-ui/react'
+import { Box, Text, chakra as c, Container, Button } from '@chakra-ui/react'
 import * as R from 'ramda'
 import gql from 'graphql-tag'
 import Layout from 'components/organisms/Layout'
@@ -17,13 +7,7 @@ import { useForm } from 'react-hook-form'
 import { EMAIL_REGEX, EMAIL_TAKEN } from 'shared/constants'
 import { getErrorMessage } from 'utils/helpers'
 import { useRouter } from 'next/router'
-
-type FormInputProps = {
-  label: string
-  name: string
-  errors: Record<string, any>
-  inputProps: Record<string, any>
-}
+import FormInput from 'components/atoms/FormInput'
 
 type TemplateProps = {
   isBrand?: boolean
@@ -45,24 +29,6 @@ const SignupMutation = gql`
     }
   }
 `
-
-function FormInput({
-  label,
-  name,
-  errors,
-  inputProps,
-  ...props
-}: FormInputProps): JSX.Element {
-  return (
-    <FormControl isInvalid={errors[name]} mb={8} {...props}>
-      <FormLabel htmlFor="email">{label}</FormLabel>
-      <Input id={name} {...inputProps} />
-      <FormErrorMessage color="red">
-        {errors[name] && errors[name].message}
-      </FormErrorMessage>
-    </FormControl>
-  )
-}
 
 function SignupFormTemplate({ isBrand }: TemplateProps): JSX.Element {
   const [signup] = useMutation(SignupMutation)

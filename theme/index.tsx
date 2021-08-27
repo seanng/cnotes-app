@@ -7,7 +7,9 @@ import Container from './components/container'
 import FormLabel from './components/form-label'
 import Tabs from './components/tabs'
 import Table from './components/table'
+import Accordion from './components/accordion'
 import Input from './components/input'
+import Textarea from './components/textarea'
 
 const breakpoints = createBreakpoints({
   sm: '40em',
@@ -23,6 +25,8 @@ const components = {
   Container,
   FormLabel,
   Input,
+  Textarea,
+  Accordion,
   Table,
   Tabs,
 }
