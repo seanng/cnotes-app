@@ -1,8 +1,10 @@
+// SERVER ONLY
 import cookieJS from 'cookie'
 import { UserInputError } from 'apollo-server-micro'
 import bcrypt from 'bcryptjs'
 import jwt from 'jsonwebtoken'
 import { User } from 'shared/types'
+import { CREATOR } from 'shared/constants'
 
 type Token = {
   user: User
@@ -47,4 +49,9 @@ export function getUserPayload(cookie: string): User | null {
   } catch (error) {
     return null
   }
+}
+
+export function isCreator(user?: User): boolean {
+  // TODO: user.status === VERIFIED &&
+  return user && user.role === CREATOR
 }

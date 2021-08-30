@@ -6,7 +6,6 @@ import {
   Text,
   FormControl,
   FormLabel,
-  Input,
   Textarea,
   Button,
   Accordion,
@@ -17,28 +16,80 @@ import {
   Spacer,
   Select,
 } from '@chakra-ui/react'
-import { NextPage } from 'next'
+import gql from 'graphql-tag'
+import { useMutation } from '@apollo/client'
+import { GetServerSideProps, NextPage } from 'next'
 import Layout from 'components/organisms/Layout'
 import { useForm } from 'react-hook-form'
+import * as R from 'ramda'
 import { ArrowForwardIcon } from '@chakra-ui/icons'
+import DatePicker from 'components/atoms/DatePicker'
+import 'react-datepicker/dist/react-datepicker.css'
+import { getUserPayload, isCreator } from 'utils/auth'
+import { redirTo } from 'utils/helpers'
+
+const CreateOfferMutation = gql`
+  mutation CreateOfferMutation($input: CreateOfferInput!) {
+    createOffer(input: $input) {
+      _id
+    }
+  }
+`
 
 type OnSubmitProps = {
+  platform: string
   deliverable: string
-  start: string
-  end: string
+  deliveryStartsAt: string
+  deliveryEndsAt: string
   description: string
+  canReuse: string
+  willFollowScript: string
+  revisionDays: string
+  numberOfRevisions: string
 }
 
 const CreatePage: NextPage = () => {
+  const [createOffer] = useMutation(CreateOfferMutation)
   const {
     handleSubmit,
     register,
+    control,
+    watch,
     formState: { errors, isSubmitting },
   } = useForm()
 
+  const deliveryStartsAt = watch('deliveryStartsAt')
+
   const onSubmit = async (data: OnSubmitProps): Promise<void> => {
     try {
-      console.log('data: ', data)
+      // Add withNull so it's easier for Michael to see what fields are missing from form.
+      const withNull = R.map(x => (x ? x : null), data)
+      const { numberOfRevisions, revisionDays, canReuse, willFollowScript } =
+        withNull
+      const input = {
+        ...withNull,
+        ...(numberOfRevisions && {
+          numberOfRevisions: Number(numberOfRevisions),
+        }),
+        ...(revisionDays && {
+          revisionDays: Number(revisionDays),
+        }),
+        ...(canReuse && {
+          canReuse: canReuse === 'Yes',
+        }),
+        ...(willFollowScript && {
+          willFollowScript: willFollowScript === 'Yes',
+        }),
+      }
+
+      const {
+        data: { createOffer: payload },
+      } = await createOffer({
+        variables: {
+          input,
+        },
+      })
+      console.log('data: ', payload)
       // submit and then navigate (or render) create success
     } catch (error) {
       console.log('error: ', error)
@@ -58,30 +109,78 @@ const CreatePage: NextPage = () => {
               apply for VIP access to our marketplace. We will reach out if
               there is a fit.
             </Text>
+            <Flex maxW={600} mb={10}>
+              <FormControl flex={1} mr={5}>
+                <FormLabel>Platform</FormLabel>
+                <Select {...register('platform')}>
+                  <option value={''}>I&apos;m not sure</option>
+                  <option>YouTube</option>
+                  <option>TikTok</option>
+                </Select>
+              </FormControl>
+              <FormControl flex={1}>
+                <FormLabel>Deliverable</FormLabel>
+                <Select {...register('deliverable')}>
+                  <option value={''}>I&apos;m not sure</option>
+                  <option>Integration</option>
+                  <option>Dedicated</option>
+                </Select>
+              </FormControl>
+            </Flex>
             <FormControl mb={10}>
               <FormLabel
                 htmlFor="when"
-                color={errors.start || errors.end ? 'red' : 'neutrals5'}
+                color={
+                  errors.deliveryStartsAt || errors.end ? 'red' : 'neutrals5'
+                }
               >
                 When are you available to post the sponsored work?
               </FormLabel>
               <Flex>
-                <Input
-                  w={100}
-                  id="start"
-                  mr={10}
-                  isInvalid={errors.start}
-                  placeholder="Start"
-                  {...register('start', { required: true })}
+                <DatePicker
+                  controllerProps={{
+                    control: control,
+                    name: 'deliveryStartsAt',
+                    rules: { required: true },
+                  }}
+                  inputProps={{
+                    w: 140,
+                    id: 'deliveryStartsAt',
+                    mr: 10,
+                    isInvalid: errors.deliveryStartsAt,
+                  }}
+                  // selectsStart
+                  minDate={new Date()}
+                  placeholderText="Start"
                 />
-                <Input
+                <DatePicker
+                  controllerProps={{
+                    control: control,
+                    name: 'deliveryEndsAt',
+                    rules: { required: true },
+                  }}
+                  inputProps={{
+                    w: 140,
+                    id: 'deliveryEndsAt',
+                    isInvalid: errors.deliveryEndsAt,
+                  }}
+                  // selectsEnd
+                  minDate={deliveryStartsAt}
+                  placeholderText="End"
+                />
+                {/* <Input
                   w={100}
-                  id="end"
-                  isInvalid={errors.end}
+                  id="deliveryEndsAt"
+                  isInvalid={errors.deliveryEndsAt}
                   placeholder="End"
-                  {...register('end', { required: true })}
-                />
+                  {...register('deliveryEndsAt', { required: true })}
+                /> */}
               </Flex>
+              <style jsx>{`
+                .react-datepicker-wrapper {
+                  width: 50%;
+                }
+              `}</style>
             </FormControl>
             <FormControl maxW={600} isInvalid={errors.description}>
               <FormLabel htmlFor="description">
@@ -121,12 +220,10 @@ const CreatePage: NextPage = () => {
                     </Flex>
                     <Spacer />
                     <Select w={110} {...register('numberOfRevisions')}>
-                      <option selected value={null}>
-                        -
-                      </option>
-                      <option value={1}>1</option>
-                      <option value={2}>2</option>
-                      <option value={3}>3</option>
+                      <option value={''}>-</option>
+                      <option>1</option>
+                      <option>2</option>
+                      <option>3</option>
                     </Select>
                   </Flex>
                   <Flex mb={8}>
@@ -139,9 +236,7 @@ const CreatePage: NextPage = () => {
                     </Flex>
                     <Spacer />
                     <Select w={110} {...register('revisionDays')}>
-                      <option selected value={null}>
-                        -
-                      </option>
+                      <option value={''}>-</option>
                       <option value={3}>3 days</option>
                       <option value={7}>7 days</option>
                       <option value={14}>14 days</option>
@@ -157,11 +252,9 @@ const CreatePage: NextPage = () => {
                     </Flex>
                     <Spacer />
                     <Select w={110} {...register('canReuse')}>
-                      <option value={null} selected>
-                        -
-                      </option>
-                      <option value={1}>Yes</option>
-                      <option value={0}>No</option>
+                      <option value={''}>-</option>
+                      <option>Yes</option>
+                      <option>No</option>
                     </Select>
                   </Flex>
                   <Flex mb={8} align="center">
@@ -172,11 +265,9 @@ const CreatePage: NextPage = () => {
                     </Flex>
                     <Spacer />
                     <Select w={110} {...register('willFollowScript')}>
-                      <option value={null} selected>
-                        -
-                      </option>
-                      <option value={1}>Yes</option>
-                      <option value={0}>No</option>
+                      <option value={''}>-</option>
+                      <option>Yes</option>
+                      <option>No</option>
                     </Select>
                   </Flex>
                 </AccordionPanel>
@@ -198,6 +289,15 @@ const CreatePage: NextPage = () => {
       </Container>
     </Layout>
   )
+}
+
+export const getServerSideProps: GetServerSideProps = async ctx => {
+  const user = getUserPayload(ctx.req.headers.cookie)
+  if (!isCreator(user)) {
+    return redirTo('/')
+  }
+
+  return { props: { user } }
 }
 
 export default CreatePage

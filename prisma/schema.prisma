@@ -9,14 +9,56 @@ datasource db {
 }
 
 model User {
-  id    String  @id @default(dbgenerated()) @map("_id") @db.ObjectId
-  email String  @unique
-  password String
-  role String // enum doesn't work :(
-  status String @default("UNVERIFIED")
-  firstName  String
-  lastName  String
-  companyName String?
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id            String   @id @default(dbgenerated()) @map("_id") @db.ObjectId
+  email         String   @unique
+  password      String
+  role          String // enum doesn't work :(
+  status        String   @default("UNVERIFIED")
+  firstName     String
+  lastName      String
+  companyName   String?
+  // do we need to create a separate field to track lost auctions?
+  bids          Bid[] // brand only. 
+  offersCreated Offer[]  @relation("CreatedOffer") // created offer for creator, else won offer for brand.
+  offersWon     Offer[]  @relation("WonOffer") // created offer for creator, else won offer for brand.
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+}
+
+model Offer {
+  id                String    @id @default(dbgenerated()) @map("_id") @db.ObjectId
+  status            String    @default("VERIFYING") // verifying, bidding, selecting, transacting, paying, completed
+  bids              Bid[]
+  platform          String?
+  deliverable       String?
+  description       String
+  deliveryStartsAt  DateTime?
+  deliveryEndsAt    DateTime?
+  canReuse          Boolean?
+  willFollowScript  Boolean?
+  revisionDays      Int?
+  numberOfRevisions Int?
+  creator           User      @relation("CreatedOffer", fields: [creatorId], references: [id])
+  creatorId         String    @db.ObjectId
+  brand             User?     @relation("WonOffer", fields: [brandId], references: [id])
+  brandId           String?   @db.ObjectId
+  auctionEndsAt     DateTime? // date auction ends
+  selectedAt        DateTime? // date creator selected winner
+  transactedAt      DateTime? // date creator submitted 
+  paidAt            DateTime? // date marked as paid
+  completedAt       DateTime? // date marked as complete
+  createdAt         DateTime  @default(now())
+  updatedAt         DateTime  @updatedAt
+}
+
+model Bid {
+  id         String   @id @default(dbgenerated()) @map("_id") @db.ObjectId
+  offer      Offer    @relation(fields: [offerId], references: [id])
+  offerId    String   @db.ObjectId
+  brand      User     @relation(fields: [brandId], references: [id])
+  brandId    String   @db.ObjectId
+  price      Int
+  message    String
+  productUrl String
+  createdAt  DateTime @default(now())
 }

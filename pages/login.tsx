@@ -130,7 +130,7 @@ const Login: NextPage = () => {
             fontWeight="bold"
             mb={4}
           >
-            <Link href="forgot-password">Forgot Password?</Link>
+            <Link href="/forgot-password">Forgot Password?</Link>
           </Box>
           <Button
             borderRadius="lg"

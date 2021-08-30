@@ -16,3 +16,7 @@ export const INCORRECT_PASSWORD = 'Invalid name and password combination.'
 
 // user statuses
 export const UNVERIFIED = 'UNVERIFIED'
+export const VERIFIED = 'VERIFIED'
+
+// offer statuses
+export const PENDING = 'PENDING'

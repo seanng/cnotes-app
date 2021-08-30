@@ -1,3 +1,4 @@
+// FRONTEND ONLY.
 import { GetServerSidePropsResult, Redirect } from 'next'
 
 export function getErrorMessage(error: Record<string, any>): string {
