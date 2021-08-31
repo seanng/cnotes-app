@@ -79,7 +79,7 @@ function UserMenu({ user }: Props): JSX.Element {
         {user.firstName}
       </PopoverHeader>
       <PopoverBody fontWeight="bold" letterSpacing="0.5px" color="neutrals4">
-        <LinkText href="/signout">My Dashboard</LinkText>
+        <LinkText href="/dashboard">My Dashboard</LinkText>
         <Divider my={4} />
         <LinkText href="/signout">Log Out</LinkText>
       </PopoverBody>

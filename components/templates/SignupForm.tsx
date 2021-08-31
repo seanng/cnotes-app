@@ -30,7 +30,7 @@ const SignupMutation = gql`
   }
 `
 
-function SignupFormTemplate({ isBrand }: TemplateProps): JSX.Element {
+function SignupForm({ isBrand }: TemplateProps): JSX.Element {
   const [signup] = useMutation(SignupMutation)
   const router = useRouter()
   const {
@@ -166,4 +166,4 @@ function SignupFormTemplate({ isBrand }: TemplateProps): JSX.Element {
   )
 }
 
-export default SignupFormTemplate
+export default SignupForm
