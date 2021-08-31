@@ -1,5 +1,7 @@
+import { ForbiddenError } from 'apollo-server-micro'
 import prisma from 'lib/prisma'
-import { objectType } from 'nexus'
+import { arg, inputObjectType, mutationField, objectType } from 'nexus'
+import { isBrand } from 'utils/auth'
 
 export const Bid = objectType({
   name: 'Bid',
@@ -31,5 +33,42 @@ export const Bid = objectType({
     t.nonNull.field('createdAt', {
       type: 'DateTime',
     })
+  },
+})
+
+export const CreateBid = mutationField('createBid', {
+  type: 'Bid',
+  args: {
+    input: arg({ type: 'CreateBidInput' }),
+  },
+  resolve: async (ctx, { input }, { user }) => {
+    if (!isBrand(user)) throw new ForbiddenError('Not a brand')
+
+    const bid = await prisma.bid.create({
+      data: {
+        ...input,
+        brand: {
+          connect: { id: user.id },
+        },
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      },
+    })
+    console.log('bid: ', bid)
+
+    // send email
+    return {
+      _id: bid.id,
+      ...bid,
+    }
+  },
+})
+
+export const CreateBidInput = inputObjectType({
+  name: 'CreateBidInput',
+  definition(t) {
+    t.nonNull.int('price')
+    t.nonNull.string('productUrl')
+    t.string('message')
   },
 })

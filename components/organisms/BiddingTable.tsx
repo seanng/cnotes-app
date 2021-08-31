@@ -14,7 +14,7 @@ import {
 import NextLink from 'next/link'
 import { CREATOR_AVATAR_TEXT_SPACING } from 'shared/constants'
 import { FC } from 'react'
-import BidInput from 'components/atoms/BidInput'
+import BidInput from 'components/molecules/BidInput'
 
 const columns = [
   'Creator',

@@ -9,6 +9,7 @@ import Tabs from './components/tabs'
 import Table from './components/table'
 import Accordion from './components/accordion'
 import Input from './components/input'
+import Modal from './components/modal'
 import Textarea from './components/textarea'
 
 const breakpoints = createBreakpoints({
@@ -29,6 +30,7 @@ const components = {
   Accordion,
   Table,
   Tabs,
+  Modal,
 }
 
 const theme = extendTheme({

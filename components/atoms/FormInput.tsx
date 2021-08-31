@@ -4,9 +4,10 @@ import {
   FormLabel,
   FormErrorMessage,
   Input,
+  FormControlProps,
 } from '@chakra-ui/react'
 
-type Props = {
+interface Props extends FormControlProps {
   label: string
   name: string
   errors: Record<string, any>

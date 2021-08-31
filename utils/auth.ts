@@ -4,7 +4,7 @@ import { UserInputError } from 'apollo-server-micro'
 import bcrypt from 'bcryptjs'
 import jwt from 'jsonwebtoken'
 import { User } from 'shared/types'
-import { CREATOR } from 'shared/constants'
+import { BRAND, CREATOR } from 'shared/constants'
 
 type Token = {
   user: User
@@ -54,4 +54,9 @@ export function getUserPayload(cookie: string): User | null {
 export function isCreator(user?: User): boolean {
   // TODO: user.status === VERIFIED &&
   return user && user.role === CREATOR
+}
+
+export function isBrand(user?: User): boolean {
+  // TODO: user.status === VERIFIED &&
+  return user && user.role === BRAND
 }
