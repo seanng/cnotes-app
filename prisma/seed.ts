@@ -1,3 +1,5 @@
+// PRISMA DOES NOT SUPPORT SEEDING MONGODB. USE seed.js INSTEAD
+
 import { PrismaClient, Prisma } from '@prisma/client'
 
 const prisma = new PrismaClient()
