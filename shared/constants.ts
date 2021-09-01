@@ -14,9 +14,17 @@ export const EMAIL_TAKEN = 'This email has already been registered.'
 export const USER_NOT_FOUND = 'User not found.'
 export const INCORRECT_PASSWORD = 'Invalid name and password combination.'
 
-// user statuses
+// statuses
 export const UNVERIFIED = 'UNVERIFIED'
-export const VERIFIED = 'VERIFIED'
+export const VERIFIED = 'VERIFIED' // just user status
+// export const BANNED = 'BANNED' // just user status
 
-// offer statuses
-export const PENDING = 'PENDING'
+// offer
+export const ACTIVE = 'ACTIVE'
+export const TRANSACTING = 'TRANSACTING'
+export const PAYING = 'PAYING'
+export const COMPLETED = 'COMPLETED'
+
+// offer statuses (frontend)
+export const HISTORY = 'HISTORY'
+export const WON = 'WON'

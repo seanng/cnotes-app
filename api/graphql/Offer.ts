@@ -1,8 +1,14 @@
 import { ForbiddenError } from 'apollo-server-micro'
 import prisma from 'lib/prisma'
-import { arg, inputObjectType, mutationField, objectType } from 'nexus'
-import { PENDING } from 'shared/constants'
-import { isCreator } from 'utils/auth'
+import {
+  arg,
+  inputObjectType,
+  mutationField,
+  objectType,
+  queryField,
+} from 'nexus'
+import { ACTIVE, UNVERIFIED } from 'shared/constants'
+import { isBrand, isCreator } from 'utils/auth'
 
 export const Offer = objectType({
   name: 'Offer',
@@ -69,28 +75,26 @@ export const Offer = objectType({
   },
 })
 
-export const CreateOffer = mutationField('createOffer', {
+export const createOffer = mutationField('createOffer', {
   type: 'Offer',
   args: {
     input: arg({ type: 'CreateOfferInput' }),
   },
-  resolve: async (ctx, { input }, { user }) => {
-    console.log('input: ', input)
-    console.log('user: ', user)
+  resolve: async (_, { input }, { user }) => {
     if (!isCreator(user)) throw new ForbiddenError('Not a creator')
 
     const offer = await prisma.offer.create({
       data: {
         ...input,
-        status: PENDING,
+        status: UNVERIFIED,
         creator: {
           connect: { id: user.id },
         },
+        highestBid: 0,
         createdAt: new Date(),
         updatedAt: new Date(),
       },
     })
-    console.log('offer: ', offer)
 
     // send email
     return {
@@ -100,7 +104,7 @@ export const CreateOffer = mutationField('createOffer', {
   },
 })
 
-export const CreateOfferInput = inputObjectType({
+export const createOfferInput = inputObjectType({
   name: 'CreateOfferInput',
   definition(t) {
     t.nonNull.string('description')
@@ -112,5 +116,25 @@ export const CreateOfferInput = inputObjectType({
     t.boolean('willFollowScript')
     t.int('revisionDays')
     t.int('numberOfRevisions')
+  },
+})
+
+export const getDiscoveryOffers = queryField('getDiscoveryOffers', {
+  type: 'Offer',
+  resolve: async (_, __, { user }) => {
+    if (!isBrand(user)) throw new ForbiddenError('Not a brand')
+
+    const data = await prisma.offer.findMany({
+      where: {
+        status: ACTIVE,
+        auctionEndsAt: {
+          gt: new Date(),
+        },
+        // TODO: add filters.
+      },
+    })
+
+    console.log('data: ', data)
+    return data
   },
 })

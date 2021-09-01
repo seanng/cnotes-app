@@ -27,9 +27,9 @@ import gql from 'graphql-tag'
 import FormInput from 'components/atoms/FormInput'
 import { URL_REGEX } from 'shared/constants'
 
-const CreateBidMutation = gql`
-  mutation CreateOfferMutation($input: CreateOfferInput!) {
-    createOffer(input: $input) {
+const PlaceBidMutation = gql`
+  mutation PlaceBidMutation($input: PlaceBidInput!) {
+    placeBid(input: $input) {
       _id
     }
   }
@@ -103,6 +103,7 @@ type ModalProps = {
 }
 
 // TODO: may have to move to react context to prevent rendering of multiple modals per page.
+// TODO: add initial values to message and productUrl.
 const BidModal: FC<ModalProps> = ({
   onClose,
   isOpen,
@@ -115,18 +116,19 @@ const BidModal: FC<ModalProps> = ({
     formState: { isSubmitting, errors },
   } = useForm()
 
-  const [createBid] = useMutation(CreateBidMutation)
+  const [placeBid] = useMutation(PlaceBidMutation)
   const [showSuccess, setShowSuccess] = useState(false)
 
   const onConfirm = async (input: OnConfirmProps): Promise<void> => {
     // submit bid to backend.
 
     const {
-      data: { createBid: payload },
-    } = await createBid({
+      data: { placeBid: payload },
+    } = await placeBid({
       variables: {
         input: {
           ...input,
+          offerId: offer.id,
           price,
         },
       },

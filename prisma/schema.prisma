@@ -27,8 +27,9 @@ model User {
 
 model Offer {
   id                String    @id @default(dbgenerated()) @map("_id") @db.ObjectId
-  status            String    @default("VERIFYING") // verifying, bidding, selecting, transacting, paying, completed
+  status            String    @default("UNVERIFIED") // UNVERIFIED, ACTIVE (bidding + selecting), TRANSACTING, PAYING, COMPLETED
   bids              Bid[]
+  highestBid        Int?
   platform          String?
   deliverable       String?
   description       String
@@ -57,8 +58,10 @@ model Bid {
   offerId    String   @db.ObjectId
   brand      User     @relation(fields: [brandId], references: [id])
   brandId    String   @db.ObjectId
-  price      Int
-  message    String
   productUrl String
+  message    String
+  isCleared  Boolean?
+  history    Json[] // {price, bidAt} Prisma doesnt support embedded docs https://github.com/prisma/prisma/issues/6708
   createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
 }
