@@ -6,6 +6,7 @@ import {
   mutationField,
   objectType,
   queryField,
+  list,
 } from 'nexus'
 // import { ACTIVE } from 'shared/constants'
 import { isBrand } from 'utils/auth'
@@ -13,7 +14,7 @@ import { isBrand } from 'utils/auth'
 export const Bid = objectType({
   name: 'Bid',
   definition(t) {
-    t.nonNull.id('_id')
+    t.nonNull.id('id')
     // todo: replcae with getRelation('bid', 'offer')
     t.nonNull.field('offer', {
       type: 'Offer',
@@ -34,9 +35,11 @@ export const Bid = objectType({
           })
           .brand(),
     })
-    t.nonNull.int('price')
+    t.field('history', {
+      type: list('Json'),
+    })
     t.nonNull.string('message')
-    t.nonNull.string('productUrl')
+    t.string('productUrl')
     t.nonNull.field('createdAt', {
       type: 'DateTime',
     })
@@ -68,17 +71,33 @@ export const Bid = objectType({
 //   },
 // })
 
-export const getAllBids = queryField('getAllBids', {
-  type: 'Bid',
+export const myBids = queryField('myBids', {
+  type: list('Bid'),
   resolve: async (_, __, { user }) => {
     if (!isBrand(user)) throw new ForbiddenError('Not a brand')
-
     const data = await prisma.bid.findMany({
       where: {
         brandId: user.id,
       },
       include: {
-        offer: true,
+        offer: {
+          include: {
+            bids: {
+              select: {
+                // https://www.prisma.io/docs/concepts/components/prisma-client/aggregation-grouping-summarizing/#count-relations
+                // ATM, mongodb count is not supported :(
+                history: true,
+              },
+            },
+            creator: {
+              // todo: change to handle
+              select: {
+                firstName: true,
+                lastName: true,
+              },
+            },
+          },
+        },
       },
     })
 
@@ -144,10 +163,7 @@ export const placeBid = mutationField('placeBid', {
 
     // TODO: send email to user
 
-    return {
-      _id: bid.id,
-      ...bid,
-    }
+    return bid
   },
 })
 

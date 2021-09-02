@@ -30,7 +30,7 @@ import { URL_REGEX } from 'shared/constants'
 const PlaceBidMutation = gql`
   mutation PlaceBidMutation($input: PlaceBidInput!) {
     placeBid(input: $input) {
-      _id
+      id
     }
   }
 `

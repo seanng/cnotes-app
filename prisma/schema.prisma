@@ -17,7 +17,6 @@ model User {
   firstName     String
   lastName      String
   companyName   String?
-  // do we need to create a separate field to track lost auctions?
   bids          Bid[] // brand only. 
   offersCreated Offer[]  @relation("CreatedOffer") // created offer for creator, else won offer for brand.
   offersWon     Offer[]  @relation("WonOffer") // created offer for creator, else won offer for brand.

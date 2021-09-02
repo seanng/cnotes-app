@@ -13,17 +13,22 @@ import { isBrand, isCreator } from 'utils/auth'
 export const Offer = objectType({
   name: 'Offer',
   definition(t) {
-    t.nonNull.id('_id')
+    t.nonNull.id('id')
     t.nonNull.string('status')
     t.string('platform')
     t.string('deliverable')
     t.nonNull.string('description')
-    t.string('deliveryStartsAt') // TODO: change to date time
-    t.string('deliveryEndsAt') // TODO: change to date time
+    t.field('deliveryStartsAt', {
+      type: 'DateTime',
+    })
+    t.field('deliveryEndsAt', {
+      type: 'DateTime',
+    })
     t.boolean('canReuse')
     t.boolean('willFollowScript')
     t.int('revisionDays')
     t.int('numberOfRevisions')
+    t.int('highestBid')
     t.list.field('bids', {
       type: 'Bid',
       resolve: parent =>
@@ -97,10 +102,7 @@ export const createOffer = mutationField('createOffer', {
     })
 
     // send email
-    return {
-      _id: offer.id,
-      ...offer,
-    }
+    return offer
   },
 })
 

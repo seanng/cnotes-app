@@ -30,7 +30,7 @@ import { User } from 'shared/types'
 const CreateOfferMutation = gql`
   mutation CreateOfferMutation($input: CreateOfferInput!) {
     createOffer(input: $input) {
-      _id
+      id
     }
   }
 `

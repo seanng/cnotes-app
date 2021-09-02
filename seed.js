@@ -72,7 +72,7 @@ async function seedOffer(db) {
         auctionEndsAt,
         numberOfRevisions: faker.datatype.number({ min: 0, max: 3 }),
         revisionDays: 7,
-        willFollowScript: i % 2,
+        willFollowScript: i % 2 === 0,
         deliveryStartsAt,
         deliveryEndsAt,
         createdAt: now,
@@ -97,17 +97,13 @@ async function seedBid(db) {
     brands.forEach(brand => {
       const hasBid = faker.datatype.boolean()
       if (!hasBid) {
+        // makes it so half the time the brand doesnt have a bid on the offer
         return
       }
-      const historyCount = faker.datatype.number({ min: 0, max: 1 })
-      const history = []
 
-      for (let i = 0; i < historyCount; i++) {
-        const price = faker.datatype.number({ min: 100, max: 500 })
-        history.push({ price, bidAt: now })
-        if (price > highestBid) {
-          highestBid = price
-        }
+      const price = faker.datatype.number({ min: 100, max: 500 })
+      if (price > highestBid) {
+        highestBid = price
       }
 
       const data = {
@@ -115,7 +111,7 @@ async function seedBid(db) {
         brandId: brand._id,
         productUrl: faker.internet.url(),
         message: faker.lorem.sentences(2),
-        history,
+        history: [{ price, bidAt: now }],
         createdAt: now,
         updatedAt: now,
       }
