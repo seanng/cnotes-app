@@ -82,13 +82,6 @@ export const myBids = queryField('myBids', {
       include: {
         offer: {
           include: {
-            bids: {
-              select: {
-                // https://www.prisma.io/docs/concepts/components/prisma-client/aggregation-grouping-summarizing/#count-relations
-                // ATM, mongodb count is not supported :(
-                history: true,
-              },
-            },
             creator: {
               // todo: change to handle
               select: {
@@ -151,15 +144,16 @@ export const placeBid = mutationField('placeBid', {
       })
     }
 
-    if (price > bid.offer.highestBid) {
-      await prisma.offer.update({
-        where: { id: bid.offerId },
-        data: {
-          highestBid: price,
-          updatedAt: now,
+    await prisma.offer.update({
+      where: { id: bid.offerId },
+      data: {
+        ...(price > bid.offer.highestBid && { highestBid: price }),
+        bidCount: {
+          increment: 1,
         },
-      })
-    }
+        updatedAt: now,
+      },
+    })
 
     // TODO: send email to user
 

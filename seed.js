@@ -94,6 +94,7 @@ async function seedBid(db) {
 
   for (let offer of offers) {
     let highestBid = 0
+    let bidCount = 0
     brands.forEach(brand => {
       const hasBid = faker.datatype.boolean()
       if (!hasBid) {
@@ -117,10 +118,11 @@ async function seedBid(db) {
       }
 
       bids.push(data)
+      bidCount += 1
     })
     await db
       .collection('Offer')
-      .updateOne({ _id: offer._id }, { $set: { highestBid } })
+      .updateOne({ _id: offer._id }, { $set: { highestBid, bidCount } })
   }
 
   await db.collection('Bid').insertMany(bids)

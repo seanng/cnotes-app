@@ -96,6 +96,7 @@ export const createOffer = mutationField('createOffer', {
           connect: { id: user.id },
         },
         highestBid: 0,
+        bidCount: 0,
         createdAt: new Date(),
         updatedAt: new Date(),
       },

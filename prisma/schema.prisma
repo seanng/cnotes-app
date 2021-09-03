@@ -29,6 +29,7 @@ model Offer {
   status            String    @default("UNVERIFIED") // UNVERIFIED, ACTIVE (bidding + selecting), TRANSACTING, PAYING, COMPLETED
   bids              Bid[]
   highestBid        Int?
+  bidCount          Int?
   platform          String?
   deliverable       String?
   description       String

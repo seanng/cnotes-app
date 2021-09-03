@@ -30,13 +30,11 @@ const MyBidsQuery = gql`
         platform
         deliverable
         highestBid
+        bidCount
         auctionEndsAt
         creator {
           firstName
           lastName
-        }
-        bids {
-          history
         }
       }
     }
