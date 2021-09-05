@@ -1,9 +1,18 @@
 import * as R from 'ramda'
-import { objectType, arg, inputObjectType, mutationField } from 'nexus'
+import sgMail from 'lib/sendgrid'
+import {
+  objectType,
+  arg,
+  inputObjectType,
+  mutationField,
+  nonNull,
+  stringArg,
+} from 'nexus'
 import prisma from 'lib/prisma'
 import { UserInputError, AuthenticationError } from 'apollo-server-micro'
 import {
   EMAIL_TAKEN,
+  FROM_ADDRESS,
   INCORRECT_PASSWORD,
   UNVERIFIED,
   USER_NOT_FOUND,
@@ -85,11 +94,37 @@ export const Login = mutationField('login', {
 
 export const Signout = mutationField('signOut', {
   type: 'Boolean',
-  args: {
-    input: arg({ type: 'LoginInput' }),
-  },
   resolve: async (_, __, { res }) => {
     res.setHeader('Set-Cookie', serializeCookie('', -1))
+    return true
+  },
+})
+
+export const ForgotPassword = mutationField('forgotPassword', {
+  type: 'Boolean',
+  args: {
+    input: nonNull(stringArg()),
+  },
+  resolve: async (_, { input }, ___) => {
+    const user = await prisma.user.findUnique({
+      where: { email: input },
+    })
+    if (!user) {
+      throw new AuthenticationError(USER_NOT_FOUND)
+    }
+    const token = encryptToken(user)
+
+    await sgMail.send({
+      from: FROM_ADDRESS,
+      to: input,
+      subject: `cnotes: Password Reset link`,
+      html: `
+        <h1>cnotes Password Reset</h1>
+        <p>Forgot something did you? Please use the following link to reset your password.</p>
+        <p>${process.env.BASE_URL}/reset-password?t=${token}</p>
+        <hr />
+      `,
+    })
     return true
   },
 })
@@ -118,6 +153,6 @@ export const LoginInput = inputObjectType({
   name: 'LoginInput',
   definition(t) {
     t.nonNull.string('email')
-    t.nonNull.string('password')
+    t.string('password')
   },
 })

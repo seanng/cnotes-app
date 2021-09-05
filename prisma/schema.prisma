@@ -30,6 +30,7 @@ model Offer {
   bids              Bid[]
   highestBid        Int?
   bidCount          Int?
+  startPrice        Int?
   platform          String?
   deliverable       String?
   description       String

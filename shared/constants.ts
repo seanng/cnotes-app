@@ -28,3 +28,5 @@ export const COMPLETED = 'COMPLETED'
 // offer statuses (frontend)
 export const HISTORY = 'HISTORY'
 export const WON = 'WON'
+
+export const FROM_ADDRESS = 'no-reply@cnotes.co'

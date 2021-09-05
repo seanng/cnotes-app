@@ -27,6 +27,8 @@ export const Offer = objectType({
     t.boolean('canReuse')
     t.boolean('willFollowScript')
     t.int('revisionDays')
+    t.int('bidCount')
+    t.int('startPrice')
     t.int('numberOfRevisions')
     t.int('highestBid')
     t.list.field('bids', {

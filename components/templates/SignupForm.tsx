@@ -116,7 +116,7 @@ function SignupForm({ isBrand }: TemplateProps): JSX.Element {
                 label="Email Address"
                 errors={errors}
                 inputProps={{
-                  placeholder: 'eg. Smith',
+                  placeholder: 'eg. john@smith.com',
                   ...register('email', {
                     required: true,
                     pattern: {
