@@ -6,6 +6,7 @@ export type User = {
   firstName: string
   lastName: string
   email: string
+  password?: string // omitted unless it's in the password reset token
   companyName?: string
   viewerCount?: number
 }
@@ -16,4 +17,11 @@ export type Offer = {
   platform: string
   deliverable: string
   // bids[]?
+}
+
+export type Token = {
+  user: User
+  time: string
+  iat: number
+  exp: number
 }

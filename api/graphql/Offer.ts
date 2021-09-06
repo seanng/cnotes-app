@@ -89,6 +89,7 @@ export const createOffer = mutationField('createOffer', {
   },
   resolve: async (_, { input }, { user }) => {
     if (!isCreator(user)) throw new ForbiddenError('Not a creator')
+    const now = new Date()
 
     const offer = await prisma.offer.create({
       data: {
@@ -99,8 +100,8 @@ export const createOffer = mutationField('createOffer', {
         },
         highestBid: 0,
         bidCount: 0,
-        createdAt: new Date(),
-        updatedAt: new Date(),
+        createdAt: now,
+        updatedAt: now,
       },
     })
 

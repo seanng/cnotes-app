@@ -148,7 +148,7 @@ function SignupForm({ isBrand }: TemplateProps): JSX.Element {
                 errors={errors}
                 inputProps={{
                   type: 'password',
-                  placeholder: 'eg. Smith',
+                  placeholder: 'Re-enter your password',
                   ...register('passwordConfirm', {
                     validate: v =>
                       v === password || 'The passwords do not match',
@@ -156,7 +156,7 @@ function SignupForm({ isBrand }: TemplateProps): JSX.Element {
                 }}
               />
               <Button type="submit" isLoading={isSubmitting}>
-                Create Account
+                Create account
               </Button>
             </form>
           </Box>

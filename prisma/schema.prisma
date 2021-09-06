@@ -12,6 +12,7 @@ model User {
   id            String   @id @default(dbgenerated()) @map("_id") @db.ObjectId
   email         String   @unique
   password      String
+  handle String? // brand handle will be auto-generated to slug
   role          String // enum doesn't work :(
   status        String   @default("UNVERIFIED")
   firstName     String

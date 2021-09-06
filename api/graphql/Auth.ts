@@ -1,4 +1,5 @@
 import * as R from 'ramda'
+import jwt from 'jsonwebtoken'
 import sgMail from 'lib/sendgrid'
 import {
   objectType,
@@ -14,6 +15,7 @@ import {
   EMAIL_TAKEN,
   FROM_ADDRESS,
   INCORRECT_PASSWORD,
+  INVALID_TOKEN,
   UNVERIFIED,
   USER_NOT_FOUND,
 } from 'shared/constants'
@@ -23,7 +25,7 @@ import {
   isCorrectPassword,
   serializeCookie,
 } from 'utils/auth'
-import { User } from 'shared/types'
+import { Token, User } from 'shared/types'
 
 // should match up with User.
 const publicFields = [
@@ -48,14 +50,15 @@ export const Signup = mutationField('signup', {
     if (foundUser) {
       throw new AuthenticationError(EMAIL_TAKEN)
     }
+    const now = new Date()
     const user = await prisma.user.create({
       data: {
         ...input,
         password: createPassword(input.password),
         // until integrating with https://github.com/prisma/nexus-prisma/, prisma schema doesnt work
         status: UNVERIFIED,
-        createdAt: new Date(),
-        updatedAt: new Date(),
+        createdAt: now,
+        updatedAt: now,
       },
     })
     // todo: send welcome email.
@@ -121,11 +124,46 @@ export const ForgotPassword = mutationField('forgotPassword', {
       html: `
         <h1>cnotes Password Reset</h1>
         <p>Forgot something did you? Please use the following link to reset your password.</p>
-        <p>${process.env.BASE_URL}/reset-password?t=${token}</p>
+        <p>${process.env.BASE_URL}/reset-password?token=${token}</p>
         <hr />
       `,
     })
     return true
+  },
+})
+
+export const ResetPassword = mutationField('resetPassword', {
+  type: 'Boolean',
+  args: {
+    input: arg({ type: 'ResetPasswordInput' }),
+  },
+  resolve: async (_, { input }, { res }) => {
+    const { token, password } = input
+
+    try {
+      const { user } = jwt.verify(token, process.env.JWT_SECRET) as Token
+      const foundUser = await prisma.user.findFirst({
+        where: { id: user.id, password: user.password },
+      })
+
+      if (!foundUser) {
+        throw new AuthenticationError(USER_NOT_FOUND)
+      }
+
+      const newUser = await prisma.user.update({
+        where: { id: user.id },
+        data: {
+          password: createPassword(password),
+          updatedAt: new Date(),
+        },
+      })
+      const userObj = R.pick(publicFields, newUser) as User
+      const newToken = encryptToken(userObj)
+      res.setHeader('Set-Cookie', serializeCookie(newToken))
+      return true
+    } catch (error) {
+      throw new AuthenticationError(INVALID_TOKEN)
+    }
   },
 })
 
@@ -154,5 +192,13 @@ export const LoginInput = inputObjectType({
   definition(t) {
     t.nonNull.string('email')
     t.string('password')
+  },
+})
+
+export const ResetPasswordInput = inputObjectType({
+  name: 'ResetPasswordInput',
+  definition(t) {
+    t.nonNull.string('token')
+    t.nonNull.string('password')
   },
 })

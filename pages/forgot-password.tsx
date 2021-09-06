@@ -1,5 +1,4 @@
 import { useMutation } from '@apollo/client'
-import { useRouter } from 'next/router'
 import {
   Box,
   chakra as c,
@@ -10,6 +9,7 @@ import {
   ModalFooter,
   Button,
   ModalOverlay,
+  ModalCloseButton,
   ModalHeader,
 } from '@chakra-ui/react'
 import FormInput from 'components/atoms/FormInput'
@@ -38,7 +38,6 @@ const ForgotPasswordPage: NextPage = () => {
     formState: { errors, isSubmitting },
   } = useForm()
   const [forgotPassword] = useMutation(ForgotPasswordMutation)
-  const router = useRouter()
   const [isModalOpen, setIsModalOpen] = useState(false)
 
   const onSubmit = async (data: OnSubmitProps): Promise<void> => {
@@ -59,9 +58,8 @@ const ForgotPasswordPage: NextPage = () => {
     }
   }
 
-  const onModalClose = (): void => {
+  const onClose = (): void => {
     setIsModalOpen(false)
-    router.push('/login')
   }
 
   return (
@@ -94,7 +92,7 @@ const ForgotPasswordPage: NextPage = () => {
         </Container>
       </Layout>
       <Modal
-        onClose={onModalClose}
+        onClose={onClose}
         isOpen={isModalOpen}
         closeOnOverlayClick={false}
         isCentered
@@ -102,11 +100,12 @@ const ForgotPasswordPage: NextPage = () => {
         <ModalOverlay />
         <ModalContent>
           <ModalHeader>Email Sent!</ModalHeader>
+          <ModalCloseButton />
           <ModalBody textStyle="body2">
             {`Please check your email inbox for password reset instructions.`}
           </ModalBody>
           <ModalFooter>
-            <Button onClick={onModalClose}>Got it!</Button>
+            <Button onClick={onClose}>Got it!</Button>
           </ModalFooter>
         </ModalContent>
       </Modal>

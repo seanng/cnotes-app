@@ -3,15 +3,8 @@ import cookieJS from 'cookie'
 import { UserInputError } from 'apollo-server-micro'
 import bcrypt from 'bcryptjs'
 import jwt from 'jsonwebtoken'
-import { User } from 'shared/types'
+import { User, Token } from 'shared/types'
 import { BRAND, CREATOR } from 'shared/constants'
-
-type Token = {
-  user: User
-  time: string
-  iat: number
-  exp: number
-}
 
 export function serializeCookie(token = '', maxAge = 6 * 60 * 60): string {
   return cookieJS.serialize('token', token, {
