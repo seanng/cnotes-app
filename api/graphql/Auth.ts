@@ -1,5 +1,6 @@
 import * as R from 'ramda'
 import jwt from 'jsonwebtoken'
+import slugify from 'slugify'
 import sgMail from 'lib/sendgrid'
 import {
   objectType,
@@ -33,7 +34,8 @@ const publicFields = [
   'role',
   'firstName',
   'lastName',
-  'companyName',
+  'alias',
+  'slug',
   'email',
   'status',
 ]
@@ -55,7 +57,7 @@ export const Signup = mutationField('signup', {
       data: {
         ...input,
         password: createPassword(input.password),
-        // until integrating with https://github.com/prisma/nexus-prisma/, prisma schema doesnt work
+        slug: slugify(input.alias),
         status: UNVERIFIED,
         createdAt: now,
         updatedAt: now,
@@ -183,7 +185,7 @@ export const SignupInput = inputObjectType({
     t.nonNull.string('role')
     t.nonNull.string('firstName')
     t.nonNull.string('lastName')
-    t.string('companyName')
+    t.nonNull.string('alias')
   },
 })
 

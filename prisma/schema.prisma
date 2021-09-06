@@ -9,20 +9,28 @@ datasource db {
 }
 
 model User {
-  id            String   @id @default(dbgenerated()) @map("_id") @db.ObjectId
-  email         String   @unique
-  password      String
-  handle String? // brand handle will be auto-generated to slug
-  role          String // enum doesn't work :(
-  status        String   @default("UNVERIFIED")
-  firstName     String
-  lastName      String
-  companyName   String?
-  bids          Bid[] // brand only. 
-  offersCreated Offer[]  @relation("CreatedOffer") // created offer for creator, else won offer for brand.
-  offersWon     Offer[]  @relation("WonOffer") // created offer for creator, else won offer for brand.
-  createdAt     DateTime @default(now())
-  updatedAt     DateTime @updatedAt
+  id              String   @id @default(dbgenerated()) @map("_id") @db.ObjectId
+  email           String   @unique
+  password        String
+  alias           String   @unique // company name / creator name.
+  role            String // enum doesn't work :(
+  status          String   @default("UNVERIFIED") // unverified, verified, disabled (aka banned)
+  firstName       String
+  lastName        String
+  slug            String   @unique // generated with slugify(alias)
+  avatarUrl       String?
+  bannerUrl       String?
+  websiteUrl      String?
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+  // creator-specific
+  externalCollabs Json[] // {companyName, companyUrl, executedAt, deliverable, platform, thumbnailUrl, collabUrl} Prisma doesnt support embedded docs https://github.com/prisma/prisma/issues/6708
+  primaryPlatform String?
+  offersCreated   Offer[]  @relation("CreatedOffer")
+  // brand-speciifc
+  bids            Bid[] // brand only. 
+  companyName     String?
+  offersWon       Offer[]  @relation("WonOffer")
 }
 
 model Offer {

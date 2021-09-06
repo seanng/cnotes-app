@@ -1,5 +1,6 @@
 // PRISMA DOES NOT SUPPORT SEEDING MONGODB. USE THIS FILE.
 const faker = require('faker')
+const slugify = require('slugify')
 const MongoClient = require('mongodb').MongoClient
 const bcrypt = require('bcryptjs')
 
@@ -28,6 +29,9 @@ async function seedUser(db) {
   const now = new Date()
   for (let i = 0; i < 10; i++) {
     const isBrand = i % 2
+    const alias = isBrand
+      ? `${faker.company.companyName()}${i}`
+      : `${faker.internet.userName()}${i}`
     const data = {
       firstName: faker.name.firstName(),
       lastName: faker.name.lastName(),
@@ -35,7 +39,9 @@ async function seedUser(db) {
       status: 'VERIFIED',
       role: isBrand ? 'BRAND' : 'CREATOR',
       email: `a${i}@a.com`,
-      ...(isBrand && { companyName: faker.company.companyName() }),
+      // add i because alias should be unique.
+      alias,
+      slug: slugify(alias),
       createdAt: now,
       updatedAt: now,
     }

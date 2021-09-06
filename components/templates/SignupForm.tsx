@@ -19,7 +19,7 @@ type OnSubmitProps = {
   email: string
   password: string
   passwordConfirm: string
-  companyName?: string
+  alias: string
 }
 
 const SignupMutation = gql`
@@ -98,19 +98,17 @@ function SignupForm({ isBrand }: TemplateProps): JSX.Element {
                   }),
                 }}
               />
-              {isBrand && (
-                <FormInput
-                  name="companyName"
-                  label="Company Name"
-                  errors={errors}
-                  inputProps={{
-                    placeholder: 'eg. Spotify Ltd.',
-                    ...register('companyName', {
-                      required: true,
-                    }),
-                  }}
-                />
-              )}
+              <FormInput
+                name="alias"
+                label={isBrand ? 'Company Name' : 'Creator Name'}
+                errors={errors}
+                inputProps={{
+                  placeholder: 'eg. Spotify Ltd.',
+                  ...register('alias', {
+                    required: true,
+                  }),
+                }}
+              />
               <FormInput
                 name="email"
                 label="Email Address"

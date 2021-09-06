@@ -125,7 +125,7 @@ export const createOfferInput = inputObjectType({
   },
 })
 
-export const getDiscoveryOffers = queryField('getDiscoveryOffers', {
+export const discoveryOffers = queryField('discoveryOffers', {
   type: 'Offer',
   resolve: async (_, __, { user }) => {
     if (!isBrand(user)) throw new ForbiddenError('Not a brand')
@@ -141,6 +141,22 @@ export const getDiscoveryOffers = queryField('getDiscoveryOffers', {
     })
 
     console.log('data: ', data)
+    return data
+  },
+})
+
+export const creatorDashboardOffers = queryField('creatorDashboardOffers', {
+  type: 'Offer',
+  resolve: async (_, __, { user }) => {
+    if (!isCreator(user)) throw new ForbiddenError('Not a creator')
+
+    const data = await prisma.offer.findMany({
+      where: {
+        creatorId: user.id,
+      },
+      // TODO: add filters + pagination
+    })
+
     return data
   },
 })

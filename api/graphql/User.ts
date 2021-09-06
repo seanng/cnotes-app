@@ -9,8 +9,9 @@ export const User = objectType({
     t.nonNull.string('role')
     t.nonNull.string('firstName')
     t.nonNull.string('lastName')
-    t.string('status')
-    t.string('companyName')
+    t.nonNull.string('alias')
+    t.nonNull.string('slug')
+    t.nonNull.string('status')
     t.nonNull.field('createdAt', {
       type: 'DateTime',
     })
