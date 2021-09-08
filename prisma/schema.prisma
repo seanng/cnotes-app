@@ -14,17 +14,19 @@ model User {
   password        String
   alias           String   @unique // company name / creator name.
   role            String // enum doesn't work :(
-  status          String   @default("UNVERIFIED") // unverified, verified, disabled (aka banned)
+  status          String   @default("UNVERIFIED") // unverified, verified, suspended
   firstName       String
   lastName        String
   slug            String   @unique // generated with slugify(alias)
   avatarUrl       String?
+  description       String?
   bannerUrl       String?
   websiteUrl      String?
   createdAt       DateTime @default(now())
   updatedAt       DateTime @updatedAt
   // creator-specific
-  externalCollabs Json[] // {companyName, companyUrl, executedAt, deliverable, platform, thumbnailUrl, collabUrl} Prisma doesnt support embedded docs https://github.com/prisma/prisma/issues/6708
+  externalCollabs Json[] // {companyName, companyUrl, executedAt, deliverable, platform, thumbnailUrl, collabUrl}
+  otherSamples Json[]
   primaryPlatform String?
   offersCreated   Offer[]  @relation("CreatedOffer")
   // brand-speciifc

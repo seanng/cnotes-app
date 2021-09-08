@@ -1,18 +1,7 @@
 import { useMutation } from '@apollo/client'
-import {
-  Box,
-  chakra as c,
-  Container,
-  Modal,
-  ModalContent,
-  ModalBody,
-  ModalFooter,
-  Button,
-  ModalOverlay,
-  ModalCloseButton,
-  ModalHeader,
-} from '@chakra-ui/react'
+import { Box, chakra as c, Container, Button } from '@chakra-ui/react'
 import FormInput from 'components/atoms/FormInput'
+import FeedbackModal from 'components/molecules/FeedbackModal'
 import Layout from 'components/organisms/Layout'
 import gql from 'graphql-tag'
 import { NextPage } from 'next'
@@ -91,24 +80,14 @@ const ForgotPasswordPage: NextPage = () => {
           </Box>
         </Container>
       </Layout>
-      <Modal
+      <FeedbackModal
+        hasCloseButton
         onClose={onClose}
         isOpen={isModalOpen}
-        closeOnOverlayClick={false}
-        isCentered
-      >
-        <ModalOverlay />
-        <ModalContent>
-          <ModalHeader>Email Sent!</ModalHeader>
-          <ModalCloseButton />
-          <ModalBody textStyle="body2">
-            {`Please check your email inbox for password reset instructions.`}
-          </ModalBody>
-          <ModalFooter>
-            <Button onClick={onClose}>Got it!</Button>
-          </ModalFooter>
-        </ModalContent>
-      </Modal>
+        header="Email Sent!"
+        body="Please check your email inbox for password reset instructions."
+        buttonText="Got it!"
+      />
     </>
   )
 }

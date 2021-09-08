@@ -18,6 +18,7 @@ import {
   INCORRECT_PASSWORD,
   INVALID_TOKEN,
   UNVERIFIED,
+  userPublicFields,
   USER_NOT_FOUND,
 } from 'shared/constants'
 import {
@@ -27,18 +28,6 @@ import {
   serializeCookie,
 } from 'utils/auth'
 import { Token, User } from 'shared/types'
-
-// should match up with User.
-const publicFields = [
-  'id',
-  'role',
-  'firstName',
-  'lastName',
-  'alias',
-  'slug',
-  'email',
-  'status',
-]
 
 export const Signup = mutationField('signup', {
   type: 'AuthPayload',
@@ -64,7 +53,7 @@ export const Signup = mutationField('signup', {
       },
     })
     // todo: send welcome email.
-    const userObj = R.pick(publicFields, user) as User
+    const userObj = R.pick(userPublicFields, user) as User
     const token = encryptToken(userObj)
     res.setHeader('Set-Cookie', serializeCookie(token))
     return { token, user }
@@ -90,7 +79,7 @@ export const Login = mutationField('login', {
       throw new UserInputError(INCORRECT_PASSWORD)
     }
 
-    const userObj = R.pick(publicFields, user) as User
+    const userObj = R.pick(userPublicFields, user) as User
     const token = encryptToken(userObj)
     res.setHeader('Set-Cookie', serializeCookie(token))
     return { token, user }
@@ -159,7 +148,7 @@ export const ResetPassword = mutationField('resetPassword', {
           updatedAt: new Date(),
         },
       })
-      const userObj = R.pick(publicFields, newUser) as User
+      const userObj = R.pick(userPublicFields, newUser) as User
       const newToken = encryptToken(userObj)
       res.setHeader('Set-Cookie', serializeCookie(newToken))
       return true

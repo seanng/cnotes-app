@@ -5,10 +5,13 @@ export type User = {
   status: string
   firstName: string
   lastName: string
+  alias: string
   email: string
   password?: string // omitted unless it's in the password reset token
-  companyName?: string
   viewerCount?: number
+  description?: string
+  websiteUrl?: string
+  avatarUrl?: string
 }
 
 export type Offer = {

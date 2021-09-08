@@ -1,16 +1,5 @@
 import { useMutation } from '@apollo/client'
-import {
-  Box,
-  Button,
-  chakra as c,
-  Container,
-  Modal,
-  ModalContent,
-  ModalBody,
-  ModalFooter,
-  ModalOverlay,
-  ModalHeader,
-} from '@chakra-ui/react'
+import { Box, Button, chakra as c, Container } from '@chakra-ui/react'
 import Layout from 'components/organisms/Layout'
 import { NextPage } from 'next'
 import { useForm } from 'react-hook-form'
@@ -20,6 +9,7 @@ import { getErrorMessage } from 'utils/helpers'
 import { INVALID_TOKEN } from 'shared/constants'
 import FormInput from 'components/atoms/FormInput'
 import { useState } from 'react'
+import FeedbackModal from 'components/molecules/FeedbackModal'
 
 type OnSubmitProps = {
   password: string
@@ -113,31 +103,20 @@ const ResetPasswordPage: NextPage = () => {
           </Box>
         </Container>
       </Layout>
-      <Modal
+      <FeedbackModal
         onClose={(): void => {
           setIsModalOpen(false)
         }}
         isOpen={isModalOpen}
-        closeOnOverlayClick={false}
-        isCentered
-      >
-        <ModalOverlay />
-        <ModalContent>
-          <ModalHeader>
-            {isSuccess ? 'Success!' : 'There was a problem.'}
-          </ModalHeader>
-          <ModalBody textStyle="body2">
-            {isSuccess
-              ? `You have successfully updated your password.`
-              : `The reset password link is either invalid or expired. Please reset your password again.`}
-          </ModalBody>
-          <ModalFooter>
-            <Button onClick={onConfirm}>
-              {isSuccess ? 'Go to Dashboard' : 'Go to Password Reset'}
-            </Button>
-          </ModalFooter>
-        </ModalContent>
-      </Modal>
+        header={isSuccess ? 'Success!' : 'There was a problem.'}
+        body={
+          isSuccess
+            ? `You have successfully updated your password.`
+            : `The reset password link is either invalid or expired. Please reset your password again.`
+        }
+        buttonText={isSuccess ? 'Go to Dashboard' : 'Go to Password Reset'}
+        onConfirm={onConfirm}
+      />
     </>
   )
 }

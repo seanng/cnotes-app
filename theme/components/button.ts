@@ -18,6 +18,19 @@ function variantSolid(props: Dict): Dict {
   }
 }
 
+function variantOutline(props: Dict): Dict {
+  const { color = 'blue' } = props
+
+  return {
+    border: '2px solid',
+    borderColor: 'neutrals6',
+    _hover: {
+      borderColor: color,
+      backgroundColor: 'inherit',
+    },
+  }
+}
+
 export default {
   baseStyle: {
     letterSpacing: '0.02em',
@@ -39,14 +52,7 @@ export default {
   },
   variants: {
     solid: variantSolid,
-    outline: {
-      border: '2px solid',
-      borderColor: 'neutrals6',
-      _hover: {
-        borderColor: 'blue',
-        backgroundColor: 'inherit',
-      },
-    },
+    outline: variantOutline,
   },
   defaultProps: {
     size: 'md',

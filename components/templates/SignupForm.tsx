@@ -53,7 +53,7 @@ function SignupForm({ isBrand }: TemplateProps): JSX.Element {
           },
         },
       })
-      router.push('/dashboard')
+      router.push('/account')
     } catch (error) {
       if (getErrorMessage(error) === EMAIL_TAKEN) {
         setError('email', {
@@ -103,7 +103,7 @@ function SignupForm({ isBrand }: TemplateProps): JSX.Element {
                 label={isBrand ? 'Company Name' : 'Creator Name'}
                 errors={errors}
                 inputProps={{
-                  placeholder: 'eg. Spotify Ltd.',
+                  placeholder: isBrand ? 'eg. Spotify Ltd.' : 'eg. Grapplr',
                   ...register('alias', {
                     required: true,
                   }),

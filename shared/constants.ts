@@ -11,6 +11,7 @@ export const URL_REGEX =
 
 // error messages
 export const EMAIL_TAKEN = 'This email has already been registered.'
+export const ALIAS_TAKEN = 'This alias is already being used by someone else.'
 export const USER_NOT_FOUND = 'User not found.'
 export const INCORRECT_PASSWORD = 'Invalid name and password combination.'
 export const INVALID_TOKEN = 'Token is either invalid or has expired.'
@@ -18,7 +19,7 @@ export const INVALID_TOKEN = 'Token is either invalid or has expired.'
 // statuses
 export const UNVERIFIED = 'UNVERIFIED'
 export const VERIFIED = 'VERIFIED' // just user status
-// export const BANNED = 'BANNED' // just user status
+// export const SUSPENDED = 'SUSPENDED' // just user status
 
 // offer
 export const ACTIVE = 'ACTIVE'
@@ -31,3 +32,23 @@ export const HISTORY = 'HISTORY'
 export const WON = 'WON'
 
 export const FROM_ADDRESS = 'no-reply@cnotes.co'
+
+// should match up with User.
+export const userPublicFields = [
+  'id',
+  'role',
+  'firstName',
+  'lastName',
+  'alias',
+  'slug',
+  'email',
+  'status',
+  'description',
+  'websiteUrl',
+  'avatarUrl',
+]
+
+export default function constant() {
+  // no op
+  // return null
+}
