@@ -1,7 +1,7 @@
 import * as R from 'ramda'
 import { AuthenticationError, ForbiddenError } from 'apollo-server-errors'
 import prisma from 'lib/prisma'
-import { arg, inputObjectType, mutationField, objectType } from 'nexus'
+import { arg, inputObjectType, list, mutationField, objectType } from 'nexus'
 import slugify from 'slugify'
 import { ALIAS_TAKEN, userPublicFields } from 'shared/constants'
 import { encryptToken, serializeCookie } from 'utils/auth'
@@ -18,6 +18,12 @@ export const User = objectType({
     t.nonNull.string('lastName')
     t.string('websiteUrl')
     t.string('avatarUrl')
+    t.field('externalCollabs', {
+      type: list('Json'),
+    })
+    t.field('otherSamples', {
+      type: list('Json'),
+    })
     t.nonNull.string('alias')
     t.nonNull.string('slug')
     t.nonNull.string('status')

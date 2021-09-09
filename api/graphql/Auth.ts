@@ -13,6 +13,7 @@ import {
 import prisma from 'lib/prisma'
 import { UserInputError, AuthenticationError } from 'apollo-server-micro'
 import {
+  BRAND,
   EMAIL_TAKEN,
   FROM_ADDRESS,
   INCORRECT_PASSWORD,
@@ -42,10 +43,13 @@ export const Signup = mutationField('signup', {
       throw new AuthenticationError(EMAIL_TAKEN)
     }
     const now = new Date()
+    const isBrand = input.role === BRAND
     const user = await prisma.user.create({
       data: {
         ...input,
         password: createPassword(input.password),
+        ...(!isBrand && { externalCollabs: [] }),
+        ...(!isBrand && { otherSamples: [] }),
         slug: slugify(input.alias),
         status: UNVERIFIED,
         createdAt: now,

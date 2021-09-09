@@ -13,7 +13,7 @@
     "generate:prisma": "prisma generate",
     "generate:nexus": "ts-node --transpile-only -P nexus.tsconfig.json -r tsconfig-paths/register pages/api",
     "lint": "eslint . --ext ts --ext tsx --ext js",
-    "seed": "yarn ts-node prisma/seed",
+    "seed": "node seed.js",
     "start": "next start",
     "ts-node": "ts-node --compiler-options \"{\\\"module\\\":\\\"commonjs\\\"}\"",
     "type-check": "tsc --pretty --noEmit"

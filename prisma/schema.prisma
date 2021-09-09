@@ -19,14 +19,14 @@ model User {
   lastName        String
   slug            String   @unique // generated with slugify(alias)
   avatarUrl       String?
-  description       String?
+  description     String?
   bannerUrl       String?
   websiteUrl      String?
   createdAt       DateTime @default(now())
   updatedAt       DateTime @updatedAt
   // creator-specific
-  externalCollabs Json[] // {companyName, companyUrl, executedAt, deliverable, platform, thumbnailUrl, collabUrl}
-  otherSamples Json[]
+  externalCollabs Json[] // {url, thumbnailUrl, description, companyName, companyUrl, executedAt, deliverable, platform}
+  otherSamples    Json[] // {url, thumbnailUrl, description}
   primaryPlatform String?
   offersCreated   Offer[]  @relation("CreatedOffer")
   // brand-speciifc

@@ -32,6 +32,43 @@ async function seedUser(db) {
     const alias = isBrand
       ? `${faker.company.companyName()}${i}`
       : `${faker.internet.userName()}${i}`
+
+    const otherSamples = [
+      {
+        url: 'https://youtube.com/sample',
+        thumbnailUrl: 'https://i.ytimg.com/vi/__9UQN2DLV8/sddefault.jpg',
+        description: 'blablabla',
+      },
+      {
+        url: 'https://youtube.com/sample2',
+        thumbnailUrl: 'https://i.ytimg.com/vi/__9UQN2DLV8/sddefault.jpg',
+        description: 'blablabla',
+      },
+    ]
+
+    const externalCollabs = [
+      {
+        companyName: 'Razer Corp',
+        companyUrl: 'https://www.razer.com',
+        url: 'https://youtube.com/sample',
+        thumbnailUrl: 'https://i.ytimg.com/vi/__9UQN2DLV8/sddefault.jpg',
+        deliverable: 'Integration',
+        platform: 'YouTube',
+        description: 'blablabla',
+        executedAt: new Date(),
+      },
+      {
+        companyName: '',
+        companyUrl: 'https://www.razer.com',
+        url: 'https://youtube.com/sample2',
+        thumbnailUrl: 'https://i.ytimg.com/vi/__9UQN2DLV8/sddefault.jpg',
+        deliverable: 'Dedicated',
+        platform: 'YouTube',
+        description: 'blablabla',
+        executedAt: new Date(),
+      },
+    ]
+
     const data = {
       firstName: faker.name.firstName(),
       lastName: faker.name.lastName(),
@@ -42,6 +79,8 @@ async function seedUser(db) {
       // add i because alias should be unique.
       alias,
       slug: slugify(alias),
+      ...(!isBrand && { externalCollabs }),
+      ...(!isBrand && { otherSamples }),
       createdAt: now,
       updatedAt: now,
     }
