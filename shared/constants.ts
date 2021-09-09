@@ -46,8 +46,7 @@ export const userPublicFields = [
   'description',
   'websiteUrl',
   'avatarUrl',
-  'externalCollabs',
-  'otherSamples',
+  'portfolio',
 ]
 
 export default function constant() {

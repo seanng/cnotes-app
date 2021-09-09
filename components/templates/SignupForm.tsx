@@ -77,9 +77,9 @@ function SignupForm({ isBrand }: TemplateProps): JSX.Element {
           <Box w={['90%', '60%']}>
             <form onSubmit={handleSubmit(onSubmit)}>
               <FormInput
-                name="firstName"
                 label="First Name"
-                errors={errors}
+                mb={8}
+                error={errors.lastName}
                 inputProps={{
                   placeholder: 'eg. Steven',
                   ...register('firstName', {
@@ -88,9 +88,9 @@ function SignupForm({ isBrand }: TemplateProps): JSX.Element {
                 }}
               />
               <FormInput
-                name="lastName"
                 label="Last Name"
-                errors={errors}
+                mb={8}
+                error={errors.lastName}
                 inputProps={{
                   placeholder: 'eg. Smith',
                   ...register('lastName', {
@@ -99,9 +99,9 @@ function SignupForm({ isBrand }: TemplateProps): JSX.Element {
                 }}
               />
               <FormInput
-                name="alias"
                 label={isBrand ? 'Company Name' : 'Creator Name'}
-                errors={errors}
+                error={errors.alias}
+                mb={8}
                 inputProps={{
                   placeholder: isBrand ? 'eg. Spotify Ltd.' : 'eg. Grapplr',
                   ...register('alias', {
@@ -110,9 +110,9 @@ function SignupForm({ isBrand }: TemplateProps): JSX.Element {
                 }}
               />
               <FormInput
-                name="email"
                 label="Email Address"
-                errors={errors}
+                error={errors.email}
+                mb={8}
                 inputProps={{
                   placeholder: 'eg. john@smith.com',
                   ...register('email', {
@@ -125,9 +125,9 @@ function SignupForm({ isBrand }: TemplateProps): JSX.Element {
                 }}
               />
               <FormInput
-                name="password"
                 label="Password"
-                errors={errors}
+                error={errors.password}
+                mb={8}
                 inputProps={{
                   type: 'password',
                   placeholder: 'Password',
@@ -141,9 +141,9 @@ function SignupForm({ isBrand }: TemplateProps): JSX.Element {
                 }}
               />
               <FormInput
-                name="passwordConfirm"
                 label="Confirm password"
-                errors={errors}
+                error={errors.passwordConfirm}
+                mb={8}
                 inputProps={{
                   type: 'password',
                   placeholder: 'Re-enter your password',

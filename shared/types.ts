@@ -1,17 +1,11 @@
-export type WorkSample = {
+export type PortfolioItem = {
   url: string
   thumbnailUrl: string
-  description: string
-}
-
-export type ExternalCollab = {
-  url: string
-  thumbnailUrl: string
-  companyUrl: string
-  companyName: string
-  deliverable: string
-  platform: string
-  description: string
+  description?: string
+  companyUrl?: string
+  companyName?: string
+  deliverable?: string
+  platform?: string
   executedAt: Date
 }
 
@@ -24,9 +18,7 @@ export type User = {
   lastName: string
   alias: string
   email: string
-  // externalCollabs: any[]
-  externalCollabs?: ExternalCollab[] | any // prisma is complaining
-  otherSamples?: WorkSample[] | any // prisma is complaining
+  portfolio?: PortfolioItem[] | any // prisma is complaining
   password?: string // omitted unless it's in the password reset token
   viewerCount?: number
   description?: string
@@ -55,7 +47,8 @@ export type SettingsFormFieldValues = {
   alias: string
   websiteUrl: string
   description: string
-  externalCollabs: ExternalCollab[]
-  otherSamples: WorkSample[]
+  collabs?: PortfolioItem[]
+  samples?: PortfolioItem[]
+  portfolio?: PortfolioItem[]
   avatarUrl?: string
 }

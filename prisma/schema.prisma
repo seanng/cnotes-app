@@ -25,8 +25,7 @@ model User {
   createdAt       DateTime @default(now())
   updatedAt       DateTime @updatedAt
   // creator-specific
-  externalCollabs Json[] // {url, thumbnailUrl, description, companyName, companyUrl, executedAt, deliverable, platform}
-  otherSamples    Json[] // {url, thumbnailUrl, description}
+  portfolio       Json[] // {url, thumbnailUrl, description, companyName?, companyUrl?, executedAt, deliverable?, platform}
   primaryPlatform String?
   offersCreated   Offer[]  @relation("CreatedOffer")
   // brand-speciifc
@@ -77,3 +76,9 @@ model Bid {
   createdAt  DateTime @default(now())
   updatedAt  DateTime @updatedAt
 }
+
+// model Project {
+//   id         String   @id @default(dbgenerated()) @map("_id") @db.ObjectId
+//   creatorId String @db.ObjectId
+//   creator User @relation(fields: [creatorId], references: [id])
+// }

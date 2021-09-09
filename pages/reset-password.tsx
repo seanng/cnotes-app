@@ -70,9 +70,8 @@ const ResetPasswordPage: NextPage = () => {
               Enter your new password
             </c.h2>
             <FormInput
-              name="password"
               label="New password"
-              errors={errors}
+              error={errors.password}
               inputProps={{
                 type: 'password',
                 placeholder: 'Your new password',
@@ -86,9 +85,8 @@ const ResetPasswordPage: NextPage = () => {
               }}
             />
             <FormInput
-              name="passwordConfirm"
               label="Confirm new password"
-              errors={errors}
+              error={errors.passwordConfirm}
               inputProps={{
                 type: 'password',
                 placeholder: 'Re-enter your new password',

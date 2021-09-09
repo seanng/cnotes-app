@@ -18,10 +18,7 @@ export const User = objectType({
     t.nonNull.string('lastName')
     t.string('websiteUrl')
     t.string('avatarUrl')
-    t.field('externalCollabs', {
-      type: list('Json'),
-    })
-    t.field('otherSamples', {
+    t.field('portfolio', {
       type: list('Json'),
     })
     t.nonNull.string('alias')
@@ -78,6 +75,9 @@ export const UserInput = inputObjectType({
     t.nonNull.string('alias')
     t.string('websiteUrl')
     t.string('avatarUrl')
+    t.field('portfolio', {
+      type: list('Json'),
+    })
     t.string('description')
   },
 })

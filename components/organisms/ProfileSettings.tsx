@@ -91,9 +91,9 @@ const ProfileSettings: FC<Props> = ({
       </Flex>
       <SimpleGrid columns={[1, 2]} spacingX={4}>
         <FormInput
-          name="firstName"
           label="First Name"
-          errors={errors}
+          mb={8}
+          error={errors.firstName}
           inputProps={{
             placeholder: 'eg. Steven',
             ...register('firstName', {
@@ -103,9 +103,9 @@ const ProfileSettings: FC<Props> = ({
           mr={[0, 4]}
         />
         <FormInput
-          name="lastName"
           label="Last Name"
-          errors={errors}
+          mb={8}
+          error={errors.lastName}
           inputProps={{
             placeholder: 'eg. Smith',
             ...register('lastName', {
@@ -114,9 +114,9 @@ const ProfileSettings: FC<Props> = ({
           }}
         />
         <FormInput
-          name="alias"
           label={isBrand ? 'Company Name' : 'Creator Name'}
-          errors={errors}
+          error={errors.alias}
+          mb={8}
           inputProps={{
             placeholder: isBrand ? 'eg. Spotify Ltd.' : 'eg. Grapplr',
             ...register('alias', {
@@ -125,11 +125,11 @@ const ProfileSettings: FC<Props> = ({
           }}
         />
         <FormInput
-          name="websiteUrl"
           label={
             isBrand ? 'Website URL (Include HTTPS)' : 'Main URL (Include HTTPS)'
           }
-          errors={errors}
+          mb={8}
+          error={errors.websiteUrl}
           inputProps={{
             placeholder: isBrand
               ? 'eg. https://drop.com'

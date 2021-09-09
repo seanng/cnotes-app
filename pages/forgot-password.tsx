@@ -60,9 +60,9 @@ const ForgotPasswordPage: NextPage = () => {
               Forgot Password?
             </c.h2>
             <FormInput
-              name="email"
               label="Email Address"
-              errors={errors}
+              mb={8}
+              error={errors.email}
               inputProps={{
                 placeholder: 'eg. john@smith.com',
                 ...register('email', {

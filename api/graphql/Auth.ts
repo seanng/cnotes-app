@@ -48,8 +48,7 @@ export const Signup = mutationField('signup', {
       data: {
         ...input,
         password: createPassword(input.password),
-        ...(!isBrand && { externalCollabs: [] }),
-        ...(!isBrand && { otherSamples: [] }),
+        ...(!isBrand && { portfolio: [] }),
         slug: slugify(input.alias),
         status: UNVERIFIED,
         createdAt: now,

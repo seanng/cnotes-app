@@ -13,6 +13,7 @@ import {
   TabList,
   Flex,
 } from '@chakra-ui/react'
+import * as R from 'ramda'
 import FeedbackModal from 'components/molecules/FeedbackModal'
 import Layout from 'components/organisms/Layout'
 import gql from 'graphql-tag'
@@ -21,13 +22,16 @@ import { ChangeEventHandler, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { SettingsFormFieldValues, User } from 'shared/types'
 import { getErrorMessage, redirTo, uploadToS3 } from 'utils/helpers'
-import { ALIAS_TAKEN } from 'shared/constants'
+import { ALIAS_TAKEN, CREATOR } from 'shared/constants'
 import ProfileSettings from 'components/organisms/ProfileSettings'
 import { getUserPayload } from 'utils/auth'
 
-const PastWork = dynamic(() => import('components/organisms/PastCollabs'), {
-  ssr: false,
-})
+const Portfolio = dynamic(
+  () => import('components/organisms/PortfolioSettings'),
+  {
+    ssr: false,
+  }
+)
 
 const UpdateUserMutation = gql`
   mutation UpdateUserMutation($input: UserInput!) {
@@ -43,12 +47,23 @@ const defaultValues = {
   firstName: '',
   lastName: '',
   description: '',
-  externalCollabs: [],
-  otherSamples: [],
+  collabs: [],
+  samples: [],
 }
 
 const getFormData = (user: User): SettingsFormFieldValues => {
   if (!user) return defaultValues
+
+  const collabs = []
+  const samples = []
+
+  if (user.portfolio) {
+    for (let i = 0; i < user.portfolio.length; i++) {
+      const item = user.portfolio[i]
+      const list = item.companyName ? collabs : samples
+      list.push(item)
+    }
+  }
 
   return {
     ...defaultValues,
@@ -57,8 +72,8 @@ const getFormData = (user: User): SettingsFormFieldValues => {
     firstName: user.firstName,
     lastName: user.lastName,
     description: user.description,
-    externalCollabs: user.externalCollabs || [],
-    otherSamples: user.otherSamples || [],
+    collabs,
+    samples,
   }
 }
 
@@ -72,8 +87,8 @@ const tabs = [
     Component: ProfileSettings,
   },
   {
-    label: 'past collabs',
-    Component: PastWork,
+    label: 'portfolio',
+    Component: Portfolio,
   },
 ]
 
@@ -97,13 +112,15 @@ const SettingsPage: NextPage<Props> = ({ user }: Props) => {
 
   const onSubmit = async (data: SettingsFormFieldValues): Promise<void> => {
     try {
-      const input = { ...data }
+      setIsSuccess(true)
+      const input = R.omit(['collabs', 'samples'], data)
       if (avatarFile) {
         input.avatarUrl = await uploadToS3(avatarFile, 'avatars', user.id)
       }
-      console.log('submitting: ', input)
+      if (user.role === CREATOR) {
+        input.portfolio = data.collabs.concat(data.samples)
+      }
       await updateUser({ variables: { input } })
-      console.log('submitt success')
       setIsModalOpen(true)
     } catch (error) {
       if (getErrorMessage(error) === ALIAS_TAKEN) {
@@ -116,7 +133,6 @@ const SettingsPage: NextPage<Props> = ({ user }: Props) => {
       // error could come from alias taken.
       setIsSuccess(false)
       setIsModalOpen(true)
-      console.log('error: ', error)
     }
   }
 
@@ -126,7 +142,8 @@ const SettingsPage: NextPage<Props> = ({ user }: Props) => {
       alias: () => setTabIdx(0),
       firstName: () => setTabIdx(0),
       lastName: () => setTabIdx(0),
-      externalCollabs: () => setTabIdx(1),
+      collabs: () => setTabIdx(1),
+      samples: () => setTabIdx(1),
     }
     showError[Object.keys(data)[0]]()
   }
@@ -162,7 +179,6 @@ const SettingsPage: NextPage<Props> = ({ user }: Props) => {
             <c.h3 textStyle="h3" mb={12}>
               Settings
             </c.h3>
-            {/* tabs go here */}
             <Tabs
               index={tabIdx}
               variant="pill"
@@ -174,7 +190,7 @@ const SettingsPage: NextPage<Props> = ({ user }: Props) => {
               <Flex justify="space-between" align="center" mb={10}>
                 <TabList>
                   {tabs.map(({ label }) => (
-                    <Tab id={label} key={label}>
+                    <Tab id={label} key={label} mr={4}>
                       {label}
                     </Tab>
                   ))}
