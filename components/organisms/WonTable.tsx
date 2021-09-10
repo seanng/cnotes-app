@@ -16,8 +16,9 @@ import {
 import NextLink from 'next/link'
 import { CREATOR_AVATAR_TEXT_SPACING } from 'shared/constants'
 import { MouseEventHandler, FC } from 'react'
+import { Bid, User } from 'shared/types'
 
-const data = [
+const fakeData = [
   {
     id: 'abcdef',
     creator: {
@@ -71,7 +72,13 @@ const columns = [
   '', // Mark As Paid Button
 ]
 
-const WonTable: FC = () => {
+type Props = {
+  data: Bid[]
+  user: User
+}
+
+const WonTable: FC<Props> = ({ data }: Props) => {
+  console.log('data: ', data)
   const handleClick: MouseEventHandler = () => {
     // return input
     // input should be a number
@@ -86,7 +93,7 @@ const WonTable: FC = () => {
         </Tr>
       </Thead>
       <Tbody>
-        {data.map(offer => (
+        {fakeData.map(offer => (
           <LinkBox
             as={Tr}
             transform="scale(1)"

@@ -19,7 +19,7 @@ import {
   FieldError,
 } from 'react-hook-form'
 import FormInput from 'components/atoms/FormInput'
-import { URL_REGEX } from 'shared/constants'
+import { PLATFORM_URL_REGEX, URL_REGEX } from 'shared/constants'
 
 type Props = {
   user: User
@@ -78,8 +78,8 @@ const Portfolio: FC<Props> = ({ register, control, errors }: Props) => {
                 ...register(`collabs.${i}.url` as const, {
                   required: true,
                   pattern: {
-                    value: URL_REGEX,
-                    message: 'Enter a valid website url',
+                    value: PLATFORM_URL_REGEX,
+                    message: 'Enter a url from YouTube or TikTok',
                   },
                 }),
               }}
@@ -177,8 +177,8 @@ const Portfolio: FC<Props> = ({ register, control, errors }: Props) => {
                 ...register(`samples.${i}.url` as const, {
                   required: true,
                   pattern: {
-                    value: URL_REGEX,
-                    message: 'Enter a valid website url',
+                    value: PLATFORM_URL_REGEX,
+                    message: 'Enter a url from YouTube or TikTok',
                   },
                 }),
               }}

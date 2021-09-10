@@ -10,58 +10,14 @@ import {
   Tr,
   LinkBox,
   LinkOverlay,
-  Badge,
   IconButton,
 } from '@chakra-ui/react'
 import NextLink from 'next/link'
 import { CloseIcon } from '@chakra-ui/icons'
-import { CREATOR_AVATAR_TEXT_SPACING } from 'shared/constants'
-import { MouseEventHandler, FC } from 'react'
-
-const data = [
-  {
-    id: 'abcdef',
-    creator: {
-      id: 'gfisdj',
-      role: 'CREATOR',
-      status: 'VERIFIED',
-      firstName: 'Linus',
-      lastName: 'Tech Tips',
-      email: 'abc@abc.com',
-      viewerCount: 100000,
-    },
-    platform: 'YouTube',
-    deliverable: 'Integration',
-  },
-  {
-    id: 'abcdddef',
-    creator: {
-      id: 'gfisffdj',
-      role: 'CREATOR',
-      status: 'VERIFIED',
-      firstName: 'Linus',
-      lastName: 'Tech Tips',
-      email: 'abc@abc.com',
-      viewerCount: 100000,
-    },
-    platform: 'YouTube',
-    deliverable: 'Integration',
-  },
-  {
-    id: 'abcde123f',
-    creator: {
-      id: 'gf12isdj',
-      role: 'CREATOR',
-      status: 'VERIFIED',
-      firstName: 'Linus',
-      lastName: 'Tech Tips',
-      email: 'abc@abc.com',
-      viewerCount: 100000,
-    },
-    platform: 'YouTube',
-    deliverable: 'Integration',
-  },
-]
+import { ACTIVE, CREATOR_AVATAR_TEXT_SPACING } from 'shared/constants'
+import { Bid, User } from 'shared/types'
+import { MouseEventHandler, FC, useMemo } from 'react'
+import OfferStatusBadge from 'components/atoms/OfferStatusBadge'
 
 const columns = [
   'Creator',
@@ -72,10 +28,38 @@ const columns = [
   '', // Clear Button
 ]
 
-const AwaitingTable: FC = () => {
+type Props = {
+  data: Bid[]
+  user: User
+}
+
+const getBidStatus = (bid: Bid, user: User): string => {
+  if (bid.offer.status === ACTIVE) {
+    return 'SELECTING'
+  } else if (bid.offer.brandId !== user.id) {
+    return 'LOST'
+  }
+  return 'WON'
+}
+
+const AwaitingTable: FC<Props> = ({ data, user }: Props) => {
+  const now = new Date()
+  const bids = useMemo(() => {
+    return data
+      .filter(
+        ({ offer, isCleared }) =>
+          now > new Date(offer.auctionEndsAt) && !isCleared
+      )
+      .map(bid => ({
+        ...bid,
+        status: getBidStatus(bid, user),
+      }))
+  }, [data])
+
   const handleClick: MouseEventHandler = () => {
     // Clear button handler
   }
+
   return (
     <Table variant="brandDashboard">
       <Thead>
@@ -86,7 +70,7 @@ const AwaitingTable: FC = () => {
         </Tr>
       </Thead>
       <Tbody>
-        {data.map(offer => (
+        {bids.map(({ offer, status, history }) => (
           <LinkBox
             as={Tr}
             transform="scale(1)"
@@ -100,12 +84,12 @@ const AwaitingTable: FC = () => {
                 <LinkOverlay>
                   <Flex align="center">
                     <Avatar
-                      name="Linus Tech Tips"
+                      name={offer.creator.alias}
                       src="https://bit.ly/dan-abramov"
                     />
                     <Flex direction="column" ml={CREATOR_AVATAR_TEXT_SPACING}>
-                      <Box>Linus Tech Tips</Box>
-                      <Box textStyle="caption2">10k viewers</Box>
+                      <Box>{offer.creator.alias}</Box>
+                      {/* <Box textStyle="caption2">10k viewers</Box> */}
                     </Flex>
                   </Flex>
                 </LinkOverlay>
@@ -113,36 +97,26 @@ const AwaitingTable: FC = () => {
             </Td>
             <Td>
               <Flex direction="column">
-                <Box>Integration</Box>
-                <Box textStyle="caption2">TikTok</Box>
+                <Box>{offer.deliverable}</Box>
+                <Box textStyle="caption2">{offer.platform}</Box>
               </Flex>
             </Td>
+            <Td>${offer.highestBid.toLocaleString()}</Td>
+            <Td>${history[history.length - 1].price.toLocaleString()}</Td>
             <Td>
-              <Flex direction="column">
-                <Box color="red">5 hours 59 minutes</Box>
-                <Box textStyle="caption2">Tuesday, 9:30am</Box>
-              </Flex>
+              <OfferStatusBadge status={status} />
             </Td>
-            <Td>
-              <Flex direction="column">
-                <Box>$1,500</Box>
-                <Box textStyle="caption2">2 bids</Box>
-              </Flex>
-            </Td>
-            <Td>
-              {/* TODO: come up with logic in determining statuses */}
-              {/* TODO: add 50, 200, 400 etc to colors.ts so colors will show */}
-              <Badge colorScheme="teal">WON</Badge>
-            </Td>
-            <Td pl={-2} textAlign="right">
-              <IconButton
-                size="xs"
-                type="submit"
-                aria-label="Bid"
-                bgColor="red"
-                onClick={handleClick}
-                icon={<CloseIcon boxSize={2} />}
-              />
+            <Td pl={-2} textAlign="right" maxWidth={50}>
+              {status !== 'SELECTING' && (
+                <IconButton
+                  size="xs"
+                  type="submit"
+                  aria-label="Bid"
+                  bgColor="red"
+                  onClick={handleClick}
+                  icon={<CloseIcon boxSize={2} />}
+                />
+              )}
             </Td>
           </LinkBox>
         ))}

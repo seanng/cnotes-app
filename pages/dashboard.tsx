@@ -27,7 +27,7 @@ const DashboardPage: NextPage<Props> = ({ user }: Props) => {
 export const getServerSideProps: GetServerSideProps = async ctx => {
   const user = getUserPayload(ctx.req.headers.cookie)
   if (!user) {
-    return redirTo('/')
+    return redirTo('/login')
   }
 
   return { props: { user } }

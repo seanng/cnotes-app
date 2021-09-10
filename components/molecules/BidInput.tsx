@@ -151,7 +151,7 @@ const BidModal: FC<ModalProps> = ({
         {showSuccess ? (
           <>
             <ModalBody textStyle="body2" mb={10}>
-              {`You have successfully bid $${price} for a ${offer.platform} ${offer.deliverable} from ${offer.creator.firstName}.`}
+              {`You have successfully bid $${price} for a ${offer.platform} ${offer.deliverable} from ${offer.creator.alias}.`}
             </ModalBody>
             <ModalFooter>
               <Button onClick={onClose}>Close</Button>
@@ -161,12 +161,11 @@ const BidModal: FC<ModalProps> = ({
           <form onSubmit={handleSubmit(onConfirm)}>
             <ModalBody>
               <Box textStyle="body2" mb={10}>
-                {`You are about to make a bid for a ${offer.platform} ${offer.deliverable} from ${offer.creator.firstName}`}
+                {`You are about to make a bid for a ${offer.platform} ${offer.deliverable} from ${offer.creator.alias}`}
               </Box>
               <FormInput
                 label="Link to Product"
-                errors={errors}
-                name="productLink"
+                error={errors.productLink}
                 inputProps={{
                   ...register('productLink', {
                     required: true,

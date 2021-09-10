@@ -14,6 +14,7 @@ import {
 import NextLink from 'next/link'
 import { CREATOR_AVATAR_TEXT_SPACING } from 'shared/constants'
 import { FC } from 'react'
+import { Bid, User } from 'shared/types'
 
 const data = [
   {
@@ -68,7 +69,12 @@ const columns = [
   'Date Completed',
 ]
 
-const HistoryTable: FC = () => {
+type Props = {
+  user: User
+  data: Bid[]
+}
+
+const HistoryTable: FC<Props> = () => {
   return (
     <Table variant="brandDashboard">
       <Thead>

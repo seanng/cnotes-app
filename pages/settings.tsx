@@ -77,11 +77,14 @@ const getFormData = (user: User): SettingsFormFieldValues => {
   }
 }
 
-interface Props {
-  user: User
-}
+const brandTabs = [
+  {
+    label: 'profile',
+    Component: ProfileSettings,
+  },
+]
 
-const tabs = [
+const creatorTabs = [
   {
     label: 'profile',
     Component: ProfileSettings,
@@ -91,6 +94,10 @@ const tabs = [
     Component: Portfolio,
   },
 ]
+
+interface Props {
+  user: User
+}
 
 const SettingsPage: NextPage<Props> = ({ user }: Props) => {
   const [updateUser] = useMutation(UpdateUserMutation)
@@ -170,6 +177,8 @@ const SettingsPage: NextPage<Props> = ({ user }: Props) => {
     errors,
     user,
   }
+
+  const tabs = user.role === CREATOR ? creatorTabs : brandTabs
 
   return (
     <>

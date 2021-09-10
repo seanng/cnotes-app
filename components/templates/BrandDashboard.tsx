@@ -29,12 +29,12 @@ const MyBidsQuery = gql`
         id
         platform
         deliverable
+        status
         highestBid
         bidCount
         auctionEndsAt
         creator {
-          firstName
-          lastName
+          alias
         }
       }
     }
@@ -71,7 +71,6 @@ const BrandDashboard: NextPage<Props> = ({ user }: Props) => {
     // fetchPolicy: 'no-cache',
   })
 
-  console.log('bids: ', bids)
   useEffect(() => {
     if (data && data.myBids) {
       setBids(data.myBids)
@@ -100,21 +99,22 @@ const BrandDashboard: NextPage<Props> = ({ user }: Props) => {
             lazyBehavior="keepMounted"
           >
             <Flex justify="space-between" align="center" mb={10}>
-              <c.div display={['none', 'block']}>
-                dropdown placeholder for tab idx: {tabIdx}
-              </c.div>
               <TabList>
                 {tables.map(({ label }) => (
                   <Tab key={label}>{label}</Tab>
                 ))}
               </TabList>
+              <c.div display={['none', 'block']}>
+                dropdown placeholder for tab idx: {tabIdx}
+              </c.div>
             </Flex>
             <TabPanels>
-              {tables.map(({ label, Table }) => (
-                <TabPanel key={label}>
-                  <Table />
-                </TabPanel>
-              ))}
+              {bids &&
+                tables.map(({ label, Table }) => (
+                  <TabPanel key={label}>
+                    <Table data={bids} user={user} />
+                  </TabPanel>
+                ))}
             </TabPanels>
           </Tabs>
         </Container>

@@ -12,9 +12,12 @@ import {
   LinkOverlay,
 } from '@chakra-ui/react'
 import NextLink from 'next/link'
+import CountdownTimer from 'components/atoms/CountdownTimer'
 import { CREATOR_AVATAR_TEXT_SPACING } from 'shared/constants'
-import { FC } from 'react'
+import { FC, useMemo } from 'react'
 import BidInput from 'components/molecules/BidInput'
+import { Bid, User } from 'shared/types'
+import { formatRelative } from 'date-fns'
 
 const columns = [
   'Creator',
@@ -25,53 +28,18 @@ const columns = [
   '', // Bid Button
 ]
 
-const data = [
-  {
-    id: 'abcdef',
-    creator: {
-      id: 'gfisdj',
-      role: 'CREATOR',
-      status: 'VERIFIED',
-      firstName: 'Linus',
-      lastName: 'Tech Tips',
-      email: 'abc@abc.com',
-      viewerCount: 100000,
-    },
-    platform: 'YouTube',
-    deliverable: 'Integration',
-  },
-  {
-    id: 'abcdddef',
-    creator: {
-      id: 'gfisffdj',
-      role: 'CREATOR',
-      status: 'VERIFIED',
-      firstName: 'Linus',
-      lastName: 'Tech Tips',
-      email: 'abc@abc.com',
-      viewerCount: 100000,
-    },
-    platform: 'YouTube',
-    deliverable: 'Integration',
-  },
-  {
-    id: 'abcde123f',
-    creator: {
-      id: 'gf12isdj',
-      role: 'CREATOR',
-      status: 'VERIFIED',
-      firstName: 'Linus',
-      lastName: 'Tech Tips',
-      email: 'abc@abc.com',
-      viewerCount: 100000,
-    },
-    platform: 'YouTube',
-    deliverable: 'Integration',
-  },
-]
+type Props = {
+  data: Bid[]
+  user: User
+}
 
 // query the data via apollo?
-const BiddingTable: FC = () => {
+const BiddingTable: FC<Props> = ({ data }: Props) => {
+  const now = new Date()
+  const bids = useMemo(() => {
+    return data.filter(({ offer }) => new Date(offer.auctionEndsAt) > now)
+  }, [data])
+
   return (
     <Table variant="brandDashboard">
       <Thead>
@@ -82,7 +50,7 @@ const BiddingTable: FC = () => {
         </Tr>
       </Thead>
       <Tbody>
-        {data.map(offer => (
+        {bids.map(({ offer, history }) => (
           <LinkBox
             as={Tr}
             transform="scale(1)"
@@ -96,12 +64,12 @@ const BiddingTable: FC = () => {
                 <LinkOverlay>
                   <Flex align="center">
                     <Avatar
-                      name="Linus Tech Tips"
+                      name={offer.creator.alias}
                       src="https://bit.ly/dan-abramov"
                     />
                     <Flex direction="column" ml={CREATOR_AVATAR_TEXT_SPACING}>
-                      <Box>Linus Tech Tips</Box>
-                      <Box textStyle="caption2">10k viewers</Box>
+                      <Box>{offer.creator.alias}</Box>
+                      {/* <Box textStyle="caption2">10k viewers</Box> */}
                     </Flex>
                   </Flex>
                 </LinkOverlay>
@@ -109,23 +77,25 @@ const BiddingTable: FC = () => {
             </Td>
             <Td>
               <Flex direction="column">
-                <Box>Integration</Box>
-                <Box textStyle="caption2">TikTok</Box>
+                <Box>{offer.deliverable}</Box>
+                <Box textStyle="caption2">{offer.platform}</Box>
+              </Flex>
+            </Td>
+            <Td>
+              <Flex direction="column" minWidth={208}>
+                <CountdownTimer end={offer.auctionEndsAt} />
+                <Box textStyle="caption2">
+                  {`Ends ${formatRelative(new Date(offer.auctionEndsAt), now)}`}
+                </Box>
               </Flex>
             </Td>
             <Td>
               <Flex direction="column">
-                <Box color="red">5 hours 59 minutes</Box>
-                <Box textStyle="caption2">Tuesday, 9:30am</Box>
+                <Box>${offer.highestBid.toLocaleString()}</Box>
+                <Box textStyle="caption2">{offer.bidCount} bids</Box>
               </Flex>
             </Td>
-            <Td>
-              <Flex direction="column">
-                <Box>$1,500</Box>
-                <Box textStyle="caption2">2 bids</Box>
-              </Flex>
-            </Td>
-            <Td>$1,200</Td>
+            <Td>${history[history.length - 1].price.toLocaleString()}</Td>
             <Td pr={0} textAlign="right">
               <BidInput offer={offer} />
             </Td>

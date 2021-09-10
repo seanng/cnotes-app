@@ -110,6 +110,7 @@ async function seedOffer(db) {
         highestBid: 0,
         platform: faker.random.arrayElement(['YouTube', 'TikTok']),
         deliverable: faker.random.arrayElement(['Integration', 'Deliverable']),
+        status: 'ACTIVE',
         description: faker.lorem.paragraph(5),
         creatorId: creator._id,
         auctionEndsAt,
@@ -129,7 +130,6 @@ async function seedOffer(db) {
 
 async function seedBid(db) {
   const brands = await db.collection('User').find({ role: 'BRAND' }).toArray()
-
   const offers = await db.collection('Offer').find().toArray()
 
   const now = new Date()
@@ -153,6 +153,7 @@ async function seedBid(db) {
       const data = {
         offerId: offer._id,
         brandId: brand._id,
+        isCleared: false,
         productUrl: faker.internet.url(),
         message: faker.lorem.sentences(2),
         history: [{ price, bidAt: now }],

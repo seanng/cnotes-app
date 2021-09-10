@@ -38,6 +38,7 @@ export const Bid = objectType({
     t.field('history', {
       type: list('Json'),
     })
+    t.nonNull.boolean('isCleared')
     t.nonNull.string('message')
     t.string('productUrl')
     t.nonNull.field('createdAt', {
@@ -83,10 +84,8 @@ export const myBids = queryField('myBids', {
         offer: {
           include: {
             creator: {
-              // todo: change to handle
               select: {
-                firstName: true,
-                lastName: true,
+                alias: true,
               },
             },
           },
@@ -128,6 +127,7 @@ export const placeBid = mutationField('placeBid', {
         data: {
           ...data,
           offerId,
+          isCleared: false,
           brandId: user.id,
           createdAt: now,
         },
