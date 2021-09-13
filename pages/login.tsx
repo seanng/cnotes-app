@@ -1,6 +1,5 @@
-import gql from 'graphql-tag'
 import { chakra as c, Box, Flex, Button } from '@chakra-ui/react'
-import { useMutation, useApolloClient } from '@apollo/client'
+import { useMutation, useApolloClient, gql } from '@apollo/client'
 import Input from 'components/atoms/LoginInput'
 import { useForm } from 'react-hook-form'
 import {

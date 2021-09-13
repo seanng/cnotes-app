@@ -22,10 +22,10 @@ import { ArrowForwardIcon } from '@chakra-ui/icons'
 import { FC, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { Offer } from 'shared/types'
-import { useMutation } from '@apollo/client'
-import gql from 'graphql-tag'
+import { useMutation, gql } from '@apollo/client'
 import FormInput from 'components/atoms/FormInput'
 import { URL_REGEX } from 'shared/constants'
+import { useRouter } from 'next/router'
 
 const PlaceBidMutation = gql`
   mutation PlaceBidMutation($input: PlaceBidInput!) {
@@ -115,16 +115,13 @@ const BidModal: FC<ModalProps> = ({
     register,
     formState: { isSubmitting, errors },
   } = useForm()
+  const router = useRouter()
 
   const [placeBid] = useMutation(PlaceBidMutation)
   const [showSuccess, setShowSuccess] = useState(false)
 
   const onConfirm = async (input: OnConfirmProps): Promise<void> => {
-    // submit bid to backend.
-
-    const {
-      data: { placeBid: payload },
-    } = await placeBid({
+    await placeBid({
       variables: {
         input: {
           ...input,
@@ -133,11 +130,12 @@ const BidModal: FC<ModalProps> = ({
         },
       },
     })
-
-    // render success.
     setShowSuccess(true)
+  }
 
-    console.log('data: ', payload)
+  const onSuccess = (): void => {
+    onClose()
+    router.reload()
   }
 
   // TODO: may have to add useEffect when isOpen=true, setShowSuccess(false)
@@ -154,7 +152,7 @@ const BidModal: FC<ModalProps> = ({
               {`You have successfully bid $${price} for a ${offer.platform} ${offer.deliverable} from ${offer.creator.alias}.`}
             </ModalBody>
             <ModalFooter>
-              <Button onClick={onClose}>Close</Button>
+              <Button onClick={onSuccess}>Close</Button>
             </ModalFooter>
           </>
         ) : (
@@ -163,11 +161,26 @@ const BidModal: FC<ModalProps> = ({
               <Box textStyle="body2" mb={10}>
                 {`You are about to make a bid for a ${offer.platform} ${offer.deliverable} from ${offer.creator.alias}`}
               </Box>
+              <Flex mb={1} color="neutrals4" textStyle="caption1">
+                <Box>Time left</Box>
+                <Spacer />
+                <Box>3 hours 3 minutes left</Box>
+              </Flex>
+              <Flex mb={2} color="neutrals4" textStyle="caption1">
+                <Box>Total number of bids</Box>
+                <Spacer />
+                <Box>3</Box>
+              </Flex>
+              <Flex textStyle="body2" fontWeight="bold" mb={6}>
+                <Box>Your bid</Box>
+                <Spacer />
+                <Box>{`$${price}`}</Box>
+              </Flex>
               <FormInput
                 label="Link to Product"
-                error={errors.productLink}
+                error={errors.productUrl}
                 inputProps={{
-                  ...register('productLink', {
+                  ...register('productUrl', {
                     required: true,
                     pattern: {
                       value: URL_REGEX,
@@ -185,25 +198,10 @@ const BidModal: FC<ModalProps> = ({
                 </FormLabel>
                 <Textarea
                   placeholder={`eg. I want you to shine for me like a whistle.`}
-                  mb={8}
+                  // mb={8}
                   {...register('message')}
                 />
               </FormControl>
-              <Flex mb={1} color="neutrals4" textStyle="caption1">
-                <Box>Time left</Box>
-                <Spacer />
-                <Box>3 hours 3 minutes left</Box>
-              </Flex>
-              <Flex mb={2} color="neutrals4" textStyle="caption1">
-                <Box>Total number of bids</Box>
-                <Spacer />
-                <Box>3</Box>
-              </Flex>
-              <Flex textStyle="body2" fontWeight="bold">
-                <Box>Your bid</Box>
-                <Spacer />
-                <Box>{`$${price}`}</Box>
-              </Flex>
             </ModalBody>
             <ModalFooter>
               <Button type="submit" disabled={isSubmitting} mr={4}>

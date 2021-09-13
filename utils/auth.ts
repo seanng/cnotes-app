@@ -1,9 +1,10 @@
 // SERVER ONLY
 import cookieJS from 'cookie'
+import { User as PrismaUser } from '@prisma/client'
 import { UserInputError } from 'apollo-server-micro'
 import bcrypt from 'bcryptjs'
 import jwt from 'jsonwebtoken'
-import { User, Token } from 'shared/types'
+import { Token, User } from 'shared/types'
 import { BRAND, CREATOR } from 'shared/constants'
 
 export function serializeCookie(token = '', maxAge = 6 * 60 * 60): string {
@@ -27,7 +28,7 @@ export function isCorrectPassword(exposed: string, hashed: string): boolean {
   return bcrypt.compareSync(exposed, hashed)
 }
 
-export function encryptToken(user: User): string {
+export function encryptToken(user: PrismaUser): string {
   return jwt.sign({ user, time: new Date() }, process.env.JWT_SECRET, {
     expiresIn: '6h',
   })

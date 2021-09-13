@@ -29,6 +29,7 @@ export const Offer = objectType({
     t.int('revisionDays')
     t.int('bidCount')
     t.int('startPrice')
+    t.int('finalPrice')
     t.int('numberOfRevisions')
     t.int('highestBid')
     t.list.field('bids', {

@@ -1,6 +1,5 @@
 import Link from 'next/link'
-import gql from 'graphql-tag'
-import { useQuery } from '@apollo/client'
+import { useQuery, gql } from '@apollo/client'
 import Layout from '../components/Layout'
 
 const FeedQuery = gql`

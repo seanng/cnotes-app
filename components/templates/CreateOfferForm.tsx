@@ -16,8 +16,7 @@ import {
   Spacer,
   Select,
 } from '@chakra-ui/react'
-import gql from 'graphql-tag'
-import { useMutation } from '@apollo/client'
+import { useMutation, gql } from '@apollo/client'
 import { NextPage } from 'next'
 import Layout from 'components/organisms/Layout'
 import { useForm } from 'react-hook-form'

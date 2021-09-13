@@ -46,10 +46,7 @@ const ProfileSettings: FC<Props> = ({
         <Avatar
           size={'2xl'}
           name="Linus Tech Tips"
-          src={
-            (avatarFile ? URL.createObjectURL(avatarFile) : user.avatarUrl) ||
-            '/banner-default.jpg'
-          }
+          src={avatarFile ? URL.createObjectURL(avatarFile) : user.avatarUrl}
           mr={6}
         />
         <Flex direction="column" justifyContent="center">

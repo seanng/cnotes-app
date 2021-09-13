@@ -9,10 +9,20 @@ const OfferStatusBadge: FC<Props> = ({ status }: Props) => {
   // TODO: (after designer) add 50, 200, 400 etc to colors.ts so colors will show
   const colors = {
     WON: 'teal',
-    LOST: 'red',
+    LOST: 'pink',
     SELECTING: 'purple',
+    TRANSACTING: 'pink',
+    PAYING: 'pink',
   }
-  return <Badge colorScheme={colors[status] || 'teal'}>{status}</Badge>
+  const display = {
+    TRANSACTING: 'DELIVERING',
+    PAYING: 'OUTSTANDING',
+  }
+  return (
+    <Badge colorScheme={colors[status] || 'teal'}>
+      {display[status] || status}
+    </Badge>
+  )
 }
 
 export default OfferStatusBadge

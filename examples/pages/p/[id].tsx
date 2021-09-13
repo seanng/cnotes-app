@@ -1,6 +1,5 @@
 import Router, { useRouter } from 'next/router'
-import gql from 'graphql-tag'
-import { useQuery, useMutation } from '@apollo/client'
+import { useQuery, useMutation, gql } from '@apollo/client'
 import Layout from '../../components/Layout'
 
 const PostQuery = gql`

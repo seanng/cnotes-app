@@ -40,6 +40,10 @@ const BiddingTable: FC<Props> = ({ data }: Props) => {
     return data.filter(({ offer }) => new Date(offer.auctionEndsAt) > now)
   }, [data])
 
+  if (!bids || bids.length === 0) {
+    return <Box textStyle="body1">There are no ongoing bids at the moment</Box>
+  }
+
   return (
     <Table variant="brandDashboard">
       <Thead>
@@ -65,7 +69,7 @@ const BiddingTable: FC<Props> = ({ data }: Props) => {
                   <Flex align="center">
                     <Avatar
                       name={offer.creator.alias}
-                      src="https://bit.ly/dan-abramov"
+                      src={offer.creator.avatarUrl}
                     />
                     <Flex direction="column" ml={CREATOR_AVATAR_TEXT_SPACING}>
                       <Box>{offer.creator.alias}</Box>

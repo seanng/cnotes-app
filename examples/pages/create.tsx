@@ -1,7 +1,6 @@
 import React, { useState } from 'react'
 import Router from 'next/router'
-import gql from 'graphql-tag'
-import { useMutation } from '@apollo/client'
+import { useMutation, gql } from '@apollo/client'
 import Layout from '../components/Layout'
 
 const CreateDraftMutation = gql`

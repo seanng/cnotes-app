@@ -1,11 +1,11 @@
 import * as R from 'ramda'
 import { AuthenticationError, ForbiddenError } from 'apollo-server-errors'
 import prisma from 'lib/prisma'
+import { User as UserType } from '@prisma/client'
 import { arg, inputObjectType, list, mutationField, objectType } from 'nexus'
 import slugify from 'slugify'
 import { ALIAS_TAKEN, userPublicFields } from 'shared/constants'
 import { encryptToken, serializeCookie } from 'utils/auth'
-import { User as UserType } from 'shared/types'
 
 export const User = objectType({
   name: 'User',

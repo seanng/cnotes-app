@@ -14,10 +14,20 @@ import {
 } from '@chakra-ui/react'
 import NextLink from 'next/link'
 import { CloseIcon } from '@chakra-ui/icons'
-import { ACTIVE, CREATOR_AVATAR_TEXT_SPACING } from 'shared/constants'
+import { CREATOR_AVATAR_TEXT_SPACING } from 'shared/constants'
 import { Bid, User } from 'shared/types'
+import { useMutation, gql } from '@apollo/client'
 import { MouseEventHandler, FC, useMemo } from 'react'
 import OfferStatusBadge from 'components/atoms/OfferStatusBadge'
+
+const UpdateBidMutation = gql`
+  mutation UpdateBidMutation($input: UpdateBidInput!) {
+    updateBid(input: $input) {
+      id
+      isCleared
+    }
+  }
+`
 
 const columns = [
   'Creator',
@@ -34,9 +44,9 @@ type Props = {
 }
 
 const getBidStatus = (bid: Bid, user: User): string => {
-  if (bid.offer.status === ACTIVE) {
+  if (!bid.offer.brand) {
     return 'SELECTING'
-  } else if (bid.offer.brandId !== user.id) {
+  } else if (bid.offer.brand.id !== user.id) {
     return 'LOST'
   }
   return 'WON'
@@ -44,6 +54,8 @@ const getBidStatus = (bid: Bid, user: User): string => {
 
 const AwaitingTable: FC<Props> = ({ data, user }: Props) => {
   const now = new Date()
+  const [updateBid] = useMutation(UpdateBidMutation)
+
   const bids = useMemo(() => {
     return data
       .filter(
@@ -56,9 +68,18 @@ const AwaitingTable: FC<Props> = ({ data, user }: Props) => {
       }))
   }, [data])
 
-  const handleClick: MouseEventHandler = () => {
-    // Clear button handler
-  }
+  const handleClearClick =
+    (id: string): MouseEventHandler =>
+    async (): Promise<void> => {
+      await updateBid({
+        variables: {
+          input: {
+            id,
+            isCleared: true,
+          },
+        },
+      })
+    }
 
   return (
     <Table variant="brandDashboard">
@@ -70,7 +91,7 @@ const AwaitingTable: FC<Props> = ({ data, user }: Props) => {
         </Tr>
       </Thead>
       <Tbody>
-        {bids.map(({ offer, status, history }) => (
+        {bids.map(({ id, offer, status, history }) => (
           <LinkBox
             as={Tr}
             transform="scale(1)"
@@ -85,7 +106,7 @@ const AwaitingTable: FC<Props> = ({ data, user }: Props) => {
                   <Flex align="center">
                     <Avatar
                       name={offer.creator.alias}
-                      src="https://bit.ly/dan-abramov"
+                      src={offer.creator.avatarUrl}
                     />
                     <Flex direction="column" ml={CREATOR_AVATAR_TEXT_SPACING}>
                       <Box>{offer.creator.alias}</Box>
@@ -113,7 +134,7 @@ const AwaitingTable: FC<Props> = ({ data, user }: Props) => {
                   type="submit"
                   aria-label="Bid"
                   bgColor="red"
-                  onClick={handleClick}
+                  onClick={handleClearClick(id)}
                   icon={<CloseIcon boxSize={2} />}
                 />
               )}

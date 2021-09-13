@@ -1,5 +1,5 @@
 import dynamic from 'next/dynamic'
-import { useMutation } from '@apollo/client'
+import { gql, useMutation } from '@apollo/client'
 import { GetServerSideProps, NextPage } from 'next'
 import {
   Box,
@@ -16,7 +16,6 @@ import {
 import * as R from 'ramda'
 import FeedbackModal from 'components/molecules/FeedbackModal'
 import Layout from 'components/organisms/Layout'
-import gql from 'graphql-tag'
 import { useRouter } from 'next/router'
 import { ChangeEventHandler, useState } from 'react'
 import { useForm } from 'react-hook-form'

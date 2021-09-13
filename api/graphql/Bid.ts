@@ -38,7 +38,7 @@ export const Bid = objectType({
     t.field('history', {
       type: list('Json'),
     })
-    t.nonNull.boolean('isCleared')
+    t.boolean('isCleared')
     t.nonNull.string('message')
     t.string('productUrl')
     t.nonNull.field('createdAt', {
@@ -46,31 +46,6 @@ export const Bid = objectType({
     })
   },
 })
-
-// where active = active & now < auctionEndsAt
-// export const getActiveBids = queryField('getActiveBids', {
-//   type: 'Bid',
-//   resolve: async (_, __, { user }) => {
-//     if (!isBrand(user)) throw new ForbiddenError('Not a brand')
-
-//     const data = await prisma.bid.findMany({
-//       where: {
-//         brandId: user.id,
-//         offer: {
-//           status: ACTIVE,
-//           auctionEndsAt: {
-//             gt: new Date(),
-//           },
-//         },
-//       },
-//       include: {
-//         offer: true,
-//       },
-//     })
-
-//     return data
-//   },
-// })
 
 export const myBids = queryField('myBids', {
   type: list('Bid'),
@@ -83,9 +58,15 @@ export const myBids = queryField('myBids', {
       include: {
         offer: {
           include: {
+            brand: {
+              select: {
+                id: true,
+              },
+            },
             creator: {
               select: {
                 alias: true,
+                avatarUrl: true,
               },
             },
           },
@@ -97,6 +78,22 @@ export const myBids = queryField('myBids', {
   },
 })
 
+export const updateBid = mutationField('updateBid', {
+  type: 'Bid',
+  args: {
+    input: arg({ type: 'UpdateBidInput' }),
+  },
+  resolve: async (ctx, { input }, { user }) => {
+    if (!isBrand(user)) throw new ForbiddenError('Not a brand')
+    const { id, ...data } = input
+    const bid = await prisma.bid.update({
+      data,
+      where: { id },
+    })
+    return bid
+  },
+})
+
 export const placeBid = mutationField('placeBid', {
   type: 'Bid',
   args: {
@@ -104,7 +101,8 @@ export const placeBid = mutationField('placeBid', {
   },
   resolve: async (ctx, { input }, { user }) => {
     if (!isBrand(user)) throw new ForbiddenError('Not a brand')
-    const { price, offerId, productUrl, message } = input
+    const { offerId, productUrl, message } = input
+    const price = Number(input.price)
 
     let bid = await prisma.bid.findFirst({
       where: { brandId: user.id, offerId },
@@ -165,8 +163,16 @@ export const placeBidInput = inputObjectType({
   name: 'PlaceBidInput',
   definition(t) {
     t.nonNull.string('offerId')
-    t.nonNull.int('price')
+    t.nonNull.string('price')
     t.nonNull.string('productUrl')
     t.string('message')
+  },
+})
+
+export const updateBidInput = inputObjectType({
+  name: 'UpdateBidInput',
+  definition(t) {
+    t.string('id')
+    t.boolean('isCleared')
   },
 })

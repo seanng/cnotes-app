@@ -36,11 +36,12 @@ model User {
 
 model Offer {
   id                String    @id @default(dbgenerated()) @map("_id") @db.ObjectId
-  status            String    @default("UNVERIFIED") // UNVERIFIED, ACTIVE (bidding + selecting), TRANSACTING, PAYING, COMPLETED
+  status            String    @default("UNVERIFIED") // UNVERIFIED, ACTIVE (bidding + selecting), TRANSACTING, PAYING, COMPLETED 
   bids              Bid[]
   highestBid        Int?
   bidCount          Int?
   startPrice        Int?
+  finalPrice        Int? // the same as offer.brand.bids.history[history.length-1].price. updated on winner select.
   platform          String?
   deliverable       String?
   description       String

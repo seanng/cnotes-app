@@ -11,6 +11,7 @@ import {
   stringArg,
 } from 'nexus'
 import prisma from 'lib/prisma'
+import { User } from '@prisma/client'
 import { UserInputError, AuthenticationError } from 'apollo-server-micro'
 import {
   BRAND,
@@ -28,7 +29,7 @@ import {
   isCorrectPassword,
   serializeCookie,
 } from 'utils/auth'
-import { Token, User } from 'shared/types'
+import { Token } from 'shared/types'
 
 export const Signup = mutationField('signup', {
   type: 'AuthPayload',

@@ -43,6 +43,7 @@ export interface Offer {
   id: string
   creator: User
   status: 'UNVERIFIED' | 'ACTIVE' | 'TRANSACTING' | 'PAYING' | 'COMPLETED'
+  brand: User
   brandId?: string
   platform: string
   deliverable: string
@@ -50,6 +51,10 @@ export interface Offer {
   auctionEndsAt: string
   bidCount: number
   highestBid: number
+  finalPrice: number
+  deliveryStartsAt: string
+  deliveryEndsAt: string
+  completedAt: string
 }
 
 export interface Token {

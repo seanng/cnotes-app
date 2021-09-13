@@ -1,6 +1,5 @@
 import { useEffect } from 'react'
-import { useMutation, useApolloClient } from '@apollo/client'
-import gql from 'graphql-tag'
+import { useMutation, useApolloClient, gql } from '@apollo/client'
 import { useRouter } from 'next/router'
 import { NextPage } from 'next'
 

@@ -11,18 +11,18 @@ import {
   TabPanel,
 } from '@chakra-ui/react'
 import { NextPage } from 'next'
-import { useQuery } from '@apollo/client'
+import { useQuery, gql } from '@apollo/client'
 import { User } from 'shared/types'
 import BiddingTable from 'components/organisms/BiddingTable'
 import AwaitingTable from 'components/organisms/AwaitingTable'
 import WonTable from 'components/organisms/WonTable'
 import HistoryTable from 'components/organisms/HistoryTable'
-import gql from 'graphql-tag'
 
 const MyBidsQuery = gql`
   query MyBidsQuery {
     myBids {
       id
+      isCleared
       productUrl
       history
       offer {
@@ -30,12 +30,20 @@ const MyBidsQuery = gql`
         platform
         deliverable
         status
+        brand {
+          id
+        }
         highestBid
         bidCount
+        finalPrice
+        deliveryStartsAt
+        deliveryEndsAt
         auctionEndsAt
         creator {
           alias
+          avatarUrl
         }
+        completedAt
       }
     }
   }

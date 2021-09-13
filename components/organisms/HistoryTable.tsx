@@ -12,59 +12,15 @@ import {
   LinkOverlay,
 } from '@chakra-ui/react'
 import NextLink from 'next/link'
-import { CREATOR_AVATAR_TEXT_SPACING } from 'shared/constants'
-import { FC } from 'react'
+import { COMPLETED, CREATOR_AVATAR_TEXT_SPACING } from 'shared/constants'
+import { format } from 'date-fns'
+import { FC, useMemo } from 'react'
 import { Bid, User } from 'shared/types'
-
-const data = [
-  {
-    id: 'abcdef',
-    creator: {
-      id: 'gfisdj',
-      role: 'CREATOR',
-      status: 'VERIFIED',
-      firstName: 'Linus',
-      lastName: 'Tech Tips',
-      email: 'abc@abc.com',
-      viewerCount: 100000,
-    },
-    platform: 'YouTube',
-    deliverable: 'Integration',
-  },
-  {
-    id: 'abcdddef',
-    creator: {
-      id: 'gfisffdj',
-      role: 'CREATOR',
-      status: 'VERIFIED',
-      firstName: 'Linus',
-      lastName: 'Tech Tips',
-      email: 'abc@abc.com',
-      viewerCount: 100000,
-    },
-    platform: 'YouTube',
-    deliverable: 'Integration',
-  },
-  {
-    id: 'abcde123f',
-    creator: {
-      id: 'gf12isdj',
-      role: 'CREATOR',
-      status: 'VERIFIED',
-      firstName: 'Linus',
-      lastName: 'Tech Tips',
-      email: 'abc@abc.com',
-      viewerCount: 100000,
-    },
-    platform: 'YouTube',
-    deliverable: 'Integration',
-  },
-]
 
 const columns = [
   'Creator',
   'Deliverable',
-  'Time Left',
+  'Offer Size',
   'Activation Range',
   'Date Completed',
 ]
@@ -74,7 +30,20 @@ type Props = {
   data: Bid[]
 }
 
-const HistoryTable: FC<Props> = () => {
+const HistoryTable: FC<Props> = ({ data, user }: Props) => {
+  const bids = useMemo(() => {
+    return data.filter(
+      ({ offer }) =>
+        offer.brand && offer.brand.id === user.id && offer.status === COMPLETED
+    )
+  }, [data])
+  if (!bids || bids.length === 0) {
+    return (
+      <Box textStyle="body1">
+        You haven&apos;t completed any transactions yet.
+      </Box>
+    )
+  }
   return (
     <Table variant="brandDashboard">
       <Thead>
@@ -85,7 +54,7 @@ const HistoryTable: FC<Props> = () => {
         </Tr>
       </Thead>
       <Tbody>
-        {data.map(offer => (
+        {bids.map(({ offer }) => (
           <LinkBox
             as={Tr}
             transform="scale(1)"
@@ -99,12 +68,12 @@ const HistoryTable: FC<Props> = () => {
                 <LinkOverlay>
                   <Flex align="center">
                     <Avatar
-                      name="Linus Tech Tips"
-                      src="https://bit.ly/dan-abramov"
+                      name={offer.creator.alias}
+                      src={offer.creator.avatarUrl}
                     />
                     <Flex direction="column" ml={CREATOR_AVATAR_TEXT_SPACING}>
-                      <Box>Linus Tech Tips</Box>
-                      <Box textStyle="caption2">10k viewers</Box>
+                      <Box>{offer.creator.alias}</Box>
+                      {/* <Box textStyle="caption2">10k viewers</Box> */}
                     </Flex>
                   </Flex>
                 </LinkOverlay>
@@ -112,13 +81,16 @@ const HistoryTable: FC<Props> = () => {
             </Td>
             <Td>
               <Flex direction="column">
-                <Box>Integration</Box>
-                <Box textStyle="caption2">TikTok</Box>
+                <Box>{offer.deliverable}</Box>
+                <Box textStyle="caption2">{offer.platform}</Box>
               </Flex>
             </Td>
-            <Td>$1,200</Td>
-            <Td>09/20 - 10/04</Td>
-            <Td>10/05/21</Td>
+            <Td>${offer.finalPrice}</Td>
+            <Td>{`${format(new Date(offer.deliveryStartsAt), 'P')} - ${format(
+              new Date(offer.deliveryEndsAt),
+              'P'
+            )}`}</Td>
+            <Td>{format(new Date(offer.completedAt), 'P')}</Td>
           </LinkBox>
         ))}
       </Tbody>
