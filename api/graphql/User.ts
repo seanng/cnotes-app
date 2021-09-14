@@ -16,6 +16,7 @@ export const User = objectType({
     t.nonNull.string('role')
     t.nonNull.string('firstName')
     t.nonNull.string('lastName')
+    t.string('description')
     t.string('websiteUrl')
     t.string('avatarUrl')
     t.field('portfolio', {

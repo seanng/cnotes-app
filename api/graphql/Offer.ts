@@ -7,6 +7,7 @@ import {
   objectType,
   queryField,
   list,
+  idArg,
 } from 'nexus'
 import { ACTIVE, UNVERIFIED } from 'shared/constants'
 import { isCreator } from 'utils/auth'
@@ -125,6 +126,22 @@ export const createOfferInput = inputObjectType({
     t.int('revisionDays')
     t.int('numberOfRevisions')
   },
+})
+
+export const offerWhereUniqueInput = inputObjectType({
+  name: 'OfferWhereUniqueInput',
+  definition(t) {
+    t.id('id')
+  },
+})
+
+export const offerById = queryField('offerById', {
+  type: 'Offer',
+  args: {
+    id: idArg(),
+  },
+  resolve: async (_, { id }) =>
+    prisma.offer.findUnique({ where: { id }, include: { creator: true } }),
 })
 
 export const discoveryOffers = queryField('discoveryOffers', {

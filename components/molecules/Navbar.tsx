@@ -12,7 +12,7 @@ import {
   PopoverTrigger,
   PopoverContent,
   PopoverArrow,
-  PopoverHeader,
+  // PopoverHeader,
   PopoverBody,
   Divider,
 } from '@chakra-ui/react'
@@ -61,7 +61,7 @@ type Props = {
   user: User
 }
 
-function UserMenu({ user }: Props): JSX.Element {
+function UserMenu(): JSX.Element {
   return (
     <PopoverContent backgroundColor="white" mr={4} w={220} px={3} py={3}>
       <PopoverArrow
@@ -69,17 +69,20 @@ function UserMenu({ user }: Props): JSX.Element {
         borderTopWidth={1}
         borderLeftWidth={1}
       />
-      <PopoverHeader
+      {/* <PopoverHeader
         textStyle="body2"
         fontWeight="bold"
         borderBottomWidth="0px"
         mb={3}
         color="neutrals3"
       >
-        {user.firstName}
-      </PopoverHeader>
+        <LinkText href="/settings">{user.firstName}</LinkText>
+      </PopoverHeader> */}
       <PopoverBody fontWeight="bold" letterSpacing="0.5px" color="neutrals4">
-        <LinkText href="/dashboard">My Dashboard</LinkText>
+        <LinkText href="/dashboard">Dashboard</LinkText>
+        <LinkText href="/settings" mt={4}>
+          Settings
+        </LinkText>
         <Divider my={4} />
         <LinkText href="/signout">Log Out</LinkText>
       </PopoverBody>
@@ -111,7 +114,7 @@ export default function Navbar({ user }: Props): JSX.Element {
                   {user.firstName}
                 </Button>
               </PopoverTrigger>
-              <UserMenu user={user} />
+              <UserMenu />
             </Popover>
           </Box>
         ) : (
