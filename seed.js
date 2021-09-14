@@ -156,7 +156,7 @@ async function seedBid(db) {
         isCleared: false,
         productUrl: faker.internet.url(),
         message: faker.lorem.sentences(2),
-        history: [{ price, bidAt: now }],
+        history: [{ price, date: now }],
         createdAt: now,
         updatedAt: now,
       }

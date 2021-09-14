@@ -8,14 +8,20 @@ import {
   queryField,
   list,
 } from 'nexus'
-// import { ACTIVE } from 'shared/constants'
 import { isBrand } from 'utils/auth'
+
+export const BidHistory = objectType({
+  name: 'BidHistory',
+  definition(t) {
+    t.nonNull.int('price')
+    t.nonNull.string('date')
+  },
+})
 
 export const Bid = objectType({
   name: 'Bid',
   definition(t) {
     t.nonNull.id('id')
-    // todo: replcae with getRelation('bid', 'offer')
     t.nonNull.field('offer', {
       type: 'Offer',
       resolve: parent =>
@@ -25,7 +31,6 @@ export const Bid = objectType({
           })
           .offer(),
     })
-    // todo: replcae with getRelation('bid', 'brand')
     t.nonNull.field('brand', {
       type: 'User',
       resolve: parent =>
@@ -35,8 +40,14 @@ export const Bid = objectType({
           })
           .brand(),
     })
-    t.field('history', {
-      type: list('Json'),
+    t.list.field('history', {
+      type: 'BidHistory',
+      resolve: async parent => {
+        const bid = await prisma.bid.findUnique({
+          where: { id: parent.id },
+        })
+        return bid.history
+      },
     })
     t.boolean('isCleared')
     t.nonNull.string('message')
@@ -79,7 +90,7 @@ export const myBids = queryField('myBids', {
 })
 
 export const updateBid = mutationField('updateBid', {
-  type: 'Bid',
+  type: list('Bid'),
   args: {
     input: arg({ type: 'UpdateBidInput' }),
   },
@@ -111,7 +122,7 @@ export const placeBid = mutationField('placeBid', {
 
     const now = new Date()
 
-    const historyItem = { price, bidTimeStamp: now.toString() } // cant put date obj in json
+    const historyItem = { price, date: now.toString() } // cant put date obj in json
 
     const data = {
       message,

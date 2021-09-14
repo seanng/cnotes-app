@@ -24,7 +24,10 @@ const MyBidsQuery = gql`
       id
       isCleared
       productUrl
-      history
+      history {
+        price
+      }
+      message
       offer {
         id
         platform
