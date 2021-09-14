@@ -1,3 +1,5 @@
+// Must-read: https://www.apollographql.com/docs/react/performance/server-side-rendering/
+
 import { ApolloClient, InMemoryCache } from '@apollo/client'
 
 const baseUrl = process.env.NEXT_PUBLIC_BASE_URL

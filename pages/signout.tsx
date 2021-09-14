@@ -3,8 +3,8 @@ import { useMutation, useApolloClient, gql } from '@apollo/client'
 import { useRouter } from 'next/router'
 import { NextPage } from 'next'
 
-const SignOutMutation = gql`
-  mutation SignOutMutation {
+const SIGN_OUT = gql`
+  mutation signOut {
     signOut
   }
 `
@@ -12,7 +12,7 @@ const SignOutMutation = gql`
 const SignOut: NextPage = () => {
   const client = useApolloClient()
   const router = useRouter()
-  const [signOut] = useMutation(SignOutMutation)
+  const [signOut] = useMutation(SIGN_OUT)
 
   useEffect(() => {
     signOut().then(() => {

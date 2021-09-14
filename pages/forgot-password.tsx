@@ -12,8 +12,8 @@ import { getErrorMessage } from 'utils/helpers'
 type OnSubmitProps = {
   email: string
 }
-const ForgotPasswordMutation = gql`
-  mutation ForgotPasswordMutation($input: String!) {
+const FORGOT_PASSWORD = gql`
+  mutation forgotPassword($input: String!) {
     forgotPassword(input: $input)
   }
 `
@@ -25,7 +25,7 @@ const ForgotPasswordPage: NextPage = () => {
     setError,
     formState: { errors, isSubmitting },
   } = useForm()
-  const [forgotPassword] = useMutation(ForgotPasswordMutation)
+  const [forgotPassword] = useMutation(FORGOT_PASSWORD)
   const [isModalOpen, setIsModalOpen] = useState(false)
 
   const onSubmit = async (data: OnSubmitProps): Promise<void> => {

@@ -32,8 +32,8 @@ const Portfolio = dynamic(
   }
 )
 
-const UpdateUserMutation = gql`
-  mutation UpdateUserMutation($input: UserInput!) {
+const UPDATE_USER = gql`
+  mutation updateUser($input: UserInput!) {
     updateUser(input: $input) {
       id
     }
@@ -99,7 +99,7 @@ interface Props {
 }
 
 const SettingsPage: NextPage<Props> = ({ user }: Props) => {
-  const [updateUser] = useMutation(UpdateUserMutation)
+  const [updateUser] = useMutation(UPDATE_USER)
   const [isSuccess, setIsSuccess] = useState(true)
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [avatarFile, setAvatarFile] = useState(null)

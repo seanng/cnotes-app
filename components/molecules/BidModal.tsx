@@ -21,8 +21,8 @@ import { useForm } from 'react-hook-form'
 import { Offer } from 'shared/types'
 import { URL_REGEX } from 'shared/constants'
 
-const PlaceBidMutation = gql`
-  mutation PlaceBidMutation($input: PlaceBidInput!) {
+const PLACE_BID = gql`
+  mutation placeBid($input: PlaceBidInput!) {
     placeBid(input: $input) {
       id
       message
@@ -72,7 +72,7 @@ const BidModal: FC<ModalProps> = ({
   } = useForm({
     defaultValues,
   })
-  const [placeBid] = useMutation(PlaceBidMutation)
+  const [placeBid] = useMutation(PLACE_BID)
   const [showSuccess, setShowSuccess] = useState(false)
 
   useEffect(() => {

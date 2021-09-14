@@ -6,6 +6,20 @@ import { User } from 'shared/types'
 import client from 'lib/apollo-client'
 import { getUserPayload } from 'utils/auth'
 
+const PROFILE_BY_SLUG = gql`
+  query profileBySlug($slug: String!) {
+    profileBySlug(slug: $slug) {
+      id
+      description
+      portfolio
+      alias
+      slug
+      avatarUrl
+      createdAt
+    }
+  }
+`
+
 type Props = {
   profile: User
   user: User
@@ -23,23 +37,9 @@ const ProfilePage: NextPage<Props> = ({ profile, user }: Props) => {
 
 export default ProfilePage
 
-const ProfileBySlug = gql`
-  query ProfileBySlug($slug: String!) {
-    profileBySlug(slug: $slug) {
-      id
-      description
-      portfolio
-      alias
-      slug
-      avatarUrl
-      createdAt
-    }
-  }
-`
-
 export const getServerSideProps: GetServerSideProps = async ctx => {
   const { data } = await client.query({
-    query: ProfileBySlug,
+    query: PROFILE_BY_SLUG,
     variables: { slug: ctx.params.slug },
   })
   const user = getUserPayload(ctx.req.headers.cookie)

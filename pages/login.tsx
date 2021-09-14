@@ -20,8 +20,8 @@ type OnSubmitProps = {
   password: string
 }
 
-const LoginMutation = gql`
-  mutation LoginMutation($input: LoginInput!) {
+const LOGIN = gql`
+  mutation login($input: LoginInput!) {
     login(input: $input) {
       token
     }
@@ -30,7 +30,7 @@ const LoginMutation = gql`
 
 const Login: NextPage = () => {
   const client = useApolloClient()
-  const [login] = useMutation(LoginMutation)
+  const [login] = useMutation(LOGIN)
   const router = useRouter()
 
   const {

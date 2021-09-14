@@ -20,8 +20,8 @@ import { useMutation, gql } from '@apollo/client'
 import { MouseEventHandler, FC, useMemo } from 'react'
 import OfferStatusBadge from 'components/atoms/OfferStatusBadge'
 
-const UpdateBidMutation = gql`
-  mutation UpdateBidMutation($input: UpdateBidInput!) {
+const UPDATE_BID = gql`
+  mutation updateBid($input: UpdateBidInput!) {
     updateBid(input: $input) {
       id
       isCleared
@@ -54,7 +54,7 @@ const getBidStatus = (bid: Bid, user: User): string => {
 
 const AwaitingTable: FC<Props> = ({ data, user }: Props) => {
   const now = new Date()
-  const [updateBid] = useMutation(UpdateBidMutation)
+  const [updateBid] = useMutation(UPDATE_BID)
 
   const bids = useMemo(() => {
     return data

@@ -15,8 +15,8 @@ type OnSubmitProps = {
   passwordConfirm: string
 }
 
-const ResetPasswordMutation = gql`
-  mutation ResetPasswordMutation($input: ResetPasswordInput!) {
+const RESET_PASSWORD = gql`
+  mutation resetPassword($input: ResetPasswordInput!) {
     resetPassword(input: $input)
   }
 `
@@ -26,7 +26,7 @@ const ResetPasswordPage: NextPage = () => {
     query: { token },
     push: routerPush,
   } = useRouter()
-  const [resetPassword] = useMutation(ResetPasswordMutation)
+  const [resetPassword] = useMutation(RESET_PASSWORD)
   const {
     handleSubmit,
     register,

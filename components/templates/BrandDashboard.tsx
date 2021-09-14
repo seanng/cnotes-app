@@ -18,8 +18,8 @@ import AwaitingTable from 'components/organisms/AwaitingTable'
 import WonTable from 'components/organisms/WonTable'
 import HistoryTable from 'components/organisms/HistoryTable'
 
-const MyBidsQuery = gql`
-  query MyBidsQuery {
+const MY_BIDS = gql`
+  query myBids {
     myBids {
       id
       isCleared
@@ -78,7 +78,7 @@ interface Props {
 const BrandDashboard: NextPage<Props> = ({ user }: Props) => {
   const [tabIdx, setTabIdx] = useState<number>(0)
   const [bids, setBids] = useState([])
-  const { data, loading } = useQuery(MyBidsQuery, {
+  const { data, loading } = useQuery(MY_BIDS, {
     // fetchPolicy: 'no-cache',
   })
 

@@ -21,8 +21,8 @@ type OnSubmitProps = {
   alias: string
 }
 
-const SignupMutation = gql`
-  mutation SignupMutation($input: SignupInput!) {
+const SIGN_UP = gql`
+  mutation signup($input: SignupInput!) {
     signup(input: $input) {
       token
     }
@@ -30,7 +30,7 @@ const SignupMutation = gql`
 `
 
 function SignupForm({ isBrand }: TemplateProps): JSX.Element {
-  const [signup] = useMutation(SignupMutation)
+  const [signup] = useMutation(SIGN_UP)
   const router = useRouter()
   const {
     handleSubmit,

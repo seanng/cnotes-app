@@ -7,8 +7,8 @@ import { getUserPayload } from 'utils/auth'
 import { redirTo } from 'utils/helpers'
 import { User } from 'shared/types'
 
-const OfferQuery = gql`
-  query Offer($id: ID) {
+const OFFER_BY_ID = gql`
+  query offerById($id: ID) {
     offerById(id: $id) {
       id
       highestBid
@@ -44,7 +44,8 @@ const OfferDetailsPage: NextPage<Props> = ({ user }: Props) => {
     query: { offerId },
   } = useRouter()
 
-  const { data, loading } = useQuery(OfferQuery, {
+  // maybe move this to getserversideprops? though then how to implement polling?
+  const { data, loading } = useQuery(OFFER_BY_ID, {
     variables: { id: offerId },
   })
 

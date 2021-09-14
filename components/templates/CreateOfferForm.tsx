@@ -26,8 +26,8 @@ import DatePicker from 'components/atoms/DatePicker'
 import 'react-datepicker/dist/react-datepicker.css'
 import { User } from 'shared/types'
 
-const CreateOfferMutation = gql`
-  mutation CreateOfferMutation($input: CreateOfferInput!) {
+const CREATE_OFFER = gql`
+  mutation createOffer($input: CreateOfferInput!) {
     createOffer(input: $input) {
       id
     }
@@ -52,7 +52,7 @@ interface Props {
 }
 
 const CreateOfferForm: NextPage<Props> = ({ user, onOfferSubmit }: Props) => {
-  const [createOffer] = useMutation(CreateOfferMutation)
+  const [createOffer] = useMutation(CREATE_OFFER)
   const {
     handleSubmit,
     register,
