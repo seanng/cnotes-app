@@ -26,9 +26,17 @@ const calculateTimeLeft = (
 interface Props extends BoxProps {
   start?: string
   end: string
+  suffix?: string
+  prefix?: string
 }
 
-const CountdownTimer: FC<Props> = ({ start, end, ...boxProps }: Props) => {
+const CountdownTimer: FC<Props> = ({
+  start,
+  end,
+  suffix = '',
+  prefix = '',
+  ...boxProps
+}: Props) => {
   const [timeLeft, setTimeLeft] = useState(calculateTimeLeft(start, end))
   const isSecondsAway = timeLeft.hours < 0 && timeLeft.minutes < 3
 
@@ -68,7 +76,13 @@ const CountdownTimer: FC<Props> = ({ start, end, ...boxProps }: Props) => {
   })
   return (
     <Box color={isSecondsAway ? 'red' : 'green'} {...boxProps}>
-      {timerComponents.length ? timerComponents : <span>Auction Ended</span>}
+      {timerComponents.length ? (
+        <span>
+          {prefix} {timerComponents} {suffix}
+        </span>
+      ) : (
+        <span>Auction Ended</span>
+      )}
     </Box>
   )
 }

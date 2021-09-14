@@ -6,9 +6,10 @@ import {
   mutationField,
   objectType,
   queryField,
+  list,
 } from 'nexus'
 import { ACTIVE, UNVERIFIED } from 'shared/constants'
-import { isBrand, isCreator } from 'utils/auth'
+import { isCreator } from 'utils/auth'
 
 export const Offer = objectType({
   name: 'Offer',
@@ -127,22 +128,32 @@ export const createOfferInput = inputObjectType({
 })
 
 export const discoveryOffers = queryField('discoveryOffers', {
-  type: 'Offer',
-  resolve: async (_, __, { user }) => {
-    if (!isBrand(user)) throw new ForbiddenError('Not a brand')
-
-    const data = await prisma.offer.findMany({
+  type: list('Offer'),
+  args: {
+    // after: arg({ type: OfferWhereUniqueInput }),
+    // before: arg({ type: OfferWhereUniqueInput }),
+    // first: intArg(),
+    // last: intArg(),
+    // filtering...
+  },
+  resolve: async (_, __) => {
+    return prisma.offer.findMany({
       where: {
         status: ACTIVE,
         auctionEndsAt: {
           gt: new Date(),
         },
-        // TODO: add filters.
+      },
+      include: {
+        creator: {
+          select: {
+            avatarUrl: true,
+            alias: true,
+            slug: true,
+          },
+        },
       },
     })
-
-    console.log('data: ', data)
-    return data
   },
 })
 
