@@ -77,7 +77,7 @@ async function seedUser(db) {
       email: `a${i}@a.com`,
       // add i because alias should be unique.
       alias,
-      slug: slugify(alias),
+      slug: slugify(alias.toLowerCase()),
       ...(!isBrand && { portfolio }),
       createdAt: now,
       updatedAt: now,

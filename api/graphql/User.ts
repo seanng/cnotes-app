@@ -2,7 +2,15 @@ import * as R from 'ramda'
 import { AuthenticationError, ForbiddenError } from 'apollo-server-errors'
 import prisma from 'lib/prisma'
 import { User as UserType } from '@prisma/client'
-import { arg, inputObjectType, list, mutationField, objectType } from 'nexus'
+import {
+  arg,
+  stringArg,
+  inputObjectType,
+  queryField,
+  list,
+  mutationField,
+  objectType,
+} from 'nexus'
 import slugify from 'slugify'
 import { ALIAS_TAKEN, userPublicFields } from 'shared/constants'
 import { encryptToken, serializeCookie } from 'utils/auth'
@@ -43,7 +51,7 @@ export const updateUser = mutationField('updateUser', {
     if (!user) throw new ForbiddenError('Not authorized')
     const now = new Date()
 
-    const slug = slugify(input.alias)
+    const slug = slugify(input.alias.toLowerCase())
 
     const aliasUser = await prisma.user.findUnique({
       where: { slug },
@@ -81,4 +89,10 @@ export const UserInput = inputObjectType({
     })
     t.string('description')
   },
+})
+
+export const profileBySlug = queryField('profileBySlug', {
+  type: 'User',
+  args: { slug: stringArg() },
+  resolve: async (_, { slug }) => prisma.user.findUnique({ where: { slug } }),
 })

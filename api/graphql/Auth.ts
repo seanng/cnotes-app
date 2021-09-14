@@ -50,7 +50,7 @@ export const Signup = mutationField('signup', {
         ...input,
         password: createPassword(input.password),
         ...(!isBrand && { portfolio: [] }),
-        slug: slugify(input.alias),
+        slug: slugify(input.alias.toLowerCase()),
         status: UNVERIFIED,
         createdAt: now,
         updatedAt: now,
@@ -119,7 +119,7 @@ export const ForgotPassword = mutationField('forgotPassword', {
       html: `
         <h1>cnotes Password Reset</h1>
         <p>Forgot something did you? Please use the following link to reset your password.</p>
-        <p>${process.env.BASE_URL}/reset-password?token=${token}</p>
+        <p>${process.env.NEXT_PUBLIC_BASE_URL}/reset-password?token=${token}</p>
         <hr />
       `,
     })
