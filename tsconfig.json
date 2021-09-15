@@ -21,6 +21,6 @@
     "isolatedModules": true,
     "jsx": "preserve"
   },
-  "exclude": ["node_modules", "generated", "examples"],
+  "exclude": ["node_modules", "generated", "examples", "prisma"],
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"]
 }
