@@ -67,8 +67,8 @@ export default {
   },
   inputLabel: {
     fontSize: '10px',
-    fontWeight: 'bold',
-    fontFamily: 'Inter',
+    fontWeight: 'black',
+    fontFamily: 'heading',
     textTransform: 'uppercase',
     color: '#808191',
     letterSpacing: '0.9px',

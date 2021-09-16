@@ -1,8 +1,9 @@
 import { gql } from '@apollo/client'
-import { Text, Container } from '@chakra-ui/react'
+import { Avatar, Box, Text, Container } from '@chakra-ui/react'
 import { GetServerSideProps, NextPage } from 'next'
 import Layout from 'components/organisms/Layout'
 import { User } from 'shared/types'
+import { PLACEHOLDER_BANNER_URL } from 'shared/constants'
 import client from 'lib/apollo-client'
 import { getUserPayload } from 'utils/auth'
 
@@ -26,10 +27,27 @@ type Props = {
 }
 
 const ProfilePage: NextPage<Props> = ({ profile, user }: Props) => {
+  const bgImage = profile.bannerUrl || PLACEHOLDER_BANNER_URL
   return (
     <Layout user={user}>
-      <Container>
-        <Text>{JSON.stringify(profile)}</Text>
+      <Box h={250} w="100%" bgImage={`url(${bgImage})`} bgPosition="cover" />
+      <Container display={{ md: 'flex' }}>
+        <Box
+          h={400}
+          p={8}
+          borderWidth={1}
+          borderColor="gray.200"
+          mt={-40}
+          bgColor="white"
+        >
+          <Avatar name={profile.alias} size="3xl" src={profile.avatarUrl} />
+        </Box>
+        <Box width="100%">
+          <Text>{JSON.stringify(profile)}</Text>
+        </Box>
+
+        {/* <Grid templateColumns="" gap={2}>
+        </Grid> */}
       </Container>
     </Layout>
   )

@@ -12,7 +12,6 @@ import {
   PopoverTrigger,
   PopoverContent,
   PopoverArrow,
-  // PopoverHeader,
   PopoverBody,
   Divider,
 } from '@chakra-ui/react'
@@ -43,10 +42,10 @@ function Nav(): JSX.Element {
       display={['none', 'flex']}
       lineHeight={10}
       borderLeft="2px"
-      borderColor="neutrals6"
+      borderColor="gray.200"
       fontFamily="DM Sans"
       fontWeight={700}
-      color="neutrals4"
+      color="gray.600"
     >
       {nav.map(({ title, url }) => (
         <Box key={title} ml={8} letterSpacing="0.4px">
@@ -69,16 +68,7 @@ function UserMenu(): JSX.Element {
         borderTopWidth={1}
         borderLeftWidth={1}
       />
-      {/* <PopoverHeader
-        textStyle="body2"
-        fontWeight="bold"
-        borderBottomWidth="0px"
-        mb={3}
-        color="neutrals3"
-      >
-        <LinkText href="/settings">{user.firstName}</LinkText>
-      </PopoverHeader> */}
-      <PopoverBody fontWeight="bold" letterSpacing="0.5px" color="neutrals4">
+      <PopoverBody fontWeight="bold" letterSpacing="0.5px" color="gray.600">
         <LinkText href="/dashboard">Dashboard</LinkText>
         <LinkText href="/settings" mt={4}>
           Settings
@@ -92,7 +82,7 @@ function UserMenu(): JSX.Element {
 
 export default function Navbar({ user }: Props): JSX.Element {
   return (
-    <Container py={5} as="header" borderBottom="1px" borderColor="neutrals6">
+    <Container py={5} as="header" borderBottom="1px" borderColor="gray.100">
       <Flex align="center" justify="space-between" wrap="wrap">
         <Flex>
           <Logo />

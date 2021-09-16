@@ -75,7 +75,7 @@ const DiscoverPage: NextPage<Props> = ({ user }: Props) => {
                       textStyle="caption1"
                       mb={4}
                     />
-                    <Box borderRadius="md" p={4} bgColor="neutrals7" mb={4}>
+                    <Box borderRadius="md" p={4} bgColor="gray.300" mb={4}>
                       <Text noOfLines={3} textStyle="caption2">
                         {offer.description}
                       </Text>

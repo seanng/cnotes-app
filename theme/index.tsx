@@ -11,6 +11,7 @@ import Accordion from './components/accordion'
 import Input from './components/input'
 import Modal from './components/modal'
 import Textarea from './components/textarea'
+import Avatar from './components/avatar'
 
 const breakpoints = createBreakpoints({
   sm: '40em',
@@ -31,10 +32,13 @@ const components = {
   Table,
   Tabs,
   Modal,
+  Avatar,
 }
 
 const theme = extendTheme({
   colors,
+  initialColorMode: 'light',
+  useSystemColorMode: true,
   fonts,
   breakpoints,
   textStyles,

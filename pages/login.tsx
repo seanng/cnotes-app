@@ -124,7 +124,7 @@ const Login: NextPage = () => {
           <Box
             textAlign="right"
             textStyle="caption1"
-            fontFamily="Inter"
+            fontFamily="heading"
             color="blue"
             fontWeight="bold"
             mb={4}
@@ -145,10 +145,10 @@ const Login: NextPage = () => {
             justify="center"
             textStyle="caption1"
             fontWeight="bold"
-            fontFamily="Inter"
+            fontFamily="heading"
             color="blue"
           >
-            <Box color="neutrals1" mr={4}>
+            <Box color="gray.900" mr={4}>
               Not a member?
             </Box>
             <Link href="/signup">Sign up now</Link>

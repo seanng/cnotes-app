@@ -24,6 +24,7 @@ export interface User {
   description?: string
   websiteUrl?: string
   avatarUrl?: string
+  bannerUrl?: string
 }
 
 export interface BidHistoryItem {

@@ -12,14 +12,14 @@ export default {
   baseStyle: {
     th: {
       fontFamily: 'body',
-      color: 'neutrals4',
+      color: 'gray.500',
     },
   },
   variants: {
     brandDashboard: {
       tbody: {
         tr: {
-          borderColor: 'neutrals6',
+          borderColor: 'gray.100',
           borderBottomWidth: 1,
         },
       },

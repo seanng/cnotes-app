@@ -53,7 +53,7 @@ const ProfileSettings: FC<Props> = ({
           <Box mb={2} textStyle="body2">
             Profile Photo
           </Box>
-          <Box textStyle="caption2" color="neutrals4" mb={3}>
+          <Box textStyle="caption2" color="gray.600" mb={3}>
             We recommend an image of at least 400 x 400
           </Box>
           <Flex>

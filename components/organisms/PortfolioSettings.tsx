@@ -71,7 +71,6 @@ const Portfolio: FC<Props> = ({ register, control, errors }: Props) => {
               mb={4}
               error={errors.collabs?.[i]?.url}
               label="url"
-              hideMessage
               inputProps={{
                 defaultValue: field.url,
                 placeholder: 'eg. https://www.youtube.com/watch?v=l7FV87ocmwM',
@@ -79,7 +78,7 @@ const Portfolio: FC<Props> = ({ register, control, errors }: Props) => {
                   required: true,
                   pattern: {
                     value: PLATFORM_URL_REGEX,
-                    message: 'Enter a url from YouTube or TikTok',
+                    message: 'Invalid YouTube or TikTok URL',
                   },
                 }),
               }}
@@ -115,7 +114,7 @@ const Portfolio: FC<Props> = ({ register, control, errors }: Props) => {
                 }),
               }}
             />
-            <Flex position="relative" align="center">
+            <Flex position="relative">
               <FormControl maxW={160} mr={4} mb={4}>
                 <FormLabel>Job Type</FormLabel>
                 <Select
@@ -132,6 +131,7 @@ const Portfolio: FC<Props> = ({ register, control, errors }: Props) => {
                 </Select>
               </FormControl>
               <IconButton
+                mt={7}
                 size="md"
                 aria-label="Remove"
                 bgColor="red"
@@ -169,7 +169,6 @@ const Portfolio: FC<Props> = ({ register, control, errors }: Props) => {
               mb={4}
               error={errors.samples?.[i]?.url}
               label="url"
-              hideMessage
               mr={4}
               inputProps={{
                 defaultValue: field.url,
@@ -178,12 +177,12 @@ const Portfolio: FC<Props> = ({ register, control, errors }: Props) => {
                   required: true,
                   pattern: {
                     value: PLATFORM_URL_REGEX,
-                    message: 'Enter a url from YouTube or TikTok',
+                    message: 'Invalid YouTube or TikTok URL',
                   },
                 }),
               }}
             />
-            <Flex w="100%" align="center">
+            <Flex w="100%">
               <FormInput
                 mb={4}
                 error={errors.samples?.[i]?.description}
@@ -199,6 +198,7 @@ const Portfolio: FC<Props> = ({ register, control, errors }: Props) => {
                 }}
               />
               <IconButton
+                mt={7}
                 size="md"
                 aria-label="Remove"
                 bgColor="red"

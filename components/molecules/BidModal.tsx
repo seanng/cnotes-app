@@ -122,12 +122,12 @@ const BidModal: FC<ModalProps> = ({
               <Box textStyle="body2" mb={10}>
                 {`You are about to make a bid for a ${offer.platform} ${offer.deliverable} from ${offer.creator.alias}`}
               </Box>
-              <Flex mb={1} color="neutrals4" textStyle="caption1">
+              <Flex mb={1} color="gray.600" textStyle="caption1">
                 <Box>Time left</Box>
                 <Spacer />
                 <Box>3 hours 3 minutes left</Box>
               </Flex>
-              <Flex mb={2} color="neutrals4" textStyle="caption1">
+              <Flex mb={2} color="gray.600" textStyle="caption1">
                 <Box>Total number of bids</Box>
                 <Spacer />
                 <Box>3</Box>

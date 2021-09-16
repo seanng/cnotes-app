@@ -52,6 +52,9 @@ export const userPublicFields = [
   'portfolio',
 ]
 
+export const PLACEHOLDER_BANNER_URL =
+  'https://cnotes-dev.s3-ap-southeast-1.amazonaws.com/placeholders/bg-profile.jpg'
+
 export default function constant() {
   // no op
   // return null

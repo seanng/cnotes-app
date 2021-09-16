@@ -2,7 +2,7 @@ import Navbar from 'components/molecules/Navbar'
 import { User } from 'shared/types'
 
 type Props = {
-  children: JSX.Element
+  children: JSX.Element | JSX.Element[]
   user?: User
 }
 

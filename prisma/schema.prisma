@@ -22,6 +22,7 @@ model User {
   description     String?
   bannerUrl       String?
   websiteUrl      String?
+  creatorStats    Json[] // { platform, viewership, followers, demographic (male, female), lastVerifiedAt, locations[] }
   createdAt       DateTime @default(now())
   updatedAt       DateTime @updatedAt
   // creator-specific
@@ -77,6 +78,13 @@ model Bid {
   createdAt  DateTime @default(now())
   updatedAt  DateTime @updatedAt
 }
+
+// model CreatorStats {
+//   id         String   @id @default(dbgenerated()) @map("_id") @db.ObjectId
+//   creator      User     @relation(fields: [creatorId], references: [id])
+//   creatorId    String   @db.ObjectId
+//   platform String
+// }
 
 // model Project {
 //   id         String   @id @default(dbgenerated()) @map("_id") @db.ObjectId

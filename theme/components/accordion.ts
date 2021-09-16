@@ -7,7 +7,7 @@ export default {
       },
     },
     button: {
-      color: 'neutrals2',
+      color: 'gray.700',
       _hover: {
         bg: 'transparent',
       },

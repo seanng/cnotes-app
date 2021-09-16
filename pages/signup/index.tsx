@@ -66,9 +66,9 @@ const SignupFoyer: NextPage = () => {
         <c.h2 textStyle="h2" mb={6}>
           Sign up
         </c.h2>
-        <Text color="neutrals4">
-          Select if you are a <c.span color="neutrals1">creator</c.span> or a{' '}
-          <c.span color="neutrals1">brand</c.span>.
+        <Text color="gray.600">
+          Select if you are a <c.span color="gray.900">creator</c.span> or a{' '}
+          <c.span color="gray.900">brand</c.span>.
         </Text>
         <Box display={['block', 'flex']} pt={[16, 20]}>
           <LinkCard

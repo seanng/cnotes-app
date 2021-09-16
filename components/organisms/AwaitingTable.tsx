@@ -81,6 +81,14 @@ const AwaitingTable: FC<Props> = ({ data, user }: Props) => {
       })
     }
 
+  if (!bids || bids.length === 0) {
+    return (
+      <Box textStyle="body1">
+        There are currently no offers that are pending.
+      </Box>
+    )
+  }
+
   return (
     <Table variant="brandDashboard">
       <Thead>

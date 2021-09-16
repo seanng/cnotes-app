@@ -108,7 +108,7 @@ const CreateOfferForm: NextPage<Props> = ({ user, onOfferSubmit }: Props) => {
             <chakra.h2 textStyle="h2" mb={6}>
               Create an offer
             </chakra.h2>
-            <Text color="neutrals4" mb={10} maxW={600}>
+            <Text color="gray.600" mb={10} maxW={600}>
               Being connected to brands is invite only. Fill out this form to
               apply for VIP access to our marketplace. We will reach out if
               there is a fit.
@@ -135,7 +135,7 @@ const CreateOfferForm: NextPage<Props> = ({ user, onOfferSubmit }: Props) => {
               <FormLabel
                 htmlFor="when"
                 color={
-                  errors.deliveryStartsAt || errors.end ? 'red' : 'neutrals5'
+                  errors.deliveryStartsAt || errors.end ? 'red' : 'gray.500'
                 }
               >
                 When are you available to post the sponsored work?
@@ -203,7 +203,7 @@ const CreateOfferForm: NextPage<Props> = ({ user, onOfferSubmit }: Props) => {
                   <Flex mb={8}>
                     <Flex direction="column">
                       <Box mb={1}>Number of Revisions</Box>
-                      <Box textStyle="caption2" color="neutrals4">
+                      <Box textStyle="caption2" color="gray.600">
                         How many times can a brand suggest non-major changes to
                         the sponsored work?
                       </Box>
@@ -219,7 +219,7 @@ const CreateOfferForm: NextPage<Props> = ({ user, onOfferSubmit }: Props) => {
                   <Flex mb={8}>
                     <Flex direction="column">
                       <Box mb={1}>Revision Time</Box>
-                      <Box textStyle="caption2" color="neutrals4">
+                      <Box textStyle="caption2" color="gray.600">
                         When can the brand preview your work and suggest edits
                         before it goes live?
                       </Box>
@@ -235,7 +235,7 @@ const CreateOfferForm: NextPage<Props> = ({ user, onOfferSubmit }: Props) => {
                   <Flex mb={8}>
                     <Flex direction="column">
                       <Box mb={1}>Will the media be reusable?</Box>
-                      <Box textStyle="caption2" color="neutrals4">
+                      <Box textStyle="caption2" color="gray.600">
                         Will the brand get a license to reuse the work in other
                         places? (eg. making it into a Facebook ad)
                       </Box>

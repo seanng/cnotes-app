@@ -70,7 +70,7 @@ function SignupForm({ isBrand }: TemplateProps): JSX.Element {
           <c.h2 textStyle="h2" mb={6}>
             Create Account
           </c.h2>
-          <Text color="neutrals4" mb={16}>
+          <Text color="gray.600" mb={16}>
             Start getting more transparency into sponsorships.
           </Text>
           <Box w={['90%', '60%']}>
