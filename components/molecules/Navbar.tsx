@@ -82,42 +82,45 @@ function UserMenu(): JSX.Element {
 
 export default function Navbar({ user }: Props): JSX.Element {
   return (
-    <Container py={5} as="header" borderBottom="1px" borderColor="gray.100">
-      <Flex align="center" justify="space-between" wrap="wrap">
-        <Flex>
-          <Logo />
-          <Nav />
+    <Flex py={5} borderBottom="1px" borderColor="gray.100" w="full">
+      <Container>
+        <Flex align="center" justify="space-between" wrap="wrap">
+          <Flex>
+            <Logo />
+            <Nav />
+          </Flex>
+          {/* NavButtons */}
+
+          {user ? (
+            <Box display={['none', 'block']}>
+              <LinkButton
+                href={user.role === CREATOR ? '/create' : '/discover'}
+                size="sm"
+                mr={3}
+              >
+                {user.role === CREATOR ? 'Create Offer' : 'Discover'}
+              </LinkButton>
+              <Popover gutter={16}>
+                <PopoverTrigger>
+                  <Button size="sm" variant="outline">
+                    {user.firstName}
+                  </Button>
+                </PopoverTrigger>
+                <UserMenu />
+              </Popover>
+            </Box>
+          ) : (
+            <Box display={['none', 'block']}>
+              <LinkButton size="sm" href="/signup" bgColor="red" mr={3}>
+                Sign up
+              </LinkButton>
+              <LinkButton size="sm" href="/login" mr={3}>
+                Login
+              </LinkButton>
+            </Box>
+          )}
         </Flex>
-        {/* NavButtons */}
-        {user ? (
-          <Box>
-            <LinkButton
-              href={user.role === CREATOR ? '/create' : '/discover'}
-              size="sm"
-              mr={3}
-            >
-              {user.role === CREATOR ? 'Create Offer' : 'Discover'}
-            </LinkButton>
-            <Popover gutter={16}>
-              <PopoverTrigger>
-                <Button size="sm" variant="outline">
-                  {user.firstName}
-                </Button>
-              </PopoverTrigger>
-              <UserMenu />
-            </Popover>
-          </Box>
-        ) : (
-          <Box>
-            <LinkButton size="sm" href="/signup" bgColor="red" mr={3}>
-              Sign up
-            </LinkButton>
-            <LinkButton size="sm" href="/login" mr={3}>
-              Login
-            </LinkButton>
-          </Box>
-        )}
-      </Flex>
-    </Container>
+      </Container>
+    </Flex>
   )
 }

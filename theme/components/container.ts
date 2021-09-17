@@ -2,7 +2,8 @@ export default {
   variants: {
     page: {
       width: '100%',
-      padding: '0 80px',
+      py: 0,
+      px: [5, 10, 20],
       maxWidth: '1280px',
     },
   },
