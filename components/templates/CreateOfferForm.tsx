@@ -65,35 +65,41 @@ const CreateOfferForm: NextPage<Props> = ({ user, onOfferSubmit }: Props) => {
 
   const onSubmit = async (data: OnSubmitProps): Promise<void> => {
     try {
-      // Add withNull so it's easier for Michael to see what fields are missing from form.
-      const withNull = R.map(x => (x ? x : null), data)
-      const { numberOfRevisions, revisionDays, canReuse, willFollowScript } =
-        withNull
-      const input = {
-        ...withNull,
-        ...(numberOfRevisions && {
-          numberOfRevisions: Number(numberOfRevisions),
-        }),
-        ...(revisionDays && {
-          revisionDays: Number(revisionDays),
-        }),
-        ...(canReuse && {
-          canReuse: canReuse === 'Yes',
-        }),
-        ...(willFollowScript && {
-          willFollowScript: willFollowScript === 'Yes',
-        }),
-      }
+      const input = R.pipe(
+        R.omit([
+          'numberOfRevisions',
+          'revisionDays',
+          'canReuse',
+          'willFollowScript',
+        ]),
+        R.set(R.lensProp('specs'), [])
+      )(data)
 
-      const {
-        data: { createOffer: payload },
-      } = await createOffer({
-        variables: {
-          input,
-        },
+      data.numberOfRevisions &&
+        input.specs.push({
+          key: 'Number of revisions',
+          value: data.numberOfRevisions,
+        })
+      data.revisionDays &&
+        input.specs.push({
+          key: 'Revision days',
+          value: data.revisionDays,
+        })
+      data.canReuse &&
+        input.specs.push({
+          key: 'Reusable?',
+          value: data.canReuse,
+        })
+      data.willFollowScript &&
+        input.specs.push({
+          key: 'Will follow script?',
+          value: data.willFollowScript,
+        })
+
+      await createOffer({
+        variables: { input },
       })
       onOfferSubmit()
-      console.log('data: ', payload)
       // submit and then navigate (or render) create success
     } catch (error) {
       console.log('error: ', error)

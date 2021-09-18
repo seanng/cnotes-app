@@ -48,10 +48,7 @@ model Offer {
   description       String
   deliveryStartsAt  DateTime?
   deliveryEndsAt    DateTime?
-  canReuse          Boolean?
-  willFollowScript  Boolean?
-  revisionDays      Int?
-  numberOfRevisions Int?
+  specs             Json[] // { key, value }
   creator           User      @relation("CreatedOffer", fields: [creatorId], references: [id])
   creatorId         String    @db.ObjectId
   brand             User?     @relation("WonOffer", fields: [brandId], references: [id])

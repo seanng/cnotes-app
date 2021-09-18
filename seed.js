@@ -114,9 +114,24 @@ async function seedOffer(db) {
         description: faker.lorem.paragraph(5),
         creatorId: creator._id,
         auctionEndsAt,
-        numberOfRevisions: faker.datatype.number({ min: 0, max: 3 }),
-        revisionDays: 7,
-        willFollowScript: i % 2 === 0,
+        specs: [
+          {
+            key: 'Number of revisions',
+            value: faker.datatype.number({ min: 0, max: 3 }),
+          },
+          {
+            key: 'Will follow script?',
+            value: i % 2 ? 'Yes' : 'No',
+          },
+          {
+            key: 'Revision days',
+            value: 7,
+          },
+          {
+            key: 'Reusable?',
+            value: i % 2 ? 'Yes' : 'No',
+          },
+        ],
         deliveryStartsAt,
         deliveryEndsAt,
         createdAt: now,

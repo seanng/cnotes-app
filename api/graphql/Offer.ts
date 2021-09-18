@@ -26,13 +26,12 @@ export const Offer = objectType({
     t.field('deliveryEndsAt', {
       type: 'DateTime',
     })
-    t.boolean('canReuse')
-    t.boolean('willFollowScript')
-    t.int('revisionDays')
+    t.field('specs', {
+      type: list('Json'),
+    })
     t.int('bidCount')
     t.int('startPrice')
     t.int('finalPrice')
-    t.int('numberOfRevisions')
     t.int('highestBid')
     t.list.field('bids', {
       type: 'Bid',
@@ -121,10 +120,7 @@ export const createOfferInput = inputObjectType({
     t.string('deliverable')
     t.string('deliveryStartsAt') // TODO: change to date time
     t.string('deliveryEndsAt') // TODO: change to date time
-    t.boolean('canReuse')
-    t.boolean('willFollowScript')
-    t.int('revisionDays')
-    t.int('numberOfRevisions')
+    t.field('specs', { type: list('Json') })
   },
 })
 
