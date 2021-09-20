@@ -146,12 +146,11 @@ const Login: NextPage = () => {
             textStyle="caption1"
             fontWeight="bold"
             fontFamily="heading"
-            color="blue"
           >
-            <Box color="gray.900" mr={4}>
-              Not a member?
+            <Box mr={4}>Not a member?</Box>
+            <Box color="blue">
+              <Link href="/signup">Sign up now</Link>
             </Box>
-            <Link href="/signup">Sign up now</Link>
           </Flex>
         </c.form>
       </Box>

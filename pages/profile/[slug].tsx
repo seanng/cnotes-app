@@ -2,7 +2,7 @@ import { gql } from '@apollo/client'
 import { Avatar, Box, Text, Container } from '@chakra-ui/react'
 import { GetServerSideProps, NextPage } from 'next'
 import Layout from 'components/organisms/Layout'
-import { User } from 'shared/types'
+import { PortfolioItem, User } from 'shared/types'
 import { PLACEHOLDER_BANNER_URL } from 'shared/constants'
 import client from 'lib/apollo-client'
 import { getUserPayload } from 'utils/auth'
@@ -15,14 +15,21 @@ const PROFILE_BY_SLUG = gql`
       portfolio
       alias
       slug
+      bannerUrl
       avatarUrl
       createdAt
     }
   }
 `
 
+type UserProfile = User & {
+  collabs: PortfolioItem[]
+}
+
+type TransformedProfile = Omit<UserProfile, 'portfoilo'>
+
 type Props = {
-  profile: User
+  profile: TransformedProfile
   user: User
 }
 
@@ -55,11 +62,21 @@ const ProfilePage: NextPage<Props> = ({ profile, user }: Props) => {
 
 export default ProfilePage
 
+function profileTransformer(data: User): TransformedProfile {
+  return {
+    ...data,
+    // TODO: sort by publishedAt=.
+    collabs: data.portfolio?.filter(item => !!item.companyName),
+  }
+}
+
 export const getServerSideProps: GetServerSideProps = async ctx => {
-  const { data } = await client.query({
+  const {
+    data: { profileBySlug: data },
+  } = await client.query({
     query: PROFILE_BY_SLUG,
     variables: { slug: ctx.params.slug },
   })
   const user = getUserPayload(ctx.req.headers.cookie)
-  return { props: { profile: data.profileBySlug, user } }
+  return { props: { profile: profileTransformer(data), user } }
 }

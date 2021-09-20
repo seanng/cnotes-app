@@ -134,7 +134,7 @@ const Portfolio: FC<Props> = ({ register, control, errors }: Props) => {
                 mt={7}
                 size="md"
                 aria-label="Remove"
-                bgColor="red"
+                colorScheme="red"
                 onClick={(): void => {
                   removeCollab(i)
                 }}
@@ -201,7 +201,7 @@ const Portfolio: FC<Props> = ({ register, control, errors }: Props) => {
                 mt={7}
                 size="md"
                 aria-label="Remove"
-                bgColor="red"
+                colorScheme="red"
                 onClick={(): void => {
                   removeSample(i)
                 }}

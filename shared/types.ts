@@ -1,12 +1,19 @@
 export interface PortfolioItem {
+  platformMediaId: string
   url: string
   thumbnailUrl: string
   description?: string
+  publishedAt?: string
   companyUrl?: string
   companyName?: string
   deliverable?: string
   platform?: string
-  executedAt: Date
+  title?: string
+  viewCount?: string | number
+  commentCount?: string | number
+  likeCount?: string | number
+  dislikeCount?: string | number
+  videoUrl?: string
 }
 
 // should match up with publicfields in Auth.ts.
@@ -17,6 +24,7 @@ export interface User {
   firstName: string
   lastName: string
   alias: string
+  slug: string
   email: string
   portfolio?: PortfolioItem[] | any // prisma is complaining
   password?: string // omitted unless it's in the password reset token

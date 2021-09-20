@@ -12,6 +12,7 @@ import Input from './components/input'
 import Modal from './components/modal'
 import Textarea from './components/textarea'
 import Avatar from './components/avatar'
+import { mode } from '@chakra-ui/theme-tools'
 
 const breakpoints = createBreakpoints({
   sm: '40em',
@@ -44,11 +45,12 @@ const theme = extendTheme({
   textStyles,
   components,
   styles: {
-    global: {
+    global: props => ({
       body: {
         fontSize: '14px',
+        bg: mode('gray.50', 'gray.900')(props),
       },
-    },
+    }),
   },
 })
 

@@ -141,7 +141,7 @@ const AwaitingTable: FC<Props> = ({ data, user }: Props) => {
                   size="xs"
                   type="submit"
                   aria-label="Bid"
-                  bgColor="red"
+                  colorScheme="red"
                   onClick={handleClearClick(id)}
                   icon={<CloseIcon boxSize={2} />}
                 />

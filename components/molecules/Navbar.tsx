@@ -1,6 +1,6 @@
 import Link from 'next/link'
 import Image from 'next/image'
-import { CloseIcon, HamburgerIcon } from '@chakra-ui/icons'
+import { CloseIcon, HamburgerIcon, MoonIcon, SunIcon } from '@chakra-ui/icons'
 import LinkButton from 'components/atoms/LinkButton'
 import { User } from 'shared/types'
 import { useState } from 'react'
@@ -8,11 +8,13 @@ import { CREATOR } from 'shared/constants'
 import {
   Box,
   Button,
+  IconButton,
   Container,
   Flex,
   Stack,
   Popover,
   PopoverTrigger,
+  useColorMode,
   PopoverContent,
   PopoverArrow,
   PopoverBody,
@@ -42,10 +44,16 @@ function MenuToggle({ toggle, isOpen }): JSX.Element {
   )
 }
 
-function UserLinks() {
+function UserLinks({ user }: Props) {
+  const isCreator = user.role === CREATOR
   return (
     <>
-      <LinkText href="/dashboard">Dashboard</LinkText>
+      {isCreator && (
+        <LinkText href={`/profile/${user.slug}`}>My Profile</LinkText>
+      )}
+      <LinkText href="/dashboard" mt={4}>
+        Dashboard
+      </LinkText>
       <LinkText href="/settings" mt={4}>
         Settings
       </LinkText>
@@ -56,6 +64,8 @@ function UserLinks() {
 }
 
 function MenuLinks({ isOpen, user }): JSX.Element {
+  const { colorMode, toggleColorMode } = useColorMode()
+  const DarkModeIcon = colorMode === 'light' ? MoonIcon : SunIcon
   return (
     <Box
       flexBasis={{ base: '100%', sm: 'auto' }}
@@ -68,6 +78,12 @@ function MenuLinks({ isOpen, user }): JSX.Element {
         direction={['column', 'row']}
         pt={[6, 0]}
       >
+        <IconButton
+          onClick={toggleColorMode}
+          colorScheme="gray"
+          icon={<DarkModeIcon />}
+          aria-label="dark mode"
+        />
         {user ? (
           <>
             <LinkButton
@@ -100,7 +116,7 @@ function MenuLinks({ isOpen, user }): JSX.Element {
                     letterSpacing="0.5px"
                     color="gray.600"
                   >
-                    <UserLinks />
+                    <UserLinks user={user} />
                   </PopoverBody>
                 </PopoverContent>
               </Popover>
@@ -111,15 +127,15 @@ function MenuLinks({ isOpen, user }): JSX.Element {
               flexGrow={1}
               alignItems="center"
             >
-              <UserLinks />
+              <UserLinks user={user} />
             </Box>
           </>
         ) : (
           <>
-            <LinkButton size="sm" href="/signup" bgColor="red">
+            <LinkButton size="sm" href="/signup" colorScheme="red">
               Sign up
             </LinkButton>
-            <LinkButton size="sm" href="/login">
+            <LinkButton size="sm" href="/login" colorScheme="blue">
               Login
             </LinkButton>
           </>

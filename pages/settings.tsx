@@ -50,6 +50,7 @@ const defaultValues = {
   samples: [],
 }
 
+// refactor out to helpers for use with profile.. use on getServerSideProps
 const getFormData = (user: User): SettingsFormFieldValues => {
   if (!user) return defaultValues
 
@@ -230,7 +231,7 @@ const SettingsPage: NextPage<Props> = ({ user }: Props) => {
             : `There was a problem updating your profile. Please contact michael@cnotes.co.`
         }
         isOpen={isModalOpen}
-        buttonText={isSuccess ? 'Reload' : 'Close'}
+        buttonText={isSuccess ? 'Okay' : 'Close'}
         onClose={(): void => {
           setIsModalOpen(false)
         }}

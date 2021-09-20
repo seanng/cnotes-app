@@ -13,7 +13,8 @@ import {
 } from 'nexus'
 import slugify from 'slugify'
 import { ALIAS_TAKEN, userPublicFields } from 'shared/constants'
-import { encryptToken, serializeCookie } from 'utils/auth'
+import { encryptToken, serializeCookie, isCreator } from 'utils/auth'
+import { populatePortfolioData } from 'utils/backend'
 
 export const User = objectType({
   name: 'User',
@@ -26,6 +27,7 @@ export const User = objectType({
     t.nonNull.string('lastName')
     t.string('description')
     t.string('websiteUrl')
+    t.string('bannerUrl')
     t.string('avatarUrl')
     t.field('portfolio', {
       type: list('Json'),
@@ -50,21 +52,30 @@ export const updateUser = mutationField('updateUser', {
   resolve: async (_, { input }, { user, res }) => {
     if (!user) throw new ForbiddenError('Not authorized')
     const now = new Date()
-
-    const slug = slugify(input.alias.toLowerCase())
+    const data = { ...input }
+    data.slug = slugify(input.alias.toLowerCase())
 
     const aliasUser = await prisma.user.findUnique({
-      where: { slug },
+      where: { slug: data.slug },
     })
     if (aliasUser && aliasUser.id !== user.id) {
       throw new AuthenticationError(ALIAS_TAKEN)
     }
 
+    if (isCreator(user)) {
+      if (input.portfolio) {
+        data.portfolio = await populatePortfolioData(input.portfolio)
+      }
+
+      if (input.websiteUrl !== user.websiteUrl) {
+        // TODO: if video is youtube or tiktok, update creatorStats from parsing url.
+      }
+    }
+
     const updated = await prisma.user.update({
       where: { id: user.id },
       data: {
-        ...input,
-        slug,
+        ...data,
         updatedAt: now,
       },
     })

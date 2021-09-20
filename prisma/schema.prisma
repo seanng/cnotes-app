@@ -36,30 +36,30 @@ model User {
 }
 
 model Offer {
-  id                String    @id @default(dbgenerated()) @map("_id") @db.ObjectId
-  status            String    @default("UNVERIFIED") // UNVERIFIED, ACTIVE (bidding + selecting), TRANSACTING, PAYING, COMPLETED 
-  bids              Bid[]
-  highestBid        Int?
-  bidCount          Int?
-  startPrice        Int?
-  finalPrice        Int? // the same as offer.brand.bids.history[history.length-1].price. updated on winner select.
-  platform          String?
-  deliverable       String?
-  description       String
-  deliveryStartsAt  DateTime?
-  deliveryEndsAt    DateTime?
-  specs             Json[] // { key, value }
-  creator           User      @relation("CreatedOffer", fields: [creatorId], references: [id])
-  creatorId         String    @db.ObjectId
-  brand             User?     @relation("WonOffer", fields: [brandId], references: [id])
-  brandId           String?   @db.ObjectId
-  auctionEndsAt     DateTime? // date auction ends
-  selectedAt        DateTime? // date creator selected winner
-  transactedAt      DateTime? // date creator submitted 
-  paidAt            DateTime? // date marked as paid
-  completedAt       DateTime? // date marked as complete
-  createdAt         DateTime  @default(now())
-  updatedAt         DateTime  @updatedAt
+  id               String    @id @default(dbgenerated()) @map("_id") @db.ObjectId
+  status           String    @default("UNVERIFIED") // UNVERIFIED, ACTIVE (bidding + selecting), TRANSACTING, PAYING, COMPLETED 
+  bids             Bid[]
+  highestBid       Int?
+  bidCount         Int?
+  startPrice       Int?
+  finalPrice       Int? // the same as offer.brand.bids.history[history.length-1].price. updated on winner select.
+  platform         String?
+  deliverable      String?
+  description      String
+  deliveryStartsAt DateTime?
+  deliveryEndsAt   DateTime?
+  specs            Json[] // { key, value }
+  creator          User      @relation("CreatedOffer", fields: [creatorId], references: [id])
+  creatorId        String    @db.ObjectId
+  brand            User?     @relation("WonOffer", fields: [brandId], references: [id])
+  brandId          String?   @db.ObjectId
+  auctionEndsAt    DateTime? // date auction ends
+  selectedAt       DateTime? // date creator selected winner
+  transactedAt     DateTime? // date creator submitted 
+  paidAt           DateTime? // date marked as paid
+  completedAt      DateTime? // date marked as complete
+  createdAt        DateTime  @default(now())
+  updatedAt        DateTime  @updatedAt
 }
 
 model Bid {
