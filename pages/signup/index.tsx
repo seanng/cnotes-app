@@ -47,7 +47,9 @@ function LinkCard({ href, label, imgSrc }: LinkCardProps): JSX.Element {
               objectFit="contain"
             />
           </AspectRatio>
-          <Button variant="outline">{label}</Button>
+          <Button variant="outline" colorScheme="gray">
+            {label}
+          </Button>
         </LinkOverlay>
       </NextLink>
     </LinkBox>

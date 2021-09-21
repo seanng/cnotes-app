@@ -113,7 +113,7 @@ function MenuLinks({
             <Box display={['none', 'block']}>
               <Popover gutter={16}>
                 <PopoverTrigger>
-                  <Button size="sm" variant="outline">
+                  <Button size="sm" variant="outline" colorScheme="gray">
                     {user.firstName}
                   </Button>
                 </PopoverTrigger>

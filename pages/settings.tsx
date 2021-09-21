@@ -1,4 +1,5 @@
 import dynamic from 'next/dynamic'
+import { useWarningOnExit } from 'hooks'
 import { gql, useMutation } from '@apollo/client'
 import { GetServerSideProps, NextPage } from 'next'
 import {
@@ -106,7 +107,6 @@ const SettingsPage: NextPage<Props> = ({ user }: Props) => {
   const [avatarFile, setAvatarFile] = useState(null)
   const [tabIdx, setTabIdx] = useState<number>(0)
   const router = useRouter()
-
   const {
     handleSubmit,
     register,
@@ -116,6 +116,11 @@ const SettingsPage: NextPage<Props> = ({ user }: Props) => {
   } = useForm<SettingsFormFieldValues>({
     defaultValues: getFormData(user),
   })
+
+  useWarningOnExit(
+    isDirty,
+    'You have unsaved changes. Are you sure you want to leave this page?'
+  )
 
   const onSubmit = async (data: SettingsFormFieldValues): Promise<void> => {
     try {
