@@ -3,7 +3,7 @@ import Image from 'next/image'
 import { CloseIcon, HamburgerIcon, MoonIcon, SunIcon } from '@chakra-ui/icons'
 import LinkButton from 'components/atoms/LinkButton'
 import { User } from 'shared/types'
-import { useState } from 'react'
+import { useState, JSXElementConstructor } from 'react'
 import { CREATOR } from 'shared/constants'
 import {
   Box,
@@ -26,17 +26,27 @@ type Props = {
   user: User
 }
 
-function Logo(): JSX.Element {
+function Logo({ isLightMode }: { isLightMode: boolean }): JSX.Element {
   return (
     <Link href="/">
       <Box as="a" href="/" position="relative" w={128} mr={8} h={10}>
-        <Image layout="fill" src="/logo-dark.png" objectFit="contain" />
+        <Image
+          layout="fill"
+          src={isLightMode ? '/logo-dark.png' : '/logo-light.png'}
+          objectFit="contain"
+        />
       </Box>
     </Link>
   )
 }
 
-function MenuToggle({ toggle, isOpen }): JSX.Element {
+function MenuToggle({
+  toggle,
+  isOpen,
+}: {
+  toggle: () => void
+  isOpen: boolean
+}): JSX.Element {
   return (
     <Box display={{ base: 'block', sm: 'none' }} onClick={toggle}>
       {isOpen ? <CloseIcon /> : <HamburgerIcon />}
@@ -44,7 +54,7 @@ function MenuToggle({ toggle, isOpen }): JSX.Element {
   )
 }
 
-function UserLinks({ user }: Props) {
+function UserLinks({ user }: Props): JSX.Element {
   const isCreator = user.role === CREATOR
   return (
     <>
@@ -63,9 +73,17 @@ function UserLinks({ user }: Props) {
   )
 }
 
-function MenuLinks({ isOpen, user }): JSX.Element {
-  const { colorMode, toggleColorMode } = useColorMode()
-  const DarkModeIcon = colorMode === 'light' ? MoonIcon : SunIcon
+function MenuLinks({
+  isOpen,
+  user,
+  toggleColorMode,
+  DarkModeIcon,
+}: {
+  isOpen: boolean
+  user: User
+  toggleColorMode: () => void
+  DarkModeIcon: JSXElementConstructor<any>
+}): JSX.Element {
   return (
     <Box
       flexBasis={{ base: '100%', sm: 'auto' }}
@@ -147,6 +165,10 @@ function MenuLinks({ isOpen, user }): JSX.Element {
 
 export default function Navbar({ user }: Props): JSX.Element {
   const [isOpen, setIsOpen] = useState(false)
+  const { colorMode, toggleColorMode } = useColorMode()
+  const isLightMode = colorMode === 'light'
+  const DarkModeIcon = isLightMode ? MoonIcon : SunIcon
+
   const toggle = () => {
     setIsOpen(!isOpen)
   }
@@ -155,9 +177,14 @@ export default function Navbar({ user }: Props): JSX.Element {
     <Flex py={5} borderBottom="1px" borderColor="gray.100" w="full">
       <Container>
         <Flex align="center" justify="space-between" wrap="wrap">
-          <Logo />
+          <Logo isLightMode={isLightMode} />
           <MenuToggle isOpen={isOpen} toggle={toggle} />
-          <MenuLinks isOpen={isOpen} user={user} />
+          <MenuLinks
+            isOpen={isOpen}
+            user={user}
+            DarkModeIcon={DarkModeIcon}
+            toggleColorMode={toggleColorMode}
+          />
         </Flex>
       </Container>
     </Flex>
