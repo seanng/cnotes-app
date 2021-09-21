@@ -4,3 +4,4 @@ generated/
 .vscode/
 .idea/
 .env*
+private/
