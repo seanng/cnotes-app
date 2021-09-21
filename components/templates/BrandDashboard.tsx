@@ -115,9 +115,9 @@ const BrandDashboard: NextPage<Props> = ({ user }: Props) => {
                   <Tab key={label}>{label}</Tab>
                 ))}
               </TabList>
-              <c.div display={['none', 'block']}>
+              {/* <c.div display={['none', 'block']}>
                 dropdown placeholder for tab idx: {tabIdx}
-              </c.div>
+              </c.div> */}
             </Flex>
             <TabPanels>
               {bids &&

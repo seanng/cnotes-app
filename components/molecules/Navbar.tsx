@@ -54,16 +54,10 @@ function MenuToggle({
   )
 }
 
-function UserLinks({ user }: Props): JSX.Element {
-  const isCreator = user.role === CREATOR
+function UserLinks(): JSX.Element {
   return (
     <>
-      {isCreator && (
-        <LinkText href={`/profile/${user.slug}`}>My Profile</LinkText>
-      )}
-      <LinkText href="/dashboard" mt={4}>
-        Dashboard
-      </LinkText>
+      <LinkText href="/dashboard">Dashboard</LinkText>
       <LinkText href="/settings" mt={4}>
         Settings
       </LinkText>
@@ -134,7 +128,7 @@ function MenuLinks({
                     letterSpacing="0.5px"
                     color="gray.600"
                   >
-                    <UserLinks user={user} />
+                    <UserLinks />
                   </PopoverBody>
                 </PopoverContent>
               </Popover>
@@ -145,7 +139,7 @@ function MenuLinks({
               flexGrow={1}
               alignItems="center"
             >
-              <UserLinks user={user} />
+              <UserLinks />
             </Box>
           </>
         ) : (

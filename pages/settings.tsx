@@ -3,6 +3,7 @@ import { useWarningOnExit } from 'hooks'
 import { gql, useMutation } from '@apollo/client'
 import { GetServerSideProps, NextPage } from 'next'
 import {
+  HStack,
   Box,
   Button,
   Container,
@@ -17,6 +18,7 @@ import {
 import * as R from 'ramda'
 import FeedbackModal from 'components/molecules/FeedbackModal'
 import Layout from 'components/organisms/Layout'
+import LinkButton from 'components/atoms/LinkButton'
 import { useRouter } from 'next/router'
 import { ChangeEventHandler, useState } from 'react'
 import { useForm } from 'react-hook-form'
@@ -218,13 +220,24 @@ const SettingsPage: NextPage<Props> = ({ user }: Props) => {
                 ))}
               </TabPanels>
             </Tabs>
-            <Button
-              disabled={(!isDirty && !avatarFile) || isSubmitting}
-              type="submit"
-              isLoading={isSubmitting}
-            >
-              Save
-            </Button>
+            <HStack>
+              <Button
+                disabled={(!isDirty && !avatarFile) || isSubmitting}
+                type="submit"
+                isLoading={isSubmitting}
+                mr={4}
+              >
+                Save Changes
+              </Button>
+              <LinkButton
+                type="button"
+                variant="outline"
+                size="md"
+                href={`/profile/${user.slug}`}
+              >
+                Preview
+              </LinkButton>
+            </HStack>
           </Box>
         </Container>
       </Layout>
