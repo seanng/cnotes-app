@@ -1,3 +1,4 @@
+import sgMail from 'lib/sendgrid'
 import { ForbiddenError } from 'apollo-server-micro'
 import prisma from 'lib/prisma'
 import {
@@ -9,7 +10,7 @@ import {
   list,
   idArg,
 } from 'nexus'
-import { ACTIVE, UNVERIFIED } from 'shared/constants'
+import { FROM_ADDRESS, ACTIVE, UNVERIFIED } from 'shared/constants'
 import { isCreator } from 'utils/auth'
 
 export const Offer = objectType({
@@ -106,6 +107,26 @@ export const createOffer = mutationField('createOffer', {
         updatedAt: now,
       },
     })
+    if (process.env.NODE_ENV === 'production') {
+      await sgMail.send({
+        from: FROM_ADDRESS,
+        to: ['shonum@gmail.com', 'michael@cnotes.co'],
+        subject: `cnotes: ${user.alias} has submitted an offer`,
+        html: `
+          <h1>${user.alias} has submitted an offer:</h1>
+          <p>User ID: ${user.id} </p>
+          <p>Offer ID: ${offer.id} </p>
+          <p>Platform: ${input.platform} </p>
+          <p>Deliverable: ${input.deliverable} </p>
+          <p>Execution Date Range: ${input.deliveryStartsAt} to ${
+          input.deliveryEndsAt
+        } </p>
+          <p>Description: ${input.description} </p>
+          <p>${input.specs.map(spec => `${spec.key}: ${spec.value}`)}</p>
+          <hr />
+        `,
+      })
+    }
 
     // send email
     return offer
