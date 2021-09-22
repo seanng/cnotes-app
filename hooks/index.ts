@@ -1,2 +1,2 @@
 export * from './useWarningOnExit'
-export * from './useColor'
+export * from './useTransposeColor'

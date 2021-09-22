@@ -84,3 +84,10 @@ export interface SettingsFormFieldValues {
   portfolio?: PortfolioItem[]
   avatarUrl?: string
 }
+
+// Profile Page
+type UserProfile = User & {
+  collabs: PortfolioItem[]
+}
+
+export type TransformedProfile = Omit<UserProfile, 'portfoilo'>

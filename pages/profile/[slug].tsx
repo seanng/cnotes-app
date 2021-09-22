@@ -1,11 +1,17 @@
 import { gql } from '@apollo/client'
-import { Avatar, Box, Text, Container } from '@chakra-ui/react'
+import { Box, Text, Container } from '@chakra-ui/react'
 import { GetServerSideProps, NextPage } from 'next'
 import Layout from 'components/organisms/Layout'
-import { PortfolioItem, User } from 'shared/types'
+import { User, TransformedProfile } from 'shared/types'
 import { PLACEHOLDER_BANNER_URL } from 'shared/constants'
 import client from 'lib/apollo-client'
 import { getUserPayload } from 'utils/auth'
+import {
+  PROFILE_BOX_INNER_WIDTH,
+  PROFILE_BOX_WRAPPER_PADDING,
+} from 'shared/metrics'
+import ProfileBox from 'components/organisms/ProfileBox'
+import ProfileReel from 'components/organisms/ProfileReel'
 
 const PROFILE_BY_SLUG = gql`
   query profileBySlug($slug: String!) {
@@ -22,12 +28,6 @@ const PROFILE_BY_SLUG = gql`
   }
 `
 
-type UserProfile = User & {
-  collabs: PortfolioItem[]
-}
-
-type TransformedProfile = Omit<UserProfile, 'portfoilo'>
-
 type Props = {
   profile: TransformedProfile
   user: User
@@ -35,27 +35,26 @@ type Props = {
 
 const ProfilePage: NextPage<Props> = ({ profile, user }: Props) => {
   const bgImage = profile.bannerUrl || PLACEHOLDER_BANNER_URL
+  const profileBodyWidth = `calc(100% - ${PROFILE_BOX_INNER_WIDTH}px - ${PROFILE_BOX_WRAPPER_PADDING}px)`
+
   return (
     <Layout user={user}>
       <Box h={250} w="100%" bgImage={`url(${bgImage})`} bgPosition="cover" />
       <Container display={{ md: 'flex' }}>
-        <Box
-          h={400}
-          p={8}
-          borderWidth={1}
-          borderColor="gray.200"
-          mt={-40}
-          bgColor="white"
-        >
-          <Avatar name={profile.alias} size="3xl" src={profile.avatarUrl} />
-        </Box>
-        <Box width="100%">
-          <Text>{JSON.stringify(profile)}</Text>
-        </Box>
+        <ProfileBox profile={profile} />
+        <Box width={profileBodyWidth} pl={[0, null, 20]}>
+          <Text textStyle="h2">About</Text>
+          <Text textStyle="base">
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis
+            facilisis congue a libero neque, bibendum arcu. Integer habitasse
+            augue vestibulum nibh a metus nulla. Lectus adipiscing magnis eu
+            donec vestibulum. Sit faucibus nisl luctus suscipit gravida.
+          </Text>
 
-        {/* <Grid templateColumns="" gap={2}>
-        </Grid> */}
+          {/* <Text>{JSON.stringify(profile)}</Text> */}
+        </Box>
       </Container>
+      <ProfileReel profile={profile} />
     </Layout>
   )
 }
@@ -63,10 +62,17 @@ const ProfilePage: NextPage<Props> = ({ profile, user }: Props) => {
 export default ProfilePage
 
 function profileTransformer(data: User): TransformedProfile {
+  const portfolio = data.portfolio
+    .slice()
+    .sort(
+      (a, b) =>
+        new Date(b.publishedAt).valueOf() - new Date(a.publishedAt).valueOf()
+    )
+
   return {
     ...data,
-    // TODO: sort by publishedAt=.
-    collabs: data.portfolio?.filter(item => !!item.companyName),
+    portfolio,
+    collabs: portfolio.filter(item => !!item.companyName),
   }
 }
 

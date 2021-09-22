@@ -1062,6 +1062,11 @@
     minimatch "^3.0.4"
     strip-json-comments "^3.1.1"
 
+"@fontsource/bebas-neue@^4.5.0":
+  version "4.5.0"
+  resolved "https://registry.yarnpkg.com/@fontsource/bebas-neue/-/bebas-neue-4.5.0.tgz#f12c97a7702bd986152631175d00963892aba560"
+  integrity sha512-n1q39krvjIw4gPbxmEa7hYYu1DJkzrKAlqYM2GqGKVRzTrXX0/riVJw/9/KKgK5yreAf5ERBsEv+QhfdyNsuOg==
+
 "@fontsource/dm-sans@^4.5.0":
   version "4.5.0"
   resolved "https://registry.yarnpkg.com/@fontsource/dm-sans/-/dm-sans-4.5.0.tgz#0dae7ab3563b3ffd47181a3fa4c9c6a33fb04c5e"

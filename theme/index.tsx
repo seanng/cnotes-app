@@ -21,7 +21,12 @@ const breakpoints = createBreakpoints({
   xl: '80em',
 })
 
-const fonts = { heading: 'DM Sans', body: 'Poppins' }
+const fonts = {
+  heading: 'DM Sans',
+  body: 'Poppins',
+  headingNew: 'Bebas Neue',
+  bodyNew: 'GothamPro',
+}
 
 const components = {
   Button,
