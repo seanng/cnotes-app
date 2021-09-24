@@ -71,9 +71,11 @@ const ProfileReel = ({ profile }: Props): JSX.Element => {
                           </Tag>
                         </Flex>
                       )}
-                      <Tag variant="reel" bgColor={green[600]}>
-                        <IsVerifiedTag color="black" />
-                      </Tag>
+                      {item.isVerified && (
+                        <Tag variant="reel" bgColor={green[600]}>
+                          <IsVerifiedTag color="black" />
+                        </Tag>
+                      )}
                     </Flex>
                     <Center
                       position="absolute"

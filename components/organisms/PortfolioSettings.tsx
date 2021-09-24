@@ -148,13 +148,12 @@ const Portfolio: FC<Props> = ({ register, control, errors }: Props) => {
       })}
       <Button
         size="sm"
-        variant="outline"
         onClick={(): void => {
           appendCollab({})
         }}
         mb={16}
       >
-        Add Collab
+        Add
       </Button>
       <Box textStyle="xLarge" fontWeight="bold" mb={8}>
         Highlights
@@ -217,13 +216,12 @@ const Portfolio: FC<Props> = ({ register, control, errors }: Props) => {
       })}
       <Button
         size="sm"
-        variant="outline"
         onClick={(): void => {
           appendSample({})
         }}
         mb={12}
       >
-        Add Sample
+        Add
       </Button>
     </Box>
   )

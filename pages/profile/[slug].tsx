@@ -63,7 +63,7 @@ const ProfilePage: NextPage<Props> = ({ profile, user }: Props) => {
         <Box
           width={['100%', null, profileBodyWidth]}
           pl={[0, null, '5%', 20]}
-          mt={[5, null, -8]}
+          mt={[7, null, -8]}
         >
           <Text textStyle="h2" mb={3}>
             About
@@ -104,7 +104,7 @@ const ProfilePage: NextPage<Props> = ({ profile, user }: Props) => {
                   <Text as="span" fontWeight={600} mr={2}>
                     <Link href={collab.companyUrl}>{collab.companyName}</Link>
                   </Text>
-                  <IsVerifiedTag />
+                  {collab.isVerified && <IsVerifiedTag />}
                 </Box>
                 <Text textStyle="small" color={gray[600]}>
                   {format(new Date(collab.publishedAt), 'dd LLLL yyyy')}

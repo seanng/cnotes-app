@@ -3,6 +3,7 @@ export interface PortfolioItem {
   url: string
   thumbnailUrl: string
   description?: string
+  isVerified?: boolean
   publishedAt?: string
   companyUrl?: string
   companyName?: string
