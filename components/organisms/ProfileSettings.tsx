@@ -50,10 +50,10 @@ const ProfileSettings: FC<Props> = ({
           mr={6}
         />
         <Flex direction="column" justifyContent="center">
-          <Box mb={2} textStyle="body2">
+          <Box mb={2} textStyle="base">
             Profile Photo
           </Box>
-          <Box textStyle="caption2" color="gray.600" mb={3}>
+          <Box textStyle="mini" color="gray.600" mb={3}>
             We recommend an image of at least 400 x 400
           </Box>
           <Flex>

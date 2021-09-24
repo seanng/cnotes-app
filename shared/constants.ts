@@ -56,7 +56,6 @@ export const userPublicFields = [
 ]
 
 export const S3_BUCKET_URL =
-  'https://cnotes-dev.s3-ap-southeast-1.amazonaws.com/'
+  'https://cnotes-dev.s3-ap-southeast-1.amazonaws.com'
 
-export const PLACEHOLDER_BANNER_URL =
-  'https://cnotes-dev.s3-ap-southeast-1.amazonaws.com/placeholders/bg-profile.jpg'
+export const PLACEHOLDER_BANNER_URL = `${S3_BUCKET_URL}/placeholders/bg-profile.jpg`

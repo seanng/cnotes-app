@@ -1,7 +1,7 @@
 import textStyles from 'theme/foundations/text-styles'
 export default {
   baseStyle: {
-    ...textStyles.hairline2,
+    ...textStyles.micro,
     fontFamily: 'body',
     letterSpacing: '0.1px',
     fontWeight: 'bold',

@@ -51,11 +51,11 @@ const Portfolio: FC<Props> = ({ register, control, errors }: Props) => {
 
   return (
     <Box>
-      <Box textStyle="hairline1" mb={8}>
+      <Box textStyle="xLarge" fontWeight="bold" mb={8}>
         Past Collabs
       </Box>
       {collabsFields.length === 0 && (
-        <Box textStyle="body2" mb={8}>
+        <Box textStyle="base" mb={8}>
           Worked with brands in the past? Showcase your work here!
         </Box>
       )}
@@ -154,11 +154,11 @@ const Portfolio: FC<Props> = ({ register, control, errors }: Props) => {
       >
         Add Collab
       </Button>
-      <Box textStyle="hairline1" mb={8}>
+      <Box textStyle="xLarge" fontWeight="bold" mb={8}>
         Highlights
       </Box>
       {samplesFields.length === 0 && (
-        <Box textStyle="body2" mb={8}>
+        <Box textStyle="base" mb={8}>
           Showcase work that aren&apos;t brand collabs here.
         </Box>
       )}

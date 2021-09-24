@@ -7,7 +7,7 @@ import {
   Box,
   Text,
 } from '@chakra-ui/react'
-import { useColors } from 'hooks'
+import { useColors } from 'utils/colors'
 import {
   PROFILE_BOX_INNER_WIDTH,
   PROFILE_BOX_WRAPPER_PADDING,

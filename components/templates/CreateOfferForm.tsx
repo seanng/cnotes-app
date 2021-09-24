@@ -196,7 +196,7 @@ const CreateOfferForm: NextPage<Props> = ({ user, onOfferSubmit }: Props) => {
                   <AccordionButton>
                     <Box
                       textAlign="left"
-                      textStyle="caption1"
+                      textStyle="small"
                       fontWeight="bold"
                       mr={4}
                     >
@@ -205,11 +205,11 @@ const CreateOfferForm: NextPage<Props> = ({ user, onOfferSubmit }: Props) => {
                     <AccordionIcon />
                   </AccordionButton>
                 </h2>
-                <AccordionPanel textStyle="body2">
+                <AccordionPanel textStyle="base">
                   <Flex mb={8}>
                     <Flex direction="column">
                       <Box mb={1}>Number of Revisions</Box>
-                      <Box textStyle="caption2" color="gray.600">
+                      <Box textStyle="mini" color="gray.600">
                         How many times can a brand suggest non-major changes to
                         the sponsored work?
                       </Box>
@@ -225,7 +225,7 @@ const CreateOfferForm: NextPage<Props> = ({ user, onOfferSubmit }: Props) => {
                   <Flex mb={8}>
                     <Flex direction="column">
                       <Box mb={1}>Revision Time</Box>
-                      <Box textStyle="caption2" color="gray.600">
+                      <Box textStyle="mini" color="gray.600">
                         When can the brand preview your work and suggest edits
                         before it goes live?
                       </Box>
@@ -241,7 +241,7 @@ const CreateOfferForm: NextPage<Props> = ({ user, onOfferSubmit }: Props) => {
                   <Flex mb={8}>
                     <Flex direction="column">
                       <Box mb={1}>Will the media be reusable?</Box>
-                      <Box textStyle="caption2" color="gray.600">
+                      <Box textStyle="mini" color="gray.600">
                         Will the brand get a license to reuse the work in other
                         places? (eg. making it into a Facebook ad)
                       </Box>

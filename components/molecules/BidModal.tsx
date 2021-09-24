@@ -109,7 +109,7 @@ const BidModal: FC<ModalProps> = ({
         <ModalCloseButton />
         {showSuccess ? (
           <>
-            <ModalBody textStyle="body2" mb={10}>
+            <ModalBody textStyle="base" mb={10}>
               {`You have successfully bid $${price} for a ${offer.platform} ${offer.deliverable} from ${offer.creator.alias}.`}
             </ModalBody>
             <ModalFooter>
@@ -119,20 +119,20 @@ const BidModal: FC<ModalProps> = ({
         ) : (
           <form onSubmit={handleSubmit(onConfirm)}>
             <ModalBody>
-              <Box textStyle="body2" mb={10}>
+              <Box textStyle="base" mb={10}>
                 {`You are about to make a bid for a ${offer.platform} ${offer.deliverable} from ${offer.creator.alias}`}
               </Box>
-              <Flex mb={1} color="gray.600" textStyle="caption1">
+              <Flex mb={1} color="gray.600" textStyle="small">
                 <Box>Time left</Box>
                 <Spacer />
                 <Box>3 hours 3 minutes left</Box>
               </Flex>
-              <Flex mb={2} color="gray.600" textStyle="caption1">
+              <Flex mb={2} color="gray.600" textStyle="small">
                 <Box>Total number of bids</Box>
                 <Spacer />
                 <Box>3</Box>
               </Flex>
-              <Flex textStyle="body2" fontWeight="bold" mb={6}>
+              <Flex textStyle="base" fontWeight="bold" mb={6}>
                 <Box>Your bid</Box>
                 <Spacer />
                 <Box>{`$${price}`}</Box>

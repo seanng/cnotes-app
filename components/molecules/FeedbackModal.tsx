@@ -42,7 +42,7 @@ const FeedbackModal: FC<P> = ({
       <ModalContent>
         <ModalHeader>{header}</ModalHeader>
         {hasCloseButton && <ModalCloseButton />}
-        <ModalBody textStyle="body2">{body}</ModalBody>
+        <ModalBody textStyle="base">{body}</ModalBody>
         <ModalFooter>
           <Button onClick={onConfirm || onClose}>{buttonText}</Button>
         </ModalFooter>

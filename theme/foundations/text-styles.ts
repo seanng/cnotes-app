@@ -54,7 +54,7 @@ export default {
   small: {
     fontFamily: 'body',
     fontSize: ['14px'],
-    lineHeight: '16px',
+    lineHeight: '24px',
   },
   mini: {
     fontFamily: 'body',
@@ -74,51 +74,5 @@ export default {
     fontSize: ['10px'],
     fontWeight: 600,
     letterSpacing: '0.05em',
-    lineHeight: '11px',
-  },
-
-  // old...
-  body1: {
-    fontSize: ['24px'],
-    lineHeight: '32px',
-    fontFamily: 'body',
-  },
-  body2: {
-    fontSize: ['16px'],
-    lineHeight: '24px',
-    fontFamily: 'body',
-  },
-  caption1: {
-    fontSize: ['14px'],
-    lineHeight: '24px',
-    fontFamily: 'body',
-  },
-  caption2: {
-    fontSize: ['12px'],
-    lineHeight: '20px',
-    fontFamily: 'body',
-  },
-  hairline1: {
-    fontSize: ['16px'],
-    fontWeight: 'bold',
-    lineHeight: '16px',
-    fontFamily: 'body',
-    textTransform: 'uppercase',
-  },
-  hairline2: {
-    fontSize: ['12px'],
-    fontWeight: 'bold',
-    lineHeight: '12px',
-    fontFamily: 'body',
-    textTransform: 'uppercase',
-  },
-  inputLabel: {
-    fontSize: '10px',
-    fontWeight: 'black',
-    fontFamily: 'heading',
-    textTransform: 'uppercase',
-    color: '#808191',
-    letterSpacing: '0.9px',
-    lineHeight: '1.6px',
   },
 }

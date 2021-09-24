@@ -59,7 +59,7 @@ const BiddingTable: FC<Props> = ({ data }: Props) => {
   }, [data])
 
   if (!bids || bids.length === 0) {
-    return <Box textStyle="body1">There are no ongoing bids at the moment</Box>
+    return <Box textStyle="xLarge">There are no ongoing bids at the moment</Box>
   }
 
   return (
@@ -77,14 +77,7 @@ const BiddingTable: FC<Props> = ({ data }: Props) => {
             const { offer, history } = bid
             const currentBidPrice = history[history.length - 1].price
             return (
-              <LinkBox
-                as={Tr}
-                transform="scale(1)"
-                cursor="pointer"
-                key={offer.id}
-                _hover={{ shadow: 'md' }}
-                textStyle="body2"
-              >
+              <LinkBox as={Tr} key={offer.id}>
                 <Td>
                   <NextLink href={`/offer/${offer.id}`} passHref>
                     <LinkOverlay>
@@ -98,7 +91,7 @@ const BiddingTable: FC<Props> = ({ data }: Props) => {
                           ml={CREATOR_AVATAR_TEXT_SPACING}
                         >
                           <Box>{offer.creator.alias}</Box>
-                          {/* <Box textStyle="caption2">10k viewers</Box> */}
+                          {/* <Box textStyle="mini">10k viewers</Box> */}
                         </Flex>
                       </Flex>
                     </LinkOverlay>
@@ -107,13 +100,13 @@ const BiddingTable: FC<Props> = ({ data }: Props) => {
                 <Td>
                   <Flex direction="column">
                     <Box>{offer.deliverable}</Box>
-                    <Box textStyle="caption2">{offer.platform}</Box>
+                    <Box textStyle="mini">{offer.platform}</Box>
                   </Flex>
                 </Td>
                 <Td>
                   <Flex direction="column" minWidth={208}>
                     <CountdownTimer end={offer.auctionEndsAt} />
-                    <Box textStyle="caption2">
+                    <Box textStyle="mini">
                       {`Ends ${formatRelative(
                         new Date(offer.auctionEndsAt),
                         now
@@ -124,7 +117,7 @@ const BiddingTable: FC<Props> = ({ data }: Props) => {
                 <Td>
                   <Flex direction="column">
                     <Box>${offer.highestBid.toLocaleString()}</Box>
-                    <Box textStyle="caption2">{offer.bidCount} bids</Box>
+                    <Box textStyle="mini">{offer.bidCount} bids</Box>
                   </Flex>
                 </Td>
                 <Td>${currentBidPrice.toLocaleString()}</Td>

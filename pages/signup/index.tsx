@@ -13,7 +13,9 @@ import {
 } from '@chakra-ui/react'
 import { GetServerSideProps, NextPage } from 'next'
 import { getUserPayload } from 'utils/auth'
+import { S3_BUCKET_URL } from 'shared/constants'
 import { redirTo } from 'utils/helpers'
+import { useColors } from 'utils/colors'
 
 type LinkCardProps = {
   href: string
@@ -57,6 +59,7 @@ function LinkCard({ href, label, imgSrc }: LinkCardProps): JSX.Element {
 }
 
 const SignupFoyer: NextPage = () => {
+  const { gray } = useColors()
   return (
     <Layout>
       <Container
@@ -65,22 +68,28 @@ const SignupFoyer: NextPage = () => {
         alignItems="center"
         py={[16, 20]}
       >
-        <c.h2 textStyle="h2" mb={6}>
+        <c.h2
+          textStyle="h2"
+          fontFamily="body"
+          textTransform="capitalize"
+          fontWeight="bold"
+          mb={6}
+        >
           Sign up
         </c.h2>
-        <Text color="gray.600">
-          Select if you are a <c.span color="gray.900">creator</c.span> or a{' '}
-          <c.span color="gray.900">brand</c.span>.
+        <Text color={gray[600]}>
+          Select if you are a <c.span color={gray[900]}>creator</c.span> or a{' '}
+          <c.span color={gray[900]}>brand</c.span>.
         </Text>
         <Box display={['block', 'flex']} pt={[16, 20]}>
           <LinkCard
             href="/signup/creator"
-            imgSrc="/signup-cover-creator.jpg"
+            imgSrc={`${S3_BUCKET_URL}/assets/signup-cover-creator.jpg`}
             label="Creator"
           />
           <LinkCard
             href="/signup/brand"
-            imgSrc="/signup-cover-brand.jpg"
+            imgSrc={`${S3_BUCKET_URL}/assets/signup-cover-brand.jpg`}
             label="Brand"
           />
         </Box>

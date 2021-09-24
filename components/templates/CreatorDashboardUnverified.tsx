@@ -14,7 +14,7 @@ const CreatorDashboardUnverified: NextPage<Props> = ({ user }: Props) => {
         <c.h4 textStyle="h4" mb={6}>
           Learn how cnotes helps you get more sponsorships:
         </c.h4>
-        <c.h6 textStyle="body2" mb={6}>
+        <c.h6 textStyle="base" mb={6}>
           Ready to work with brands? Email michael.ninh@drop.com to get started!
         </c.h6>
         <Box my={10}>YouTube Embed goes here!!</Box>

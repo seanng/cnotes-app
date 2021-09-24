@@ -65,7 +65,13 @@ const ResetPasswordPage: NextPage = () => {
       <Layout>
         <Container py={[16, 20]}>
           <Box as="form" onSubmit={handleSubmit(onSubmit)} w={600} maxW="100%">
-            <c.h2 textStyle="h2" mb={16}>
+            <c.h2
+              textStyle="h2"
+              fontFamily="body"
+              textTransform="capitalize"
+              fontWeight="bold"
+              mb={16}
+            >
               Enter your new password
             </c.h2>
             <FormInput

@@ -14,7 +14,7 @@ const CreateOfferSuccess: NextPage<Props> = ({ user }: Props) => {
         <c.h4 textStyle="h4" mb={6}>
           Thanks for applying!
         </c.h4>
-        <c.h6 textStyle="body2" mb={6}>
+        <c.h6 textStyle="base" mb={6}>
           We’ll personally reach out and get you onboard if you’re a fit.
         </c.h6>
       </Container>

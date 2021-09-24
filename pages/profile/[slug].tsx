@@ -1,7 +1,7 @@
 import { gql } from '@apollo/client'
 import Image from 'next/image'
-import { Box, Center, Flex, Text, Container } from '@chakra-ui/react'
-import { useTransposeColor, useColors } from 'hooks'
+import { Box, Center, Flex, Text, Container, Link } from '@chakra-ui/react'
+import { useTransposeColor, useColors } from 'utils/colors'
 import IsVerifiedTag from 'components/atoms/IsVerifiedTag'
 import { GetServerSideProps, NextPage } from 'next'
 import Layout from 'components/organisms/Layout'
@@ -96,13 +96,13 @@ const ProfilePage: NextPage<Props> = ({ profile, user }: Props) => {
               <Flex direction="column">
                 <Box textStyle="base" mb={1} display="inline-block">
                   <Text as="span" fontWeight={600}>
-                    {collab.deliverable}
+                    <Link href={collab.url}>{collab.deliverable}</Link>
                   </Text>
                   <Text as="span" color={gray[600]}>
                     &nbsp;for&nbsp;
                   </Text>
                   <Text as="span" fontWeight={600} mr={2}>
-                    {collab.companyName}
+                    <Link href={collab.companyUrl}>{collab.companyName}</Link>
                   </Text>
                   <IsVerifiedTag />
                 </Box>

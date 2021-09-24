@@ -26,7 +26,8 @@ function LoginInput({
           top="32px"
           right="24px"
           left="24px"
-          textStyle="inputLabel"
+          textStyle="nano"
+          lineHeight={0}
         >
           {name}
         </Box>
@@ -40,7 +41,6 @@ function LoginInput({
             border="2px"
             borderColor={errors[name] ? 'red' : 'transparent'}
             backgroundColor="rgba(228, 228, 228, 0.3)"
-            fontFamily="Poppins"
             fontWeight={600}
             color="#11142D"
             transition="all .2s"

@@ -17,7 +17,7 @@ import {
 import { TransformedProfile } from 'shared/types'
 import { TIKTOK } from 'shared/constants'
 import IsVerifiedTag from 'components/atoms/IsVerifiedTag'
-import { useColors } from 'hooks'
+import { useColors } from 'utils/colors'
 
 type Props = {
   profile: TransformedProfile

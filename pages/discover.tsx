@@ -72,11 +72,11 @@ const DiscoverPage: NextPage<Props> = ({ user }: Props) => {
                     <CountdownTimer
                       end={offer.auctionEndsAt}
                       prefix="Ends in"
-                      textStyle="caption1"
+                      textStyle="small"
                       mb={4}
                     />
                     <Box borderRadius="md" p={4} bgColor="gray.300" mb={4}>
-                      <Text noOfLines={3} textStyle="caption2">
+                      <Text noOfLines={3} textStyle="mini">
                         {offer.description}
                       </Text>
                     </Box>
@@ -85,7 +85,7 @@ const DiscoverPage: NextPage<Props> = ({ user }: Props) => {
                       justifyContent="space-between"
                     >
                       <Box>
-                        <Box textStyle="body2">{`${offer.platform} ${offer.deliverable}`}</Box>
+                        <Box textStyle="base">{`${offer.platform} ${offer.deliverable}`}</Box>
                         <Flex align="center">
                           <Avatar
                             name={offer.creator.alias}
@@ -97,15 +97,15 @@ const DiscoverPage: NextPage<Props> = ({ user }: Props) => {
                             ml={CREATOR_AVATAR_TEXT_SPACING}
                           >
                             <Box>{offer.creator.alias}</Box>
-                            {/* <Box textStyle="caption2">10k viewers</Box> */}
+                            {/* <Box textStyle="mini">10k viewers</Box> */}
                           </Flex>
                         </Flex>
                       </Box>
                       <Box>
-                        <Box textStyle="body1">
+                        <Box textStyle="xLarge">
                           ${offer.highestBid.toLocaleString()}
                         </Box>
-                        <Box textStyle="caption2">{offer.bidCount} bids</Box>
+                        <Box textStyle="mini">{offer.bidCount} bids</Box>
                       </Box>
                     </Box>
                   </LinkOverlay>

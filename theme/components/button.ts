@@ -87,7 +87,7 @@ const variantGhost = props => {
 
   return {
     color: mode(`${c}.600`, `${c}.200`)(props),
-    bg: mode(`${c}.50`, 'transparent')(props),
+    bg: mode('rgba(255, 255, 255, 0.5)', 'transparent')(props),
     _hover: {
       bg: mode(`${c}.100`, darkHoverBg)(props),
     },

@@ -1,4 +1,4 @@
-import { useColors } from 'hooks'
+import { useColors } from 'utils/colors'
 import { Doughnut } from 'react-chartjs-2'
 
 import { Flex, Text, Box, BoxProps } from '@chakra-ui/react'

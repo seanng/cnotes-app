@@ -1,4 +1,5 @@
 import { CREATOR_AVATAR_TEXT_SPACING } from 'shared/constants'
+import { mode, transparentize } from '@chakra-ui/theme-tools'
 
 const AVATAR_WIDTH = 12 // avatar size="md" is 48px
 const DEFAULT_TH_PX = 6 // https://github.com/chakra-ui/chakra-ui/blob/main/packages/theme/src/components/table.ts#L134
@@ -16,19 +17,26 @@ export default {
     },
   },
   variants: {
-    brandDashboard: {
-      tbody: {
-        tr: {
-          borderColor: 'gray.100',
-          borderBottomWidth: 1,
+    brandDashboard: props => {
+      const darkHoverBg = transparentize(`gray.200`, 0.12)(props.theme)
+      return {
+        tbody: {
+          tr: {
+            borderColor: mode('gray.100', 'gray.800')(props),
+            textStyle: 'base',
+            cursor: 'pointer',
+            transform: 'scale(1)',
+            borderBottomWidth: 1,
+            _hover: mode({ shadow: 'md' }, { bgColor: darkHoverBg })(props),
+          },
         },
-      },
-      th: {
-        // v-align creator heading with text
-        _first: {
-          pl: FIRST_PL,
+        th: {
+          // v-align creator heading with text
+          _first: {
+            pl: FIRST_PL,
+          },
         },
-      },
+      }
     },
   },
   defaultProps: {

@@ -67,7 +67,13 @@ function SignupForm({ isBrand }: TemplateProps): JSX.Element {
     <Layout>
       <Container centerContent py={[16, 20]}>
         <Box w={900} maxW="100%">
-          <c.h2 textStyle="h2" mb={6}>
+          <c.h2
+            textStyle="h2"
+            fontFamily="body"
+            textTransform="capitalize"
+            fontWeight="bold"
+            mb={5}
+          >
             Create Account
           </c.h2>
           <Text color="gray.600" mb={16}>

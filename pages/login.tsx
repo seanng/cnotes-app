@@ -12,6 +12,7 @@ import { useRouter } from 'next/router'
 import { GetServerSideProps, NextPage } from 'next'
 import { getUserPayload } from 'utils/auth'
 import NextLink from 'next/link'
+import { useColors } from 'utils/colors'
 
 const Link = c(NextLink)
 
@@ -39,6 +40,8 @@ const Login: NextPage = () => {
     setError,
     formState: { errors, isSubmitting },
   } = useForm()
+
+  const { gray } = useColors()
 
   const onSubmit = async (data: OnSubmitProps): Promise<void> => {
     try {
@@ -69,22 +72,22 @@ const Login: NextPage = () => {
     <Flex minH="100vh">
       <Box
         display={{ base: 'none', lg: 'block' }}
-        color="white"
+        color={gray[0]}
         w="40%"
         px={20}
         py={120}
-        bgColor="#6c5dd3"
+        bgColor={gray[900]}
       >
         <Box textStyle="h1" mb={4}>
           cnotes
         </Box>
-        <Box textStyle="body2" fontWeight="bold">
+        <Box textStyle="base" fontWeight="bold">
           Making sponsorships more transparent.
         </Box>
       </Box>
       <Box w={{ base: '100%', lg: '60%' }} p={20}>
         <c.form onSubmit={handleSubmit(onSubmit)} maxW={412} m="auto">
-          <Box textStyle="h4" fontFamily="Poppins" mb={12}>
+          <Box textStyle="h5" mb={12}>
             Sign in to cnotes
           </Box>
           <Input
@@ -117,16 +120,15 @@ const Login: NextPage = () => {
               }),
             }}
           />
-          <Box textStyle="caption1" fontWeight="bold" mt={8} mb={6}>
-            If you made an account before xxxx you will need to create a new
+          <Box textStyle="small" fontWeight="bold" mt={8} mb={6}>
+            If you made an account before 07/20/21 you will need to create a new
             account.
           </Box>
           <Box
             textAlign="right"
-            textStyle="caption1"
-            fontFamily="heading"
-            color="blue"
             fontWeight="bold"
+            textStyle="small"
+            color="blue"
             mb={4}
           >
             <Link href="/forgot-password">Forgot Password?</Link>
@@ -141,12 +143,7 @@ const Login: NextPage = () => {
           >
             Sign in
           </Button>
-          <Flex
-            justify="center"
-            textStyle="caption1"
-            fontWeight="bold"
-            fontFamily="heading"
-          >
+          <Flex justify="center" textStyle="small" fontWeight="bold">
             <Box mr={4}>Not a member?</Box>
             <Box color="blue">
               <Link href="/signup">Sign up now</Link>

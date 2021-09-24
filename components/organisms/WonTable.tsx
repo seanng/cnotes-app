@@ -50,7 +50,9 @@ const WonTable: FC<Props> = ({ data, user }: Props) => {
   }
   if (!bids || bids.length === 0) {
     return (
-      <Box textStyle="body1">You don&apos;t have any ongoing transactions.</Box>
+      <Box textStyle="xLarge">
+        You don&apos;t have any ongoing transactions.
+      </Box>
     )
   }
   return (
@@ -64,14 +66,7 @@ const WonTable: FC<Props> = ({ data, user }: Props) => {
       </Thead>
       <Tbody>
         {bids.map(({ offer }) => (
-          <LinkBox
-            as={Tr}
-            transform="scale(1)"
-            cursor="pointer"
-            _hover={{ shadow: 'md' }}
-            textStyle="body2"
-            key={offer.id}
-          >
+          <LinkBox as={Tr} key={offer.id}>
             <Td>
               <NextLink href={`/offer/${offer.id}`} passHref>
                 <LinkOverlay>
@@ -82,7 +77,7 @@ const WonTable: FC<Props> = ({ data, user }: Props) => {
                     />
                     <Flex direction="column" ml={CREATOR_AVATAR_TEXT_SPACING}>
                       <Box>{offer.creator.alias}</Box>
-                      {/* <Box textStyle="caption2">10k viewers</Box> */}
+                      {/* <Box textStyle="mini">10k viewers</Box> */}
                     </Flex>
                   </Flex>
                 </LinkOverlay>
@@ -91,7 +86,7 @@ const WonTable: FC<Props> = ({ data, user }: Props) => {
             <Td>
               <Flex direction="column">
                 <Box>{offer.deliverable}</Box>
-                <Box textStyle="caption2">{offer.platform}</Box>
+                <Box textStyle="mini">{offer.platform}</Box>
               </Flex>
             </Td>
             <Td>${offer.finalPrice}</Td>
