@@ -114,8 +114,8 @@ const Portfolio: FC<Props> = ({ register, control, errors }: Props) => {
                 }),
               }}
             />
-            <Flex position="relative">
-              <FormControl maxW={160} mr={4} mb={4}>
+            <Flex position="relative" align="center" justify="space-between">
+              <FormControl maxW={180} mr={4} mb={4}>
                 <FormLabel>Job Type</FormLabel>
                 <Select
                   {...register(`collabs.${i}.deliverable`)}
@@ -131,14 +131,16 @@ const Portfolio: FC<Props> = ({ register, control, errors }: Props) => {
                 </Select>
               </FormControl>
               <IconButton
-                mt={7}
-                size="md"
+                mt={3}
+                size="sm"
+                borderRadius="full"
                 aria-label="Remove"
                 colorScheme="red"
+                minWidth="40px"
                 onClick={(): void => {
                   removeCollab(i)
                 }}
-                icon={<CloseIcon boxSize={2} />}
+                icon={<CloseIcon boxSize={3} />}
               />
             </Flex>
           </SimpleGrid>
@@ -182,7 +184,7 @@ const Portfolio: FC<Props> = ({ register, control, errors }: Props) => {
                 }),
               }}
             />
-            <Flex w="100%">
+            <Flex w="100%" align="center">
               <FormInput
                 mb={4}
                 error={errors.samples?.[i]?.description}
@@ -198,14 +200,16 @@ const Portfolio: FC<Props> = ({ register, control, errors }: Props) => {
                 }}
               />
               <IconButton
-                mt={7}
-                size="md"
+                mt={3}
+                size="sm"
+                borderRadius="full"
+                minWidth="40px"
                 aria-label="Remove"
                 colorScheme="red"
                 onClick={(): void => {
                   removeSample(i)
                 }}
-                icon={<CloseIcon boxSize={2} />}
+                icon={<CloseIcon boxSize={3} />}
               />
             </Flex>
           </Box>

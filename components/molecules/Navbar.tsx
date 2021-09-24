@@ -3,7 +3,7 @@
 import { CloseIcon, HamburgerIcon, MoonIcon, SunIcon } from '@chakra-ui/icons'
 import LinkButton from 'components/atoms/LinkButton'
 import { User } from 'shared/types'
-import { useState, JSXElementConstructor } from 'react'
+import { useState } from 'react'
 import { CREATOR } from 'shared/constants'
 import {
   Box,
@@ -69,16 +69,18 @@ function UserLinks(): JSX.Element {
 }
 
 function MenuLinks({
+  isLightMode,
   isOpen,
   user,
   toggleColorMode,
-  DarkModeIcon,
 }: {
+  isLightMode: boolean
   isOpen: boolean
   user: User
   toggleColorMode: () => void
-  DarkModeIcon: JSXElementConstructor<any>
 }): JSX.Element {
+  const DarkModeIcon = isLightMode ? MoonIcon : SunIcon
+  const popoverBgColor = isLightMode ? 'gray.50' : 'gray.800'
   return (
     <Box
       flexBasis={{ base: '100%', sm: 'auto' }}
@@ -113,21 +115,21 @@ function MenuLinks({
                   </Button>
                 </PopoverTrigger>
                 <PopoverContent
-                  backgroundColor="white"
+                  backgroundColor={popoverBgColor}
                   mr={4}
                   w={220}
                   px={3}
                   py={3}
                 >
                   <PopoverArrow
-                    backgroundColor="white"
+                    backgroundColor={popoverBgColor}
                     borderTopWidth={1}
                     borderLeftWidth={1}
                   />
                   <PopoverBody
                     fontWeight="bold"
                     letterSpacing="0.5px"
-                    color="gray.600"
+                    color={isLightMode ? 'gray.600' : 'gray.300'}
                   >
                     <UserLinks />
                   </PopoverBody>
@@ -162,7 +164,6 @@ export default function Navbar({ user }: Props): JSX.Element {
   const [isOpen, setIsOpen] = useState(false)
   const { colorMode, toggleColorMode } = useColorMode()
   const isLightMode = colorMode === 'light'
-  const DarkModeIcon = isLightMode ? MoonIcon : SunIcon
 
   const toggle = () => {
     setIsOpen(!isOpen)
@@ -184,7 +185,7 @@ export default function Navbar({ user }: Props): JSX.Element {
           <MenuLinks
             isOpen={isOpen}
             user={user}
-            DarkModeIcon={DarkModeIcon}
+            isLightMode={isLightMode}
             toggleColorMode={toggleColorMode}
           />
         </Flex>
