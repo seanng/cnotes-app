@@ -21,6 +21,7 @@ import {
   Divider,
 } from '@chakra-ui/react'
 import LinkText from 'components/atoms/Link'
+import { NAVBAR_HEIGHT } from 'shared/metrics'
 
 type Props = {
   user: User
@@ -144,11 +145,11 @@ function MenuLinks({
           </>
         ) : (
           <>
-            <LinkButton size="sm" href="/signup" colorScheme="red">
-              Sign up
-            </LinkButton>
             <LinkButton size="sm" href="/login" colorScheme="blue">
               Login
+            </LinkButton>
+            <LinkButton size="sm" href="/signup" colorScheme="red">
+              Sign up
             </LinkButton>
           </>
         )}
@@ -168,7 +169,7 @@ export default function Navbar({ user }: Props): JSX.Element {
   }
 
   return (
-    <Flex py={5} borderBottom="1px" borderColor="gray.100" w="full">
+    <Flex h={NAVBAR_HEIGHT} align="center" w="full">
       <Container>
         <Flex align="center" justify="space-between" wrap="wrap">
           <Logo isLightMode={isLightMode} />

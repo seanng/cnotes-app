@@ -66,6 +66,7 @@
       }
     ],
     "@typescript-eslint/require-await": "off",
+    "@typescript-eslint/ban-ts-comment": "off",
     "no-return-await": "error",
     "no-console": [
       1,

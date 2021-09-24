@@ -1062,20 +1062,15 @@
     minimatch "^3.0.4"
     strip-json-comments "^3.1.1"
 
-"@fontsource/bebas-neue@^4.5.0":
+"@fontsource/anton@^4.5.0":
   version "4.5.0"
-  resolved "https://registry.yarnpkg.com/@fontsource/bebas-neue/-/bebas-neue-4.5.0.tgz#f12c97a7702bd986152631175d00963892aba560"
-  integrity sha512-n1q39krvjIw4gPbxmEa7hYYu1DJkzrKAlqYM2GqGKVRzTrXX0/riVJw/9/KKgK5yreAf5ERBsEv+QhfdyNsuOg==
+  resolved "https://registry.yarnpkg.com/@fontsource/anton/-/anton-4.5.0.tgz#f36b897048e216ad00f4bb0f4336b2bc4d9ba33c"
+  integrity sha512-wQT6QpWr3lwCItxx8NyfagxmjZsddKqjlTcqwjq08CCVgGmwYH0TdCtDkRBZr4lHoNJMZTVTVHI7UCQnclRpnQ==
 
-"@fontsource/dm-sans@^4.5.0":
+"@fontsource/asap@^4.5.0":
   version "4.5.0"
-  resolved "https://registry.yarnpkg.com/@fontsource/dm-sans/-/dm-sans-4.5.0.tgz#0dae7ab3563b3ffd47181a3fa4c9c6a33fb04c5e"
-  integrity sha512-GKsjzK7NU6G1NHAxXRCquZQmZSvj3ah5AMR4N6PU2YpshIpr+NLIwYc+SJty+ZJ4Btysr9KN40+X4ng34heGjw==
-
-"@fontsource/poppins@^4.5.0":
-  version "4.5.0"
-  resolved "https://registry.yarnpkg.com/@fontsource/poppins/-/poppins-4.5.0.tgz#a419697b85864afbf8363f5c247b1e9d1f117564"
-  integrity sha512-RqgMIQqKHWNH3IUj+a0MAhlb4g5fftsXRTJ2bauefBmfM8Ja5q+qQZjKwyB/iCc+paJD320zFnLJ8G+y1ZyemQ==
+  resolved "https://registry.yarnpkg.com/@fontsource/asap/-/asap-4.5.0.tgz#e4e0943c63d3275896637e6f12a04590c0eb3e99"
+  integrity sha512-nadDbEpOOx73wbgoz/9FAYFD8BLP8g2ilrMo3Ibhb4Mhrhb3SdKtmdze3GR7BMlHARLbQSqgfyH7qBf02r6kPw==
 
 "@googleapis/youtube@^2.0.0":
   version "2.0.0"
@@ -1157,6 +1152,11 @@
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/@humanwhocodes/object-schema/-/object-schema-1.2.0.tgz#87de7af9c231826fdd68ac7258f77c429e0e5fcf"
   integrity sha512-wdppn25U8z/2yiaT6YGquE6X8sSv7hNMWSXYSSU1jGv/yd6XqjXgTDJ8KP4NgjTXfJ3GbRjeeb8RTV7a/VpM+w==
+
+"@iconify/react@^3.0.1":
+  version "3.0.1"
+  resolved "https://registry.yarnpkg.com/@iconify/react/-/react-3.0.1.tgz#ce2cb3f4a2b6aab5f7af082c833d869b6fb43182"
+  integrity sha512-yUskSSR80JzRSWcqNsBAG9AN802XzZgHsex8mTOkMLYcPQC3fk1XwK17ulnY5vf692OafhGCAMccR8TWKFaGdw==
 
 "@istanbuljs/load-nyc-config@^1.0.0":
   version "1.1.0"
@@ -2911,6 +2911,11 @@ character-reference-invalid@^1.0.0:
   version "1.1.4"
   resolved "https://registry.yarnpkg.com/character-reference-invalid/-/character-reference-invalid-1.1.4.tgz#083329cda0eae272ab3dbbf37e9a382c13af1560"
   integrity sha512-mKKUkUbhPpQlCOfIuZkvSEgktjPFIsZKRRbC6KWVEMvlzblj3i3asQv5ODsrwt0N3pHAEvjP8KTQPHkp0+6jOg==
+
+chart.js@^3.5.1:
+  version "3.5.1"
+  resolved "https://registry.yarnpkg.com/chart.js/-/chart.js-3.5.1.tgz#73e24d23a4134a70ccdb5e79a917f156b6f3644a"
+  integrity sha512-m5kzt72I1WQ9LILwQC4syla/LD/N413RYv2Dx2nnTkRS9iv/ey1xLTt0DnPc/eWV4zI+BgEgDYBIzbQhZHc/PQ==
 
 chokidar@3.5.1:
   version "3.5.1"
@@ -6935,6 +6940,13 @@ react-aws-s3@^1.5.0:
   dependencies:
     crypto-js "^3.1.9-1"
     short-uuid "^3.1.0"
+
+react-chartjs-2@^3.0.5:
+  version "3.0.5"
+  resolved "https://registry.yarnpkg.com/react-chartjs-2/-/react-chartjs-2-3.0.5.tgz#afc23993a32e146bdcc9addff16a28d8964b98ad"
+  integrity sha512-fYr4E82agaZi9IFMe5GtOZ6WE/HWdxy/KywLNOzXsqgPkD2oo1IlrQLKMLUki/2UXko3p95TR2L8Q2rEss/opQ==
+  dependencies:
+    lodash "^4.17.19"
 
 react-clientside-effect@^1.2.2:
   version "1.2.5"

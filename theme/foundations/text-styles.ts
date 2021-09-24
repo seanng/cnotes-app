@@ -1,61 +1,69 @@
 const heading = {
   fontWeight: 400,
-  fontFamily: 'headingNew',
+  fontFamily: 'heading',
+  textTransform: 'lowercase',
 }
 
 export default {
   hero: {
     ...heading,
-    fontSize: ['96px'],
-    lineHeight: '115px',
+    fontSize: ['80px'],
+    lineHeight: '118px',
   },
   h1: {
     ...heading,
     fontSize: ['64px'],
-    lineHeight: '76px',
+    lineHeight: '94px',
   },
   h2: {
     ...heading,
     fontSize: ['48px'],
-    lineHeight: '58px',
+    lineHeight: '70px',
   },
   h3: {
     ...heading,
     fontSize: ['40px'],
-    lineHeight: '48px',
+    lineHeight: '58px',
   },
   h4: {
     ...heading,
     fontSize: ['32px'],
-    lineHeight: '40px',
+    lineHeight: '46px',
   },
-  xLarge: {
-    fontFamily: 'bodyNew',
-    fontSize: ['24px'],
+  h5: {
+    fontFamily: 'body',
+    fontWeight: 700,
+    fontSize: ['32px'],
     lineHeight: '36px',
   },
+  xLarge: {
+    fontFamily: 'body',
+    fontSize: ['24px'],
+    lineHeight: '28px',
+  },
   large: {
-    fontFamily: 'bodyNew',
+    fontFamily: 'body',
     fontSize: ['18px'],
     lineHeight: '27px',
   },
   base: {
-    fontFamily: 'bodyNew',
+    fontFamily: 'body',
     fontSize: ['16px'],
     lineHeight: '22px',
   },
   small: {
-    fontFamily: 'bodyNew',
+    fontFamily: 'body',
     fontSize: ['14px'],
-    lineHeight: '21px',
+    lineHeight: '16px',
   },
   mini: {
-    fontFamily: 'bodyNew',
+    fontFamily: 'body',
     fontSize: ['12px'],
-    lineHeight: '18px',
+    lineHeight: '14px',
   },
   micro: {
-    fontFamily: 'headingNew',
+    fontFamily: 'body',
+    textTransform: 'uppercase',
     fontSize: ['12px'],
     letterSpacing: '5%',
     lineHeight: '18px',

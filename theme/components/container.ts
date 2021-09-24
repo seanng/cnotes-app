@@ -4,7 +4,7 @@ export default {
       width: '100%',
       py: 0,
       px: [5, 10, 20],
-      maxWidth: '1280px',
+      maxWidth: '100%',
     },
   },
   defaultProps: {

@@ -3,9 +3,8 @@
 
 export default {
   baseStyle: {
-    letterSpacing: '0.02em',
-    fontWeight: 'bold',
-    fontFamily: 'heading',
+    fontWeight: 600,
+    fontFamily: 'body',
   },
   sizes: {
     sm: {

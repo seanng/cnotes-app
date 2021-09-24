@@ -1,2 +1,3 @@
+export const NAVBAR_HEIGHT = 100
 export const PROFILE_BOX_WRAPPER_PADDING = 40
 export const PROFILE_BOX_INNER_WIDTH = 280
