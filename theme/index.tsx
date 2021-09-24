@@ -7,6 +7,7 @@ import Container from './components/container'
 import FormLabel from './components/form-label'
 import Tabs from './components/tabs'
 import Table from './components/table'
+import Tag from './components/tag'
 import Accordion from './components/accordion'
 import Input from './components/input'
 import Modal from './components/modal'
@@ -33,6 +34,7 @@ const components = {
   Input,
   Textarea,
   Accordion,
+  Tag,
   Table,
   Tabs,
   Modal,
@@ -41,8 +43,7 @@ const components = {
 
 const theme = extendTheme({
   colors,
-  initialColorMode: 'light',
-  useSystemColorMode: true,
+  initialColorMode: 'dark',
   fonts,
   breakpoints,
   textStyles,

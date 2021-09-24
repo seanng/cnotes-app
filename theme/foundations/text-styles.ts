@@ -68,6 +68,14 @@ export default {
     letterSpacing: '5%',
     lineHeight: '18px',
   },
+  nano: {
+    fontFamily: 'body',
+    textTransform: 'uppercase',
+    fontSize: ['10px'],
+    fontWeight: 600,
+    letterSpacing: '0.05em',
+    lineHeight: '11px',
+  },
 
   // old...
   body1: {

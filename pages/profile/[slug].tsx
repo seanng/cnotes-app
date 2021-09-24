@@ -1,7 +1,8 @@
 import { gql } from '@apollo/client'
 import Image from 'next/image'
-import { Box, Center, Flex, Text, Container, Icon } from '@chakra-ui/react'
+import { Box, Center, Flex, Text, Container } from '@chakra-ui/react'
 import { useTransposeColor, useColors } from 'hooks'
+import IsVerifiedTag from 'components/atoms/IsVerifiedTag'
 import { GetServerSideProps, NextPage } from 'next'
 import Layout from 'components/organisms/Layout'
 import { User, TransformedProfile } from 'shared/types'
@@ -15,7 +16,6 @@ import {
 } from 'shared/metrics'
 import { format } from 'date-fns'
 import ProfileBox from 'components/organisms/ProfileBox'
-import { Icon as Iconify } from '@iconify/react'
 import ProfileReel from 'components/organisms/ProfileReel'
 
 const PROFILE_BY_SLUG = gql`
@@ -60,7 +60,11 @@ const ProfilePage: NextPage<Props> = ({ profile, user }: Props) => {
       />
       <Container display={{ md: 'flex' }} maxWidth={1280}>
         <ProfileBox profile={profile} />
-        <Box width={profileBodyWidth} pl={[0, null, 20]} mt={-8}>
+        <Box
+          width={['100%', null, profileBodyWidth]}
+          pl={[0, null, '5%', 20]}
+          mt={[5, null, -8]}
+        >
           <Text textStyle="h2" mb={3}>
             About
           </Text>
@@ -80,6 +84,7 @@ const ProfilePage: NextPage<Props> = ({ profile, user }: Props) => {
                 bgColor="black"
                 height="50px"
                 width="50px"
+                minWidth="50px"
                 mr={5}
               >
                 <Image
@@ -89,27 +94,24 @@ const ProfilePage: NextPage<Props> = ({ profile, user }: Props) => {
                 />
               </Center>
               <Flex direction="column">
-                <Flex textStyle="base" mb={1}>
-                  <Text fontWeight={600}>{collab.deliverable}</Text>
-                  <Text color={gray[600]}>&nbsp;for&nbsp;</Text>
-                  <Text fontWeight={600}>{collab.companyName}</Text>
-                  <Text textStyle="micro" color="green.400" fontWeight={600}>
-                    <Icon
-                      as={Iconify}
-                      ml={2}
-                      mr={1}
-                      icon="akar-icons:circle-check-fill"
-                    />
-                    cnotes verified
+                <Box textStyle="base" mb={1} display="inline-block">
+                  <Text as="span" fontWeight={600}>
+                    {collab.deliverable}
                   </Text>
-                </Flex>
+                  <Text as="span" color={gray[600]}>
+                    &nbsp;for&nbsp;
+                  </Text>
+                  <Text as="span" fontWeight={600} mr={2}>
+                    {collab.companyName}
+                  </Text>
+                  <IsVerifiedTag />
+                </Box>
                 <Text textStyle="small" color={gray[600]}>
                   {format(new Date(collab.publishedAt), 'dd LLLL yyyy')}
                 </Text>
               </Flex>
             </Flex>
           ))}
-          {/* <Text>{JSON.stringify(profile)}</Text> */}
         </Box>
       </Container>
       <ProfileReel profile={profile} />

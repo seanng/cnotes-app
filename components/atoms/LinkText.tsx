@@ -9,7 +9,7 @@ interface Props extends LinkBoxProps {
 
 // Link with custom style
 const LinkText: FC<Props> = ({ href, children, ...props }: Props) => (
-  <LinkBox _hover={{ color: 'blue' }} {...props}>
+  <LinkBox {...props}>
     <NextLink href={href} passHref>
       <LinkOverlay>{children}</LinkOverlay>
     </NextLink>

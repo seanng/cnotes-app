@@ -1,5 +1,5 @@
-import Link from 'next/link'
-import Image from 'next/image'
+// import NextLink from 'next/link'
+// import Image from 'next/image'
 import { CloseIcon, HamburgerIcon, MoonIcon, SunIcon } from '@chakra-ui/icons'
 import LinkButton from 'components/atoms/LinkButton'
 import { User } from 'shared/types'
@@ -20,26 +20,26 @@ import {
   PopoverBody,
   Divider,
 } from '@chakra-ui/react'
-import LinkText from 'components/atoms/Link'
+import LinkText from 'components/atoms/LinkText'
 import { NAVBAR_HEIGHT } from 'shared/metrics'
 
 type Props = {
   user: User
 }
 
-function Logo({ isLightMode }: { isLightMode: boolean }): JSX.Element {
-  return (
-    <Link href="/">
-      <Box as="a" href="/" position="relative" w={128} mr={8} h={10}>
-        <Image
-          layout="fill"
-          src={isLightMode ? '/logo-dark.png' : '/logo-light.png'}
-          objectFit="contain"
-        />
-      </Box>
-    </Link>
-  )
-}
+// function Logo({ isLightMode }: { isLightMode: boolean }): JSX.Element {
+//   return (
+//     <NextLink href="/">
+//       <Box as="a" href="/" position="relative" w={128} mr={8} h={10}>
+//         <Image
+//           layout="fill"
+//           src={isLightMode ? '/logo-dark.png' : '/logo-light.png'}
+//           objectFit="contain"
+//         />
+//       </Box>
+//     </NextLink>
+//   )
+// }
 
 function MenuToggle({
   toggle,
@@ -145,10 +145,10 @@ function MenuLinks({
           </>
         ) : (
           <>
-            <LinkButton size="sm" href="/login" colorScheme="blue">
-              Login
+            <LinkButton size="sm" href="/login" variant="outline">
+              Log in
             </LinkButton>
-            <LinkButton size="sm" href="/signup" colorScheme="red">
+            <LinkButton size="sm" href="/signup">
               Sign up
             </LinkButton>
           </>
@@ -169,10 +169,17 @@ export default function Navbar({ user }: Props): JSX.Element {
   }
 
   return (
-    <Flex h={NAVBAR_HEIGHT} align="center" w="full">
+    <Flex minHeight={NAVBAR_HEIGHT} pt={5} w="full">
       <Container>
         <Flex align="center" justify="space-between" wrap="wrap">
-          <Logo isLightMode={isLightMode} />
+          <LinkText
+            href="/"
+            textStyle="h4"
+            color={isLightMode ? 'black' : 'white'}
+          >
+            cnotes
+          </LinkText>
+          {/* <Logo isLightMode={isLightMode} /> */}
           <MenuToggle isOpen={isOpen} toggle={toggle} />
           <MenuLinks
             isOpen={isOpen}
