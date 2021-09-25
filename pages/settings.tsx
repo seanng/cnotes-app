@@ -1,11 +1,12 @@
 import dynamic from 'next/dynamic'
-import { useWarningOnExit } from 'hooks'
+// import { useWarningOnExit } from 'hooks'
 import { gql, useMutation } from '@apollo/client'
 import { GetServerSideProps, NextPage } from 'next'
 import {
   HStack,
   Box,
   Button,
+  useDisclosure,
   Container,
   chakra as c,
   Tabs,
@@ -26,6 +27,7 @@ import { SettingsFormFieldValues, User } from 'shared/types'
 import { getErrorMessage, redirTo, uploadToS3 } from 'utils/helpers'
 import { ALIAS_TAKEN, CREATOR } from 'shared/constants'
 import ProfileSettings from 'components/organisms/ProfileSettings'
+import SocialSettings from 'components/organisms/SocialSettings'
 import { getUserPayload } from 'utils/auth'
 
 const Portfolio = dynamic(
@@ -49,6 +51,9 @@ const defaultValues = {
   firstName: '',
   lastName: '',
   about: '',
+  tiktokUrl: '',
+  youtubeUrl: '',
+  genre: '',
   collabs: [],
   samples: [],
 }
@@ -71,10 +76,15 @@ const getFormData = (user: User): SettingsFormFieldValues => {
   return {
     ...defaultValues,
     alias: user.alias,
+    genre: user.genre,
     websiteUrl: user.websiteUrl,
     firstName: user.firstName,
     lastName: user.lastName,
     about: user.about,
+    youtubeUrl: user.youtubeUrl,
+    tiktokUrl: user.tiktokUrl,
+    facebookUrl: user.facebookUrl,
+    instagramUrl: user.instagramUrl,
     collabs,
     samples,
   }
@@ -96,6 +106,10 @@ const creatorTabs = [
     label: 'portfolio',
     Component: Portfolio,
   },
+  {
+    label: 'social',
+    Component: SocialSettings,
+  },
 ]
 
 interface Props {
@@ -105,7 +119,7 @@ interface Props {
 const SettingsPage: NextPage<Props> = ({ user }: Props) => {
   const [updateUser] = useMutation(UPDATE_USER)
   const [isSuccess, setIsSuccess] = useState(true)
-  const [isModalOpen, setIsModalOpen] = useState(false)
+  const { isOpen, onOpen, onClose } = useDisclosure()
   const [avatarFile, setAvatarFile] = useState(null)
   const [tabIdx, setTabIdx] = useState<number>(0)
   const router = useRouter()
@@ -119,10 +133,11 @@ const SettingsPage: NextPage<Props> = ({ user }: Props) => {
     defaultValues: getFormData(user),
   })
 
-  useWarningOnExit(
-    isDirty,
-    'You have unsaved changes. Are you sure you want to leave this page?'
-  )
+  // Commented out because success modal forces page reload
+  // useWarningOnExit(
+  //   isDirty,
+  //   'You have unsaved changes. Are you sure you want to leave this page?'
+  // )
 
   const onSubmit = async (data: SettingsFormFieldValues): Promise<void> => {
     try {
@@ -135,7 +150,7 @@ const SettingsPage: NextPage<Props> = ({ user }: Props) => {
         input.portfolio = data.collabs.concat(data.samples)
       }
       await updateUser({ variables: { input } })
-      setIsModalOpen(true)
+      onOpen()
     } catch (error) {
       if (getErrorMessage(error) === ALIAS_TAKEN) {
         setError('alias', {
@@ -144,20 +159,26 @@ const SettingsPage: NextPage<Props> = ({ user }: Props) => {
         })
         return
       }
+      console.log('error: ', error)
       // error could come from alias taken.
       setIsSuccess(false)
-      setIsModalOpen(true)
+      onOpen()
     }
   }
 
   const onError = data => {
     const showError = {
       websiteUrl: () => setTabIdx(0),
+      genre: () => setTabIdx(0),
       alias: () => setTabIdx(0),
       firstName: () => setTabIdx(0),
       lastName: () => setTabIdx(0),
       collabs: () => setTabIdx(1),
       samples: () => setTabIdx(1),
+      youtubeUrl: () => setTabIdx(2),
+      tiktokUrl: () => setTabIdx(2),
+      instagramUrl: () => setTabIdx(2),
+      facebookUrl: () => setTabIdx(2),
     }
     showError[Object.keys(data)[0]]()
   }
@@ -248,13 +269,11 @@ const SettingsPage: NextPage<Props> = ({ user }: Props) => {
             ? `You have successfully updated your profile.`
             : `There was a problem updating your profile. Please contact michael@cnotes.co.`
         }
-        isOpen={isModalOpen}
+        isOpen={isOpen}
         buttonText={isSuccess ? 'Okay' : 'Close'}
-        onClose={(): void => {
-          setIsModalOpen(false)
-        }}
+        onClose={onClose}
         onConfirm={(): void => {
-          isSuccess ? router.reload() : setIsModalOpen(false)
+          isSuccess ? router.reload() : onClose()
         }}
       />
     </>

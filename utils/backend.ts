@@ -57,6 +57,7 @@ export const populatePortfolioData = async (
       throw new ValidationError('Platform not found')
     }
     item.platform = service
+    item.platformMediaId = id
     if (service === 'youtube') {
       // so we can make 1 combined request to youtube api
       youtubeIds.push(id)

@@ -97,7 +97,6 @@ const ProfileSettings: FC<Props> = ({
               required: true,
             }),
           }}
-          mr={[0, 4]}
         />
         <FormInput
           label="Last Name"
@@ -122,9 +121,7 @@ const ProfileSettings: FC<Props> = ({
           }}
         />
         <FormInput
-          label={
-            isBrand ? 'Website URL (Include HTTPS)' : 'Main URL (Include HTTPS)'
-          }
+          label={isBrand ? 'Website URL' : 'Main Channel URL'}
           mb={8}
           error={errors.websiteUrl}
           inputProps={{
@@ -135,12 +132,22 @@ const ProfileSettings: FC<Props> = ({
               required: true,
               pattern: {
                 value: URL_REGEX,
-                message: 'Enter a valid website url',
+                message: 'Enter a valid website URL (include https)',
               },
             }),
           }}
         />
       </SimpleGrid>
+      {!isBrand && (
+        <FormInput
+          label="What type of creator are you?"
+          mb={8}
+          inputProps={{
+            placeholder: 'eg. Mechanical Keyboard Reviewer',
+            ...register('genre'),
+          }}
+        />
+      )}
       <FormControl>
         <FormLabel htmlFor="about">{isBrand ? 'About Us' : 'Bio'}</FormLabel>
         <Textarea

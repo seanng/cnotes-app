@@ -10,7 +10,6 @@ import Table from './components/table'
 import Tag from './components/tag'
 import Accordion from './components/accordion'
 import Input from './components/input'
-import Modal from './components/modal'
 import Textarea from './components/textarea'
 import Avatar from './components/avatar'
 import { mode } from '@chakra-ui/theme-tools'
@@ -37,7 +36,6 @@ const components = {
   Tag,
   Table,
   Tabs,
-  Modal,
   Avatar,
 }
 

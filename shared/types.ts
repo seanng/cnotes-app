@@ -36,6 +36,10 @@ export interface User {
   bannerUrl?: string
   createdAt?: string
   genre?: string
+  tiktokUrl?: string
+  youtubeUrl?: string
+  facebookUrl?: string
+  instagramUrl?: string
 }
 
 export interface BidHistoryItem {
@@ -86,6 +90,11 @@ export interface SettingsFormFieldValues {
   samples?: PortfolioItem[]
   portfolio?: PortfolioItem[]
   avatarUrl?: string
+  genre?: string
+  tiktokUrl?: string
+  youtubeUrl?: string
+  facebookUrl?: string
+  instagramUrl?: string
 }
 
 // Profile Page

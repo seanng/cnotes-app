@@ -9,20 +9,20 @@ datasource db {
 }
 
 model User {
-  id                  String   @id @default(dbgenerated()) @map("_id") @db.ObjectId
-  email               String   @unique
+  id                  String    @id @default(dbgenerated()) @map("_id") @db.ObjectId
+  email               String    @unique
   password            String
-  alias               String   @unique // company name / creator name.
+  alias               String    @unique // company name / creator name.
   role                String // enum doesn't work :(
-  status              String   @default("UNVERIFIED") // unverified, verified, suspended
+  status              String    @default("UNVERIFIED") // unverified, verified, suspended
   firstName           String
   lastName            String
-  slug                String   @unique // generated with slugify(alias)
+  slug                String    @unique // generated with slugify(alias)
   avatarUrl           String?
   about               String?
   bannerUrl           String?
-  createdAt           DateTime @default(now())
-  updatedAt           DateTime @updatedAt
+  createdAt           DateTime  @default(now())
+  updatedAt           DateTime  @updatedAt
   // social links
   websiteUrl          String?
   tiktokUrl           String?
@@ -34,13 +34,13 @@ model User {
   portfolio           Json[] // {url, thumbnailUrl, description, companyName?, companyUrl?, executedAt, deliverable?, platform}
   primaryPlatform     String?
   genre               String?
-  offersCreated       Offer[]  @relation("CreatedOffer")
+  offersCreated       Offer[]   @relation("CreatedOffer")
   creatorStats        Json[] // { platform, viewership, followers, demographic (male, female), lastVerifiedAt, locations[] }
   statsLastVerifiedAt DateTime?
   // brand-speciifc
   bids                Bid[] // brand only. 
   companyName         String?
-  offersWon           Offer[]  @relation("WonOffer")
+  offersWon           Offer[]   @relation("WonOffer")
 }
 
 model Offer {

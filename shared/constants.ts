@@ -49,9 +49,14 @@ export const userPublicFields = [
   'slug',
   'email',
   'status',
-  'description',
+  'about',
+  'genre',
   'websiteUrl',
   'avatarUrl',
+  'youtubeUrl',
+  'tiktokUrl',
+  'facebookUrl',
+  'instagramUrl',
   'portfolio',
 ]
 
