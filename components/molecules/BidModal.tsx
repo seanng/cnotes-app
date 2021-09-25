@@ -154,9 +154,7 @@ const BidModal: FC<ModalProps> = ({
                 mb={10}
               />
               <FormControl isInvalid={!!errors.message}>
-                <FormLabel htmlFor="description">
-                  Message To Creator (optional)
-                </FormLabel>
+                <FormLabel htmlFor="description">Message To Creator</FormLabel>
                 <Textarea
                   placeholder={`eg. I want you to shine for me like a whistle.`}
                   // mb={8}

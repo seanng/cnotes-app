@@ -97,7 +97,7 @@ const BrandDashboard: NextPage<Props> = ({ user }: Props) => {
       {loading ? (
         <div>loading...</div>
       ) : (
-        <Container>
+        <Container overflowX="scroll">
           <c.h3 textStyle="h3" mt={20} mb={14}>
             My Deals
           </c.h3>

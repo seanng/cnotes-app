@@ -15,7 +15,6 @@ export default {
           borderColor: 'inherit',
         },
         _focus: {
-          borderColor: 'gray.800',
           boxShadow: 'none',
         },
         _invalid: {

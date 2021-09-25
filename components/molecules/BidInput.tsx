@@ -41,6 +41,7 @@ const BidInput: FC<Props> = ({ onSubmit, minBid }: Props) => {
         <InputRightElement>
           <IconButton
             type="submit"
+            borderRadius="full"
             disabled={!isValid || isSubmitting}
             aria-label="Bid"
             icon={<ArrowForwardIcon />}

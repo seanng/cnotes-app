@@ -1,4 +1,5 @@
 import Navbar from 'components/molecules/Navbar'
+import { Box } from '@chakra-ui/react'
 import { User } from 'shared/types'
 
 type Props = {
@@ -11,6 +12,7 @@ export default function Layout({ children, user }: Props): JSX.Element {
     <>
       <Navbar user={user} />
       {children}
+      <Box pt={20} />
       {/* TODO: Footer */}
     </>
   )

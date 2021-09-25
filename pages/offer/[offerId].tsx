@@ -16,14 +16,9 @@ const OFFER_BY_ID = gql`
       platform
       deliverable
       description
-      willFollowScript
-      revisionDays
-      numberOfRevisions
-      canReuse
       deliveryStartsAt
       deliveryEndsAt
       creator {
-        description
         portfolio
         alias
         slug
