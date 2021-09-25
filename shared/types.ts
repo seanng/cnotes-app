@@ -30,10 +30,12 @@ export interface User {
   portfolio?: PortfolioItem[] | any // prisma is complaining
   password?: string // omitted unless it's in the password reset token
   viewerCount?: number
-  description?: string
+  about?: string
   websiteUrl?: string
   avatarUrl?: string
   bannerUrl?: string
+  createdAt?: string
+  genre?: string
 }
 
 export interface BidHistoryItem {
@@ -79,7 +81,7 @@ export interface SettingsFormFieldValues {
   lastName: string
   alias: string
   websiteUrl: string
-  description: string
+  about: string
   collabs?: PortfolioItem[]
   samples?: PortfolioItem[]
   portfolio?: PortfolioItem[]

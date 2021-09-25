@@ -53,6 +53,7 @@ export const Signup = mutationField('signup', {
         slug: slugify(input.alias.toLowerCase()),
         status: UNVERIFIED,
         createdAt: now,
+        statsLastVerifiedAt: null,
         updatedAt: now,
       },
     })

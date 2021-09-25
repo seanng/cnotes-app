@@ -22,13 +22,14 @@ const PROFILE_BY_SLUG = gql`
   query profileBySlug($slug: String!) {
     profileBySlug(slug: $slug) {
       id
-      description
+      about
       portfolio
       alias
       slug
       bannerUrl
       avatarUrl
       createdAt
+      statsLastVerifiedAt
     }
   }
 `
@@ -38,7 +39,7 @@ type Props = {
   user: User
 }
 
-const toCssVar = (colorCode: string) => {
+const toCssVar = (colorCode: string): string => {
   const [color, hue] = colorCode.split('.')
   return `var(--chakra-colors-${color}-${hue})`
 }
@@ -107,7 +108,8 @@ const ProfilePage: NextPage<Props> = ({ profile, user }: Props) => {
                   {collab.isVerified && <IsVerifiedTag />}
                 </Box>
                 <Text textStyle="small" color={gray[600]}>
-                  {format(new Date(collab.publishedAt), 'dd LLLL yyyy')}
+                  {collab.publishedAt &&
+                    format(new Date(collab.publishedAt), 'dd LLLL yyyy')}
                 </Text>
               </Flex>
             </Flex>

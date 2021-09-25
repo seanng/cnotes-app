@@ -48,7 +48,7 @@ const defaultValues = {
   websiteUrl: '',
   firstName: '',
   lastName: '',
-  description: '',
+  about: '',
   collabs: [],
   samples: [],
 }
@@ -74,7 +74,7 @@ const getFormData = (user: User): SettingsFormFieldValues => {
     websiteUrl: user.websiteUrl,
     firstName: user.firstName,
     lastName: user.lastName,
-    description: user.description,
+    about: user.about,
     collabs,
     samples,
   }

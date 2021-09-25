@@ -5,6 +5,7 @@ import {
   FormErrorMessage,
   FormControl,
 } from '@chakra-ui/react'
+import { useColors } from 'utils/colors'
 
 interface Props extends BoxProps {
   name: string
@@ -18,6 +19,8 @@ function LoginInput({
   errors,
   ...props
 }: Props): JSX.Element {
+  const { gray } = useColors()
+
   return (
     <FormControl isInvalid={errors[name]} mb={8} {...props}>
       <Box position="relative" {...props}>
@@ -42,12 +45,12 @@ function LoginInput({
             borderColor={errors[name] ? 'red' : 'transparent'}
             backgroundColor="rgba(228, 228, 228, 0.3)"
             fontWeight={600}
-            color="#11142D"
+            color={gray[1000]}
             transition="all .2s"
             outline="none"
             _focus={{
               borderColor: errors[name] ? 'red' : 'blue',
-              backgroundColor: 'white',
+              backgroundColor: gray[0],
             }}
             {...inputProps}
           />

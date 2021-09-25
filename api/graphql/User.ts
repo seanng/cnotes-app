@@ -25,7 +25,12 @@ export const User = objectType({
     t.nonNull.string('role')
     t.nonNull.string('firstName')
     t.nonNull.string('lastName')
-    t.string('description')
+    t.string('about')
+    t.string('genre')
+    t.string('tiktokUrl')
+    t.string('youtubeUrl')
+    t.string('instagramUrl')
+    t.string('facebookUrl')
     t.string('websiteUrl')
     t.string('bannerUrl')
     t.string('avatarUrl')
@@ -35,6 +40,9 @@ export const User = objectType({
     t.nonNull.string('alias')
     t.nonNull.string('slug')
     t.nonNull.string('status')
+    t.field('statsLastVerifiedAt', {
+      type: 'DateTime',
+    })
     t.nonNull.field('createdAt', {
       type: 'DateTime',
     })
@@ -98,7 +106,12 @@ export const UserInput = inputObjectType({
     t.field('portfolio', {
       type: list('Json'),
     })
-    t.string('description')
+    t.string('about')
+    t.string('genre')
+    t.string('tiktokUrl')
+    t.string('youtubeUrl')
+    t.string('instagramUrl')
+    t.string('facebookUrl')
   },
 })
 

@@ -1,3 +1,4 @@
+import { formatDistanceToNow } from 'date-fns'
 import {
   Icon,
   Tooltip,
@@ -56,20 +57,30 @@ const Social = ({ ...props }) => {
   )
 }
 
+function formatStatTitle(key: string): string {
+  const map = {
+    followerCount: '# of followers',
+    verifiedCollabsCount: 'Verified Collabs',
+    avgImpressions: 'Avg Impressions',
+    avgEngagement: 'Avg Engagement',
+  }
+  return map[key] || key
+}
+
 const StatNumbers = ({ ...props }) => {
   const { gray } = useColors()
   const stats = [
-    { key: 'Verified Collabs', value: '15' },
-    { key: '# of followers', value: '250k' },
+    { key: 'verifiedCollabsCount', value: '15' },
+    { key: 'followerCount', value: '250k' },
     {
-      key: 'Avg Impressions',
+      key: 'avgImpressions',
       value: '263k',
-      help: 'Total Views / Total Videos',
+      helpText: 'Total Views / Total Videos',
     },
     {
-      key: 'Avg Engagement',
+      key: 'avgEngagement',
       value: '50%',
-      help: 'Total Comments / Total Views',
+      helpText: 'Total Comments / Total Views',
     },
   ]
   return (
@@ -77,15 +88,15 @@ const StatNumbers = ({ ...props }) => {
       {stats.map(stat => (
         <Box key={stat.key}>
           <Text textStyle="micro" color={gray[600]}>
-            {stat.key}
-            {stat.help && (
-              <Tooltip label={stat.help} hasArrow placement="top">
+            {formatStatTitle(stat.key)}
+            {stat.helpText && (
+              <Tooltip label={stat.helpText} hasArrow placement="top">
                 <Icon ml={1} mb={1} as={Iconify} icon="bx:bxs-help-circle" />
               </Tooltip>
             )}
           </Text>
           <Text textStyle="h4" fontSize={26} color={gray[1000]}>
-            {stat.value}
+            {stat.value || '-'}
           </Text>
         </Box>
       ))}
@@ -115,13 +126,13 @@ const ProfileBox = ({ profile }: Props): JSX.Element => {
           mb={7}
         />
         <Text color="gray.500" textStyle="micro" mb={1}>
-          Joined 2 months ago
+          {`Joined ${formatDistanceToNow(new Date(profile.createdAt))} ago`}
         </Text>
         <Text textStyle="h4" mb={1}>
           {profile.alias}
         </Text>
         <Text color={gray[1000]} textStyle="micro" fontWeight={500} mb={4}>
-          Mechanical Keyboard Reviewer
+          {profile.genre || ''}
         </Text>
         <Social mb="60px" />
         <StatNumbers />

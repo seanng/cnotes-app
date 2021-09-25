@@ -142,9 +142,7 @@ const ProfileSettings: FC<Props> = ({
         />
       </SimpleGrid>
       <FormControl>
-        <FormLabel htmlFor="description">
-          {isBrand ? 'About Us' : 'Bio'}
-        </FormLabel>
+        <FormLabel htmlFor="about">{isBrand ? 'About Us' : 'Bio'}</FormLabel>
         <Textarea
           placeholder={
             isBrand
@@ -152,7 +150,7 @@ const ProfileSettings: FC<Props> = ({
               : `eg. I'm a passionate, easy going creator that loves sharing tech gadgets with my amazing community!`
           }
           mb={10}
-          {...register('description')}
+          {...register('about')}
         />
       </FormControl>
     </Box>
