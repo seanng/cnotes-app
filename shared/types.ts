@@ -41,6 +41,7 @@ export interface User {
   facebookUrl?: string
   instagramUrl?: string
   creatorStats?: Record<string, any>[]
+  statsLastVerifiedAt?: string
 }
 
 export interface BidHistoryItem {

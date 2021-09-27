@@ -150,16 +150,23 @@ const ProfileBox = ({ profile }: Props): JSX.Element => {
       {profile.role === CREATOR && (
         <>
           <Divider mb={8} opacity={0.4} />
-          <Box
-            px={`${PROFILE_BOX_WRAPPER_PADDING}px`}
-            pb={`${PROFILE_BOX_WRAPPER_PADDING}px`}
-          >
+          <Box px={`${PROFILE_BOX_WRAPPER_PADDING}px`} pb={5}>
             <StatNumbers data={profile.creatorStats} mb={10} />
             {genderChart?.value && (
               <GenderChart mb={10} data={genderChart?.value} />
             )}
             {locationChart?.value && (
               <LocationChart data={locationChart.value} />
+            )}
+            {profile.statsLastVerifiedAt && (
+              <Text color={gray[500]} textStyle="micro" fontWeight={600}>
+                *Stats were last verified
+                <Box as="span" color={gray[900]}>
+                  {` ${formatDistanceToNow(
+                    new Date(profile.statsLastVerifiedAt)
+                  )} ago`}
+                </Box>
+              </Text>
             )}
           </Box>
         </>

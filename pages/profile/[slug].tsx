@@ -133,6 +133,18 @@ export default ProfilePage
 function profileTransformer(data: User): TransformedProfile {
   const portfolio = data.portfolio
     .slice()
+    .map(vid => ({
+      ...vid,
+      rating: (
+        (Number(vid.likeCount) /
+          (Number(vid.likeCount) + Number(vid.dislikeCount))) *
+        100
+      ).toFixed(0),
+      engagementRate: (
+        (Number(vid.commentCount) / Number(vid.viewCount)) *
+        100
+      ).toFixed(0),
+    }))
     .sort(
       (a, b) =>
         new Date(b.publishedAt).valueOf() - new Date(a.publishedAt).valueOf()

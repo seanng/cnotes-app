@@ -4,6 +4,7 @@ import {
   Button,
   Flex,
   Container,
+  Icon,
   Tag,
   GridItem,
   LinkBox,
@@ -16,7 +17,9 @@ import {
 import { TransformedProfile } from 'shared/types'
 import { TIKTOK } from 'shared/constants'
 import IsVerifiedTag from 'components/atoms/IsVerifiedTag'
+import { Icon as Iconify } from '@iconify/react'
 import { useColors } from 'utils/colors'
+import { formatCountNumber } from 'utils/helpers'
 
 type Props = {
   profile: TransformedProfile
@@ -118,11 +121,32 @@ const ProfileReel = ({ profile }: Props): JSX.Element => {
                         type="button"
                         textTransform="uppercase"
                         fontWeight="bold"
-                        // mb={5} TODO: uncomment
+                        mb={5}
                       >
                         Play Video
                       </Button>
-                      {/* TODO: add video stats. */}
+                      <Flex>
+                        {item.viewCount && (
+                          <Flex color="yellow.500" align="center">
+                            <Icon as={Iconify} icon="carbon:view" mr={1} />
+                            {formatCountNumber(item.viewCount)}
+                          </Flex>
+                        )}
+                        {item.rating && (
+                          <Flex align="center" color="green.500" mx={2}>
+                            <Icon
+                              as={Iconify}
+                              icon="ant-design:like-outlined"
+                              mr={1}
+                            />
+                            {item.rating}%
+                          </Flex>
+                        )}
+                        {/* <Flex color="cyan.600">
+                          <Icon as={Iconify} icon="fa-regular:comment" />
+                          {item.engagementRate}%
+                        </Flex> */}
+                      </Flex>
                     </Flex>
                   </Center>
                 </LinkOverlay>

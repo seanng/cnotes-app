@@ -57,3 +57,14 @@ export async function deleteS3File(
   const response = await ReactS3Client.deleteFile(fileName)
   return response
 }
+
+type Count = string | number
+export function formatCountNumber(payload: Count): string {
+  const count = Number(payload)
+  const thousands = count / 1000
+  if (thousands < 1000) {
+    return `${thousands}k`
+  }
+  const millions = thousands / 1000
+  return `${millions.toFixed(1)}m`
+}
