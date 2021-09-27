@@ -7,6 +7,7 @@ import {
   Avatar,
   Flex,
   Box,
+  SimpleGridProps,
   FlexProps,
   Text,
 } from '@chakra-ui/react'
@@ -15,7 +16,7 @@ import {
   PROFILE_BOX_INNER_WIDTH,
   PROFILE_BOX_WRAPPER_PADDING,
 } from 'shared/metrics'
-import { TransformedProfile } from 'shared/types'
+import { TransformedProfile, CreatorStats } from 'shared/types'
 import GenderChart from 'components/atoms/GenderChart'
 import LocationChart from 'components/atoms/LocationChart'
 import { Icon as Iconify } from '@iconify/react'
@@ -88,7 +89,11 @@ function formatStatTitle(key: string): string {
   return map[key] || key
 }
 
-const StatNumbers = ({ data, ...props }) => {
+type StatNumbersProps = {
+  data: CreatorStats
+} & SimpleGridProps
+
+const StatNumbers = ({ data, ...props }: StatNumbersProps): JSX.Element => {
   const { gray } = useColors()
   const stats = [
     { key: 'verifiedCollabsCount' },
@@ -109,7 +114,7 @@ const StatNumbers = ({ data, ...props }) => {
             )}
           </Text>
           <Text textStyle="h4" fontSize={26} color={gray[1000]}>
-            {data.filter(({ key }) => key === stat.key)[0]?.value || '-'}
+            {data[stat.key] || '-'}
           </Text>
         </Box>
       ))}
@@ -119,12 +124,8 @@ const StatNumbers = ({ data, ...props }) => {
 
 const ProfileBox = ({ profile }: Props): JSX.Element => {
   const { gray } = useColors()
-  const genderChart = profile.creatorStats?.filter(
-    ({ key }) => key === 'genderBreakdown'
-  )[0]
-  const locationChart = profile.creatorStats?.filter(
-    ({ key }) => key === 'locationBreakdown'
-  )[0]
+  const genderChart = profile.creatorStats?.genderBreakdown
+  const locationChart = profile.creatorStats?.locationBreakdown
 
   return (
     <Flex
@@ -152,12 +153,8 @@ const ProfileBox = ({ profile }: Props): JSX.Element => {
           <Divider mb={8} opacity={0.4} />
           <Box px={`${PROFILE_BOX_WRAPPER_PADDING}px`} pb={5}>
             <StatNumbers data={profile.creatorStats} mb={10} />
-            {genderChart?.value && (
-              <GenderChart mb={10} data={genderChart?.value} />
-            )}
-            {locationChart?.value && (
-              <LocationChart data={locationChart.value} />
-            )}
+            {genderChart && <GenderChart mb={10} data={genderChart} />}
+            {locationChart && <LocationChart data={locationChart} />}
             {profile.statsLastVerifiedAt && (
               <Text color={gray[500]} textStyle="micro" fontWeight={600}>
                 *Stats were last verified

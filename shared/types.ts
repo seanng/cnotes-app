@@ -17,6 +17,25 @@ export interface PortfolioItem {
   videoUrl?: string
 }
 
+export interface LocationBreakdown {
+  country: string
+  value: number
+}
+
+export interface GenderBreakdown {
+  male: number // i.e. 30
+  female: number // i.e. 70
+}
+
+export interface CreatorStats {
+  genderBreakdown: GenderBreakdown
+  locationBreakdown: LocationBreakdown[]
+  verifiedCollabsCount: string
+  followerCount: string
+  avgImpressions: string
+  avgEngagement: string
+}
+
 // should match up with publicfields in Auth.ts.
 export interface User {
   id: string
@@ -40,7 +59,7 @@ export interface User {
   youtubeUrl?: string
   facebookUrl?: string
   instagramUrl?: string
-  creatorStats?: Record<string, any>[]
+  creatorStats?: CreatorStats
   statsLastVerifiedAt?: string
 }
 

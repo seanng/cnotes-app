@@ -1,15 +1,10 @@
 import { useColors } from 'utils/colors'
 import { Doughnut } from 'react-chartjs-2'
-
+import { LocationBreakdown } from 'shared/types'
 import { Flex, Text, Box, BoxProps } from '@chakra-ui/react'
 
-type Item = {
-  country: string
-  value: number
-}
-
 type Props = {
-  data: Item[]
+  data: LocationBreakdown[]
 } & BoxProps
 
 const hexColors = ['#33F3FF', '#FF1577', '#FFBD15', '#7A0EE5']

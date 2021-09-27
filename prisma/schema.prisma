@@ -35,7 +35,7 @@ model User {
   primaryPlatform     String?
   genre               String?
   offersCreated       Offer[]   @relation("CreatedOffer")
-  creatorStats        Json[] // { platform, viewership, followers, demographic (male, female), lastVerifiedAt, locations[] }
+  creatorStats        Json // { platform, viewership, followers, demographic (male, female), lastVerifiedAt, locations[] }
   statsLastVerifiedAt DateTime?
   // brand-speciifc
   bids                Bid[] // brand only. 

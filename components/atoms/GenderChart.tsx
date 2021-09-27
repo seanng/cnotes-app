@@ -1,13 +1,9 @@
 import { useColors } from 'utils/colors'
 import { Flex, Text, Box, BoxProps } from '@chakra-ui/react'
-
-type Data = {
-  male: number // i.e. 30
-  female: number // i.e. 70
-}
+import { GenderBreakdown } from 'shared/types'
 
 type Props = {
-  data: Data
+  data: GenderBreakdown
 } & BoxProps
 
 export default function GenderChart({ data, ...props }: Props): JSX.Element {
