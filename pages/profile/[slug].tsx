@@ -22,13 +22,20 @@ const PROFILE_BY_SLUG = gql`
   query profileBySlug($slug: String!) {
     profileBySlug(slug: $slug) {
       id
+      role
       about
       portfolio
       alias
       slug
       bannerUrl
       avatarUrl
+      tiktokUrl
+      youtubeUrl
+      instagramUrl
+      facebookUrl
+      genre
       createdAt
+      creatorStats
       statsLastVerifiedAt
     }
   }

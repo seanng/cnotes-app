@@ -40,6 +40,7 @@ export interface User {
   youtubeUrl?: string
   facebookUrl?: string
   instagramUrl?: string
+  creatorStats?: Record<string, any>[]
 }
 
 export interface BidHistoryItem {

@@ -37,6 +37,9 @@ export const User = objectType({
     t.field('portfolio', {
       type: list('Json'),
     })
+    t.field('creatorStats', {
+      type: list('Json'),
+    })
     t.nonNull.string('alias')
     t.nonNull.string('slug')
     t.nonNull.string('status')
