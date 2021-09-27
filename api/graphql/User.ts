@@ -35,10 +35,10 @@ export const User = objectType({
     t.string('bannerUrl')
     t.string('avatarUrl')
     t.field('portfolio', {
-      type: list('Json'),
+      type: list('JSON'),
     })
     t.field('creatorStats', {
-      type: list('Json'),
+      type: 'JSON',
     })
     t.nonNull.string('alias')
     t.nonNull.string('slug')
@@ -107,7 +107,7 @@ export const UserInput = inputObjectType({
     t.string('websiteUrl')
     t.string('avatarUrl')
     t.field('portfolio', {
-      type: list('Json'),
+      type: list('JSON'),
     })
     t.string('about')
     t.string('genre')

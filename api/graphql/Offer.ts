@@ -28,7 +28,7 @@ export const Offer = objectType({
       type: 'DateTime',
     })
     t.field('specs', {
-      type: list('Json'),
+      type: list('JSON'),
     })
     t.int('bidCount')
     t.int('startPrice')
@@ -141,7 +141,7 @@ export const createOfferInput = inputObjectType({
     t.string('deliverable')
     t.string('deliveryStartsAt') // TODO: change to date time
     t.string('deliveryEndsAt') // TODO: change to date time
-    t.field('specs', { type: list('Json') })
+    t.field('specs', { type: list('JSON') })
   },
 })
 
@@ -192,17 +192,13 @@ export const discoveryOffers = queryField('discoveryOffers', {
 })
 
 export const creatorDashboardOffers = queryField('creatorDashboardOffers', {
-  type: 'Offer',
+  type: list('Offer'),
   resolve: async (_, __, { user }) => {
     if (!isCreator(user)) throw new ForbiddenError('Not a creator')
-
-    const data = await prisma.offer.findMany({
+    return prisma.offer.findMany({
       where: {
         creatorId: user.id,
       },
-      // TODO: add filters + pagination
     })
-
-    return data
   },
 })

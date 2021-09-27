@@ -114,7 +114,7 @@ const StatNumbers = ({ data, ...props }: StatNumbersProps): JSX.Element => {
             )}
           </Text>
           <Text textStyle="h4" fontSize={26} color={gray[1000]}>
-            {data[stat.key] || '-'}
+            {data?.[stat.key] || '-'}
           </Text>
         </Box>
       ))}
