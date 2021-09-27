@@ -18,6 +18,9 @@ import { format } from 'date-fns'
 import ProfileBox from 'components/organisms/ProfileBox'
 import ProfileReel from 'components/organisms/ProfileReel'
 
+const ABOUT_PLACEHOLDER =
+  'Thanks for visiting my profile! Here are some of my featured works.'
+
 const PROFILE_BY_SLUG = gql`
   query profileBySlug($slug: String!) {
     profileBySlug(slug: $slug) {
@@ -76,12 +79,7 @@ const ProfilePage: NextPage<Props> = ({ profile, user }: Props) => {
           <Text textStyle="h2" mb={3}>
             About
           </Text>
-          <Text textStyle="base">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis
-            facilisis congue a libero neque, bibendum arcu. Integer habitasse
-            augue vestibulum nibh a metus nulla. Lectus adipiscing magnis eu
-            donec vestibulum. Sit faucibus nisl luctus suscipit gravida.
-          </Text>
+          <Text textStyle="base">{profile.about || ABOUT_PLACEHOLDER}</Text>
           <Text textStyle="h2" mt={10} mb={7}>
             Collabs
           </Text>
