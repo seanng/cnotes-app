@@ -121,6 +121,7 @@ const SettingsPage: NextPage<Props> = ({ user }: Props) => {
   const [isSuccess, setIsSuccess] = useState(true)
   const { isOpen, onOpen, onClose } = useDisclosure()
   const [avatarFile, setAvatarFile] = useState(null)
+  const [bannerFile, setBannerFile] = useState(null)
   const [tabIdx, setTabIdx] = useState<number>(0)
   const router = useRouter()
   const {
@@ -145,6 +146,9 @@ const SettingsPage: NextPage<Props> = ({ user }: Props) => {
       const input = R.omit(['collabs', 'samples'], data)
       if (avatarFile) {
         input.avatarUrl = await uploadToS3(avatarFile, 'avatars', user.id)
+      }
+      if (bannerFile) {
+        input.bannerUrl = await uploadToS3(bannerFile, 'banners', user.id)
       }
       if (user.role === CREATOR) {
         input.portfolio = data.collabs.concat(data.samples)
@@ -188,8 +192,17 @@ const SettingsPage: NextPage<Props> = ({ user }: Props) => {
     setAvatarFile(e.target.files[0])
   }
 
+  const handleBannerChange: ChangeEventHandler<HTMLInputElement> = e => {
+    e.preventDefault()
+    setBannerFile(e.target.files[0])
+  }
+
   const handleAvatarCancelClick = (): void => {
     setAvatarFile(null)
+  }
+
+  const handleBannerCancelClick = (): void => {
+    setBannerFile(null)
   }
 
   const handleTabChange = (i: number): void => {
@@ -200,6 +213,9 @@ const SettingsPage: NextPage<Props> = ({ user }: Props) => {
     avatarFile,
     handleAvatarChange,
     handleAvatarCancelClick,
+    bannerFile,
+    handleBannerChange,
+    handleBannerCancelClick,
     register,
     control,
     errors,
@@ -243,7 +259,9 @@ const SettingsPage: NextPage<Props> = ({ user }: Props) => {
             </Tabs>
             <HStack>
               <Button
-                disabled={(!isDirty && !avatarFile) || isSubmitting}
+                disabled={
+                  (!isDirty && !avatarFile && !bannerFile) || isSubmitting
+                }
                 type="submit"
                 isLoading={isSubmitting}
                 mr={4}

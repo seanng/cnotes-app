@@ -8,31 +8,41 @@ import {
   Button,
   SimpleGrid,
 } from '@chakra-ui/react'
+import NextImage from 'next/image'
 import FormInput from 'components/atoms/FormInput'
 import { useRef, FC, ChangeEventHandler } from 'react'
 import { FieldError, UseFormRegister, DeepMap } from 'react-hook-form'
-import { BRAND, URL_REGEX } from 'shared/constants'
+import { BRAND, URL_REGEX, PLACEHOLDER_BANNER_URL } from 'shared/constants'
 import { SettingsFormFieldValues, User } from 'shared/types'
+import { useColors } from 'utils/colors'
 
 type Props = {
   user: User
   handleAvatarChange: ChangeEventHandler<HTMLInputElement>
   handleAvatarCancelClick: () => void
+  handleBannerChange: ChangeEventHandler<HTMLInputElement>
+  handleBannerCancelClick: () => void
   register: UseFormRegister<SettingsFormFieldValues>
   errors: DeepMap<SettingsFormFieldValues, FieldError>
   avatarFile: File
+  bannerFile: File
 }
 
 const ProfileSettings: FC<Props> = ({
   avatarFile,
+  bannerFile,
   user,
   handleAvatarCancelClick,
   handleAvatarChange,
+  handleBannerChange,
+  handleBannerCancelClick,
   register,
   errors,
 }: Props) => {
   const avatarUploadInput = useRef(null)
+  const bannerUploadInput = useRef(null)
   const isBrand = user.role === BRAND
+  const { gray } = useColors()
 
   const handleAvatarUploadClick = (): void => {
     if (avatarUploadInput.current) {
@@ -40,12 +50,59 @@ const ProfileSettings: FC<Props> = ({
     }
   }
 
+  const handleBannerUploadClick = (): void => {
+    if (bannerUploadInput.current) {
+      bannerUploadInput.current.click()
+    }
+  }
+
+  const bannerUrl = user.bannerUrl || PLACEHOLDER_BANNER_URL
+
   return (
     <Box maxW={600}>
+      <Box h={200} mb={8} position="relative">
+        <Box
+          as={NextImage}
+          borderRadius="xl"
+          layout="fill"
+          objectFit="cover"
+          src={bannerFile ? URL.createObjectURL(bannerFile) : bannerUrl}
+        />
+        <Flex position="absolute" bottom={4} right={4}>
+          <Button
+            onClick={handleBannerUploadClick}
+            size="sm"
+            variant="outline"
+            bgColor={gray[50]}
+          >
+            Upload Cover Photo
+          </Button>
+          {bannerFile && (
+            <Button
+              onClick={handleBannerCancelClick}
+              size="sm"
+              variant="outline"
+              color="red"
+              bgColor={gray[50]}
+              ml={2}
+            >
+              Cancel
+            </Button>
+          )}
+          <input
+            type="file"
+            id="file"
+            ref={bannerUploadInput}
+            style={{ display: 'none' }}
+            onChange={handleBannerChange}
+            accept="image/*"
+          />
+        </Flex>
+      </Box>
       <Flex mb={8}>
         <Avatar
           size={'2xl'}
-          name="Linus Tech Tips"
+          name={`${user.firstName} ${user.lastName}`}
           src={avatarFile ? URL.createObjectURL(avatarFile) : user.avatarUrl}
           mr={6}
         />

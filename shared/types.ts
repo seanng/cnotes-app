@@ -111,6 +111,7 @@ export interface SettingsFormFieldValues {
   samples?: PortfolioItem[]
   portfolio?: PortfolioItem[]
   avatarUrl?: string
+  bannerUrl?: string
   genre?: string
   tiktokUrl?: string
   youtubeUrl?: string

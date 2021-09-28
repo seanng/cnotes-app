@@ -66,9 +66,17 @@ const ProfilePage: NextPage<Props> = ({ profile, user }: Props) => {
         h={408}
         mt={NAVBAR_HEIGHT * -1}
         w="100%"
-        bgImage={`linear-gradient(${bannerBgColor} 0%, transparent 50%, ${bannerBgColor} 100%), url(${bgImage})`}
-        bgSize="cover"
-      />
+        position="relative"
+        zIndex="-1"
+      >
+        <Image layout="fill" src={bgImage} objectFit="cover" />
+        <Box
+          position="absolute"
+          w="full"
+          h="full"
+          background={`linear-gradient(${bannerBgColor} 0%, transparent 40%, transparent 70%, ${bannerBgColor} 100%)`}
+        />
+      </Box>
       <Container display={{ md: 'flex' }} maxWidth={1280}>
         <ProfileBox profile={profile} />
         <Box

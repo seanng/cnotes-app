@@ -106,6 +106,7 @@ export const UserInput = inputObjectType({
     t.nonNull.string('alias')
     t.string('websiteUrl')
     t.string('avatarUrl')
+    t.string('bannerUrl')
     t.field('portfolio', {
       type: list('JSON'),
     })
