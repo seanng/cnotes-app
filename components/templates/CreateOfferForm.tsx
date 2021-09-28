@@ -197,7 +197,7 @@ const CreateOfferForm: NextPage<Props> = ({ user, onOfferSubmit }: Props) => {
                     <Box
                       textAlign="left"
                       textStyle="small"
-                      fontWeight="bold"
+                      fontWeight={700}
                       mr={4}
                     >
                       Advanced Options

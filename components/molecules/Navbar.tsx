@@ -127,8 +127,7 @@ function MenuLinks({
                     borderLeftWidth={1}
                   />
                   <PopoverBody
-                    fontWeight="bold"
-                    letterSpacing="0.5px"
+                    fontWeight={600}
                     color={isLightMode ? 'gray.600' : 'gray.300'}
                   >
                     <UserLinks />

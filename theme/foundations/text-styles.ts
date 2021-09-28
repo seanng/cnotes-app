@@ -60,12 +60,14 @@ export default {
     fontFamily: 'body',
     fontSize: ['12px'],
     lineHeight: '14px',
+    fontWeight: 500,
   },
   micro: {
     fontFamily: 'body',
     textTransform: 'uppercase',
     fontSize: ['12px'],
     letterSpacing: '5%',
+    fontWeight: 500,
     lineHeight: '18px',
   },
   nano: {

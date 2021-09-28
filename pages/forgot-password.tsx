@@ -60,7 +60,7 @@ const ForgotPasswordPage: NextPage = () => {
               fontFamily="body"
               mb={16}
               textTransform="capitalize"
-              fontWeight="bold"
+              fontWeight={700}
             >
               Forgot Password?
             </c.h2>

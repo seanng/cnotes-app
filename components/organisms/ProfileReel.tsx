@@ -32,26 +32,29 @@ const ProfileReel = ({ profile }: Props): JSX.Element => {
       <Text textStyle="h2" mb={5}>
         Content Reel
       </Text>
-      <Grid templateColumns={['repeat(1, 1fr)', 'repeat(3, 1fr)']} gap={6}>
+      <Grid
+        templateColumns={[
+          'repeat(1, 1fr)',
+          null,
+          'repeat(2, 1fr)',
+          'repeat(3, 1fr)',
+        ]}
+        gap={6}
+      >
         {profile.portfolio.map((item, i) => (
           <AspectRatio
             key={i}
             ratio={item.platform === TIKTOK ? 9 / 16 : 640 / 480}
           >
             <GridItem
-              colSpan={[3, 2, 1]}
+              colSpan={1}
               rowSpan={item.platform === TIKTOK ? 2 : 1}
               borderRadius="xl"
             >
               <LinkBox position="relative">
                 <LinkOverlay href={item.url} isExternal>
                   <Flex
-                    direction={[
-                      'row-reverse',
-                      'column-reverse',
-                      null,
-                      'row-reverse',
-                    ]}
+                    direction="row-reverse"
                     justify="space-between"
                     position="absolute"
                     p={3}
@@ -60,10 +63,7 @@ const ProfileReel = ({ profile }: Props): JSX.Element => {
                     alignItems="flex-start"
                   >
                     {item.companyName && (
-                      <Flex
-                        direction={['row', 'column', null, 'row']}
-                        alignItems="flex-start"
-                      >
+                      <Flex direction="row" alignItems="flex-start">
                         <Tag variant="reel" mr={1} mb={1}>
                           {item.companyName}
                         </Tag>
@@ -103,13 +103,13 @@ const ProfileReel = ({ profile }: Props): JSX.Element => {
                         <Text
                           color="white"
                           fontSize="20px"
-                          fontWeight="bold"
+                          fontWeight={700}
                         >{`${item.deliverable} for ${item.companyName}`}</Text>
                       )}
                       <Text
                         textStyle="base"
                         mb={5}
-                        fontWeight="medium"
+                        fontWeight={500}
                         color="white"
                       >
                         {format(new Date(item.publishedAt), 'dd LLLL yyyy')}
@@ -120,7 +120,7 @@ const ProfileReel = ({ profile }: Props): JSX.Element => {
                         color="gray.900"
                         type="button"
                         textTransform="uppercase"
-                        fontWeight="bold"
+                        fontWeight={700}
                         mb={5}
                       >
                         Play Video

@@ -119,7 +119,6 @@ const variantUnstyled = {
 
 export default {
   baseStyle: {
-    fontWeight: 700,
     fontFamily: 'body',
     fontSize: '16px',
     boxShadow: 'lg',

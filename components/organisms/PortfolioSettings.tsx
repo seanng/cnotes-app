@@ -51,7 +51,7 @@ const Portfolio: FC<Props> = ({ register, control, errors }: Props) => {
 
   return (
     <Box>
-      <Box textStyle="xLarge" fontWeight="bold" mb={8}>
+      <Box textStyle="xLarge" fontWeight={700} mb={8}>
         Past Collabs
       </Box>
       {collabsFields.length === 0 && (
@@ -155,7 +155,7 @@ const Portfolio: FC<Props> = ({ register, control, errors }: Props) => {
       >
         Add
       </Button>
-      <Box textStyle="xLarge" fontWeight="bold" mb={8}>
+      <Box textStyle="xLarge" fontWeight={700} mb={8}>
         Highlights
       </Box>
       {samplesFields.length === 0 && (

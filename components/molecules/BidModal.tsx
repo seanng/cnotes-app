@@ -132,7 +132,7 @@ const BidModal: FC<ModalProps> = ({
                 <Spacer />
                 <Box>3</Box>
               </Flex>
-              <Flex textStyle="base" fontWeight="bold" mb={6}>
+              <Flex textStyle="base" fontWeight={700} mb={6}>
                 <Box>Your bid</Box>
                 <Spacer />
                 <Box>{`$${price}`}</Box>

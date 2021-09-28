@@ -72,7 +72,7 @@ const SignupFoyer: NextPage = () => {
           textStyle="h2"
           fontFamily="body"
           textTransform="capitalize"
-          fontWeight="bold"
+          fontWeight={700}
           mb={6}
         >
           Sign up

@@ -81,7 +81,7 @@ const Login: NextPage = () => {
         <Box textStyle="h1" mb={4}>
           cnotes
         </Box>
-        <Box textStyle="base" fontWeight="bold">
+        <Box textStyle="base" fontWeight={500}>
           Making sponsorships more transparent.
         </Box>
       </Box>
@@ -120,13 +120,13 @@ const Login: NextPage = () => {
               }),
             }}
           />
-          <Box textStyle="small" fontWeight="bold" mt={8} mb={6}>
+          <Box textStyle="small" fontWeight={500} mt={8} mb={6}>
             If you made an account before 07/20/21 you will need to create a new
             account.
           </Box>
           <Box
             textAlign="right"
-            fontWeight="bold"
+            fontWeight={700}
             textStyle="small"
             color="blue"
             mb={4}
@@ -143,7 +143,7 @@ const Login: NextPage = () => {
           >
             Sign in
           </Button>
-          <Flex justify="center" textStyle="small" fontWeight="bold">
+          <Flex justify="center" textStyle="small" fontWeight={700}>
             <Box mr={4}>Not a member?</Box>
             <Box color="blue">
               <Link href="/signup">Sign up now</Link>

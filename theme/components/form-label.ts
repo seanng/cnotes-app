@@ -4,7 +4,7 @@ export default {
     ...textStyles.micro,
     fontFamily: 'body',
     letterSpacing: '0.1px',
-    fontWeight: 'bold',
+    fontWeight: 500,
     color: 'gray.400',
     mb: 3,
     _invalid: {

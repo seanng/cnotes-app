@@ -71,7 +71,7 @@ function SignupForm({ isBrand }: TemplateProps): JSX.Element {
             textStyle="h2"
             fontFamily="body"
             textTransform="capitalize"
-            fontWeight="bold"
+            fontWeight={700}
             mb={5}
           >
             Create Account
