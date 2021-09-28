@@ -1,4 +1,4 @@
-import { formatDistanceToNow } from 'date-fns'
+import { format, formatDistanceToNow } from 'date-fns'
 import {
   Icon,
   Divider,
@@ -131,10 +131,12 @@ const ProfileBox = ({ profile }: Props): JSX.Element => {
     <Flex
       w={`${2 * PROFILE_BOX_WRAPPER_PADDING + PROFILE_BOX_INNER_WIDTH}px`}
       pt={`${PROFILE_BOX_WRAPPER_PADDING}px`}
+      mx="auto"
       mt={-40}
       direction="column"
       align="center"
       bg={gray[0]}
+      boxShadow="lg"
       borderRadius="xl"
     >
       <Avatar name={profile.alias} size="2xl" src={profile.avatarUrl} mb={7} />
@@ -157,11 +159,9 @@ const ProfileBox = ({ profile }: Props): JSX.Element => {
             {locationChart && <LocationChart data={locationChart} />}
             {profile.statsLastVerifiedAt && (
               <Text color={gray[500]} textStyle="micro" fontWeight={600}>
-                *Stats were last verified
+                *Stats were last verified on
                 <Box as="span" color={gray[900]}>
-                  {` ${formatDistanceToNow(
-                    new Date(profile.statsLastVerifiedAt)
-                  )} ago`}
+                  {` ${format(new Date(profile.statsLastVerifiedAt), 'P')}`}
                 </Box>
               </Text>
             )}
