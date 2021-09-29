@@ -24,7 +24,7 @@ import { useRouter } from 'next/router'
 import { ChangeEventHandler, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { SettingsFormFieldValues, User } from 'shared/types'
-import { getErrorMessage, redirTo, uploadToS3 } from 'utils/helpers'
+import { getErrorMessage, redirTo, uploadToS3, compress } from 'utils/helpers'
 import { ALIAS_TAKEN, CREATOR } from 'shared/constants'
 import ProfileSettings from 'components/organisms/ProfileSettings'
 import SocialSettings from 'components/organisms/SocialSettings'
@@ -145,10 +145,12 @@ const SettingsPage: NextPage<Props> = ({ user }: Props) => {
       setIsSuccess(true)
       const input = R.omit(['collabs', 'samples'], data)
       if (avatarFile) {
-        input.avatarUrl = await uploadToS3(avatarFile, 'avatars', user.id)
+        const file = await compress(avatarFile)
+        input.avatarUrl = await uploadToS3(file, 'avatars', user.id)
       }
       if (bannerFile) {
-        input.bannerUrl = await uploadToS3(bannerFile, 'banners', user.id)
+        const file = await compress(bannerFile)
+        input.bannerUrl = await uploadToS3(file, 'banners', user.id)
       }
       if (user.role === CREATOR) {
         input.portfolio = data.collabs.concat(data.samples)

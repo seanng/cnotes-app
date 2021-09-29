@@ -1,6 +1,8 @@
 // FRONTEND ONLY.
+import Compressor from 'compressorjs'
 import { GetServerSidePropsResult, Redirect } from 'next'
 import S3 from 'lib/s3'
+import { Blob } from 'buffer'
 
 export function getErrorMessage(error: Record<string, any>): string {
   if (error.graphQLErrors) {
@@ -27,7 +29,7 @@ export function redirTo(location: string): GetServerSidePropsResult<Redirect> {
 }
 
 export async function uploadToS3(
-  file: string,
+  file: Blob | File,
   dirName: string,
   fileName = 'anon'
 ): Promise<string> {
@@ -68,3 +70,13 @@ export function formatCountNumber(payload: Count): string {
   const millions = thousands / 1000
   return `${millions.toFixed(1)}m`
 }
+
+export const compress = (payload: File): Promise<Blob> =>
+  new Promise(
+    (resolve, reject) =>
+      new Compressor(payload, {
+        quality: 0.98,
+        success: resolve,
+        error: reject,
+      })
+  )
