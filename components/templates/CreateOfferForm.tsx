@@ -1,6 +1,8 @@
 import {
   Box,
   Container,
+  Grid,
+  GridItem,
   Flex,
   chakra,
   Text,
@@ -17,14 +19,20 @@ import {
   Select,
 } from '@chakra-ui/react'
 import { useMutation, gql } from '@apollo/client'
+import { useState } from 'react'
 import { NextPage } from 'next'
+import { useColors } from 'utils/colors'
 import Layout from 'components/organisms/Layout'
 import { useForm } from 'react-hook-form'
 import * as R from 'ramda'
 import { ArrowForwardIcon } from '@chakra-ui/icons'
-import DatePicker from 'components/atoms/DatePicker'
+import IconSelector from 'components/molecules/IconSelector'
+// import DatePicker from 'components/atoms/DatePicker'
 import 'react-datepicker/dist/react-datepicker.css'
+import { S3_OFFER_ICONS_FOLDER } from 'shared/constants'
 import { User } from 'shared/types'
+
+const MAX_COL_WIDTH = 600
 
 const CREATE_OFFER = gql`
   mutation createOffer($input: CreateOfferInput!) {
@@ -51,17 +59,30 @@ interface Props {
   onOfferSubmit: () => void
 }
 
+const icons = [
+  { label: 'ball', url: `${S3_OFFER_ICONS_FOLDER}/1.png` },
+  { label: 'bar', url: `${S3_OFFER_ICONS_FOLDER}/2.png` },
+  { label: 'bar2', url: `${S3_OFFER_ICONS_FOLDER}/3.png` },
+  { label: 'cone', url: `${S3_OFFER_ICONS_FOLDER}/4.png` },
+  { label: 'cube', url: `${S3_OFFER_ICONS_FOLDER}/5.png` },
+  { label: 'cube2', url: `${S3_OFFER_ICONS_FOLDER}/6.png` },
+  { label: 'cylinder', url: `${S3_OFFER_ICONS_FOLDER}/7.png` },
+  { label: 'donut', url: `${S3_OFFER_ICONS_FOLDER}/8.png` },
+  { label: 'donut2', url: `${S3_OFFER_ICONS_FOLDER}/9.png` },
+  { label: 'tube', url: `${S3_OFFER_ICONS_FOLDER}/10.png` },
+]
+
+const INITIAL_SLIDE_IDX = Math.random() * 10
+
 const CreateOfferForm: NextPage<Props> = ({ user, onOfferSubmit }: Props) => {
+  const [selectedIconIdx, setSelectedIconIdx] = useState(INITIAL_SLIDE_IDX)
   const [createOffer] = useMutation(CREATE_OFFER)
   const {
     handleSubmit,
     register,
-    control,
-    watch,
     formState: { errors, isSubmitting },
   } = useForm()
-
-  const deliveryStartsAt = watch('deliveryStartsAt')
+  const { gray } = useColors()
 
   const onSubmit = async (data: OnSubmitProps): Promise<void> => {
     try {
@@ -97,7 +118,7 @@ const CreateOfferForm: NextPage<Props> = ({ user, onOfferSubmit }: Props) => {
         })
 
       await createOffer({
-        variables: { input },
+        variables: { input: { ...input, iconUrl: icons[selectedIconIdx].url } },
       })
       onOfferSubmit()
       // submit and then navigate (or render) create success
@@ -106,20 +127,32 @@ const CreateOfferForm: NextPage<Props> = ({ user, onOfferSubmit }: Props) => {
     }
   }
 
+  const handleIconSelect = idx => {
+    setSelectedIconIdx(idx)
+  }
+
   return (
     <Layout user={user}>
-      <Container py={[16, 20]}>
-        <Flex>
-          <Box flex={2} as="form" onSubmit={handleSubmit(onSubmit)}>
-            <chakra.h2 textStyle="h2" mb={6}>
-              Create an offer
-            </chakra.h2>
-            <Text color="gray.600" mb={10} maxW={600}>
-              Being connected to brands is invite only. Fill out this form to
-              apply for VIP access to our marketplace. We will reach out if
-              there is a fit.
-            </Text>
-            <Flex maxW={600} mb={10}>
+      <Container as="form" py={[16, 20]} onSubmit={handleSubmit(onSubmit)}>
+        <chakra.h2 textStyle="h2" mb={6}>
+          Create an offer
+        </chakra.h2>
+        <Text color={gray[600]} mb={10} maxW={MAX_COL_WIDTH}>
+          Being connected to brands is invite only. Fill out this form to apply
+          for VIP access to our marketplace. We will reach out if there is a
+          fit.
+        </Text>
+        <Grid
+          templateColumns={[
+            'repeat(1, 1fr)',
+            null,
+            'repeat(3, 1fr)',
+            'repeat(4, 1fr)',
+          ]}
+          columnGap={10}
+        >
+          <GridItem colSpan={[1, null, 2]}>
+            <Flex maxW={MAX_COL_WIDTH} mb={10}>
               <FormControl flex={1} mr={5}>
                 <FormLabel>Platform</FormLabel>
                 <Select {...register('platform')}>
@@ -137,7 +170,7 @@ const CreateOfferForm: NextPage<Props> = ({ user, onOfferSubmit }: Props) => {
                 </Select>
               </FormControl>
             </Flex>
-            <FormControl mb={10}>
+            {/* <FormControl mb={10}>
               <FormLabel
                 htmlFor="when"
                 color={
@@ -177,8 +210,8 @@ const CreateOfferForm: NextPage<Props> = ({ user, onOfferSubmit }: Props) => {
                   placeholderText="End"
                 />
               </Flex>
-            </FormControl>
-            <FormControl maxW={600} isInvalid={errors.description}>
+            </FormControl> */}
+            <FormControl maxW={MAX_COL_WIDTH} isInvalid={errors.description}>
               <FormLabel htmlFor="description">
                 Describe what you&apos;d like to do for a sponsorship?
               </FormLabel>
@@ -188,100 +221,100 @@ const CreateOfferForm: NextPage<Props> = ({ user, onOfferSubmit }: Props) => {
                 {...register('description', { required: true })}
               />
             </FormControl>
-
-            {/* advanced options */}
-            <Accordion allowToggle mb={6}>
-              <AccordionItem>
-                <h2>
-                  <AccordionButton>
-                    <Box
-                      textAlign="left"
-                      textStyle="small"
-                      fontWeight={700}
-                      mr={4}
-                    >
-                      Advanced Options
-                    </Box>
-                    <AccordionIcon />
-                  </AccordionButton>
-                </h2>
-                <AccordionPanel textStyle="base">
-                  <Flex mb={8}>
-                    <Flex direction="column">
-                      <Box mb={1}>Number of Revisions</Box>
-                      <Box textStyle="mini" color="gray.600">
-                        How many times can a brand suggest non-major changes to
-                        the sponsored work?
-                      </Box>
-                    </Flex>
-                    <Spacer />
-                    <Select w={110} {...register('numberOfRevisions')}>
-                      <option value={''}>-</option>
-                      <option>1</option>
-                      <option>2</option>
-                      <option>3</option>
-                    </Select>
-                  </Flex>
-                  <Flex mb={8}>
-                    <Flex direction="column">
-                      <Box mb={1}>Revision Time</Box>
-                      <Box textStyle="mini" color="gray.600">
-                        When can the brand preview your work and suggest edits
-                        before it goes live?
-                      </Box>
-                    </Flex>
-                    <Spacer />
-                    <Select w={110} {...register('revisionDays')}>
-                      <option value={''}>-</option>
-                      <option value={3}>3 days</option>
-                      <option value={7}>7 days</option>
-                      <option value={14}>14 days</option>
-                    </Select>
-                  </Flex>
-                  <Flex mb={8}>
-                    <Flex direction="column">
-                      <Box mb={1}>Will the media be reusable?</Box>
-                      <Box textStyle="mini" color="gray.600">
-                        Will the brand get a license to reuse the work in other
-                        places? (eg. making it into a Facebook ad)
-                      </Box>
-                    </Flex>
-                    <Spacer />
-                    <Select w={110} {...register('canReuse')}>
-                      <option value={''}>-</option>
-                      <option>Yes</option>
-                      <option>No</option>
-                    </Select>
-                  </Flex>
-                  <Flex mb={8} align="center">
-                    <Flex direction="column">
-                      <Box>
-                        Would you follow a script provided by the sponsor?
-                      </Box>
-                    </Flex>
-                    <Spacer />
-                    <Select w={110} {...register('willFollowScript')}>
-                      <option value={''}>-</option>
-                      <option>Yes</option>
-                      <option>No</option>
-                    </Select>
-                  </Flex>
-                </AccordionPanel>
-              </AccordionItem>
-            </Accordion>
-
-            <Button
-              disabled={isSubmitting}
-              type="submit"
-              rightIcon={<ArrowForwardIcon />}
-            >
-              Apply
-            </Button>
-          </Box>
-          <Box flex={1} display={{ base: 'none', lg: 'block' }}>
-            tiktok video.
-          </Box>
-        </Flex>
+          </GridItem>
+          <GridItem
+            colSpan={1}
+            width={['calc(55vw)', 'calc(30vw)', 'calc(20vw)', 'calc(15vw)']}
+            mb={[8, null, 0]}
+          >
+            <FormLabel>Choose Icon</FormLabel>
+            <IconSelector
+              initialSlideIdx={selectedIconIdx}
+              data={icons}
+              onSelect={handleIconSelect}
+            />
+          </GridItem>
+        </Grid>
+        {/* advanced options */}
+        <Accordion allowToggle maxW={MAX_COL_WIDTH + 100}>
+          <AccordionItem>
+            <h2>
+              <AccordionButton>
+                <Box textAlign="left" textStyle="small" fontWeight={700} mr={4}>
+                  Advanced Options
+                </Box>
+                <AccordionIcon />
+              </AccordionButton>
+            </h2>
+            <AccordionPanel textStyle="base">
+              <Flex mb={8}>
+                <Flex direction="column">
+                  <Box mb={1}>Number of Revisions</Box>
+                  <Box textStyle="mini" color={gray[600]}>
+                    How many times can a brand suggest non-major changes to the
+                    sponsored work?
+                  </Box>
+                </Flex>
+                <Spacer />
+                <Select w={110} {...register('numberOfRevisions')}>
+                  <option value={''}>-</option>
+                  <option>1</option>
+                  <option>2</option>
+                  <option>3</option>
+                </Select>
+              </Flex>
+              <Flex mb={8}>
+                <Flex direction="column">
+                  <Box mb={1}>Revision Time</Box>
+                  <Box textStyle="mini" color={gray[600]}>
+                    When can the brand preview your work and suggest edits
+                    before it goes live?
+                  </Box>
+                </Flex>
+                <Spacer />
+                <Select w={110} {...register('revisionDays')}>
+                  <option value={''}>-</option>
+                  <option value={3}>3 days</option>
+                  <option value={7}>7 days</option>
+                  <option value={14}>14 days</option>
+                </Select>
+              </Flex>
+              <Flex mb={8}>
+                <Flex direction="column">
+                  <Box mb={1}>Will the media be reusable?</Box>
+                  <Box textStyle="mini" color={gray[600]}>
+                    Will the brand get a license to reuse the work in other
+                    places? (eg. making it into a Facebook ad)
+                  </Box>
+                </Flex>
+                <Spacer />
+                <Select w={110} {...register('canReuse')}>
+                  <option value={''}>-</option>
+                  <option>Yes</option>
+                  <option>No</option>
+                </Select>
+              </Flex>
+              <Flex mb={8} align="center">
+                <Flex direction="column">
+                  <Box>Would you follow a script provided by the sponsor?</Box>
+                </Flex>
+                <Spacer />
+                <Select w={110} {...register('willFollowScript')}>
+                  <option value={''}>-</option>
+                  <option>Yes</option>
+                  <option>No</option>
+                </Select>
+              </Flex>
+            </AccordionPanel>
+          </AccordionItem>
+        </Accordion>
+        <Button
+          disabled={isSubmitting}
+          type="submit"
+          rightIcon={<ArrowForwardIcon />}
+        >
+          Apply
+        </Button>
       </Container>
     </Layout>
   )

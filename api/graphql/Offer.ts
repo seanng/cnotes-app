@@ -18,6 +18,7 @@ export const Offer = objectType({
   definition(t) {
     t.nonNull.id('id')
     t.nonNull.string('status')
+    t.nonNull.string('iconUrl')
     t.string('platform')
     t.string('deliverable')
     t.nonNull.string('description')
@@ -97,6 +98,9 @@ export const createOffer = mutationField('createOffer', {
     const offer = await prisma.offer.create({
       data: {
         ...input,
+        // iconUrl: `${S3_OFFER_THUMBNAILS_FOLDER}/${Math.ceil(
+        //   Math.random() * 10
+        // )}.png`,
         status: UNVERIFIED,
         creator: {
           connect: { id: user.id },
@@ -118,9 +122,6 @@ export const createOffer = mutationField('createOffer', {
           <p>Offer ID: ${offer.id} </p>
           <p>Platform: ${input.platform} </p>
           <p>Deliverable: ${input.deliverable} </p>
-          <p>Execution Date Range: ${input.deliveryStartsAt} to ${
-          input.deliveryEndsAt
-        } </p>
           <p>Description: ${input.description} </p>
           <p>${input.specs.map(spec => `${spec.key}: ${spec.value}`)}</p>
           <hr />
@@ -137,10 +138,9 @@ export const createOfferInput = inputObjectType({
   name: 'CreateOfferInput',
   definition(t) {
     t.nonNull.string('description')
+    t.nonNull.string('iconUrl')
     t.string('platform')
     t.string('deliverable')
-    t.string('deliveryStartsAt') // TODO: change to date time
-    t.string('deliveryEndsAt') // TODO: change to date time
     t.field('specs', { type: list('JSON') })
   },
 })

@@ -65,3 +65,4 @@ export const S3_BUCKET_URL =
   'https://cnotes-dev.s3-ap-southeast-1.amazonaws.com'
 
 export const PLACEHOLDER_BANNER_URL = `${S3_BUCKET_URL}/placeholders/bg-profile.jpg`
+export const S3_OFFER_ICONS_FOLDER = `${S3_BUCKET_URL}/assets/mnemonics`
