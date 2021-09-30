@@ -5,7 +5,7 @@ type Props = {
   status: string
 }
 
-const OfferStatusBadge: FC<Props> = ({ status }: Props) => {
+const ListingStatusBadge: FC<Props> = ({ status }: Props) => {
   // TODO: (after designer) add 50, 200, 400 etc to colors.ts so colors will show
   const colors = {
     WON: 'teal',
@@ -25,4 +25,4 @@ const OfferStatusBadge: FC<Props> = ({ status }: Props) => {
   )
 }
 
-export default OfferStatusBadge
+export default ListingStatusBadge

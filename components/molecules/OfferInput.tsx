@@ -10,10 +10,10 @@ import { useForm } from 'react-hook-form'
 
 type Props = {
   onSubmit: ({ input }: { input: number }) => void
-  minBid: number
+  minOffer: number
 }
 
-const BidInput: FC<Props> = ({ onSubmit, minBid }: Props) => {
+const OfferInput: FC<Props> = ({ onSubmit, minOffer }: Props) => {
   const {
     handleSubmit,
     register,
@@ -32,9 +32,9 @@ const BidInput: FC<Props> = ({ onSubmit, minBid }: Props) => {
         <Input
           borderRadius="full"
           type="number"
-          placeholder="Bid"
+          placeholder="Offer"
           {...register('input', {
-            min: minBid,
+            min: minOffer,
             required: true,
           })}
         />
@@ -43,7 +43,7 @@ const BidInput: FC<Props> = ({ onSubmit, minBid }: Props) => {
             type="submit"
             borderRadius="full"
             disabled={!isValid || isSubmitting}
-            aria-label="Bid"
+            aria-label="Offer"
             icon={<ArrowForwardIcon />}
           />
         </InputRightElement>
@@ -52,4 +52,4 @@ const BidInput: FC<Props> = ({ onSubmit, minBid }: Props) => {
   )
 }
 
-export default BidInput
+export default OfferInput

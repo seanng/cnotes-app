@@ -15,14 +15,14 @@ import {
 import NextLink from 'next/link'
 import { CloseIcon } from '@chakra-ui/icons'
 import { CREATOR_AVATAR_TEXT_SPACING } from 'shared/constants'
-import { Bid, User } from 'shared/types'
+import { Offer, User } from 'shared/types'
 import { useMutation, gql } from '@apollo/client'
 import { MouseEventHandler, FC, useMemo } from 'react'
-import OfferStatusBadge from 'components/atoms/OfferStatusBadge'
+import ListingStatusBadge from 'components/atoms/ListingStatusBadge'
 
 const UPDATE_BID = gql`
-  mutation updateBid($input: UpdateBidInput!) {
-    updateBid(input: $input) {
+  mutation updateOffer($input: UpdateOfferInput!) {
+    updateOffer(input: $input) {
       id
       isCleared
     }
@@ -32,21 +32,21 @@ const UPDATE_BID = gql`
 const columns = [
   'Creator',
   'Deliverable',
-  'Highest Bid',
-  'My Bid',
+  'Highest Offer',
+  'My Offer',
   'Status',
   '', // Clear Button
 ]
 
 type Props = {
-  data: Bid[]
+  data: Offer[]
   user: User
 }
 
-const getBidStatus = (bid: Bid, user: User): string => {
-  if (!bid.offer.brand) {
+const getOfferStatus = (offer: Offer, user: User): string => {
+  if (!offer.listing.brand) {
     return 'SELECTING'
-  } else if (bid.offer.brand.id !== user.id) {
+  } else if (offer.listing.brand.id !== user.id) {
     return 'LOST'
   }
   return 'WON'
@@ -54,24 +54,24 @@ const getBidStatus = (bid: Bid, user: User): string => {
 
 const AwaitingTable: FC<Props> = ({ data, user }: Props) => {
   const now = new Date()
-  const [updateBid] = useMutation(UPDATE_BID)
+  const [updateOffer] = useMutation(UPDATE_BID)
 
-  const bids = useMemo(() => {
+  const offers = useMemo(() => {
     return data
       .filter(
-        ({ offer, isCleared }) =>
-          now > new Date(offer.auctionEndsAt) && !isCleared
+        ({ listing, isCleared }) =>
+          now > new Date(listing.auctionEndsAt) && !isCleared
       )
-      .map(bid => ({
-        ...bid,
-        status: getBidStatus(bid, user),
+      .map(offer => ({
+        ...offer,
+        status: getOfferStatus(offer, user),
       }))
   }, [data])
 
   const handleClearClick =
     (id: string): MouseEventHandler =>
     async (): Promise<void> => {
-      await updateBid({
+      await updateOffer({
         variables: {
           input: {
             id,
@@ -81,10 +81,10 @@ const AwaitingTable: FC<Props> = ({ data, user }: Props) => {
       })
     }
 
-  if (!bids || bids.length === 0) {
+  if (!offers || offers.length === 0) {
     return (
       <Box textStyle="xLarge">
-        There are currently no offers that are pending.
+        There are currently no listings that are pending.
       </Box>
     )
   }
@@ -99,18 +99,18 @@ const AwaitingTable: FC<Props> = ({ data, user }: Props) => {
         </Tr>
       </Thead>
       <Tbody>
-        {bids.map(({ id, offer, status, history }) => (
-          <LinkBox as={Tr} key={offer.id}>
+        {offers.map(({ id, listing, status, history }) => (
+          <LinkBox as={Tr} key={listing.id}>
             <Td>
-              <NextLink href={`/offer/${offer.id}`} passHref>
+              <NextLink href={`/listing/${listing.id}`} passHref>
                 <LinkOverlay>
                   <Flex align="center">
                     <Avatar
-                      name={offer.creator.alias}
-                      src={offer.creator.avatarUrl}
+                      name={listing.creator.alias}
+                      src={listing.creator.avatarUrl}
                     />
                     <Flex direction="column" ml={CREATOR_AVATAR_TEXT_SPACING}>
-                      <Box>{offer.creator.alias}</Box>
+                      <Box>{listing.creator.alias}</Box>
                       {/* <Box textStyle="mini">10k viewers</Box> */}
                     </Flex>
                   </Flex>
@@ -119,21 +119,21 @@ const AwaitingTable: FC<Props> = ({ data, user }: Props) => {
             </Td>
             <Td>
               <Flex direction="column">
-                <Box>{offer.deliverable}</Box>
-                <Box textStyle="mini">{offer.platform}</Box>
+                <Box>{listing.deliverable}</Box>
+                <Box textStyle="mini">{listing.platform}</Box>
               </Flex>
             </Td>
-            <Td>${offer.highestBid.toLocaleString()}</Td>
+            <Td>${listing.highestOffer.toLocaleString()}</Td>
             <Td>${history[history.length - 1].price.toLocaleString()}</Td>
             <Td>
-              <OfferStatusBadge status={status} />
+              <ListingStatusBadge status={status} />
             </Td>
             <Td pl={-2} textAlign="right" maxWidth={50}>
               {status !== 'SELECTING' && (
                 <IconButton
                   size="xs"
                   type="submit"
-                  aria-label="Bid"
+                  aria-label="Offer"
                   colorScheme="red"
                   onClick={handleClearClick(id)}
                   icon={<CloseIcon boxSize={2} />}

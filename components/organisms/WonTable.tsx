@@ -13,7 +13,7 @@ import {
   Button,
 } from '@chakra-ui/react'
 import NextLink from 'next/link'
-import OfferStatusBadge from 'components/atoms/OfferStatusBadge'
+import ListingStatusBadge from 'components/atoms/ListingStatusBadge'
 import {
   CREATOR_AVATAR_TEXT_SPACING,
   COMPLETED,
@@ -21,34 +21,36 @@ import {
 } from 'shared/constants'
 import { MouseEventHandler, FC, useMemo } from 'react'
 import { format } from 'date-fns'
-import { Bid, User } from 'shared/types'
+import { Offer, User } from 'shared/types'
 
 const columns = [
   'Creator',
   'Deliverable',
-  'Offer Size',
+  'Listing Size',
   'Activation Range',
   'Status',
   '', // Mark As Paid Button
 ]
 
 type Props = {
-  data: Bid[]
+  data: Offer[]
   user: User
 }
 
 const WonTable: FC<Props> = ({ data, user }: Props) => {
-  const bids = useMemo(() => {
+  const offers = useMemo(() => {
     return data.filter(
-      ({ offer }) =>
-        offer.brand && offer.brand.id === user.id && offer.status !== COMPLETED
+      ({ listing }) =>
+        listing.brand &&
+        listing.brand.id === user.id &&
+        listing.status !== COMPLETED
     )
   }, [data])
   const handleClick: MouseEventHandler = () => {
     // return input
     // input should be a number
   }
-  if (!bids || bids.length === 0) {
+  if (!offers || offers.length === 0) {
     return (
       <Box textStyle="xLarge">
         You don&apos;t have any ongoing transactions.
@@ -65,18 +67,18 @@ const WonTable: FC<Props> = ({ data, user }: Props) => {
         </Tr>
       </Thead>
       <Tbody>
-        {bids.map(({ offer }) => (
-          <LinkBox as={Tr} key={offer.id}>
+        {offers.map(({ listing }) => (
+          <LinkBox as={Tr} key={listing.id}>
             <Td>
-              <NextLink href={`/offer/${offer.id}`} passHref>
+              <NextLink href={`/listing/${listing.id}`} passHref>
                 <LinkOverlay>
                   <Flex align="center">
                     <Avatar
-                      name={offer.creator.alias}
-                      src={offer.creator.avatarUrl}
+                      name={listing.creator.alias}
+                      src={listing.creator.avatarUrl}
                     />
                     <Flex direction="column" ml={CREATOR_AVATAR_TEXT_SPACING}>
-                      <Box>{offer.creator.alias}</Box>
+                      <Box>{listing.creator.alias}</Box>
                       {/* <Box textStyle="mini">10k viewers</Box> */}
                     </Flex>
                   </Flex>
@@ -85,20 +87,20 @@ const WonTable: FC<Props> = ({ data, user }: Props) => {
             </Td>
             <Td>
               <Flex direction="column">
-                <Box>{offer.deliverable}</Box>
-                <Box textStyle="mini">{offer.platform}</Box>
+                <Box>{listing.deliverable}</Box>
+                <Box textStyle="mini">{listing.platform}</Box>
               </Flex>
             </Td>
-            <Td>${offer.finalPrice}</Td>
-            <Td>{`${format(new Date(offer.deliveryStartsAt), 'P')} - ${format(
-              new Date(offer.deliveryEndsAt),
+            <Td>${listing.finalPrice}</Td>
+            <Td>{`${format(new Date(listing.deliveryStartsAt), 'P')} - ${format(
+              new Date(listing.deliveryEndsAt),
               'P'
             )}`}</Td>
             <Td>
-              <OfferStatusBadge status={offer.status} />
+              <ListingStatusBadge status={listing.status} />
             </Td>
             <Td pr={0}>
-              {offer.status === PAYING && (
+              {listing.status === PAYING && (
                 <Button
                   type="button"
                   aria-label="Paid"

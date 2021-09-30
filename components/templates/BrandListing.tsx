@@ -1,11 +1,11 @@
 import { NextPage } from 'next'
-import { Offer, User } from 'shared/types'
+import { Listing, User } from 'shared/types'
 import Layout from 'components/organisms/Layout'
 import { Box, Container } from '@chakra-ui/react'
 
 interface Props {
   user: User
-  listing: Offer
+  listing: Listing
 }
 
 const BrandListing: NextPage<Props> = ({ user, listing }: Props) => {

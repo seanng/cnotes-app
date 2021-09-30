@@ -34,11 +34,11 @@ const t = {
   },
   problem1: {
     title: '"It\'s difficult to get in touch with creators."',
-    body: 'Creators get a lot of email spam and are therefore unresponsive. We make sure your offers are taken care of and responded to.',
+    body: 'Creators get a lot of email spam and are therefore unresponsive. We make sure your listings are taken care of and responded to.',
   },
   problem2: {
     title: '"It can take months to finalize a deal."',
-    body: 'Discover what other brands are offering for sponsorship prices through our platform, as well as what creators have earned in the past.',
+    body: 'Discover what other brands are listinging for sponsorship prices through our platform, as well as what creators have earned in the past.',
   },
   problem3: {
     title: '"Creators disappear midway through the deal."',

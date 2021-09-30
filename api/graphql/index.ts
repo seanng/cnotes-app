@@ -1,5 +1,5 @@
 export * from './User'
 export * from './Auth'
+export * from './Listing'
 export * from './Offer'
-export * from './Bid'
 export * from './Custom'

@@ -24,13 +24,13 @@ export const UNVERIFIED = 'UNVERIFIED'
 export const VERIFIED = 'VERIFIED' // just user status
 // export const SUSPENDED = 'SUSPENDED' // just user status
 
-// offer
+// listing
 export const ACTIVE = 'ACTIVE'
 export const TRANSACTING = 'TRANSACTING'
 export const PAYING = 'PAYING'
 export const COMPLETED = 'COMPLETED'
 
-// offer statuses (frontend)
+// listing statuses (frontend)
 export const HISTORY = 'HISTORY'
 export const WON = 'WON'
 
@@ -65,4 +65,4 @@ export const S3_BUCKET_URL =
   'https://cnotes-dev.s3-ap-southeast-1.amazonaws.com'
 export const CLOUDFRONT_URL = 'https://d29zuagwjyq1tv.cloudfront.net'
 export const PLACEHOLDER_BANNER_URL = `${CLOUDFRONT_URL}/placeholders/bg-profile.jpg`
-export const S3_OFFER_ICONS_FOLDER = `${CLOUDFRONT_URL}/assets/mnemonics`
+export const S3_LISTING_ICONS_FOLDER = `${CLOUDFRONT_URL}/assets/mnemonics`

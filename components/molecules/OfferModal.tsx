@@ -18,22 +18,22 @@ import {
 import { useState, FC, useEffect } from 'react'
 import FormInput from 'components/atoms/FormInput'
 import { useForm } from 'react-hook-form'
-import { Offer } from 'shared/types'
+import { Listing } from 'shared/types'
 import { URL_REGEX } from 'shared/constants'
 
 const PLACE_BID = gql`
-  mutation placeBid($input: PlaceBidInput!) {
-    placeBid(input: $input) {
+  mutation placeOffer($input: PlaceOfferInput!) {
+    placeOffer(input: $input) {
       id
       message
       productUrl
       history {
         price
       }
-      offer {
+      listing {
         id
-        bidCount
-        highestBid
+        offerCount
+        highestOffer
       }
     }
   }
@@ -53,15 +53,15 @@ type ModalProps = {
   onClose: () => void
   isOpen: boolean
   price: number
-  offer: Offer
+  listing: Listing
   defaultValues?: DefaultValues
 }
 
-const BidModal: FC<ModalProps> = ({
+const OfferModal: FC<ModalProps> = ({
   onClose,
   isOpen,
   price,
-  offer,
+  listing,
   defaultValues = { message: '', productUrl: '' },
 }: ModalProps) => {
   const {
@@ -72,7 +72,7 @@ const BidModal: FC<ModalProps> = ({
   } = useForm({
     defaultValues,
   })
-  const [placeBid] = useMutation(PLACE_BID)
+  const [placeOffer] = useMutation(PLACE_BID)
   const [showSuccess, setShowSuccess] = useState(false)
 
   useEffect(() => {
@@ -81,11 +81,11 @@ const BidModal: FC<ModalProps> = ({
   }, [defaultValues])
 
   const onConfirm = async (input: OnConfirmProps): Promise<void> => {
-    await placeBid({
+    await placeOffer({
       variables: {
         input: {
           ...input,
-          offerId: offer.id,
+          listingId: listing.id,
           price,
         },
       },
@@ -97,7 +97,7 @@ const BidModal: FC<ModalProps> = ({
     onClose()
   }
 
-  if (!offer) {
+  if (!listing) {
     return <Box />
   }
 
@@ -105,12 +105,12 @@ const BidModal: FC<ModalProps> = ({
     <Modal onClose={onClose} isOpen={isOpen} closeOnOverlayClick={false}>
       <ModalOverlay />
       <ModalContent>
-        <ModalHeader>Place a bid</ModalHeader>
+        <ModalHeader>Place an offer</ModalHeader>
         <ModalCloseButton />
         {showSuccess ? (
           <>
             <ModalBody textStyle="base" mb={10}>
-              {`You have successfully bid $${price} for a ${offer.platform} ${offer.deliverable} from ${offer.creator.alias}.`}
+              {`You have successfully placed an offer of $${price} for a ${listing.platform} ${listing.deliverable} from ${listing.creator.alias}.`}
             </ModalBody>
             <ModalFooter>
               <Button onClick={onSuccess}>Close</Button>
@@ -120,7 +120,7 @@ const BidModal: FC<ModalProps> = ({
           <form onSubmit={handleSubmit(onConfirm)}>
             <ModalBody>
               <Box textStyle="base" mb={10}>
-                {`You are about to make a bid for a ${offer.platform} ${offer.deliverable} from ${offer.creator.alias}`}
+                {`You are about to make an offer for a ${listing.platform} ${listing.deliverable} from ${listing.creator.alias}`}
               </Box>
               <Flex mb={1} color="gray.600" textStyle="small">
                 <Box>Time left</Box>
@@ -128,12 +128,12 @@ const BidModal: FC<ModalProps> = ({
                 <Box>3 hours 3 minutes left</Box>
               </Flex>
               <Flex mb={2} color="gray.600" textStyle="small">
-                <Box>Total number of bids</Box>
+                <Box>Total number of offers</Box>
                 <Spacer />
                 <Box>3</Box>
               </Flex>
               <Flex textStyle="base" fontWeight={700} mb={6}>
-                <Box>Your bid</Box>
+                <Box>Your offer</Box>
                 <Spacer />
                 <Box>{`$${price}`}</Box>
               </Flex>
@@ -164,7 +164,7 @@ const BidModal: FC<ModalProps> = ({
             </ModalBody>
             <ModalFooter>
               <Button type="submit" disabled={isSubmitting} mr={4}>
-                Place bid
+                Place offer
               </Button>
               <Button
                 disabled={isSubmitting}
@@ -181,4 +181,4 @@ const BidModal: FC<ModalProps> = ({
   )
 }
 
-export default BidModal
+export default OfferModal

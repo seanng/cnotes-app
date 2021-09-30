@@ -15,29 +15,31 @@ import NextLink from 'next/link'
 import { COMPLETED, CREATOR_AVATAR_TEXT_SPACING } from 'shared/constants'
 import { format } from 'date-fns'
 import { FC, useMemo } from 'react'
-import { Bid, User } from 'shared/types'
+import { Offer, User } from 'shared/types'
 
 const columns = [
   'Creator',
   'Deliverable',
-  'Offer Size',
+  'Listing Size',
   'Activation Range',
   'Date Completed',
 ]
 
 type Props = {
   user: User
-  data: Bid[]
+  data: Offer[]
 }
 
 const HistoryTable: FC<Props> = ({ data, user }: Props) => {
-  const bids = useMemo(() => {
+  const offers = useMemo(() => {
     return data.filter(
-      ({ offer }) =>
-        offer.brand && offer.brand.id === user.id && offer.status === COMPLETED
+      ({ listing }) =>
+        listing.brand &&
+        listing.brand.id === user.id &&
+        listing.status === COMPLETED
     )
   }, [data])
-  if (!bids || bids.length === 0) {
+  if (!offers || offers.length === 0) {
     return (
       <Box textStyle="xLarge">
         You haven&apos;t completed any transactions yet.
@@ -54,18 +56,18 @@ const HistoryTable: FC<Props> = ({ data, user }: Props) => {
         </Tr>
       </Thead>
       <Tbody>
-        {bids.map(({ offer }) => (
-          <LinkBox as={Tr} key={offer.id}>
+        {offers.map(({ listing }) => (
+          <LinkBox as={Tr} key={listing.id}>
             <Td>
-              <NextLink href={`/offer/${offer.id}`} passHref>
+              <NextLink href={`/listing/${listing.id}`} passHref>
                 <LinkOverlay>
                   <Flex align="center">
                     <Avatar
-                      name={offer.creator.alias}
-                      src={offer.creator.avatarUrl}
+                      name={listing.creator.alias}
+                      src={listing.creator.avatarUrl}
                     />
                     <Flex direction="column" ml={CREATOR_AVATAR_TEXT_SPACING}>
-                      <Box>{offer.creator.alias}</Box>
+                      <Box>{listing.creator.alias}</Box>
                       {/* <Box textStyle="mini">10k viewers</Box> */}
                     </Flex>
                   </Flex>
@@ -74,16 +76,16 @@ const HistoryTable: FC<Props> = ({ data, user }: Props) => {
             </Td>
             <Td>
               <Flex direction="column">
-                <Box>{offer.deliverable}</Box>
-                <Box textStyle="mini">{offer.platform}</Box>
+                <Box>{listing.deliverable}</Box>
+                <Box textStyle="mini">{listing.platform}</Box>
               </Flex>
             </Td>
-            <Td>${offer.finalPrice}</Td>
-            <Td>{`${format(new Date(offer.deliveryStartsAt), 'P')} - ${format(
-              new Date(offer.deliveryEndsAt),
+            <Td>${listing.finalPrice}</Td>
+            <Td>{`${format(new Date(listing.deliveryStartsAt), 'P')} - ${format(
+              new Date(listing.deliveryEndsAt),
               'P'
             )}`}</Td>
-            <Td>{format(new Date(offer.completedAt), 'P')}</Td>
+            <Td>{format(new Date(listing.completedAt), 'P')}</Td>
           </LinkBox>
         ))}
       </Tbody>

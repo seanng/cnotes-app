@@ -15,51 +15,53 @@ import NextLink from 'next/link'
 import CountdownTimer from 'components/atoms/CountdownTimer'
 import { CREATOR_AVATAR_TEXT_SPACING } from 'shared/constants'
 import { FC, useMemo, useState } from 'react'
-import BidInput from 'components/molecules/BidInput'
-import BidModal from 'components/molecules/BidModal'
-import { Bid, User } from 'shared/types'
+import OfferInput from 'components/molecules/OfferInput'
+import OfferModal from 'components/molecules/OfferModal'
+import { Offer, User } from 'shared/types'
 import { formatRelative } from 'date-fns'
 
 const columns = [
   'Creator',
   'Deliverable',
   'Time Left',
-  'Highest Bid',
-  'My Bid',
-  '', // Bid Button
+  'Highest Offer',
+  'My Offer',
+  '', // Offer Button
 ]
 
 type Props = {
-  data: Bid[]
+  data: Offer[]
   user: User
 }
 
 // query the data via apollo?
-const BiddingTable: FC<Props> = ({ data }: Props) => {
+const OfferingTable: FC<Props> = ({ data }: Props) => {
   const [modalDefaultValues, setModalDefaultValues] = useState(null)
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [price, setPrice] = useState(0)
-  const [selectedOffer, setSelectedOffer] = useState(null)
+  const [selectedListing, setSelectedListing] = useState(null)
 
-  const handleBidEnter =
-    bid =>
+  const handleOfferEnter =
+    offer =>
     ({ input }: { input: number }): void => {
-      setSelectedOffer(bid.offer)
+      setSelectedListing(offer.listing)
       setPrice(input)
       setModalDefaultValues({
-        message: bid.message,
-        productUrl: bid.productUrl,
+        message: offer.message,
+        productUrl: offer.productUrl,
       })
       setIsModalOpen(true)
     }
 
   const now = new Date()
-  const bids = useMemo(() => {
-    return data.filter(({ offer }) => new Date(offer.auctionEndsAt) > now)
+  const offers = useMemo(() => {
+    return data.filter(({ listing }) => new Date(listing.auctionEndsAt) > now)
   }, [data])
 
-  if (!bids || bids.length === 0) {
-    return <Box textStyle="xLarge">There are no ongoing bids at the moment</Box>
+  if (!offers || offers.length === 0) {
+    return (
+      <Box textStyle="xLarge">There are no ongoing offers at the moment</Box>
+    )
   }
 
   return (
@@ -73,24 +75,24 @@ const BiddingTable: FC<Props> = ({ data }: Props) => {
           </Tr>
         </Thead>
         <Tbody>
-          {bids.map(bid => {
-            const { offer, history } = bid
-            const currentBidPrice = history[history.length - 1].price
+          {offers.map(offer => {
+            const { listing, history } = offer
+            const currentOfferPrice = history[history.length - 1].price
             return (
-              <LinkBox as={Tr} key={offer.id}>
+              <LinkBox as={Tr} key={listing.id}>
                 <Td>
-                  <NextLink href={`/offer/${offer.id}`} passHref>
+                  <NextLink href={`/listing/${listing.id}`} passHref>
                     <LinkOverlay>
                       <Flex align="center">
                         <Avatar
-                          name={offer.creator.alias}
-                          src={offer.creator.avatarUrl}
+                          name={listing.creator.alias}
+                          src={listing.creator.avatarUrl}
                         />
                         <Flex
                           direction="column"
                           ml={CREATOR_AVATAR_TEXT_SPACING}
                         >
-                          <Box>{offer.creator.alias}</Box>
+                          <Box>{listing.creator.alias}</Box>
                           {/* <Box textStyle="mini">10k viewers</Box> */}
                         </Flex>
                       </Flex>
@@ -99,16 +101,16 @@ const BiddingTable: FC<Props> = ({ data }: Props) => {
                 </Td>
                 <Td>
                   <Flex direction="column">
-                    <Box>{offer.deliverable}</Box>
-                    <Box textStyle="mini">{offer.platform}</Box>
+                    <Box>{listing.deliverable}</Box>
+                    <Box textStyle="mini">{listing.platform}</Box>
                   </Flex>
                 </Td>
                 <Td>
                   <Flex direction="column" minWidth={208}>
-                    <CountdownTimer end={offer.auctionEndsAt} />
+                    <CountdownTimer end={listing.auctionEndsAt} />
                     <Box textStyle="mini">
                       {`Ends ${formatRelative(
-                        new Date(offer.auctionEndsAt),
+                        new Date(listing.auctionEndsAt),
                         now
                       )}`}
                     </Box>
@@ -116,15 +118,15 @@ const BiddingTable: FC<Props> = ({ data }: Props) => {
                 </Td>
                 <Td>
                   <Flex direction="column">
-                    <Box>${offer.highestBid.toLocaleString()}</Box>
-                    <Box textStyle="mini">{offer.bidCount} bids</Box>
+                    <Box>${listing.highestOffer.toLocaleString()}</Box>
+                    <Box textStyle="mini">{listing.offerCount} offers</Box>
                   </Flex>
                 </Td>
-                <Td>${currentBidPrice.toLocaleString()}</Td>
+                <Td>${currentOfferPrice.toLocaleString()}</Td>
                 <Td pr={0} textAlign="right">
-                  <BidInput
-                    minBid={currentBidPrice}
-                    onSubmit={handleBidEnter(bid)}
+                  <OfferInput
+                    minOffer={currentOfferPrice}
+                    onSubmit={handleOfferEnter(offer)}
                   />
                 </Td>
               </LinkBox>
@@ -132,8 +134,8 @@ const BiddingTable: FC<Props> = ({ data }: Props) => {
           })}
         </Tbody>
       </Table>
-      <BidModal
-        offer={selectedOffer}
+      <OfferModal
+        listing={selectedListing}
         onClose={(): void => {
           setIsModalOpen(false)
         }}
@@ -145,4 +147,4 @@ const BiddingTable: FC<Props> = ({ data }: Props) => {
   )
 }
 
-export default BiddingTable
+export default OfferingTable

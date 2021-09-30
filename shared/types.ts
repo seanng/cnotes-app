@@ -63,20 +63,20 @@ export interface User {
   statsLastVerifiedAt?: string
 }
 
-export interface BidHistoryItem {
-  bidAt: Date
+export interface OfferHistoryItem {
+  offeredAt: Date
   price: number
 }
 
-export interface Bid {
+export interface Offer {
   id: string
-  offer?: Offer
+  listing?: Listing
   productUrl: string
-  history: BidHistoryItem[]
+  history: OfferHistoryItem[]
   isCleared: boolean
 }
 
-export interface Offer {
+export interface Listing {
   id: string
   creator: User
   status: 'UNVERIFIED' | 'ACTIVE' | 'TRANSACTING' | 'PAYING' | 'COMPLETED'
@@ -84,10 +84,10 @@ export interface Offer {
   brandId?: string
   platform: string
   deliverable: string
-  bids?: Bid[]
+  offers?: Offer[]
   auctionEndsAt: string
-  bidCount: number
-  highestBid: number
+  offerCount: number
+  highestOffer: number
   finalPrice: number
   deliveryStartsAt: string
   deliveryEndsAt: string

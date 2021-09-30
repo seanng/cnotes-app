@@ -1,4 +1,3 @@
-import sgMail from 'lib/sendgrid'
 import { ForbiddenError } from 'apollo-server-micro'
 import prisma from 'lib/prisma'
 import {
@@ -8,52 +7,31 @@ import {
   objectType,
   queryField,
   list,
-  idArg,
 } from 'nexus'
-import { FROM_ADDRESS, ACTIVE, UNVERIFIED } from 'shared/constants'
-import { isCreator } from 'utils/auth'
+import { isBrand } from 'utils/auth'
+
+export const OfferHistory = objectType({
+  name: 'OfferHistory',
+  definition(t) {
+    t.nonNull.int('price')
+    t.nonNull.string('date')
+  },
+})
 
 export const Offer = objectType({
   name: 'Offer',
   definition(t) {
     t.nonNull.id('id')
-    t.nonNull.string('status')
-    t.nonNull.string('iconUrl')
-    t.string('platform')
-    t.string('deliverable')
-    t.nonNull.string('description')
-    t.field('deliveryStartsAt', {
-      type: 'DateTime',
-    })
-    t.field('deliveryEndsAt', {
-      type: 'DateTime',
-    })
-    t.field('specs', {
-      type: list('JSON'),
-    })
-    t.int('bidCount')
-    t.int('startPrice')
-    t.int('finalPrice')
-    t.int('highestBid')
-    t.list.field('bids', {
-      type: 'Bid',
+    t.nonNull.field('listing', {
+      type: 'Listing',
       resolve: parent =>
         prisma.offer
           .findUnique({
             where: { id: parent.id },
           })
-          .bids(),
+          .listing(),
     })
-    t.nonNull.field('creator', {
-      type: 'User',
-      resolve: parent =>
-        prisma.offer
-          .findUnique({
-            where: { id: parent.id },
-          })
-          .creator(),
-    })
-    t.field('brand', {
+    t.nonNull.field('brand', {
       type: 'User',
       resolve: parent =>
         prisma.offer
@@ -62,143 +40,150 @@ export const Offer = objectType({
           })
           .brand(),
     })
-    t.field('auctionEndsAt', {
-      type: 'DateTime',
+    t.list.field('history', {
+      type: 'OfferHistory',
+      resolve: async parent => {
+        const offer = await prisma.offer.findUnique({
+          where: { id: parent.id },
+        })
+        return offer.history
+      },
     })
-    t.field('selectedAt', {
-      type: 'DateTime',
-    })
-    t.field('transactedAt', {
-      type: 'DateTime',
-    })
-    t.field('paidAt', {
-      type: 'DateTime',
-    })
-    t.field('completedAt', {
-      type: 'DateTime',
-    })
+    t.boolean('isCleared')
+    t.nonNull.string('message')
+    t.string('productUrl')
     t.nonNull.field('createdAt', {
       type: 'DateTime',
     })
-    t.nonNull.field('updatedAt', {
-      type: 'DateTime',
-    })
   },
 })
 
-export const createOffer = mutationField('createOffer', {
-  type: 'Offer',
-  args: {
-    input: arg({ type: 'CreateOfferInput' }),
-  },
-  resolve: async (_, { input }, { user }) => {
-    if (!isCreator(user)) throw new ForbiddenError('Not a creator')
-    const now = new Date()
-
-    const offer = await prisma.offer.create({
-      data: {
-        ...input,
-        // iconUrl: `${S3_OFFER_THUMBNAILS_FOLDER}/${Math.ceil(
-        //   Math.random() * 10
-        // )}.png`,
-        status: UNVERIFIED,
-        creator: {
-          connect: { id: user.id },
-        },
-        highestBid: 0,
-        bidCount: 0,
-        createdAt: now,
-        updatedAt: now,
-      },
-    })
-    if (process.env.NODE_ENV === 'production') {
-      await sgMail.send({
-        from: FROM_ADDRESS,
-        to: ['shonum@gmail.com', 'michael@cnotes.co'],
-        subject: `cnotes: ${user.alias} has submitted an offer`,
-        html: `
-          <h1>${user.alias} has submitted an offer:</h1>
-          <p>User ID: ${user.id} </p>
-          <p>Offer ID: ${offer.id} </p>
-          <p>Platform: ${input.platform} </p>
-          <p>Deliverable: ${input.deliverable} </p>
-          <p>Description: ${input.description} </p>
-          <p>${input.specs.map(spec => `${spec.key}: ${spec.value}`)}</p>
-          <hr />
-        `,
-      })
-    }
-
-    // send email
-    return offer
-  },
-})
-
-export const createOfferInput = inputObjectType({
-  name: 'CreateOfferInput',
-  definition(t) {
-    t.nonNull.string('description')
-    t.nonNull.string('iconUrl')
-    t.string('platform')
-    t.string('deliverable')
-    t.field('specs', { type: list('JSON') })
-  },
-})
-
-export const offerWhereUniqueInput = inputObjectType({
-  name: 'OfferWhereUniqueInput',
-  definition(t) {
-    t.id('id')
-  },
-})
-
-export const offerById = queryField('offerById', {
-  type: 'Offer',
-  args: {
-    id: idArg(),
-  },
-  resolve: async (_, { id }) =>
-    prisma.offer.findUnique({ where: { id }, include: { creator: true } }),
-})
-
-export const discoveryOffers = queryField('discoveryOffers', {
+export const myOffers = queryField('myOffers', {
   type: list('Offer'),
-  args: {
-    // after: arg({ type: OfferWhereUniqueInput }),
-    // before: arg({ type: OfferWhereUniqueInput }),
-    // first: intArg(),
-    // last: intArg(),
-    // filtering...
-  },
-  resolve: async (_, __) => {
-    return prisma.offer.findMany({
+  resolve: async (_, __, { user }) => {
+    if (!isBrand(user)) throw new ForbiddenError('Not a brand')
+    const data = await prisma.offer.findMany({
       where: {
-        status: ACTIVE,
-        auctionEndsAt: {
-          gt: new Date(),
-        },
+        brandId: user.id,
       },
       include: {
-        creator: {
-          select: {
-            avatarUrl: true,
-            alias: true,
-            slug: true,
+        listing: {
+          include: {
+            brand: {
+              select: {
+                id: true,
+              },
+            },
+            creator: {
+              select: {
+                alias: true,
+                avatarUrl: true,
+              },
+            },
           },
         },
       },
     })
+
+    return data
   },
 })
 
-export const creatorDashboardOffers = queryField('creatorDashboardOffers', {
+export const updateOffer = mutationField('updateOffer', {
   type: list('Offer'),
-  resolve: async (_, __, { user }) => {
-    if (!isCreator(user)) throw new ForbiddenError('Not a creator')
-    return prisma.offer.findMany({
-      where: {
-        creatorId: user.id,
+  args: {
+    input: arg({ type: 'UpdateOfferInput' }),
+  },
+  resolve: async (ctx, { input }, { user }) => {
+    if (!isBrand(user)) throw new ForbiddenError('Not a brand')
+    const { id, ...data } = input
+    const offer = await prisma.offer.update({
+      data,
+      where: { id },
+    })
+    return offer
+  },
+})
+
+export const placeOffer = mutationField('placeOffer', {
+  type: 'Offer',
+  args: {
+    input: arg({ type: 'PlaceOfferInput' }),
+  },
+  resolve: async (ctx, { input }, { user }) => {
+    if (!isBrand(user)) throw new ForbiddenError('Not a brand')
+    const { listingId, productUrl, message } = input
+    const price = Number(input.price)
+
+    let offer = await prisma.offer.findFirst({
+      where: { brandId: user.id, listingId },
+      include: { listing: true },
+    })
+
+    const now = new Date()
+
+    const historyItem = { price, date: now.toString() } // cant put date obj in json
+
+    const data = {
+      message,
+      productUrl,
+      history: offer ? [...offer.history, historyItem] : [historyItem],
+      updatedAt: now,
+    }
+
+    if (!offer) {
+      offer = await prisma.offer.create({
+        data: {
+          ...data,
+          listingId,
+          isCleared: false,
+          brandId: user.id,
+          createdAt: now,
+        },
+        include: {
+          listing: true,
+        },
+      })
+    } else {
+      await prisma.offer.update({
+        data,
+        where: {
+          id: offer.id,
+        },
+      })
+    }
+
+    await prisma.listing.update({
+      where: { id: offer.listingId },
+      data: {
+        ...(price > offer.listing.highestOffer && { highestOffer: price }),
+        offerCount: {
+          increment: 1,
+        },
+        updatedAt: now,
       },
     })
+
+    // TODO: send email to user
+
+    return offer
+  },
+})
+
+export const placeOfferInput = inputObjectType({
+  name: 'PlaceOfferInput',
+  definition(t) {
+    t.nonNull.string('listingId')
+    t.nonNull.string('price')
+    t.nonNull.string('productUrl')
+    t.string('message')
+  },
+})
+
+export const updateOfferInput = inputObjectType({
+  name: 'UpdateOfferInput',
+  definition(t) {
+    t.string('id')
+    t.boolean('isCleared')
   },
 })

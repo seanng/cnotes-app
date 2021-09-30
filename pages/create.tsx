@@ -3,8 +3,8 @@ import 'react-datepicker/dist/react-datepicker.css'
 import { getUserPayload, isCreator } from 'utils/auth'
 import { redirTo } from 'utils/helpers'
 import { User } from 'shared/types'
-import CreateOfferForm from 'components/templates/CreateOfferForm'
-import CreateOfferSuccess from 'components/templates/CreateOfferSuccess'
+import CreateListingForm from 'components/templates/CreateListingForm'
+import CreateListingSuccess from 'components/templates/CreateListingSuccess'
 import { useState } from 'react'
 
 interface Props {
@@ -13,14 +13,14 @@ interface Props {
 
 const CreatePage: NextPage<Props> = ({ user }: Props) => {
   const [shouldShowSuccess, setShouldShowSuccess] = useState(false)
-  const handleOfferSubmit = (): void => {
+  const handleListingSubmit = (): void => {
     setShouldShowSuccess(true)
   }
   // TODO: handle transitions
   return shouldShowSuccess ? (
-    <CreateOfferSuccess user={user} />
+    <CreateListingSuccess user={user} />
   ) : (
-    <CreateOfferForm onOfferSubmit={handleOfferSubmit} user={user} />
+    <CreateListingForm onListingSubmit={handleListingSubmit} user={user} />
   )
 }
 

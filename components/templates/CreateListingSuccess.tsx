@@ -7,7 +7,7 @@ interface Props {
   user: User
 }
 
-const CreateOfferSuccess: NextPage<Props> = ({ user }: Props) => {
+const CreateListingSuccess: NextPage<Props> = ({ user }: Props) => {
   return (
     <Layout user={user}>
       <Container py={[16, 20]}>
@@ -22,4 +22,4 @@ const CreateOfferSuccess: NextPage<Props> = ({ user }: Props) => {
   )
 }
 
-export default CreateOfferSuccess
+export default CreateListingSuccess

@@ -13,14 +13,14 @@ import {
 import { NextPage } from 'next'
 import { useQuery, gql } from '@apollo/client'
 import { User } from 'shared/types'
-import BiddingTable from 'components/organisms/BiddingTable'
+import OfferingTable from 'components/organisms/OfferingTable'
 import AwaitingTable from 'components/organisms/AwaitingTable'
 import WonTable from 'components/organisms/WonTable'
 import HistoryTable from 'components/organisms/HistoryTable'
 
 const MY_BIDS = gql`
-  query myBids {
-    myBids {
+  query myOffers {
+    myOffers {
       id
       isCleared
       productUrl
@@ -28,7 +28,7 @@ const MY_BIDS = gql`
         price
       }
       message
-      offer {
+      listing {
         id
         platform
         deliverable
@@ -36,8 +36,8 @@ const MY_BIDS = gql`
         brand {
           id
         }
-        highestBid
-        bidCount
+        highestOffer
+        offerCount
         finalPrice
         deliveryStartsAt
         deliveryEndsAt
@@ -54,8 +54,8 @@ const MY_BIDS = gql`
 
 const tables = [
   {
-    label: 'bidding',
-    Table: BiddingTable,
+    label: 'offering',
+    Table: OfferingTable,
   },
   {
     label: 'awaiting',
@@ -77,14 +77,14 @@ interface Props {
 
 const BrandDashboard: NextPage<Props> = ({ user }: Props) => {
   const [tabIdx, setTabIdx] = useState<number>(0)
-  const [bids, setBids] = useState([])
+  const [offers, setOffers] = useState([])
   const { data, loading } = useQuery(MY_BIDS, {
     // fetchPolicy: 'no-cache',
   })
 
   useEffect(() => {
-    if (data && data.myBids) {
-      setBids(data.myBids)
+    if (data && data.myOffers) {
+      setOffers(data.myOffers)
     }
   }, [data])
 
@@ -120,10 +120,10 @@ const BrandDashboard: NextPage<Props> = ({ user }: Props) => {
               </c.div> */}
             </Flex>
             <TabPanels>
-              {bids &&
+              {offers &&
                 tables.map(({ label, Table }) => (
                   <TabPanel key={label}>
-                    <Table data={bids} user={user} />
+                    <Table data={offers} user={user} />
                   </TabPanel>
                 ))}
             </TabPanels>

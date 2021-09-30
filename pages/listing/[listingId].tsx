@@ -14,12 +14,12 @@ interface Props {
   user: User
 }
 
-const OFFER_BY_ID = gql`
-  query offerById($id: ID) {
-    offerById(id: $id) {
+const LISTING_BY_ID = gql`
+  query listingById($id: ID) {
+    listingById(id: $id) {
       id
-      highestBid
-      bidCount
+      highestOffer
+      offerCount
       platform
       deliverable
       description
@@ -42,7 +42,7 @@ const ListingDetailsPage: NextPage<Props> = ({ user }: Props) => {
     query: { listingId },
   } = useRouter()
 
-  const { data, loading } = useQuery(OFFER_BY_ID, {
+  const { data, loading } = useQuery(LISTING_BY_ID, {
     variables: { id: listingId },
   })
 
@@ -56,10 +56,10 @@ const ListingDetailsPage: NextPage<Props> = ({ user }: Props) => {
   }
 
   if (user.role === BRAND) {
-    return <BrandListing user={user} listing={data.offerById} />
+    return <BrandListing user={user} listing={data.listingById} />
   }
 
-  return <CreatorListing user={user} listing={data.offerById} />
+  return <CreatorListing user={user} listing={data.listingById} />
 }
 
 export default ListingDetailsPage

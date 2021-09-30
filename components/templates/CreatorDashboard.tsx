@@ -19,9 +19,9 @@ import { useColors } from 'utils/colors'
 import { useQuery, gql } from '@apollo/client'
 import { getStatusLabel } from 'utils/helpers'
 
-const MY_OFFERS = gql`
-  query creatorDashboardOffers {
-    creatorDashboardOffers {
+const MY_LISTINGS = gql`
+  query creatorDashboardListings {
+    creatorDashboardListings {
       id
       iconUrl
       platform
@@ -30,8 +30,8 @@ const MY_OFFERS = gql`
       brand {
         id
       }
-      highestBid
-      bidCount
+      highestOffer
+      offerCount
       finalPrice
       deliveryStartsAt
       deliveryEndsAt
@@ -46,15 +46,15 @@ interface Props {
 }
 
 const CreatorDashboard: NextPage<Props> = ({ user }: Props) => {
-  const [offers, setOffers] = useState([])
+  const [listings, setListings] = useState([])
   const { gray } = useColors()
-  const { data } = useQuery(MY_OFFERS, {
+  const { data } = useQuery(MY_LISTINGS, {
     fetchPolicy: 'no-cache',
   })
-  console.log('offesr: ', offers)
+  console.log('offesr: ', listings)
   useEffect(() => {
     if (data) {
-      setOffers(data.creatorDashboardOffers)
+      setListings(data.creatorDashboardListings)
     }
   }, [data])
 
@@ -68,8 +68,8 @@ const CreatorDashboard: NextPage<Props> = ({ user }: Props) => {
           </LinkButton>
         </Flex>
         <SimpleGrid columns={[1, null, 2, null, 3]} spacing={7}>
-          {offers.map(offer => (
-            <AspectRatio key={offer.id} ratio={368 / 242}>
+          {listings.map(listing => (
+            <AspectRatio key={listing.id} ratio={368 / 242}>
               <LinkBox
                 borderRadius="lg"
                 bgColor={gray[0]}
@@ -78,10 +78,10 @@ const CreatorDashboard: NextPage<Props> = ({ user }: Props) => {
                 boxShadow="md"
               >
                 <Flex justify="space-between" width="100%" height="100%">
-                  <Box>{getStatusLabel(offer)}</Box>
+                  <Box>{getStatusLabel(listing)}</Box>
                   <Box>yo</Box>
                 </Flex>
-                <NextLink href={`/listing/${offer.id}`} passHref>
+                <NextLink href={`/listing/${listing.id}`} passHref>
                   <LinkOverlay>
                     <AspectRatio
                       ratio={1}
@@ -90,7 +90,7 @@ const CreatorDashboard: NextPage<Props> = ({ user }: Props) => {
                       bottom="-45%"
                       left="-25%"
                     >
-                      <Image layout="fill" src={offer.iconUrl} />
+                      <Image layout="fill" src={listing.iconUrl} />
                     </AspectRatio>
                   </LinkOverlay>
                 </NextLink>

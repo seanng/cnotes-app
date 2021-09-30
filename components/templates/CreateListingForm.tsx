@@ -29,14 +29,14 @@ import { ArrowForwardIcon } from '@chakra-ui/icons'
 import IconSelector from 'components/molecules/IconSelector'
 // import DatePicker from 'components/atoms/DatePicker'
 import 'react-datepicker/dist/react-datepicker.css'
-import { S3_OFFER_ICONS_FOLDER } from 'shared/constants'
+import { S3_LISTING_ICONS_FOLDER } from 'shared/constants'
 import { User } from 'shared/types'
 
 const MAX_COL_WIDTH = 600
 
-const CREATE_OFFER = gql`
-  mutation createOffer($input: CreateOfferInput!) {
-    createOffer(input: $input) {
+const CREATE_LISTING = gql`
+  mutation createListing($input: CreateListingInput!) {
+    createListing(input: $input) {
       id
     }
   }
@@ -56,25 +56,28 @@ type OnSubmitProps = {
 
 interface Props {
   user: User
-  onOfferSubmit: () => void
+  onListingSubmit: () => void
 }
 
 const icons = [
-  { label: 'ball', url: `${S3_OFFER_ICONS_FOLDER}/1.png` },
-  { label: 'bar', url: `${S3_OFFER_ICONS_FOLDER}/2.png` },
-  { label: 'bar2', url: `${S3_OFFER_ICONS_FOLDER}/3.png` },
-  { label: 'cone', url: `${S3_OFFER_ICONS_FOLDER}/4.png` },
-  { label: 'cube', url: `${S3_OFFER_ICONS_FOLDER}/5.png` },
-  { label: 'cube2', url: `${S3_OFFER_ICONS_FOLDER}/6.png` },
-  { label: 'cylinder', url: `${S3_OFFER_ICONS_FOLDER}/7.png` },
-  { label: 'donut', url: `${S3_OFFER_ICONS_FOLDER}/8.png` },
-  { label: 'donut2', url: `${S3_OFFER_ICONS_FOLDER}/9.png` },
-  { label: 'tube', url: `${S3_OFFER_ICONS_FOLDER}/10.png` },
+  { label: 'ball', url: `${S3_LISTING_ICONS_FOLDER}/1.png` },
+  { label: 'bar', url: `${S3_LISTING_ICONS_FOLDER}/2.png` },
+  { label: 'bar2', url: `${S3_LISTING_ICONS_FOLDER}/3.png` },
+  { label: 'cone', url: `${S3_LISTING_ICONS_FOLDER}/4.png` },
+  { label: 'cube', url: `${S3_LISTING_ICONS_FOLDER}/5.png` },
+  { label: 'cube2', url: `${S3_LISTING_ICONS_FOLDER}/6.png` },
+  { label: 'cylinder', url: `${S3_LISTING_ICONS_FOLDER}/7.png` },
+  { label: 'donut', url: `${S3_LISTING_ICONS_FOLDER}/8.png` },
+  { label: 'donut2', url: `${S3_LISTING_ICONS_FOLDER}/9.png` },
+  { label: 'tube', url: `${S3_LISTING_ICONS_FOLDER}/10.png` },
 ]
 
-const CreateOfferForm: NextPage<Props> = ({ user, onOfferSubmit }: Props) => {
+const CreateListingForm: NextPage<Props> = ({
+  user,
+  onListingSubmit,
+}: Props) => {
   const [selectedIconIdx, setSelectedIconIdx] = useState(0)
-  const [createOffer] = useMutation(CREATE_OFFER)
+  const [createListing] = useMutation(CREATE_LISTING)
   const {
     handleSubmit,
     register,
@@ -115,10 +118,10 @@ const CreateOfferForm: NextPage<Props> = ({ user, onOfferSubmit }: Props) => {
           value: data.willFollowScript,
         })
 
-      await createOffer({
+      await createListing({
         variables: { input: { ...input, iconUrl: icons[selectedIconIdx].url } },
       })
-      onOfferSubmit()
+      onListingSubmit()
       // submit and then navigate (or render) create success
     } catch (error) {
       console.log('error: ', error)
@@ -132,7 +135,7 @@ const CreateOfferForm: NextPage<Props> = ({ user, onOfferSubmit }: Props) => {
   return (
     <Layout user={user}>
       <Container as="form" py={[16, 20]} onSubmit={handleSubmit(onSubmit)}>
-        <chakra.h2 textStyle="h2" mb={6}>
+        <chakra.h2 textStyle={['h4', 'h2']} mb={6}>
           Create a Sponsorship Listing
         </chakra.h2>
         <Text color={gray[600]} mb={10} maxW={MAX_COL_WIDTH}>
@@ -314,4 +317,4 @@ const CreateOfferForm: NextPage<Props> = ({ user, onOfferSubmit }: Props) => {
   )
 }
 
-export default CreateOfferForm
+export default CreateListingForm
