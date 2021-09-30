@@ -4,7 +4,7 @@ import { CloseIcon, HamburgerIcon, MoonIcon, SunIcon } from '@chakra-ui/icons'
 import LinkButton from 'components/atoms/LinkButton'
 import { User } from 'shared/types'
 import { useState } from 'react'
-import { CREATOR } from 'shared/constants'
+import { BRAND } from 'shared/constants'
 import {
   Box,
   Button,
@@ -101,12 +101,11 @@ function MenuLinks({
         />
         {user ? (
           <>
-            <LinkButton
-              href={user.role === CREATOR ? '/create' : '/discover'}
-              size="sm"
-            >
-              {user.role === CREATOR ? 'Create Offer' : 'Discover'}
-            </LinkButton>
+            {user.role === BRAND && (
+              <LinkButton href="/discover" size="sm">
+                Discover
+              </LinkButton>
+            )}
             <Box display={['none', 'block']}>
               <Popover gutter={16}>
                 <PopoverTrigger>

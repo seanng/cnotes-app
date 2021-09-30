@@ -3,6 +3,8 @@ import Compressor from 'compressorjs'
 import { GetServerSidePropsResult, Redirect } from 'next'
 import S3 from 'lib/s3'
 import { Blob } from 'buffer'
+import { Offer } from 'shared/types'
+import { ACTIVE } from 'shared/constants'
 
 export function getErrorMessage(error: Record<string, any>): string {
   if (error.graphQLErrors) {
@@ -80,3 +82,10 @@ export const compress = (payload: File): Promise<Blob> =>
         error: reject,
       })
   )
+
+export function getStatusLabel(offer: Offer): string {
+  if (offer.status === ACTIVE) {
+    return new Date() < new Date(offer.auctionEndsAt) ? 'Bidding' : 'Select'
+  }
+  return offer.status
+}

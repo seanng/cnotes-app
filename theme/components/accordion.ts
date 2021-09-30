@@ -1,3 +1,5 @@
+import { mode } from '@chakra-ui/theme-tools'
+
 export default {
   baseStyle: {
     container: {
@@ -6,14 +8,14 @@ export default {
         borderBottomWidth: 0,
       },
     },
-    button: {
-      color: 'gray.700',
+    button: props => ({
+      color: mode('gray.700', 'gray.300')(props),
       _hover: {
         bg: 'transparent',
       },
       pb: 7,
       px: 0,
-    },
+    }),
     panel: {
       borderTopWidth: '1px',
       px: 0,

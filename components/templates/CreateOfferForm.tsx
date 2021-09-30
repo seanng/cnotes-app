@@ -72,10 +72,8 @@ const icons = [
   { label: 'tube', url: `${S3_OFFER_ICONS_FOLDER}/10.png` },
 ]
 
-const INITIAL_SLIDE_IDX = Math.random() * 10
-
 const CreateOfferForm: NextPage<Props> = ({ user, onOfferSubmit }: Props) => {
-  const [selectedIconIdx, setSelectedIconIdx] = useState(INITIAL_SLIDE_IDX)
+  const [selectedIconIdx, setSelectedIconIdx] = useState(0)
   const [createOffer] = useMutation(CREATE_OFFER)
   const {
     handleSubmit,
@@ -135,7 +133,7 @@ const CreateOfferForm: NextPage<Props> = ({ user, onOfferSubmit }: Props) => {
     <Layout user={user}>
       <Container as="form" py={[16, 20]} onSubmit={handleSubmit(onSubmit)}>
         <chakra.h2 textStyle="h2" mb={6}>
-          Create an offer
+          Create a Sponsorship Listing
         </chakra.h2>
         <Text color={gray[600]} mb={10} maxW={MAX_COL_WIDTH}>
           Being connected to brands is invite only. Fill out this form to apply
@@ -228,15 +226,11 @@ const CreateOfferForm: NextPage<Props> = ({ user, onOfferSubmit }: Props) => {
             mb={[8, null, 0]}
           >
             <FormLabel>Choose Icon</FormLabel>
-            <IconSelector
-              initialSlideIdx={selectedIconIdx}
-              data={icons}
-              onSelect={handleIconSelect}
-            />
+            <IconSelector data={icons} onSelect={handleIconSelect} />
           </GridItem>
         </Grid>
         {/* advanced options */}
-        <Accordion allowToggle maxW={MAX_COL_WIDTH + 100}>
+        <Accordion allowToggle maxW={MAX_COL_WIDTH + 100} mb={8}>
           <AccordionItem>
             <h2>
               <AccordionButton>
@@ -294,7 +288,7 @@ const CreateOfferForm: NextPage<Props> = ({ user, onOfferSubmit }: Props) => {
                   <option>No</option>
                 </Select>
               </Flex>
-              <Flex mb={8} align="center">
+              <Flex align="center">
                 <Flex direction="column">
                   <Box>Would you follow a script provided by the sponsor?</Box>
                 </Flex>

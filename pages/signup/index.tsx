@@ -13,7 +13,7 @@ import {
 } from '@chakra-ui/react'
 import { GetServerSideProps, NextPage } from 'next'
 import { getUserPayload } from 'utils/auth'
-import { S3_BUCKET_URL } from 'shared/constants'
+import { CLOUDFRONT_URL } from 'shared/constants'
 import { redirTo } from 'utils/helpers'
 import { useColors } from 'utils/colors'
 
@@ -84,12 +84,12 @@ const SignupFoyer: NextPage = () => {
         <Box display={['block', 'flex']} pt={[16, 20]}>
           <LinkCard
             href="/signup/creator"
-            imgSrc={`${S3_BUCKET_URL}/assets/signup-cover-creator.jpg`}
+            imgSrc={`${CLOUDFRONT_URL}/assets/signup-cover-creator.jpg`}
             label="Creator"
           />
           <LinkCard
             href="/signup/brand"
-            imgSrc={`${S3_BUCKET_URL}/assets/signup-cover-brand.jpg`}
+            imgSrc={`${CLOUDFRONT_URL}/assets/signup-cover-brand.jpg`}
             label="Brand"
           />
         </Box>

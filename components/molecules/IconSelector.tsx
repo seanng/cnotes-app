@@ -4,7 +4,6 @@ import { Box, BoxProps } from '@chakra-ui/react'
 
 type Props = {
   onSelect: (idx: number) => void
-  initialSlideIdx: number
   data: {
     label: string
     url: string
@@ -13,7 +12,6 @@ type Props = {
 
 export default function IconSelector({
   onSelect,
-  initialSlideIdx,
   data,
   ...props
 }: Props): JSX.Element {
@@ -24,7 +22,6 @@ export default function IconSelector({
     slidesToScroll: 1,
     lazyLoad: true,
     afterChange: onSelect,
-    initialSlide: initialSlideIdx,
   }
   return (
     <Box as={Slider} mx="25px" {...settings} {...props}>
