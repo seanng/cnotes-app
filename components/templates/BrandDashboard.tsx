@@ -23,11 +23,11 @@ const MY_BIDS = gql`
     myOffers {
       id
       isCleared
-      productUrl
       history {
+        productUrl
         price
+        message
       }
-      message
       listing {
         id
         platform
@@ -38,9 +38,6 @@ const MY_BIDS = gql`
         }
         highestOffer
         offerCount
-        finalPrice
-        deliveryStartsAt
-        deliveryEndsAt
         auctionEndsAt
         creator {
           alias
@@ -123,7 +120,7 @@ const BrandDashboard: NextPage<Props> = ({ user }: Props) => {
               {offers &&
                 tables.map(({ label, Table }) => (
                   <TabPanel key={label}>
-                    <Table data={offers} user={user} />
+                    <Table user={user} />
                   </TabPanel>
                 ))}
             </TabPanels>

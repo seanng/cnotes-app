@@ -71,6 +71,7 @@ export interface OfferHistoryItem {
 export interface Offer {
   id: string
   listing?: Listing
+  brand: User
   productUrl: string
   history: OfferHistoryItem[]
   isCleared: boolean
@@ -79,8 +80,9 @@ export interface Offer {
 export interface Listing {
   id: string
   creator: User
-  status: 'UNVERIFIED' | 'ACTIVE' | 'TRANSACTING' | 'PAYING' | 'COMPLETED'
-  brand: User
+  title: string
+  status: 'UNVERIFIED' | 'ACTIVE' | 'COMPLETED'
+  iconUrl?: string
   brandId?: string
   platform: string
   deliverable: string
@@ -88,10 +90,16 @@ export interface Listing {
   auctionEndsAt: string
   offerCount: number
   highestOffer: number
-  finalPrice: number
-  deliveryStartsAt: string
   deliveryEndsAt: string
   completedAt: string
+  createdAt?: string
+}
+
+export interface Deal {
+  id: string
+  brand: User
+  status: 'SUBMITING' | 'PAYING' | 'COMPLETED'
+  createdAt?: string
 }
 
 export interface Token {

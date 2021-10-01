@@ -17,17 +17,14 @@ import ListingStatusBadge from 'components/atoms/ListingStatusBadge'
 import {
   CREATOR_AVATAR_TEXT_SPACING,
   COMPLETED,
-  PAYING,
+  // PAYING,
 } from 'shared/constants'
 import { MouseEventHandler, FC, useMemo } from 'react'
-import { format } from 'date-fns'
 import { Offer, User } from 'shared/types'
 
 const columns = [
   'Creator',
   'Deliverable',
-  'Listing Size',
-  'Activation Range',
   'Status',
   '', // Mark As Paid Button
 ]
@@ -37,12 +34,12 @@ type Props = {
   user: User
 }
 
-const WonTable: FC<Props> = ({ data, user }: Props) => {
+const WonTable: FC<Props> = ({ data }: Props) => {
   const offers = useMemo(() => {
     return data.filter(
       ({ listing }) =>
-        listing.brand &&
-        listing.brand.id === user.id &&
+        // listing.brand &&
+        // listing.brand.id === user.id &&
         listing.status !== COMPLETED
     )
   }, [data])
@@ -91,25 +88,19 @@ const WonTable: FC<Props> = ({ data, user }: Props) => {
                 <Box textStyle="mini">{listing.platform}</Box>
               </Flex>
             </Td>
-            <Td>${listing.finalPrice}</Td>
-            <Td>{`${format(new Date(listing.deliveryStartsAt), 'P')} - ${format(
-              new Date(listing.deliveryEndsAt),
-              'P'
-            )}`}</Td>
             <Td>
               <ListingStatusBadge status={listing.status} />
             </Td>
             <Td pr={0}>
-              {listing.status === PAYING && (
-                <Button
-                  type="button"
-                  aria-label="Paid"
-                  size="sm"
-                  onClick={handleClick}
-                >
-                  I have paid
-                </Button>
-              )}
+              {/* TODO: change to deal.status === PAYING && */}
+              <Button
+                type="button"
+                aria-label="Paid"
+                size="sm"
+                onClick={handleClick}
+              >
+                I have paid
+              </Button>
             </Td>
           </LinkBox>
         ))}

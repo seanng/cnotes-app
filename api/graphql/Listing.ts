@@ -22,18 +22,11 @@ export const Listing = objectType({
     t.string('platform')
     t.string('deliverable')
     t.nonNull.string('description')
-    t.field('deliveryStartsAt', {
-      type: 'DateTime',
-    })
-    t.field('deliveryEndsAt', {
-      type: 'DateTime',
-    })
     t.field('specs', {
       type: list('JSON'),
     })
     t.int('offerCount')
     t.int('startPrice')
-    t.int('finalPrice')
     t.int('highestOffer')
     t.list.field('offers', {
       type: 'Offer',
@@ -158,7 +151,25 @@ export const listingById = queryField('listingById', {
     id: idArg(),
   },
   resolve: async (_, { id }) =>
-    prisma.listing.findUnique({ where: { id }, include: { creator: true } }),
+    prisma.listing.findUnique({
+      where: { id },
+      include: {
+        creator: true,
+        offers: {
+          select: {
+            history: true,
+            brand: {
+              select: {
+                id: true,
+                slug: true,
+                alias: true,
+                avatarUrl: true,
+              },
+            },
+          },
+        },
+      },
+    }),
 })
 
 export const discoveryListings = queryField('discoveryListings', {
@@ -198,6 +209,18 @@ export const creatorDashboardListings = queryField('creatorDashboardListings', {
     return prisma.listing.findMany({
       where: {
         creatorId: user.id,
+      },
+      include: {
+        offers: {
+          select: {
+            brand: {
+              select: {
+                avatarUrl: true,
+                alias: true,
+              },
+            },
+          },
+        },
       },
     })
   },

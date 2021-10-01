@@ -24,6 +24,7 @@ const breakpoints = createBreakpoints({
 const fonts = {
   heading: 'Anton',
   body: 'Asap',
+  digital: 'Roboto Mono',
 }
 
 const components = {

@@ -26,9 +26,13 @@ export const VERIFIED = 'VERIFIED' // just user status
 
 // listing
 export const ACTIVE = 'ACTIVE'
+export const LISTING = 'LISTING'
+export const SELECTING = 'SELECTING'
 export const TRANSACTING = 'TRANSACTING'
 export const PAYING = 'PAYING'
 export const COMPLETED = 'COMPLETED'
+
+export const SUBMITTING = 'SUBMITTING'
 
 // listing statuses (frontend)
 export const HISTORY = 'HISTORY'

@@ -14,10 +14,11 @@ import {
 import NextLink from 'next/link'
 import CountdownTimer from 'components/atoms/CountdownTimer'
 import { CREATOR_AVATAR_TEXT_SPACING } from 'shared/constants'
-import { FC, useMemo, useState } from 'react'
+import { FC, useState, useEffect } from 'react'
 import OfferInput from 'components/molecules/OfferInput'
 import OfferModal from 'components/molecules/OfferModal'
-import { Offer, User } from 'shared/types'
+import { useQuery, gql } from '@apollo/client'
+import { User, Offer } from 'shared/types'
 import { formatRelative } from 'date-fns'
 
 const columns = [
@@ -30,16 +31,54 @@ const columns = [
 ]
 
 type Props = {
-  data: Offer[]
   user: User
 }
 
-// query the data via apollo?
-const OfferingTable: FC<Props> = ({ data }: Props) => {
+const MY_OFFERS = gql`
+  query myOffers {
+    myOffers {
+      id
+      history {
+        productUrl
+        price
+        message
+      }
+      listing {
+        id
+        platform
+        deliverable
+        status
+        highestOffer
+        offerCount
+        auctionEndsAt
+        creator {
+          alias
+          avatarUrl
+        }
+        completedAt
+      }
+    }
+  }
+`
+
+const OfferingTable: FC<Props> = () => {
   const [modalDefaultValues, setModalDefaultValues] = useState(null)
   const [isModalOpen, setIsModalOpen] = useState(false)
+  const [offers, setOffers] = useState<Offer[]>([])
   const [price, setPrice] = useState(0)
   const [selectedListing, setSelectedListing] = useState(null)
+  const { data, loading } = useQuery(MY_OFFERS, {
+    // fetchPolicy: 'no-cache',
+  })
+
+  useEffect(() => {
+    if (data && data.myOffers) {
+      const sortedOffers = data.myOffers.filter(
+        ({ listing }) => new Date(listing.auctionEndsAt) > now
+      )
+      setOffers(sortedOffers)
+    }
+  }, [data])
 
   const handleOfferEnter =
     offer =>
@@ -47,16 +86,17 @@ const OfferingTable: FC<Props> = ({ data }: Props) => {
       setSelectedListing(offer.listing)
       setPrice(input)
       setModalDefaultValues({
-        message: offer.message,
-        productUrl: offer.productUrl,
+        message: offer.history[offer.history.length - 1].message,
+        productUrl: offer.history[offer.history.length - 1].productUrl,
       })
       setIsModalOpen(true)
     }
 
   const now = new Date()
-  const offers = useMemo(() => {
-    return data.filter(({ listing }) => new Date(listing.auctionEndsAt) > now)
-  }, [data])
+
+  if (loading) {
+    return <div>loading...</div>
+  }
 
   if (!offers || offers.length === 0) {
     return (

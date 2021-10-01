@@ -34,55 +34,61 @@ model User {
   portfolio           Json[] // {url, thumbnailUrl, description, companyName?, companyUrl?, executedAt, deliverable?, platform}
   primaryPlatform     String?
   genre               String?
-  listingsCreated     Listing[] @relation("CreatedListing")
+  listings            Listing[]
   creatorStats        Json? // { platform, viewership, followers, demographic (male, female), lastVerifiedAt, locations[] }
   statsLastVerifiedAt DateTime?
   // brand-speciifc
   offers              Offer[] // brand only. 
-  companyName         String?
-  listingsWon         Listing[] @relation("WonListing")
+  deals               Deal[]
 }
 
 model Listing {
-  id               String    @id @default(dbgenerated()) @map("_id") @db.ObjectId
-  status           String    @default("UNVERIFIED") // UNVERIFIED, ACTIVE (offering + selecting), TRANSACTING, PAYING, COMPLETED 
-  iconUrl          String
-  offers           Offer[]
-  highestOffer     Int?
-  offerCount       Int?
-  startPrice       Int?
-  finalPrice       Int? // the same as listing.brand.offers.history[history.length-1].price. updated on winner select.
-  platform         String?
-  deliverable      String?
-  description      String
-  deliveryStartsAt DateTime?
-  deliveryEndsAt   DateTime?
-  specs            Json[] // { key, value }
-  creator          User      @relation("CreatedListing", fields: [creatorId], references: [id])
-  creatorId        String    @db.ObjectId
-  brand            User?     @relation("WonListing", fields: [brandId], references: [id])
-  brandId          String?   @db.ObjectId
-  auctionEndsAt    DateTime? // date auction ends
-  selectedAt       DateTime? // date creator selected winner
-  transactedAt     DateTime? // date creator submitted 
-  paidAt           DateTime? // date marked as paid
-  completedAt      DateTime? // date marked as complete
-  createdAt        DateTime  @default(now())
-  updatedAt        DateTime  @updatedAt
+  id            String    @id @default(dbgenerated()) @map("_id") @db.ObjectId
+  status        String    @default("UNVERIFIED") // UNVERIFIED, ACTIVE (offering + selecting), COMPLETED
+  iconUrl       String
+  offers        Offer[]
+  deals         Deal[]
+  highestOffer  Int?
+  offerCount    Int?
+  startPrice    Int?
+  platform      String?
+  deliverable   String?
+  description   String
+  specs         Json[] // { key, value }
+  creator       User      @relation(fields: [creatorId], references: [id])
+  creatorId     String    @db.ObjectId
+  auctionEndsAt DateTime? // date auction ends
+  completedAt   DateTime? // date marked as complete
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+}
+
+model Deal {
+  id          String    @id @default(dbgenerated()) @map("_id") @db.ObjectId
+  status      String    @default("SUBMITTING") // SUBMITING, PAYING, COMPLETED 
+  listing     Listing   @relation(fields: [listingId], references: [id])
+  listingId   String    @db.ObjectId
+  brand       User      @relation(fields: [brandId], references: [id])
+  brandId     String    @db.ObjectId
+  price       Int
+  message     String
+  productUrl  String?
+  submittedAt DateTime? // date marked as submitted
+  paidAt      DateTime? // date marked as paid
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
 }
 
 model Offer {
-  id         String   @id @default(dbgenerated()) @map("_id") @db.ObjectId
-  listing    Listing  @relation(fields: [listingId], references: [id])
-  listingId  String   @db.ObjectId
-  brand      User     @relation(fields: [brandId], references: [id])
-  brandId    String   @db.ObjectId
-  productUrl String
-  message    String
-  isCleared  Boolean?
-  history    Json[] // {price, offeredAt} Prisma doesnt support embedded docs https://github.com/prisma/prisma/issues/6708
-  createdAt  DateTime @default(now())
-  updatedAt  DateTime @updatedAt
+  id        String   @id @default(dbgenerated()) @map("_id") @db.ObjectId
+  listing   Listing  @relation(fields: [listingId], references: [id])
+  listingId String   @db.ObjectId
+  brand     User     @relation(fields: [brandId], references: [id])
+  brandId   String   @db.ObjectId
+  isCleared Boolean?
+  history   Json[] // {price, productUrl, message, offeredAt} Prisma doesnt support embedded docs https://github.com/prisma/prisma/issues/6708
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 // model CreatorStats {

@@ -3,8 +3,8 @@ import Compressor from 'compressorjs'
 import { GetServerSidePropsResult, Redirect } from 'next'
 import S3 from 'lib/s3'
 import { Blob } from 'buffer'
-import { Listing } from 'shared/types'
-import { ACTIVE } from 'shared/constants'
+import { Listing, Deal } from 'shared/types'
+import { ACTIVE, SELECTING, LISTING } from 'shared/constants'
 
 export function getErrorMessage(error: Record<string, any>): string {
   if (error.graphQLErrors) {
@@ -83,9 +83,29 @@ export const compress = (payload: File): Promise<Blob> =>
       })
   )
 
-export function getStatusLabel(listing: Listing): string {
-  if (listing.status === ACTIVE) {
-    return new Date() < new Date(listing.auctionEndsAt) ? 'Offering' : 'Select'
+export function getListingOrDealStatus(data: Listing | Deal): string {
+  if (data.status === ACTIVE) {
+    return new Date() < new Date(data.auctionEndsAt) ? LISTING : SELECTING
   }
-  return listing.status
+  return data.status
+}
+
+export const calculateTimeLeft = (
+  start: string | undefined,
+  end: string
+): Record<string, number> => {
+  const startDate = start ? +new Date(start) : +new Date()
+  const difference = +new Date(end) - startDate
+  let timeLeft = {}
+
+  if (difference > 0) {
+    timeLeft = {
+      days: Math.floor(difference / (1000 * 60 * 60 * 24)),
+      hours: Math.floor((difference / (1000 * 60 * 60)) % 24),
+      minutes: Math.floor((difference / 1000 / 60) % 60),
+      seconds: Math.floor((difference / 1000) % 60),
+    }
+  }
+
+  return timeLeft
 }

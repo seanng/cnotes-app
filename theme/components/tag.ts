@@ -5,12 +5,23 @@ export default {
         borderRadius: 'full',
         bgColor: 'black',
         color: 'white',
-        textTransform: 'uppercase',
-        py: 0,
-        minHeight: '15px',
         fontSize: '10px',
-        fontWeight: 600,
       },
+    },
+    card: {
+      container: {
+        borderRadius: 'full',
+        fontSize: '12px',
+      },
+    },
+  },
+  baseStyle: {
+    container: {
+      fontFamily: 'body',
+      fontWeight: 600,
+      minHeight: '15px',
+      textTransform: 'uppercase',
+      py: 0,
     },
   },
 }

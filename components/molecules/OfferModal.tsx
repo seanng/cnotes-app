@@ -25,10 +25,10 @@ const PLACE_BID = gql`
   mutation placeOffer($input: PlaceOfferInput!) {
     placeOffer(input: $input) {
       id
-      message
-      productUrl
       history {
         price
+        message
+        productUrl
       }
       listing {
         id

@@ -6,10 +6,10 @@ export const SignupInput = inputObjectType({
   definition(t) {
     t.nonNull.string('email')
     t.nonNull.string('password')
+    t.nonNull.string('alias')
     t.nonNull.field('role', { type: 'UserRole' })
     t.string('firstName')
     t.string('lastName')
-    t.nullable.string('companyName')
   },
 })
 

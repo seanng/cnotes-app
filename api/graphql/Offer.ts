@@ -15,6 +15,8 @@ export const OfferHistory = objectType({
   definition(t) {
     t.nonNull.int('price')
     t.nonNull.string('date')
+    t.nonNull.string('message')
+    t.string('productUrl')
   },
 })
 
@@ -50,8 +52,6 @@ export const Offer = objectType({
       },
     })
     t.boolean('isCleared')
-    t.nonNull.string('message')
-    t.string('productUrl')
     t.nonNull.field('createdAt', {
       type: 'DateTime',
     })
@@ -122,11 +122,9 @@ export const placeOffer = mutationField('placeOffer', {
 
     const now = new Date()
 
-    const historyItem = { price, date: now.toString() } // cant put date obj in json
+    const historyItem = { price, productUrl, message, date: now.toString() } // cant put date obj in json
 
     const data = {
-      message,
-      productUrl,
       history: offer ? [...offer.history, historyItem] : [historyItem],
       updatedAt: now,
     }

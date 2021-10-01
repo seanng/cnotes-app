@@ -17,13 +17,7 @@ import { format } from 'date-fns'
 import { FC, useMemo } from 'react'
 import { Offer, User } from 'shared/types'
 
-const columns = [
-  'Creator',
-  'Deliverable',
-  'Listing Size',
-  'Activation Range',
-  'Date Completed',
-]
+const columns = ['Creator', 'Deliverable', 'Date Completed']
 
 type Props = {
   user: User
@@ -80,11 +74,6 @@ const HistoryTable: FC<Props> = ({ data, user }: Props) => {
                 <Box textStyle="mini">{listing.platform}</Box>
               </Flex>
             </Td>
-            <Td>${listing.finalPrice}</Td>
-            <Td>{`${format(new Date(listing.deliveryStartsAt), 'P')} - ${format(
-              new Date(listing.deliveryEndsAt),
-              'P'
-            )}`}</Td>
             <Td>{format(new Date(listing.completedAt), 'P')}</Td>
           </LinkBox>
         ))}
