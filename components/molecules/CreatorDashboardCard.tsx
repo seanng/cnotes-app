@@ -17,7 +17,12 @@ import { SUBMITTING, SELECTING, LISTING, PAYING } from 'shared/constants'
 import { useColors } from 'utils/colors'
 import { getListingOrDealStatus } from 'utils/helpers'
 import { memo } from 'react'
-import CountdownTimerLabel from 'components/atoms/CountdownTimerLabel'
+import dynamic from 'next/dynamic'
+
+const CountdownTimerLabel = dynamic(
+  () => import('components/atoms/CountdownTimerLabel'),
+  { ssr: false }
+)
 
 type Props = {
   data:
@@ -31,26 +36,20 @@ const DEAL_TYPE = 'deal'
 const statuses = {
   [SUBMITTING]: {
     text: 'Submitting',
-    bg: 'pink.400',
-    color: 'white',
     type: DEAL_TYPE,
+    isUrgent: true,
   },
   [LISTING]: {
     text: 'Listing',
-    bg: 'yellow.400',
-    color: 'black',
     type: LISTING_TYPE,
   },
   [SELECTING]: {
     text: 'Select Brands',
-    bg: 'pink.400',
-    color: 'white',
     type: LISTING_TYPE,
+    isUrgent: true,
   },
   [PAYING]: {
     text: 'Payment Processing',
-    bg: 'pink.400',
-    color: 'white',
     type: DEAL_TYPE,
   },
 }
@@ -65,21 +64,36 @@ function CreatorDashboardCard({ data }: Props): JSX.Element {
     <AspectRatio ratio={368 / 242}>
       <LinkBox
         borderRadius="xl"
-        bgColor={gray[0]}
-        overflow="hidden"
+        bgColor={status.isUrgent ? 'cyan.500' : gray[0]}
         boxShadow="md"
       >
-        <Flex pt={4} justify="space-between" width="100%" height="100%">
+        <Flex
+          pt={4}
+          justify="space-between"
+          width="100%"
+          height="100%"
+          position="relative"
+          overflow="hidden"
+        >
           <Flex direction="column" justify="space-between">
             {data.auctionEndsAt && (
               <CountdownTimerLabel end={data.auctionEndsAt} />
             )}
             <Box pl={4} position="absolute" top={`${(102 / 242) * 100}%`}>
-              <Text fontSize="20px" fontFamily="anton">
+              <Text
+                fontSize="20px"
+                fontFamily="anton"
+                color={status.isUrgent ? 'gray.900' : gray[900]}
+              >
                 Integration for xxxx
               </Text>
-              <Text textStyle="micro" color={gray[500]} fontWeight={600} mt={1}>
-                {`Posted ${format(new Date(data.createdAt), 'dd MMM')}`}
+              <Text
+                textStyle="micro"
+                color={status.isUrgent ? 'gray.600' : 'gray.500'}
+                fontWeight={600}
+                mt={1}
+              >
+                {`Posted ${format(new Date(data.createdAt), 'dd MMMM')}`}
               </Text>
             </Box>
             {data.offers && (
@@ -96,7 +110,7 @@ function CreatorDashboardCard({ data }: Props): JSX.Element {
                 <Text
                   textStyle="micro"
                   fontWeight={600}
-                  color={gray[500]}
+                  color={status.isUrgent ? 'gray.600' : 'gray.500'}
                   pl={1}
                 >
                   {`🔥 ${data.offers.length} Brands`}
@@ -105,13 +119,14 @@ function CreatorDashboardCard({ data }: Props): JSX.Element {
             )}
           </Flex>
           <Box>
-            <Tag mr={4} variant="card" color={status.color} bgColor={status.bg}>
+            <Tag
+              mr={4}
+              variant="card"
+              color={status.isUrgent ? 'white' : 'black'}
+              bgColor={status.isUrgent ? 'pink.400' : 'yellow.400'}
+            >
               {status.text}
             </Tag>
-          </Box>
-        </Flex>
-        <NextLink href={`/${status.type}/${data.id}`} passHref>
-          <LinkOverlay>
             <AspectRatio
               ratio={1}
               width="67%"
@@ -123,8 +138,22 @@ function CreatorDashboardCard({ data }: Props): JSX.Element {
                 <Image layout="fill" src={data.iconUrl} />
               )}
             </AspectRatio>
-          </LinkOverlay>
+          </Box>
+        </Flex>
+        <NextLink href={`/${status.type}/${data.id}`} passHref>
+          <LinkOverlay />
         </NextLink>
+        {status.isUrgent && (
+          <Box
+            bgColor="pink.500"
+            h={6}
+            w={6}
+            borderRadius="full"
+            position="absolute"
+            right={-2}
+            top={-2}
+          />
+        )}
       </LinkBox>
     </AspectRatio>
   )

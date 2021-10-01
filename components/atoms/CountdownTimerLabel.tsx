@@ -44,7 +44,7 @@ function CountdownTimerLabel({ start, end }: Props): JSX.Element {
       <Box mr={3}>{clockEmoji}</Box>
       <Box>
         <Box
-          color={isWithin24Hours ? 'cyan.500' : 'white'}
+          color={isWithin24Hours && !isCountdownComplete ? 'cyan.500' : 'white'}
           fontFamily="digital"
         >
           {isWithin24Hours ? `${HH}:${MM}:${SS}` : `${DD}:${HH}:${MM}`}
@@ -52,7 +52,9 @@ function CountdownTimerLabel({ start, end }: Props): JSX.Element {
         <Box
           fontSize="8px"
           textStyle="nano"
-          color={isWithin24Hours ? 'cyan.500' : 'gray.200'}
+          color={
+            isWithin24Hours && !isCountdownComplete ? 'cyan.500' : 'gray.200'
+          }
         >
           {!isWithin24Hours && (
             <Box as="span" ml={1} mr={4}>

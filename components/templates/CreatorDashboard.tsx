@@ -6,6 +6,7 @@ import { Text, Flex, Container, SimpleGrid } from '@chakra-ui/react'
 import { useState, useEffect } from 'react'
 import { useQuery, gql } from '@apollo/client'
 import CreatorDashboardCard from 'components/molecules/CreatorDashboardCard'
+// import fakeListings from 'private/listings.json'
 
 const MY_LISTINGS = gql`
   query creatorDashboardListings {
@@ -39,7 +40,6 @@ const CreatorDashboard: NextPage<Props> = ({ user }: Props) => {
   const { data } = useQuery(MY_LISTINGS, {
     fetchPolicy: 'no-cache',
   })
-  // console.log('offesr: ', listings)
   useEffect(() => {
     if (data) {
       setListings(data.creatorDashboardListings)
