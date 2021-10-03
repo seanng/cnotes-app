@@ -2,16 +2,26 @@ import { NextPage } from 'next'
 import LinkButton from 'components/atoms/LinkButton'
 import { User } from 'shared/types'
 import Layout from 'components/organisms/Layout'
-import { Text, Flex, Container, SimpleGrid } from '@chakra-ui/react'
+import {
+  Skeleton,
+  AspectRatio,
+  Text,
+  Flex,
+  Container,
+  SimpleGrid,
+} from '@chakra-ui/react'
 import { useState, useEffect } from 'react'
 import { useQuery, gql } from '@apollo/client'
 import CreatorDashboardCard from 'components/molecules/CreatorDashboardCard'
+import { ACTIVE, COMPLETED } from 'shared/constants'
+import { CARD_ASPECT_RATIO } from 'shared/metrics'
 // import fakeListings from 'private/listings.json'
 
 const MY_LISTINGS = gql`
   query creatorDashboardListings {
     creatorDashboardListings {
       id
+      name
       iconUrl
       platform
       deliverable
@@ -22,8 +32,16 @@ const MY_LISTINGS = gql`
           avatarUrl
         }
       }
+      deals {
+        id
+        status
+        brand {
+          alias
+          avatarUrl
+        }
+        createdAt
+      }
       highestOffer
-      offerCount
       auctionEndsAt
       completedAt
       createdAt
@@ -31,18 +49,45 @@ const MY_LISTINGS = gql`
   }
 `
 
+const LoadingSkeletonCard = () => (
+  <AspectRatio ratio={CARD_ASPECT_RATIO}>
+    <Skeleton borderRadius="xl" />
+  </AspectRatio>
+)
+
 interface Props {
   user: User
 }
 
 const CreatorDashboard: NextPage<Props> = ({ user }: Props) => {
-  const [listings, setListings] = useState([])
+  const [isLoading, setIsLoading] = useState(true)
+  const [cards, setCards] = useState([])
   const { data } = useQuery(MY_LISTINGS, {
     fetchPolicy: 'no-cache',
   })
   useEffect(() => {
     if (data) {
-      setListings(data.creatorDashboardListings)
+      const result = []
+      const listings = data.creatorDashboardListings
+      for (const listing of listings) {
+        if (listing.status === ACTIVE) {
+          result.push(listing)
+        } else {
+          for (const deal of listing.deals) {
+            if (deal.status === COMPLETED) {
+              // dont show completed deals in dashboard... yet...
+              continue
+            }
+            result.push({
+              platform: listing.platform,
+              deliverable: listing.deliverable,
+              ...deal,
+            })
+          }
+        }
+      }
+      setCards(result)
+      setIsLoading(false)
     }
   }, [data])
 
@@ -56,9 +101,17 @@ const CreatorDashboard: NextPage<Props> = ({ user }: Props) => {
           </LinkButton>
         </Flex>
         <SimpleGrid columns={[1, null, 2, null, 3]} spacing={7}>
-          {listings.map(listing => (
-            <CreatorDashboardCard key={listing.id} data={listing} />
-          ))}
+          {isLoading ? (
+            <>
+              <LoadingSkeletonCard />
+              <LoadingSkeletonCard />
+              <LoadingSkeletonCard />
+            </>
+          ) : (
+            cards.map(card => (
+              <CreatorDashboardCard key={card.id} data={card} />
+            ))
+          )}
         </SimpleGrid>
       </Container>
     </Layout>

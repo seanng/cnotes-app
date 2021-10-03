@@ -17,6 +17,7 @@ export const Listing = objectType({
   name: 'Listing',
   definition(t) {
     t.nonNull.id('id')
+    t.nonNull.string('name')
     t.nonNull.string('status')
     t.nonNull.string('iconUrl')
     t.string('platform')
@@ -37,6 +38,15 @@ export const Listing = objectType({
           })
           .offers(),
     })
+    t.list.field('deals', {
+      type: 'Deal',
+      resolve: parent =>
+        prisma.listing
+          .findUnique({
+            where: { id: parent.id },
+          })
+          .deals(),
+    })
     t.nonNull.field('creator', {
       type: 'User',
       resolve: parent =>
@@ -45,15 +55,6 @@ export const Listing = objectType({
             where: { id: parent.id },
           })
           .creator(),
-    })
-    t.field('brand', {
-      type: 'User',
-      resolve: parent =>
-        prisma.listing
-          .findUnique({
-            where: { id: parent.id },
-          })
-          .brand(),
     })
     t.field('auctionEndsAt', {
       type: 'DateTime',
@@ -79,6 +80,24 @@ export const Listing = objectType({
   },
 })
 
+interface PlatformAndDeliverable {
+  platform: string
+  deliverable: string
+}
+
+const fromPlatformAndDeliverableInput = (
+  input: string
+): PlatformAndDeliverable => {
+  if (input === "I'm not sure") {
+    return {
+      deliverable: null,
+      platform: null,
+    }
+  }
+  const [platform, deliverable] = input.toLowerCase().split(' ')
+  return { platform, deliverable }
+}
+
 export const createListing = mutationField('createListing', {
   type: 'Listing',
   args: {
@@ -90,10 +109,10 @@ export const createListing = mutationField('createListing', {
 
     const listing = await prisma.listing.create({
       data: {
-        ...input,
-        // iconUrl: `${S3_LISTING_THUMBNAILS_FOLDER}/${Math.ceil(
-        //   Math.random() * 10
-        // )}.png`,
+        ...fromPlatformAndDeliverableInput(input.platformAndDeliverable),
+        iconUrl: input.iconUrl,
+        description: input.description,
+        name: input.name,
         status: UNVERIFIED,
         creator: {
           connect: { id: user.id },
@@ -132,8 +151,8 @@ export const createListingInput = inputObjectType({
   definition(t) {
     t.nonNull.string('description')
     t.nonNull.string('iconUrl')
-    t.string('platform')
-    t.string('deliverable')
+    t.nonNull.string('name')
+    t.string('platformAndDeliverable')
     t.field('specs', { type: list('JSON') })
   },
 })
@@ -158,6 +177,18 @@ export const listingById = queryField('listingById', {
         offers: {
           select: {
             history: true,
+            brand: {
+              select: {
+                id: true,
+                slug: true,
+                alias: true,
+                avatarUrl: true,
+              },
+            },
+          },
+        },
+        deals: {
+          include: {
             brand: {
               select: {
                 id: true,
@@ -213,6 +244,16 @@ export const creatorDashboardListings = queryField('creatorDashboardListings', {
       include: {
         offers: {
           select: {
+            brand: {
+              select: {
+                avatarUrl: true,
+                alias: true,
+              },
+            },
+          },
+        },
+        deals: {
+          include: {
             brand: {
               select: {
                 avatarUrl: true,

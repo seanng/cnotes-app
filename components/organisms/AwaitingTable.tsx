@@ -43,16 +43,7 @@ type Props = {
   user: User
 }
 
-const getOfferStatus = (offer: Offer, user: User): string => {
-  if (!offer.listing.brand) {
-    return 'SELECTING'
-  } else if (offer.listing.brand.id !== user.id) {
-    return 'LOST'
-  }
-  return 'WON'
-}
-
-const AwaitingTable: FC<Props> = ({ data, user }: Props) => {
+const AwaitingTable: FC<Props> = ({ data }: Props) => {
   const now = new Date()
   const [updateOffer] = useMutation(UPDATE_BID)
 
@@ -64,7 +55,7 @@ const AwaitingTable: FC<Props> = ({ data, user }: Props) => {
       )
       .map(offer => ({
         ...offer,
-        status: getOfferStatus(offer, user),
+        status: offer.listing.status,
       }))
   }, [data])
 
@@ -129,16 +120,16 @@ const AwaitingTable: FC<Props> = ({ data, user }: Props) => {
               <ListingStatusBadge status={status} />
             </Td>
             <Td pl={-2} textAlign="right" maxWidth={50}>
-              {status !== 'SELECTING' && (
-                <IconButton
-                  size="xs"
-                  type="submit"
-                  aria-label="Offer"
-                  colorScheme="red"
-                  onClick={handleClearClick(id)}
-                  icon={<CloseIcon boxSize={2} />}
-                />
-              )}
+              {/* {status !== 'SELECTING' && ( */}
+              <IconButton
+                size="xs"
+                type="submit"
+                aria-label="Offer"
+                colorScheme="red"
+                onClick={handleClearClick(id)}
+                icon={<CloseIcon boxSize={2} />}
+              />
+              {/* )} */}
             </Td>
           </LinkBox>
         ))}

@@ -36,6 +36,7 @@ const components = {
   Accordion,
   Tag,
   Table,
+  Select: Input,
   Tabs,
   Avatar,
 }

@@ -13,9 +13,10 @@ import { isBrand } from 'utils/auth'
 export const OfferHistory = objectType({
   name: 'OfferHistory',
   definition(t) {
-    t.nonNull.int('price')
     t.nonNull.string('date')
     t.nonNull.string('message')
+    t.int('price')
+    t.string('productName')
     t.string('productUrl')
   },
 })
@@ -69,11 +70,6 @@ export const myOffers = queryField('myOffers', {
       include: {
         listing: {
           include: {
-            brand: {
-              select: {
-                id: true,
-              },
-            },
             creator: {
               select: {
                 alias: true,

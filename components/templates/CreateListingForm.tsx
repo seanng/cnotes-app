@@ -20,6 +20,7 @@ import {
 } from '@chakra-ui/react'
 import { useMutation, gql } from '@apollo/client'
 import { useState } from 'react'
+import FormInput from 'components/atoms/FormInput'
 import { NextPage } from 'next'
 import { useColors } from 'utils/colors'
 import Layout from 'components/organisms/Layout'
@@ -153,21 +154,27 @@ const CreateListingForm: NextPage<Props> = ({
           columnGap={10}
         >
           <GridItem colSpan={[1, null, 2]}>
-            <Flex maxW={MAX_COL_WIDTH} mb={10}>
-              <FormControl flex={1} mr={5}>
-                <FormLabel>Platform</FormLabel>
-                <Select {...register('platform')}>
-                  <option value={''}>I&apos;m not sure</option>
-                  <option>YouTube</option>
-                  <option>TikTok</option>
-                </Select>
-              </FormControl>
+            <Flex maxW={MAX_COL_WIDTH} mb={8}>
+              <FormInput
+                flex={1}
+                mr={5}
+                label="Listing Name"
+                error={errors.name}
+                inputProps={{
+                  placeholder: 'eg. My First Integration',
+                  ...register('name', {
+                    required: true,
+                  }),
+                }}
+              />
               <FormControl flex={1}>
                 <FormLabel>Deliverable</FormLabel>
-                <Select {...register('deliverable')}>
+                <Select {...register('platformAndDeliverable')}>
                   <option value={''}>I&apos;m not sure</option>
-                  <option>Integration</option>
-                  <option>Dedicated</option>
+                  <option>YouTube Integration</option>
+                  <option>YouTube Dedicated</option>
+                  <option>TikTok Integration</option>
+                  <option>TikTok Dedicated</option>
                 </Select>
               </FormControl>
             </Flex>
@@ -244,7 +251,7 @@ const CreateListingForm: NextPage<Props> = ({
               </AccordionButton>
             </h2>
             <AccordionPanel textStyle="base">
-              <Flex mb={8}>
+              <Flex mb={6}>
                 <Flex direction="column">
                   <Box mb={1}>Number of Revisions</Box>
                   <Box textStyle="mini" color={gray[600]}>
@@ -260,7 +267,7 @@ const CreateListingForm: NextPage<Props> = ({
                   <option>3</option>
                 </Select>
               </Flex>
-              <Flex mb={8}>
+              <Flex mb={6}>
                 <Flex direction="column">
                   <Box mb={1}>Revision Time</Box>
                   <Box textStyle="mini" color={gray[600]}>
@@ -276,7 +283,7 @@ const CreateListingForm: NextPage<Props> = ({
                   <option value={14}>14 days</option>
                 </Select>
               </Flex>
-              <Flex mb={8}>
+              <Flex mb={6}>
                 <Flex direction="column">
                   <Box mb={1}>Will the media be reusable?</Box>
                   <Box textStyle="mini" color={gray[600]}>

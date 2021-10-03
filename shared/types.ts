@@ -39,8 +39,8 @@ export interface CreatorStats {
 // should match up with publicfields in Auth.ts.
 export interface User {
   id: string
-  role: 'BRAND' | 'CREATOR'
-  status: 'UNVERIFIED' | 'VERIFIED' | 'SUSPENDED'
+  role: 'brand' | 'creator'
+  status: 'unverified' | 'verified' | 'suspended'
   firstName: string
   lastName: string
   alias: string
@@ -80,8 +80,8 @@ export interface Offer {
 export interface Listing {
   id: string
   creator: User
-  title: string
-  status: 'UNVERIFIED' | 'ACTIVE' | 'COMPLETED'
+  name: string
+  status: 'unverified' | 'active' | 'completed'
   iconUrl?: string
   brandId?: string
   platform: string
@@ -98,7 +98,9 @@ export interface Listing {
 export interface Deal {
   id: string
   brand: User
-  status: 'SUBMITING' | 'PAYING' | 'COMPLETED'
+  status: 'submitting' | 'paying' | 'completed'
+  deliverable: string
+  platform: string
   createdAt?: string
 }
 

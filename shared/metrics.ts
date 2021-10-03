@@ -1,3 +1,7 @@
 export const NAVBAR_HEIGHT = 100
 export const PROFILE_BOX_WRAPPER_PADDING = 40
 export const PROFILE_BOX_INNER_WIDTH = 290
+
+const CARD_WIDTH = 368
+export const CARD_HEIGHT = 242
+export const CARD_ASPECT_RATIO = CARD_WIDTH / CARD_HEIGHT
