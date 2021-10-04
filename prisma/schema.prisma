@@ -46,7 +46,7 @@ model Listing {
   id            String    @id @default(dbgenerated()) @map("_id") @db.ObjectId
   status        String    @default("unverified") // unverified, active (offering + selecting), completed
   iconUrl       String
-  name       String
+  name          String
   offers        Offer[]
   deals         Deal[]
   highestOffer  Int?

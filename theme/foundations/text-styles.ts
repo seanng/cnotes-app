@@ -54,7 +54,7 @@ export default {
   small: {
     fontFamily: 'body',
     fontSize: '14px',
-    lineHeight: '24px',
+    lineHeight: '18px',
   },
   mini: {
     fontFamily: 'body',

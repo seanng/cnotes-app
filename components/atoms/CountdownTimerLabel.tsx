@@ -1,15 +1,15 @@
-import { Box, Flex, BoxProps } from '@chakra-ui/react'
+import { Box, Flex, FlexProps } from '@chakra-ui/react'
 import { memo, useEffect, useState } from 'react'
 import { calculateTimeLeft } from 'utils/helpers'
 
-interface Props extends BoxProps {
+interface Props extends FlexProps {
   start?: string
   end: string
 }
 
 const format = num => (num > 9 ? num : `0${num}`)
 
-function CountdownTimerLabel({ start, end }: Props): JSX.Element {
+function CountdownTimerLabel({ start, end, ...props }: Props): JSX.Element {
   const [timeLeft, setTimeLeft] = useState(calculateTimeLeft(start, end))
   const isCountdownComplete = timeLeft.hours === undefined
   const isWithin24Hours = timeLeft.days < 1 || isCountdownComplete
@@ -34,12 +34,13 @@ function CountdownTimerLabel({ start, end }: Props): JSX.Element {
   return (
     <Flex
       align="center"
-      borderRightRadius="full"
       bgColor="gray.800"
+      display="inline-flex"
       fontSize={24}
-      pl={2}
+      pl={4}
       pr={4}
       py={1}
+      {...props}
     >
       <Box mr={3}>{clockEmoji}</Box>
       <Box>

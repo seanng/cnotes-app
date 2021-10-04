@@ -13,11 +13,11 @@ import { isBrand } from 'utils/auth'
 export const OfferHistory = objectType({
   name: 'OfferHistory',
   definition(t) {
-    t.nonNull.string('date')
     t.nonNull.string('message')
     t.int('price')
     t.string('productName')
     t.string('productUrl')
+    t.nonNull.string('createdAtString')
   },
 })
 
@@ -118,7 +118,12 @@ export const placeOffer = mutationField('placeOffer', {
 
     const now = new Date()
 
-    const historyItem = { price, productUrl, message, date: now.toString() } // cant put date obj in json
+    const historyItem = {
+      price,
+      productUrl,
+      message,
+      createdAtString: now.toString(),
+    } // cant put date obj in json
 
     const data = {
       history: offer ? [...offer.history, historyItem] : [historyItem],

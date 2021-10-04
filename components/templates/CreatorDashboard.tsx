@@ -15,7 +15,6 @@ import { useQuery, gql } from '@apollo/client'
 import CreatorDashboardCard from 'components/molecules/CreatorDashboardCard'
 import { ACTIVE, COMPLETED } from 'shared/constants'
 import { CARD_ASPECT_RATIO } from 'shared/metrics'
-// import fakeListings from 'private/listings.json'
 
 const MY_LISTINGS = gql`
   query creatorDashboardListings {

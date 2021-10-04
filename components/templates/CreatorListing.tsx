@@ -3,9 +3,9 @@ import { gql, useQuery } from '@apollo/client'
 import { Listing, User } from 'shared/types'
 import { useEffect, useState } from 'react'
 import Layout from 'components/organisms/Layout'
-import { Box, Container } from '@chakra-ui/react'
+import { Box } from '@chakra-ui/react'
 import { getListingOrDealStatus } from 'utils/helpers'
-import ListingStage from 'components/organisms/ListingStage'
+import OfferStage from 'components/organisms/OfferStage'
 import SelectingStage from 'components/organisms/SelectingStage'
 import { LISTING, SELECTING } from 'shared/constants'
 
@@ -13,6 +13,8 @@ const LISTING_BY_ID = gql`
   query listingById($id: ID) {
     listingById(id: $id) {
       id
+      name
+      iconUrl
       highestOffer
       status
       offerCount
@@ -22,9 +24,9 @@ const LISTING_BY_ID = gql`
         id
         history {
           price
-          date
           message
           productUrl
+          createdAtString
         }
         brand {
           alias
@@ -50,7 +52,7 @@ interface Props {
 }
 
 const stageComponents = {
-  [LISTING]: ListingStage,
+  [LISTING]: OfferStage,
   [SELECTING]: SelectingStage,
 }
 
@@ -85,9 +87,7 @@ const CreatorListing: NextPage<Props> = ({ user, listingId }: Props) => {
 
   return (
     <Layout user={user}>
-      <Container>
-        <Component listing={listing} />
-      </Container>
+      <Component listing={listing} />
     </Layout>
   )
 }

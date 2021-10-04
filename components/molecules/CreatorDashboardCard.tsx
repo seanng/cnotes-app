@@ -76,7 +76,11 @@ function CreatorDashboardCard({ data }: Props): JSX.Element {
           >
             <Flex direction="column" justify="space-between">
               {data.auctionEndsAt && (
-                <CountdownTimerLabel end={data.auctionEndsAt} />
+                <CountdownTimerLabel
+                  pl={2}
+                  borderRightRadius="full"
+                  end={data.auctionEndsAt}
+                />
               )}
               <Box
                 pl={4}
@@ -88,7 +92,7 @@ function CreatorDashboardCard({ data }: Props): JSX.Element {
                   fontFamily="anton"
                   color={status.isUrgent ? 'gray.900' : gray[900]}
                   textTransform="capitalize"
-                  maxWidth="245px"
+                  maxWidth="210px"
                   isTruncated
                 >
                   {status.type === LISTING
