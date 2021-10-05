@@ -7,23 +7,24 @@ import {
   ModalHeader,
   ModalBody,
   ModalFooter,
+  ModalProps,
   Button,
 } from '@chakra-ui/react'
 
 type P = {
   header: string
-  body?: string
-  buttonText: string
+  body?: string | JSX.Element
+  button: string | JSX.Element
   onConfirm?: () => void
   onClose: () => void
   hasCloseButton?: boolean
   isOpen: boolean
-}
+} & Omit<ModalProps, 'children'>
 
 const FeedbackModal: FC<P> = ({
   header,
   body,
-  buttonText,
+  button,
   onConfirm,
   hasCloseButton,
   onClose,
@@ -44,7 +45,11 @@ const FeedbackModal: FC<P> = ({
         {hasCloseButton && <ModalCloseButton />}
         <ModalBody textStyle="base">{body}</ModalBody>
         <ModalFooter>
-          <Button onClick={onConfirm || onClose}>{buttonText}</Button>
+          {typeof button === 'string' ? (
+            <Button onClick={onConfirm || onClose}>{button}</Button>
+          ) : (
+            button
+          )}
         </ModalFooter>
       </ModalContent>
     </Modal>

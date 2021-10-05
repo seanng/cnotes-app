@@ -6,7 +6,7 @@ import Layout from 'components/organisms/Layout'
 import { Box } from '@chakra-ui/react'
 import { getListingOrDealStatus } from 'utils/helpers'
 import OfferStage from 'components/organisms/OfferStage'
-import SelectingStage from 'components/organisms/SelectingStage'
+import SelectStage from 'components/organisms/SelectStage'
 import { LISTING, SELECTING } from 'shared/constants'
 
 const LISTING_BY_ID = gql`
@@ -14,6 +14,7 @@ const LISTING_BY_ID = gql`
     listingById(id: $id) {
       id
       name
+      specs
       iconUrl
       highestOffer
       status
@@ -53,7 +54,7 @@ interface Props {
 
 const stageComponents = {
   [LISTING]: OfferStage,
-  [SELECTING]: SelectingStage,
+  [SELECTING]: SelectStage,
 }
 
 const Loading = () => <Box>Loading</Box>

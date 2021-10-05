@@ -290,7 +290,7 @@ const SettingsPage: NextPage<Props> = ({ user }: Props) => {
             : `There was a problem updating your profile. Please contact michael@cnotes.co.`
         }
         isOpen={isOpen}
-        buttonText={isSuccess ? 'Okay' : 'Close'}
+        button={isSuccess ? 'Okay' : 'Close'}
         onClose={onClose}
         onConfirm={(): void => {
           isSuccess ? router.reload() : onClose()

@@ -117,7 +117,7 @@ const ResetPasswordPage: NextPage = () => {
             ? `You have successfully updated your password.`
             : `The reset password link is either invalid or expired. Please reset your password again.`
         }
-        buttonText={isSuccess ? 'Go to Dashboard' : 'Go to Password Reset'}
+        button={isSuccess ? 'Go to Dashboard' : 'Go to Password Reset'}
         onConfirm={onConfirm}
       />
     </>

@@ -13,11 +13,12 @@ import {
   Box,
 } from '@chakra-ui/react'
 import { Deal, Listing } from 'shared/types'
-import { SUBMITTING, SELECTING, LISTING, PAYING } from 'shared/constants'
+import { LISTING } from 'shared/constants'
 import { useColors } from 'utils/colors'
 import { getListingOrDealStatus } from 'utils/helpers'
 import { memo } from 'react'
 import dynamic from 'next/dynamic'
+import { statuses } from 'utils/configs'
 import { CARD_HEIGHT, CARD_ASPECT_RATIO } from 'shared/metrics'
 
 const CountdownTimerLabel = dynamic(
@@ -27,30 +28,6 @@ const CountdownTimerLabel = dynamic(
 
 type Props = {
   data: (Listing & { brand: never }) | (Listing & Deal)
-}
-
-const LISTING_TYPE = 'listing'
-const DEAL_TYPE = 'deal'
-
-const statuses = {
-  [SUBMITTING]: {
-    text: 'Submitting',
-    type: DEAL_TYPE,
-    isUrgent: true,
-  },
-  [LISTING]: {
-    text: 'Listing',
-    type: LISTING_TYPE,
-  },
-  [SELECTING]: {
-    text: 'Select Brands',
-    type: LISTING_TYPE,
-    isUrgent: true,
-  },
-  [PAYING]: {
-    text: 'Payment Processing',
-    type: DEAL_TYPE,
-  },
 }
 
 function CreatorDashboardCard({ data }: Props): JSX.Element {
@@ -106,11 +83,11 @@ function CreatorDashboardCard({ data }: Props): JSX.Element {
                   mt={1}
                 >
                   {`${
-                    status.type === LISTING_TYPE ? 'Posted' : 'Commenced'
+                    status.type === LISTING ? 'Posted' : 'Commenced'
                   } ${format(new Date(data.createdAt), 'dd MMMM')}`}
                 </Text>
               </Box>
-              {status.type === LISTING_TYPE && (
+              {status.type === LISTING && (
                 <Flex align="center" pb={4} pl={4}>
                   <AvatarGroup spacing={-2} size="sm" max={3}>
                     {data.offers.map(({ brand }) => (
@@ -142,7 +119,7 @@ function CreatorDashboardCard({ data }: Props): JSX.Element {
               >
                 {status.text}
               </Tag>
-              {status.type === LISTING_TYPE ? (
+              {status.type === LISTING ? (
                 // ICON
                 <AspectRatio
                   ratio={1}

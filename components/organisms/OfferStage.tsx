@@ -1,24 +1,11 @@
-import dynamic from 'next/dynamic'
-import Image from 'next/image'
 import { Listing } from 'shared/types'
-import {
-  Container,
-  Avatar,
-  Divider,
-  Center,
-  Text,
-  Box,
-  Tag,
-  Flex,
-} from '@chakra-ui/react'
+import { Container, Text, Box, Flex } from '@chakra-ui/react'
 import { useEffect, useState } from 'react'
+import StageHeading from 'components/molecules/StageHeading'
 import { useColors } from 'utils/colors'
 import { lightFormat, formatDistanceToNowStrict } from 'date-fns'
-
-const CountdownTimerLabel = dynamic(
-  () => import('components/atoms/CountdownTimerLabel'),
-  { ssr: false }
-)
+import { Activity } from 'shared/types'
+import OfferDetailsCard from 'components/molecules/OfferDetailsCard'
 
 type Props = {
   listing: Listing
@@ -74,36 +61,11 @@ export default function OfferStage({ listing }: Props): JSX.Element {
     setTimeline(groupedHistories)
   }, [listing.offers])
 
-  const { gray, cyan } = useColors()
+  const { gray } = useColors()
 
   return (
     <>
-      <Container mt={4} mb={6}>
-        <CountdownTimerLabel
-          borderRadius="full"
-          end={listing.auctionEndsAt}
-          mb={7}
-        />
-        <Flex align="flex-start">
-          <Center bgColor={gray[0]} borderRadius="full" p={4} mr={4}>
-            <Image
-              src={listing.iconUrl}
-              layout="fixed"
-              width={40}
-              height={40}
-            />
-          </Center>
-          <Box>
-            <Tag bgColor="yellow.400" color="black" variant="card">
-              listed
-            </Tag>
-            <Text textStyle="h4" mt={1}>
-              {listing.name}
-            </Text>
-          </Box>
-        </Flex>
-      </Container>
-      <Divider />
+      <StageHeading listing={listing} />
       <Container mt={6}>
         <Text textStyle="h4" mb={5}>
           offer activity
@@ -126,7 +88,7 @@ export default function OfferStage({ listing }: Props): JSX.Element {
                 {getDayTitle(new Date(day.activities[0].createdAtString))}
               </Text>
             </Flex>
-            {day.activities.map((activity, i) => (
+            {day.activities.map((activity: Activity, i) => (
               <Box
                 key={activity.idx}
                 ml={2}
@@ -161,31 +123,7 @@ export default function OfferStage({ listing }: Props): JSX.Element {
                     </Text>
                   </Box>
                 </Box>
-                <Flex
-                  borderRadius="xl"
-                  bgColor={gray[0]}
-                  boxShadow="sm"
-                  maxWidth={662}
-                  ml={4}
-                  p={5}
-                >
-                  <Avatar size="xl" src={activity.brand.avatarUrl} mr={5} />
-                  <Box>
-                    <Text textStyle={['base', 'large']} fontWeight={700} mb={2}>
-                      {/* TODO: change to total value */}
-                      {`$${activity.price}`}
-                    </Text>
-                    <Text textStyle={['micro', 'mini']} mb={2}>
-                      {activity.price > 0 && `💰$${activity.price} + `}
-                      <Box as="span" color={cyan[600]}>
-                        🎁WH-1000MX4 Wireless noise cancelling headphones ($200)
-                      </Box>
-                    </Text>
-                    <Text textStyle={['mini', 'small']} color={gray[500]}>
-                      {`"${activity.message}"`}
-                    </Text>
-                  </Box>
-                </Flex>
+                <OfferDetailsCard ml={4} activity={activity} />
               </Box>
             ))}
           </Box>

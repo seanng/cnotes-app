@@ -91,7 +91,7 @@ const ForgotPasswordPage: NextPage = () => {
         isOpen={isModalOpen}
         header="Email Sent!"
         body="Please check your email inbox for password reset instructions."
-        buttonText="Got it!"
+        button="Got it!"
       />
     </>
   )

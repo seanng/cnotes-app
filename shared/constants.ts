@@ -32,6 +32,7 @@ export const TRANSACTING = 'transacting'
 export const PAYING = 'paying'
 export const COMPLETED = 'completed'
 export const SUBMITTING = 'submitting'
+export const DEAL = 'deal'
 
 // listing statuses (frontend)
 export const HISTORY = 'history'
