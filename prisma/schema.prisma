@@ -55,7 +55,7 @@ model Listing {
   platform      String?
   deliverable   String?
   description   String
-  specs         Json[] // { key, value }
+  specs         Json
   creator       User      @relation(fields: [creatorId], references: [id])
   creatorId     String    @db.ObjectId
   auctionEndsAt DateTime? // date auction ends

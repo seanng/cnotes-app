@@ -64,7 +64,8 @@ export interface User {
 }
 
 export interface OfferHistoryItem {
-  offeredAt: Date
+  createdAtString: Date
+  message: string
   price: number
 }
 
@@ -135,3 +136,12 @@ type UserProfile = User & {
 }
 
 export type TransformedProfile = Omit<UserProfile, 'portfoilo'>
+
+export interface Activity {
+  idx: number
+  brand: User
+  isNew: boolean
+  price: number
+  message: string
+  createdAtString: string
+}

@@ -95,29 +95,15 @@ const CreateListingForm: NextPage<Props> = ({
           'canReuse',
           'willFollowScript',
         ]),
-        R.set(R.lensProp('specs'), [])
+        R.set(R.lensProp('specs'), {})
       )(data)
 
-      data.numberOfRevisions &&
-        input.specs.push({
-          key: 'Number of revisions',
-          value: data.numberOfRevisions,
-        })
-      data.revisionDays &&
-        input.specs.push({
-          key: 'Revision days',
-          value: data.revisionDays,
-        })
-      data.canReuse &&
-        input.specs.push({
-          key: 'Reusable?',
-          value: data.canReuse,
-        })
-      data.willFollowScript &&
-        input.specs.push({
-          key: 'Will follow script?',
-          value: data.willFollowScript,
-        })
+      input.specs = {
+        numberOfRevisions: data.numberOfRevisions,
+        revisionDays: data.revisionDays,
+        canReuse: data.canReuse,
+        willFollowScript: data.willFollowScript,
+      }
 
       await createListing({
         variables: { input: { ...input, iconUrl: icons[selectedIconIdx].url } },

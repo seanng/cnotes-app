@@ -7,7 +7,7 @@ import jwt from 'jsonwebtoken'
 import { Token, User } from 'shared/types'
 import { BRAND, CREATOR } from 'shared/constants'
 
-export function serializeCookie(token = '', maxAge = 6 * 60 * 60): string {
+export function serializeCookie(token = '', maxAge = 24 * 60 * 60): string {
   return cookieJS.serialize('token', token, {
     httpOnly: true,
     path: '/',

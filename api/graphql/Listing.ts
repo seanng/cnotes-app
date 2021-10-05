@@ -24,7 +24,7 @@ export const Listing = objectType({
     t.string('deliverable')
     t.nonNull.string('description')
     t.field('specs', {
-      type: list('JSON'),
+      type: 'JSON',
     })
     t.int('offerCount')
     t.int('startPrice')
@@ -110,6 +110,7 @@ export const createListing = mutationField('createListing', {
     const listing = await prisma.listing.create({
       data: {
         ...fromPlatformAndDeliverableInput(input.platformAndDeliverable),
+        specs: input.specs,
         iconUrl: input.iconUrl,
         description: input.description,
         name: input.name,
@@ -135,7 +136,9 @@ export const createListing = mutationField('createListing', {
           <p>Platform: ${input.platform} </p>
           <p>Deliverable: ${input.deliverable} </p>
           <p>Description: ${input.description} </p>
-          <p>${input.specs.map(spec => `${spec.key}: ${spec.value}`)}</p>
+          <p>${Object.entries(input.specs).map(
+            item => `${item[0]}: ${item[1]}`
+          )}</p>
           <hr />
         `,
       })
