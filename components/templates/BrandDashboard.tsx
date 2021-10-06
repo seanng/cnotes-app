@@ -25,7 +25,8 @@ const MY_BIDS = gql`
       isCleared
       history {
         productUrl
-        price
+        cashValue
+        productValue
         message
       }
       listing {
@@ -36,7 +37,7 @@ const MY_BIDS = gql`
         brand {
           id
         }
-        highestOffer
+        highestOfferValue
         offerCount
         auctionEndsAt
         creator {

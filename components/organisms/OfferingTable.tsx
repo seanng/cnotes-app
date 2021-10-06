@@ -40,7 +40,9 @@ const MY_OFFERS = gql`
       id
       history {
         productUrl
-        price
+        productName
+        cashValue
+        productValue
         message
       }
       listing {
@@ -48,7 +50,7 @@ const MY_OFFERS = gql`
         platform
         deliverable
         status
-        highestOffer
+        highestOfferValue
         offerCount
         auctionEndsAt
         creator {
@@ -65,7 +67,7 @@ const OfferingTable: FC<Props> = () => {
   const [modalDefaultValues, setModalDefaultValues] = useState(null)
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [offers, setOffers] = useState<Offer[]>([])
-  const [price, setPrice] = useState(0)
+  const [cashValue, setCashValue] = useState(0)
   const [selectedListing, setSelectedListing] = useState(null)
   const { data, loading } = useQuery(MY_OFFERS, {
     // fetchPolicy: 'no-cache',
@@ -84,7 +86,7 @@ const OfferingTable: FC<Props> = () => {
     offer =>
     ({ input }: { input: number }): void => {
       setSelectedListing(offer.listing)
-      setPrice(input)
+      setCashValue(input)
       setModalDefaultValues({
         message: offer.history[offer.history.length - 1].message,
         productUrl: offer.history[offer.history.length - 1].productUrl,
@@ -117,7 +119,7 @@ const OfferingTable: FC<Props> = () => {
         <Tbody>
           {offers.map(offer => {
             const { listing, history } = offer
-            const currentOfferPrice = history[history.length - 1].price
+            const currentOfferPrice = history[history.length - 1].cashValue
             return (
               <LinkBox as={Tr} key={listing.id}>
                 <Td>
@@ -158,7 +160,7 @@ const OfferingTable: FC<Props> = () => {
                 </Td>
                 <Td>
                   <Flex direction="column">
-                    <Box>${listing.highestOffer.toLocaleString()}</Box>
+                    <Box>${listing.highestOfferValue.toLocaleString()}</Box>
                     <Box textStyle="mini">{listing.offerCount} offers</Box>
                   </Flex>
                 </Td>
@@ -180,7 +182,7 @@ const OfferingTable: FC<Props> = () => {
           setIsModalOpen(false)
         }}
         isOpen={isModalOpen}
-        price={price}
+        cashValue={cashValue}
         defaultValues={modalDefaultValues}
       />
     </>

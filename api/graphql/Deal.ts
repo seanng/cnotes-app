@@ -25,7 +25,8 @@ export const Deal = objectType({
           .brand(),
     })
     t.nonNull.string('message')
-    t.int('price')
+    t.int('cashValue')
+    t.int('productValue')
     t.string('productName')
     t.string('productUrl')
     t.field('submittedAt', {

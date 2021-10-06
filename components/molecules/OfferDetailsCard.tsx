@@ -1,6 +1,7 @@
 import { Avatar, Text, Box, Flex, FlexProps } from '@chakra-ui/react'
 import { useColors } from 'utils/colors'
 import { Activity } from 'shared/types'
+import LinkText from 'components/atoms/LinkText'
 
 type Props = {
   shouldShowViewMore?: boolean
@@ -13,7 +14,7 @@ export default function OfferDetailsCard({
   ...props
 }: Props): JSX.Element {
   const { gray, cyan } = useColors()
-
+  const totalValue = activity.productValue + activity.cashValue
   return (
     <Flex
       borderRadius="xl"
@@ -37,14 +38,27 @@ export default function OfferDetailsCard({
             isTruncated
           >
             {/* TODO: change to total value */}
-            {`$${activity.price} by ${activity.brand.alias}`}
+            {`$${totalValue} by ${activity.brand.alias}`}
           </Text>
-          <Text textStyle={['micro', 'mini']} mb={2} noOfLines={2}>
-            {activity.price > 0 && `💰$${activity.price} + `}
-            <Box as="span" color={cyan[600]}>
-              🎁WH-1000MX4 Wireless noise cancelling headphones ($200)
-            </Box>
-          </Text>
+          <Box textStyle={['micro', 'mini']} mb={2}>
+            {activity.cashValue > 0 && (
+              <Box as="span" mr={3}>
+                💰${activity.cashValue}
+              </Box>
+            )}
+            {activity.productName && (
+              <Box
+                as={activity.productUrl ? LinkText : 'span'}
+                color={cyan[600]}
+                {...(activity.productUrl && {
+                  href: activity.productUrl,
+                  display: 'inline',
+                })}
+              >
+                {`🎁 ${activity.productName} ($${activity.productValue})`}
+              </Box>
+            )}
+          </Box>
           <Text
             textStyle={['mini', 'small']}
             color={gray[500]}

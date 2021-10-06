@@ -114,8 +114,8 @@ const AwaitingTable: FC<Props> = ({ data }: Props) => {
                 <Box textStyle="mini">{listing.platform}</Box>
               </Flex>
             </Td>
-            <Td>${listing.highestOffer.toLocaleString()}</Td>
-            <Td>${history[history.length - 1].price.toLocaleString()}</Td>
+            <Td>${listing.highestOfferValue.toLocaleString()}</Td>
+            <Td>${history[history.length - 1].cashValue.toLocaleString()}</Td>
             <Td>
               <ListingStatusBadge status={status} />
             </Td>

@@ -40,9 +40,9 @@ const MY_LISTINGS = gql`
         }
         createdAt
       }
-      highestOffer
+      highestOfferValue
       auctionEndsAt
-      completedAt
+      decidedAt
       createdAt
     }
   }

@@ -24,7 +24,7 @@ const ListingsQuery = gql`
   query DiscoveryListings {
     discoveryListings {
       id
-      highestOffer
+      highestOfferValue
       offerCount
       platform
       deliverable
@@ -103,7 +103,7 @@ const DiscoverPage: NextPage<Props> = ({ user }: Props) => {
                       </Box>
                       <Box>
                         <Box textStyle="xLarge">
-                          ${listing.highestOffer.toLocaleString()}
+                          ${listing.highestOfferValue.toLocaleString()}
                         </Box>
                         <Box textStyle="mini">{listing.offerCount} offers</Box>
                       </Box>

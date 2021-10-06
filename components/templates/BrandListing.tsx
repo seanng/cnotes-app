@@ -9,7 +9,7 @@ const LISTING_BY_ID = gql`
   query listingById($id: ID) {
     listingById(id: $id) {
       id
-      highestOffer
+      highestOfferValue
       offerCount
       platform
       deliverable

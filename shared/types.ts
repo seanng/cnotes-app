@@ -64,25 +64,30 @@ export interface User {
 }
 
 export interface OfferHistoryItem {
-  createdAtString: Date
-  message: string
-  price: number
+  createdAtString?: Date
+  message?: string
+  productValue?: number
+  productName?: string
+  productUrl?: string
+  cashValue?: number
 }
 
 export interface Offer {
   id: string
   listing?: Listing
   brand: User
-  productUrl: string
   history: OfferHistoryItem[]
   isCleared: boolean
 }
+
+export type ListingStatus = 'unverified' | 'active' | 'decided'
+export type DealStatus = 'submitting' | 'paying' | 'completed'
 
 export interface Listing {
   id: string
   creator: User
   name: string
-  status: 'unverified' | 'active' | 'completed'
+  status: ListingStatus
   iconUrl?: string
   brandId?: string
   platform: string
@@ -90,16 +95,22 @@ export interface Listing {
   offers?: Offer[]
   auctionEndsAt: string
   offerCount: number
-  highestOffer: number
+  highestOfferValue: number
+  deals: Deal[]
   deliveryEndsAt: string
-  completedAt: string
+  decidedAt: string
   createdAt?: string
 }
 
 export interface Deal {
   id: string
   brand: User
-  status: 'submitting' | 'paying' | 'completed'
+  status: DealStatus
+  productValue: number
+  productName: string
+  productUrl: string
+  cashValue: number
+  message: string
   deliverable: string
   platform: string
   createdAt?: string
@@ -137,11 +148,8 @@ type UserProfile = User & {
 
 export type TransformedProfile = Omit<UserProfile, 'portfoilo'>
 
-export interface Activity {
+export type Activity = {
   idx: number
   brand: User
   isNew: boolean
-  price: number
-  message: string
-  createdAtString: string
-}
+} & OfferHistoryItem

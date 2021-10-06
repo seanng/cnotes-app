@@ -4,13 +4,15 @@ import prisma from 'lib/prisma'
 import {
   arg,
   inputObjectType,
+  stringArg,
   mutationField,
   objectType,
   queryField,
   list,
   idArg,
 } from 'nexus'
-import { FROM_ADDRESS, ACTIVE, UNVERIFIED } from 'shared/constants'
+import { FROM_ADDRESS, ACTIVE, UNVERIFIED, DECIDED } from 'shared/constants'
+import { SUBMITTING } from 'shared/constants'
 import { isCreator } from 'utils/auth'
 
 export const Listing = objectType({
@@ -27,8 +29,8 @@ export const Listing = objectType({
       type: 'JSON',
     })
     t.int('offerCount')
-    t.int('startPrice')
-    t.int('highestOffer')
+    t.int('minCashValue')
+    t.int('highestOfferValue')
     t.list.field('offers', {
       type: 'Offer',
       resolve: parent =>
@@ -68,7 +70,7 @@ export const Listing = objectType({
     t.field('paidAt', {
       type: 'DateTime',
     })
-    t.field('completedAt', {
+    t.field('decidedAt', {
       type: 'DateTime',
     })
     t.nonNull.field('createdAt', {
@@ -118,7 +120,7 @@ export const createListing = mutationField('createListing', {
         creator: {
           connect: { id: user.id },
         },
-        highestOffer: 0,
+        highestOfferValue: 0,
         offerCount: 0,
         createdAt: now,
         updatedAt: now,
@@ -156,7 +158,7 @@ export const createListingInput = inputObjectType({
     t.nonNull.string('iconUrl')
     t.nonNull.string('name')
     t.string('platformAndDeliverable')
-    t.field('specs', { type: list('JSON') })
+    t.field('specs', { type: 'JSON' })
   },
 })
 
@@ -267,5 +269,50 @@ export const creatorDashboardListings = queryField('creatorDashboardListings', {
         },
       },
     })
+  },
+})
+
+export const completeListing = mutationField('completeListing', {
+  type: 'Listing',
+  args: {
+    id: stringArg(),
+    input: list(arg({ type: 'CreateDealsInput' })),
+  },
+  resolve: async (_, { id, input }, { user }) => {
+    if (!isCreator(user)) throw new ForbiddenError('Not a creator')
+    const now = new Date()
+
+    await prisma.deal.createMany({
+      data: input.map(item => ({
+        ...item,
+        listingId: id,
+        status: SUBMITTING,
+        updatedAt: now,
+        createdAt: now,
+      })),
+    })
+
+    if (process.env.NODE_ENV === 'production') {
+      // TODO: create email chain between brand and creator.
+    }
+
+    const listing = await prisma.listing.update({
+      where: { id },
+      data: { status: DECIDED, decidedAt: now },
+    })
+
+    return listing
+  },
+})
+
+export const createDealsInput = inputObjectType({
+  name: 'CreateDealsInput',
+  definition(t) {
+    t.nonNull.string('brandId')
+    t.int('cashValue')
+    t.int('productValue')
+    t.string('message')
+    t.string('productUrl')
+    t.string('productName')
   },
 })

@@ -1,10 +1,22 @@
 import { Listing } from 'shared/types'
 import StageHeading from 'components/molecules/StageHeading'
-import { Button, Box, Avatar, Container, Flex, Text } from '@chakra-ui/react'
+import { Button, Box, Container, Flex, Text } from '@chakra-ui/react'
 import { useState, useEffect } from 'react'
 import OfferDetailsCard from 'components/molecules/OfferDetailsCard'
 import FeedbackModal from 'components/molecules/FeedbackModal'
+import { useMutation, gql } from '@apollo/client'
 import { useColors } from 'utils/colors'
+import OfferDetailsModal from 'components/molecules/OfferDetailsModal'
+
+const COMPLETE_LISTING = gql`
+  mutation completeListing($id: String!, $input: [CreateDealsInput]!) {
+    completeListing(id: $id, input: $input) {
+      id
+      status
+      decidedAt
+    }
+  }
+`
 
 type Props = {
   listing: Listing
@@ -22,7 +34,8 @@ export default function SelectingStage({ listing }: Props): JSX.Element {
   const [isInfoModalOpen, setIsInfoModalOpen] = useState(false)
   const [isConfirmationModalOpen, setIsConfirmationModalOpen] = useState(false)
   const [selectCount, setSelectCount] = useState(0)
-  const { gray, cyan } = useColors()
+  const { gray } = useColors()
+  const [completeListing] = useMutation(COMPLETE_LISTING)
 
   useEffect(() => {
     const data = listing.offers.map(offer => {
@@ -31,7 +44,10 @@ export default function SelectingStage({ listing }: Props): JSX.Element {
         id: offer.id,
         brand: offer.brand,
         message: finalOffer.message,
-        price: finalOffer.price,
+        cashValue: finalOffer.cashValue,
+        productValue: finalOffer.productValue,
+        productUrl: finalOffer.productUrl,
+        productName: finalOffer.productName,
         isSelected: false,
       }
     })
@@ -68,8 +84,22 @@ export default function SelectingStage({ listing }: Props): JSX.Element {
     setIsInfoModalOpen(false)
   }
 
-  const handleFinalConfirm = () => {
-    console.log('confirm can')
+  const handleFinalConfirm = async () => {
+    const input = offers
+      .filter(({ isSelected }) => isSelected)
+      .map(offer => {
+        return {
+          brandId: offer.brand.id,
+          cashValue: offer.cashValue,
+          productValue: offer.productValue,
+          productName: offer.productName,
+          productUrl: offer.productUrl,
+          message: offer.message,
+        }
+      })
+    await completeListing({
+      variables: { id: listing.id, input },
+    })
   }
 
   return (
@@ -90,7 +120,6 @@ export default function SelectingStage({ listing }: Props): JSX.Element {
             {...(offer.isSelected && { boxShadow: `0 0 0 3px #00C0CC` })}
           />
         ))}
-        {}
       </Container>
       {selectCount > 0 && (
         <Box
@@ -120,42 +149,11 @@ export default function SelectingStage({ listing }: Props): JSX.Element {
         </Box>
       )}
       {/* Info Modal */}
-      <FeedbackModal
+      <OfferDetailsModal
         isOpen={isInfoModalOpen}
-        hasCloseButton
-        closeOnOverlayClick
         onClose={(): void => {
           setIsInfoModalOpen(false)
         }}
-        header="about this offer"
-        body={
-          <Flex direction="column" align="center">
-            <Avatar
-              mt={2}
-              mb={5}
-              size="xl"
-              src={offers[modalOfferIdx]?.brand.avatarUrl}
-            />
-            <Text color={gray[800]} textStyle="large" fontWeight={700} mb={2}>
-              {`$${offers[modalOfferIdx]?.price}`}
-            </Text>
-            <Text textStyle="small" textAlign="center" mb={4}>
-              {offers[modalOfferIdx]?.price > 0 &&
-                `💰 $${offers[modalOfferIdx]?.price} + `}
-              <Box as="span" color={cyan[600]}>
-                🎁 WH-1000MX4 Wireless noise cancelling headphones ($200)
-              </Box>
-            </Text>
-            <Text
-              textStyle={['small', 'base']}
-              color={gray[500]}
-              textAlign="center"
-              mb={4}
-            >
-              {`"${offers[modalOfferIdx]?.message}"`}
-            </Text>
-          </Flex>
-        }
         button={
           <Button onClick={handleModalSelect} isFullWidth>
             {offers[modalOfferIdx]?.isSelected
@@ -163,13 +161,14 @@ export default function SelectingStage({ listing }: Props): JSX.Element {
               : 'Select offer'}
           </Button>
         }
-        variant="new"
+        offer={offers[modalOfferIdx]}
       />
       {/* Confirmation Modal */}
       <FeedbackModal
         isOpen={isConfirmationModalOpen}
         hasCloseButton
         closeOnOverlayClick
+        size="xl"
         onClose={(): void => {
           setIsConfirmationModalOpen(false)
         }}
@@ -177,16 +176,18 @@ export default function SelectingStage({ listing }: Props): JSX.Element {
         body={
           <Flex direction="column" align="center">
             <Text mb={6}>This will start the brand deals</Text>
-            {offers
-              .filter(({ isSelected }) => isSelected)
-              .map(offer => (
-                <OfferDetailsCard
-                  key={offer.id}
-                  activity={offer}
-                  mb={6}
-                  bgColor={gray[50]}
-                />
-              ))}
+            <Box overflowY="scroll" maxHeight="calc(60vh)">
+              {offers
+                .filter(({ isSelected }) => isSelected)
+                .map(offer => (
+                  <OfferDetailsCard
+                    key={offer.id}
+                    activity={offer}
+                    mb={6}
+                    bgColor={gray[50]}
+                  />
+                ))}
+            </Box>
           </Flex>
         }
         button={

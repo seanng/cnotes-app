@@ -12,13 +12,13 @@ import {
   Flex,
   Box,
 } from '@chakra-ui/react'
-import { Deal, Listing } from 'shared/types'
+import { Deal, Listing, DealStatus, ListingStatus } from 'shared/types'
 import { LISTING } from 'shared/constants'
 import { useColors } from 'utils/colors'
 import { getListingOrDealStatus } from 'utils/helpers'
 import { memo } from 'react'
 import dynamic from 'next/dynamic'
-import { statuses } from 'utils/configs'
+import { statusConfigs } from 'utils/configs'
 import { CARD_HEIGHT, CARD_ASPECT_RATIO } from 'shared/metrics'
 
 const CountdownTimerLabel = dynamic(
@@ -26,14 +26,19 @@ const CountdownTimerLabel = dynamic(
   { ssr: false }
 )
 
+interface Data extends Omit<Listing, 'status'>, Omit<Deal, 'status'> {
+  status: DealStatus | ListingStatus
+}
+
 type Props = {
-  data: (Listing & { brand: never }) | (Listing & Deal)
+  data: Data
+  // data: (Listing & { brand: never }) | (Listing & Deal)
 }
 
 function CreatorDashboardCard({ data }: Props): JSX.Element {
   const { gray } = useColors()
-  const statusKey = getListingOrDealStatus(data)
-  const status = statuses[statusKey]
+  const status = getListingOrDealStatus(data)
+  const config = statusConfigs[status]
 
   return (
     <Box position="relative">
@@ -42,7 +47,7 @@ function CreatorDashboardCard({ data }: Props): JSX.Element {
           borderRadius="xl"
           bgColor={gray[0]}
           boxShadow="sm"
-          bgGradient={status.isUrgent ? 'linear(to-r, #33F3FF, #BED8FF)' : null}
+          bgGradient={config.isUrgent ? 'linear(to-r, #33F3FF, #BED8FF)' : null}
         >
           <Flex
             pt={4}
@@ -67,27 +72,27 @@ function CreatorDashboardCard({ data }: Props): JSX.Element {
                 <Text
                   fontSize="20px"
                   fontFamily="anton"
-                  color={status.isUrgent ? 'gray.900' : gray[900]}
+                  color={config.isUrgent ? 'gray.900' : gray[900]}
                   textTransform="capitalize"
                   maxWidth="210px"
                   isTruncated
                 >
-                  {status.type === LISTING
+                  {config.type === LISTING
                     ? data.name
                     : `${data.deliverable} for ${data.brand.alias}`}
                 </Text>
                 <Text
                   textStyle="micro"
-                  color={status.isUrgent ? 'gray.600' : 'gray.500'}
+                  color={config.isUrgent ? 'gray.600' : 'gray.500'}
                   fontWeight={600}
                   mt={1}
                 >
                   {`${
-                    status.type === LISTING ? 'Posted' : 'Commenced'
+                    config.type === LISTING ? 'Posted' : 'Commenced'
                   } ${format(new Date(data.createdAt), 'dd MMMM')}`}
                 </Text>
               </Box>
-              {status.type === LISTING && (
+              {config.type === LISTING && (
                 <Flex align="center" pb={4} pl={4}>
                   <AvatarGroup spacing={-2} size="sm" max={3}>
                     {data.offers.map(({ brand }) => (
@@ -101,7 +106,7 @@ function CreatorDashboardCard({ data }: Props): JSX.Element {
                   <Text
                     textStyle="micro"
                     fontWeight={600}
-                    color={status.isUrgent ? 'gray.600' : 'gray.500'}
+                    color={config.isUrgent ? 'gray.600' : 'gray.500'}
                     pl={1}
                   >
                     {data.offers.length > 1 &&
@@ -113,13 +118,14 @@ function CreatorDashboardCard({ data }: Props): JSX.Element {
             <Box>
               <Tag
                 mr={4}
+                color="black"
+                bgColor="yellow.400"
                 variant="card"
-                color={status.isUrgent ? 'white' : 'black'}
-                bgColor={status.isUrgent ? 'pink.400' : 'yellow.400'}
+                {...config.tagProps}
               >
-                {status.text}
+                {config.text}
               </Tag>
-              {status.type === LISTING ? (
+              {config.type === LISTING ? (
                 // ICON
                 <AspectRatio
                   ratio={1}
@@ -152,12 +158,12 @@ function CreatorDashboardCard({ data }: Props): JSX.Element {
               )}
             </Box>
           </Flex>
-          <NextLink href={`/${status.type}/${data.id}`} passHref>
+          <NextLink href={`/${config.type}/${data.id}`} passHref>
             <LinkOverlay />
           </NextLink>
         </LinkBox>
       </AspectRatio>
-      {status.isUrgent && (
+      {config.isUrgent && (
         <Box
           bgColor="pink.500"
           h={6}

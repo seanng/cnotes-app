@@ -7,7 +7,8 @@ import { Box } from '@chakra-ui/react'
 import { getListingOrDealStatus } from 'utils/helpers'
 import OfferStage from 'components/organisms/OfferStage'
 import SelectStage from 'components/organisms/SelectStage'
-import { LISTING, SELECTING } from 'shared/constants'
+import DecidedStage from 'components/organisms/DecidedStage'
+import { DECIDED, LISTING, SELECTING } from 'shared/constants'
 
 const LISTING_BY_ID = gql`
   query listingById($id: ID) {
@@ -16,20 +17,28 @@ const LISTING_BY_ID = gql`
       name
       specs
       iconUrl
-      highestOffer
+      highestOfferValue
       status
       offerCount
       platform
       deliverable
+      deals {
+        brand {
+          id
+        }
+      }
       offers {
         id
         history {
-          price
+          cashValue
           message
+          productValue
           productUrl
+          productName
           createdAtString
         }
         brand {
+          id
           alias
           avatarUrl
         }
@@ -55,6 +64,7 @@ interface Props {
 const stageComponents = {
   [LISTING]: OfferStage,
   [SELECTING]: SelectStage,
+  [DECIDED]: DecidedStage,
 }
 
 const Loading = () => <Box>Loading</Box>

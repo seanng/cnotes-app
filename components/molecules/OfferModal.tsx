@@ -26,14 +26,15 @@ const PLACE_BID = gql`
     placeOffer(input: $input) {
       id
       history {
-        price
+        cashValue
+        productValue
         message
         productUrl
       }
       listing {
         id
         offerCount
-        highestOffer
+        highestOfferValue
       }
     }
   }
@@ -52,7 +53,7 @@ type DefaultValues = {
 type ModalProps = {
   onClose: () => void
   isOpen: boolean
-  price: number
+  cashValue: number
   listing: Listing
   defaultValues?: DefaultValues
 }
@@ -60,7 +61,7 @@ type ModalProps = {
 const OfferModal: FC<ModalProps> = ({
   onClose,
   isOpen,
-  price,
+  cashValue,
   listing,
   defaultValues = { message: '', productUrl: '' },
 }: ModalProps) => {
@@ -86,7 +87,7 @@ const OfferModal: FC<ModalProps> = ({
         input: {
           ...input,
           listingId: listing.id,
-          price,
+          cashValue,
         },
       },
     })
@@ -110,7 +111,7 @@ const OfferModal: FC<ModalProps> = ({
         {showSuccess ? (
           <>
             <ModalBody textStyle="base" mb={10}>
-              {`You have successfully placed an offer of $${price} for a ${listing.platform} ${listing.deliverable} from ${listing.creator.alias}.`}
+              {`You have successfully placed an offer of $${cashValue} for a ${listing.platform} ${listing.deliverable} from ${listing.creator.alias}.`}
             </ModalBody>
             <ModalFooter>
               <Button onClick={onSuccess}>Close</Button>
@@ -135,7 +136,7 @@ const OfferModal: FC<ModalProps> = ({
               <Flex textStyle="base" fontWeight={700} mb={6}>
                 <Box>Your offer</Box>
                 <Spacer />
-                <Box>{`$${price}`}</Box>
+                <Box>{`$${cashValue}`}</Box>
               </Flex>
               <FormInput
                 label="Link to Product"

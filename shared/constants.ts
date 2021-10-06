@@ -27,6 +27,7 @@ export const VERIFIED = 'verified' // just user status
 // listing
 export const ACTIVE = 'active'
 export const LISTING = 'listing'
+export const DECIDED = 'decided'
 export const SELECTING = 'selecting'
 export const TRANSACTING = 'transacting'
 export const PAYING = 'paying'

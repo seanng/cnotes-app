@@ -43,41 +43,43 @@ model User {
 }
 
 model Listing {
-  id            String    @id @default(dbgenerated()) @map("_id") @db.ObjectId
-  status        String    @default("unverified") // unverified, active (offering + selecting), completed
-  iconUrl       String
-  name          String
-  offers        Offer[]
-  deals         Deal[]
-  highestOffer  Int?
-  offerCount    Int?
-  startPrice    Int?
-  platform      String?
-  deliverable   String?
-  description   String
-  specs         Json
-  creator       User      @relation(fields: [creatorId], references: [id])
-  creatorId     String    @db.ObjectId
-  auctionEndsAt DateTime? // date auction ends
-  completedAt   DateTime? // date marked as complete
-  createdAt     DateTime  @default(now())
-  updatedAt     DateTime  @updatedAt
+  id                String    @id @default(dbgenerated()) @map("_id") @db.ObjectId
+  status            String    @default("unverified") // unverified, active (offering + selecting), decided
+  iconUrl           String
+  name              String
+  offers            Offer[]
+  deals             Deal[]
+  highestOfferValue Int?
+  offerCount        Int?
+  minCashValue      Int?
+  platform          String?
+  deliverable       String?
+  description       String
+  specs             Json
+  creator           User      @relation(fields: [creatorId], references: [id])
+  creatorId         String    @db.ObjectId
+  auctionEndsAt     DateTime? // date auction ends
+  decidedAt         DateTime?
+  createdAt         DateTime  @default(now())
+  updatedAt         DateTime  @updatedAt
 }
 
 model Deal {
-  id          String    @id @default(dbgenerated()) @map("_id") @db.ObjectId
-  status      String    @default("submitting") // submitting, paying, completed
-  listing     Listing   @relation(fields: [listingId], references: [id])
-  listingId   String    @db.ObjectId
-  brand       User      @relation(fields: [brandId], references: [id])
-  brandId     String    @db.ObjectId
-  price       Int
-  message     String
-  productUrl  String?
-  submittedAt DateTime? // date marked as submitted
-  paidAt      DateTime? // date marked as paid
-  createdAt   DateTime  @default(now())
-  updatedAt   DateTime  @updatedAt
+  id           String    @id @default(dbgenerated()) @map("_id") @db.ObjectId
+  status       String    @default("submitting") // submitting, paying, completed
+  listing      Listing   @relation(fields: [listingId], references: [id])
+  listingId    String    @db.ObjectId
+  brand        User      @relation(fields: [brandId], references: [id])
+  brandId      String    @db.ObjectId
+  message      String
+  cashValue    Int
+  productUrl   String?
+  productName  String?
+  productValue Int
+  submittedAt  DateTime? // date marked as submitted
+  paidAt       DateTime? // date marked as paid
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
 }
 
 model Offer {
@@ -87,7 +89,7 @@ model Offer {
   brand     User     @relation(fields: [brandId], references: [id])
   brandId   String   @db.ObjectId
   isCleared Boolean?
-  history   Json[] // {price, productUrl, message, offeredAt} Prisma doesnt support embedded docs https://github.com/prisma/prisma/issues/6708
+  history   Json[] // {cashValue, productUrl, productName, productValue, message, offeredAt} Prisma doesnt support embedded docs https://github.com/prisma/prisma/issues/6708
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }

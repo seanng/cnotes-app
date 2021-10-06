@@ -12,7 +12,7 @@ import Image from 'next/image'
 import { useColors } from 'utils/colors'
 import { getListingOrDealStatus } from 'utils/helpers'
 import { Listing } from 'shared/types'
-import { statuses } from 'utils/configs'
+import { statusConfigs } from 'utils/configs'
 
 const CountdownTimerLabel = dynamic(
   () => import('components/atoms/CountdownTimerLabel'),
@@ -25,8 +25,8 @@ type Props = {
 
 export default function StageHeading({ listing }: Props): JSX.Element {
   const { gray } = useColors()
-  const statusKey = getListingOrDealStatus(listing)
-  const status = statuses[statusKey]
+  const status = getListingOrDealStatus(listing)
+  const config = statusConfigs[status]
 
   return (
     <>
@@ -47,11 +47,12 @@ export default function StageHeading({ listing }: Props): JSX.Element {
           </Center>
           <Box>
             <Tag
-              color={status.isUrgent ? 'white' : 'black'}
-              bgColor={status.isUrgent ? 'pink.400' : 'yellow.400'}
+              color="black"
+              bgColor="yellow.400"
               variant="card"
+              {...config.tagProps}
             >
-              {status.text}
+              {config.text}
             </Tag>
             <Text textStyle="h4" mt={1}>
               {listing.name}
