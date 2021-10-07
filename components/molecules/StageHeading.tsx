@@ -1,18 +1,19 @@
+import NextLink from 'next/link'
 import {
   Container,
-  Center,
   Divider,
   Text,
   Box,
   Tag,
   Flex,
+  IconButton,
 } from '@chakra-ui/react'
 import dynamic from 'next/dynamic'
 import Image from 'next/image'
-import { useColors } from 'utils/colors'
 import { getListingOrDealStatus } from 'utils/helpers'
 import { Deal, User, Listing } from 'shared/types'
 import { statusConfigs } from 'utils/configs'
+import { ArrowBackIcon } from '@chakra-ui/icons'
 
 const CountdownTimerLabel = dynamic(
   () => import('components/atoms/CountdownTimerLabel'),
@@ -30,9 +31,9 @@ type Props = {
 }
 
 export default function StageHeading({ data }: Props): JSX.Element {
-  const { gray } = useColors()
   const status = getListingOrDealStatus(data)
   const config = statusConfigs[status]
+
   const imgSrc = data.iconUrl ? data.iconUrl : data.brand.avatarUrl
   const name = data.name
     ? data.name
@@ -40,19 +41,28 @@ export default function StageHeading({ data }: Props): JSX.Element {
   return (
     <>
       <Container mt={4} mb={[6, 10]}>
-        {config.hasTimer && data.auctionEndsAt && (
-          <CountdownTimerLabel
-            borderRadius="full"
-            end={data.auctionEndsAt}
-            mb={7}
-          />
-        )}
+        <Flex mb={7} align="center">
+          <NextLink href="/dashboard">
+            <IconButton
+              size="lg"
+              fontSize="24px"
+              variant="unstyled"
+              colorScheme="gray"
+              icon={<ArrowBackIcon />}
+              aria-label="back"
+              mr={2}
+            />
+          </NextLink>
+          {config.hasTimer && data.auctionEndsAt && (
+            <CountdownTimerLabel borderRadius="full" end={data.auctionEndsAt} />
+          )}
+        </Flex>
         <Flex align="flex-start">
-          <Center bgColor={gray[0]} borderRadius="full" p={4} mr={4}>
-            {imgSrc && (
-              <Image src={imgSrc} layout="fixed" width={40} height={40} />
-            )}
-          </Center>
+          {imgSrc && (
+            <Box mr={8}>
+              <Image src={imgSrc} layout="fixed" width={70} height={70} />
+            </Box>
+          )}
           <Box>
             <Tag
               color="black"

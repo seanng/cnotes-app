@@ -1,5 +1,13 @@
 import prisma from 'lib/prisma'
-import { idArg, queryField, objectType } from 'nexus'
+import {
+  inputObjectType,
+  mutationField,
+  arg,
+  idArg,
+  queryField,
+  objectType,
+} from 'nexus'
+import { PAYING } from 'shared/constants'
 
 export const Deal = objectType({
   name: 'Deal',
@@ -29,6 +37,7 @@ export const Deal = objectType({
     t.int('productValue')
     t.string('productName')
     t.string('productUrl')
+    t.string('submittedUrl')
     t.field('submittedAt', {
       type: 'DateTime',
     })
@@ -60,4 +69,35 @@ export const dealById = queryField('dealById', {
         },
       },
     }),
+})
+
+export const updateDeal = mutationField('updateDeal', {
+  type: 'Deal',
+  args: {
+    id: idArg(),
+    payload: arg({ type: 'UpdateDealInput' }),
+  },
+  resolve: async (_, { id, payload }) => {
+    const now = new Date()
+
+    const data = {
+      ...payload,
+      ...(payload.submittedUrl && {
+        status: PAYING,
+        submittedAt: now,
+      }),
+      updatedAt: now,
+    }
+    return prisma.deal.update({
+      where: { id },
+      data,
+    })
+  },
+})
+
+export const updateDealInput = inputObjectType({
+  name: 'UpdateDealInput',
+  definition(t) {
+    t.string('submittedUrl')
+  },
 })

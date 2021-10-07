@@ -42,7 +42,7 @@ export default function DecidedStage({ listing }: Props): JSX.Element {
     }
     setSelected(selectedOffers)
     setRejected(rejectedOffers)
-  }, [])
+  }, [listing])
 
   const handleCardClick = data => () => {
     setModalOffer(data)

@@ -4,7 +4,6 @@ import prisma from 'lib/prisma'
 import {
   arg,
   inputObjectType,
-  stringArg,
   mutationField,
   objectType,
   queryField,
@@ -285,7 +284,7 @@ export const creatorDashboardListings = queryField('creatorDashboardListings', {
 export const completeListing = mutationField('completeListing', {
   type: 'Listing',
   args: {
-    id: stringArg(),
+    id: idArg(),
     input: list(arg({ type: 'CreateDealsInput' })),
   },
   resolve: async (_, { id, input }, { user }) => {

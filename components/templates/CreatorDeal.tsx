@@ -1,11 +1,12 @@
 import { gql, useQuery } from '@apollo/client'
 import { useEffect, useState, FC } from 'react'
 import { Deal, User } from 'shared/types'
-import { SUBMITTING } from 'shared/constants'
+import { PAYING, SUBMITTING } from 'shared/constants'
 import Layout from 'components/organisms/Layout'
 import { NextPage } from 'next'
 import SubmittingStage from 'components/organisms/SubmittingStage'
 import { Box } from '@chakra-ui/react'
+import PayingStage from 'components/organisms/PayingStage'
 
 const DEAL_BY_ID = gql`
   query dealById($id: ID) {
@@ -40,6 +41,7 @@ interface Props {
 
 const components = {
   [SUBMITTING]: SubmittingStage,
+  [PAYING]: PayingStage,
 }
 
 const Loading = () => <Box>Loading</Box>

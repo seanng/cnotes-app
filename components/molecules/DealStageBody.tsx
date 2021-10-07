@@ -10,6 +10,8 @@ interface Props {
   children: ReactNode
 }
 
+const CONTAINER_WIDTH = 600
+
 export default function DealStageBody({ deal, children }: Props): JSX.Element {
   const { cyan, gray } = useColors()
   const totalValue = deal.productValue + deal.cashValue
@@ -20,7 +22,13 @@ export default function DealStageBody({ deal, children }: Props): JSX.Element {
         <Text textStyle="h4" mb={5}>
           offer details
         </Text>
-        <Box borderRadius="xl" bgColor={gray[100]} p={5} maxWidth={600} mb={6}>
+        <Box
+          borderRadius="xl"
+          bgColor={gray[100]}
+          p={5}
+          maxWidth={CONTAINER_WIDTH}
+          mb={10}
+        >
           <Text textStyle={['large', 'xLarge']} fontWeight={700} mb={[2, 4]}>
             {`$${totalValue}`}
           </Text>
@@ -69,7 +77,7 @@ export default function DealStageBody({ deal, children }: Props): JSX.Element {
         <Text textStyle="h4" mb={5}>
           submission
         </Text>
-        {children}
+        <Box maxWidth={CONTAINER_WIDTH}>{children}</Box>
       </Container>
     </>
   )

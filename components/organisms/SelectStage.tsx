@@ -9,7 +9,7 @@ import { useColors } from 'utils/colors'
 import OfferDetailsModal from 'components/molecules/OfferDetailsModal'
 
 const COMPLETE_LISTING = gql`
-  mutation completeListing($id: String!, $input: [CreateDealsInput]!) {
+  mutation completeListing($id: ID!, $input: [CreateDealsInput]!) {
     completeListing(id: $id, input: $input) {
       id
       status

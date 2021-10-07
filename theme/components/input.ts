@@ -1,3 +1,5 @@
+import { mode } from '@chakra-ui/theme-tools'
+
 export default {
   sizes: {
     md: {
@@ -22,5 +24,11 @@ export default {
         },
       },
     },
+    new: props => ({
+      field: {
+        borderRadius: 'sm',
+        bgColor: mode('gray.100', 'gray.800')(props),
+      },
+    }),
   },
 }

@@ -121,6 +121,8 @@ export interface Deal {
   cashValue: number
   message: string
   createdAt?: string
+  submittedUrl?: string
+  submittedAt?: string
 }
 
 export interface Token {
