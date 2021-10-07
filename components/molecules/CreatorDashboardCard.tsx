@@ -164,9 +164,10 @@ function CreatorDashboardCard({ data }: Props): JSX.Element {
       </AspectRatio>
       {config.isUrgent && (
         <Box
+          className="animate__animated animate__heartBeat animate__infinite"
           bgColor="pink.500"
-          h={6}
-          w={6}
+          h={4}
+          w={4}
           borderRadius="full"
           position="absolute"
           right={-2}

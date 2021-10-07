@@ -17,6 +17,7 @@ import 'aos/dist/aos.css'
 import 'public/temp/landing-temp.css'
 import 'styles/slick/slick.css'
 import 'styles/slick/slick-theme.css'
+import 'animate.css'
 
 const CrispWithNoSSR = dynamic(() => import('components/atoms/Crisp'), {
   ssr: false,
