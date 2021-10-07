@@ -43,13 +43,6 @@ const LISTING_BY_ID = gql`
           avatarUrl
         }
       }
-      description
-      creator {
-        portfolio
-        alias
-        slug
-        avatarUrl
-      }
       createdAt
       auctionEndsAt
     }

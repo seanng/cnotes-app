@@ -1,5 +1,5 @@
 import prisma from 'lib/prisma'
-import { objectType } from 'nexus'
+import { idArg, queryField, objectType } from 'nexus'
 
 export const Deal = objectType({
   name: 'Deal',
@@ -39,4 +39,25 @@ export const Deal = objectType({
       type: 'DateTime',
     })
   },
+})
+
+export const dealById = queryField('dealById', {
+  type: 'Deal',
+  args: {
+    id: idArg(),
+  },
+  resolve: async (_, { id }) =>
+    prisma.deal.findUnique({
+      where: { id },
+      include: {
+        brand: true,
+        listing: {
+          select: {
+            platform: true,
+            deliverable: true,
+            specs: true,
+          },
+        },
+      },
+    }),
 })

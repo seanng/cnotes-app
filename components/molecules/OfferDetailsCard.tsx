@@ -37,7 +37,6 @@ export default function OfferDetailsCard({
             mb={2}
             isTruncated
           >
-            {/* TODO: change to total value */}
             {`$${totalValue} by ${activity.brand.alias}`}
           </Text>
           <Box textStyle={['micro', 'mini']} mb={2}>

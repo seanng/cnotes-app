@@ -11,7 +11,7 @@ import dynamic from 'next/dynamic'
 import Image from 'next/image'
 import { useColors } from 'utils/colors'
 import { getListingOrDealStatus } from 'utils/helpers'
-import { Listing } from 'shared/types'
+import { Deal, User, Listing } from 'shared/types'
 import { statusConfigs } from 'utils/configs'
 
 const CountdownTimerLabel = dynamic(
@@ -20,30 +20,38 @@ const CountdownTimerLabel = dynamic(
 )
 
 type Props = {
-  listing: Listing
+  data: (Listing | Deal) & {
+    auctionEndsAt?: string
+    iconUrl?: string
+    name?: string
+    brand?: User
+    listing?: Listing
+  }
 }
 
-export default function StageHeading({ listing }: Props): JSX.Element {
+export default function StageHeading({ data }: Props): JSX.Element {
   const { gray } = useColors()
-  const status = getListingOrDealStatus(listing)
+  const status = getListingOrDealStatus(data)
   const config = statusConfigs[status]
-
+  const imgSrc = data.iconUrl ? data.iconUrl : data.brand.avatarUrl
+  const name = data.name
+    ? data.name
+    : `${data.listing.deliverable} for ${data.brand.alias}`
   return (
     <>
       <Container mt={4} mb={[6, 10]}>
-        <CountdownTimerLabel
-          borderRadius="full"
-          end={listing.auctionEndsAt}
-          mb={7}
-        />
+        {config.hasTimer && data.auctionEndsAt && (
+          <CountdownTimerLabel
+            borderRadius="full"
+            end={data.auctionEndsAt}
+            mb={7}
+          />
+        )}
         <Flex align="flex-start">
           <Center bgColor={gray[0]} borderRadius="full" p={4} mr={4}>
-            <Image
-              src={listing.iconUrl}
-              layout="fixed"
-              width={40}
-              height={40}
-            />
+            {imgSrc && (
+              <Image src={imgSrc} layout="fixed" width={40} height={40} />
+            )}
           </Center>
           <Box>
             <Tag
@@ -55,7 +63,7 @@ export default function StageHeading({ listing }: Props): JSX.Element {
               {config.text}
             </Tag>
             <Text textStyle="h4" mt={1}>
-              {listing.name}
+              {name}
             </Text>
           </Box>
         </Flex>

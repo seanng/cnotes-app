@@ -32,7 +32,6 @@ interface Data extends Omit<Listing, 'status'>, Omit<Deal, 'status'> {
 
 type Props = {
   data: Data
-  // data: (Listing & { brand: never }) | (Listing & Deal)
 }
 
 function CreatorDashboardCard({ data }: Props): JSX.Element {

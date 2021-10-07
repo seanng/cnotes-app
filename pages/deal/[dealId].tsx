@@ -1,29 +1,29 @@
 import { useRouter } from 'next/router'
 import { NextPage, GetServerSideProps } from 'next'
-import { BRAND } from 'shared/constants'
+// import { BRAND } from 'shared/constants'
 import { User } from 'shared/types'
 import { getUserPayload } from 'utils/auth'
 import { redirTo } from 'utils/helpers'
-import BrandListing from 'components/templates/BrandListing'
-import CreatorListing from 'components/templates/CreatorListing'
+// import BrandDeal from 'components/templates/BrandDeal'
+import CreatorDeal from 'components/templates/CreatorDeal'
 
 interface Props {
   user: User
 }
 
-const ListingPage: NextPage<Props> = ({ user }: Props) => {
+const DealPage: NextPage<Props> = ({ user }: Props) => {
   const {
-    query: { listingId },
+    query: { dealId },
   } = useRouter()
 
-  if (user.role === BRAND) {
-    return <BrandListing user={user} listingId={listingId as string} />
-  }
+  // if (user.role === BRAND) {
+  //   return <BrandDeal user={user} dealId={dealId as string} />
+  // }
 
-  return <CreatorListing user={user} listingId={listingId as string} />
+  return <CreatorDeal user={user} dealId={dealId as string} />
 }
 
-export default ListingPage
+export default DealPage
 
 export const getServerSideProps: GetServerSideProps = async ctx => {
   const user = getUserPayload(ctx.req.headers.cookie)

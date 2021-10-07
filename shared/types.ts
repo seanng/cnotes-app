@@ -83,6 +83,13 @@ export interface Offer {
 export type ListingStatus = 'unverified' | 'active' | 'decided'
 export type DealStatus = 'submitting' | 'paying' | 'completed'
 
+interface ListingSpecs {
+  canReuse?: boolean
+  numberOfRevisions?: number
+  revisionDays?: number
+  willFollowScript?: boolean
+}
+
 export interface Listing {
   id: string
   creator: User
@@ -96,6 +103,7 @@ export interface Listing {
   auctionEndsAt: string
   offerCount: number
   highestOfferValue: number
+  specs: ListingSpecs
   deals: Deal[]
   deliveryEndsAt: string
   decidedAt: string
@@ -106,13 +114,12 @@ export interface Deal {
   id: string
   brand: User
   status: DealStatus
+  listing?: Listing
   productValue: number
   productName: string
   productUrl: string
   cashValue: number
   message: string
-  deliverable: string
-  platform: string
   createdAt?: string
 }
 

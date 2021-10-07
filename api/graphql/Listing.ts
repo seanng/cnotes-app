@@ -109,10 +109,20 @@ export const createListing = mutationField('createListing', {
     if (!isCreator(user)) throw new ForbiddenError('Not a creator')
     const now = new Date()
 
+    const specs = { ...input.specs }
+
+    Object.keys(specs).map(key => {
+      if (specs[key] === 'Yes') {
+        specs[key] = true
+      } else if (specs[key] === 'No') {
+        specs[key] = false
+      }
+    })
+
     const listing = await prisma.listing.create({
       data: {
         ...fromPlatformAndDeliverableInput(input.platformAndDeliverable),
-        specs: input.specs,
+        specs,
         iconUrl: input.iconUrl,
         description: input.description,
         name: input.name,

@@ -65,7 +65,7 @@ export default function OfferStage({ listing }: Props): JSX.Element {
 
   return (
     <>
-      <StageHeading listing={listing} />
+      <StageHeading data={listing} />
       <Container mt={6}>
         <Text textStyle="h4" mb={5}>
           offer activity

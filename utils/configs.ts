@@ -27,12 +27,14 @@ export const statusConfigs = {
   [LISTING]: {
     text: 'Listing',
     type: LISTING,
+    hasTimer: true,
   },
   [SELECTING]: {
     text: 'Select Offers',
     type: LISTING,
     tagProps: urgentTagProps,
     isUrgent: true,
+    hasTimer: true,
   },
   [DECIDED]: {
     text: 'Offers Selected',

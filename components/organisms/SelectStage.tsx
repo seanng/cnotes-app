@@ -104,7 +104,7 @@ export default function SelectingStage({ listing }: Props): JSX.Element {
 
   return (
     <>
-      <StageHeading listing={listing} />
+      <StageHeading data={listing} />
       <Container mt={[6, 10]} mb={110}>
         <Text textStyle="h4" mb={[5, 8]}>
           select offers
