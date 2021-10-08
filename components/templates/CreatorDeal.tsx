@@ -1,7 +1,8 @@
 import { gql, useQuery } from '@apollo/client'
 import { useEffect, useState, FC } from 'react'
 import { Deal, User } from 'shared/types'
-import { Text, Divider, Skeleton, Container, Box } from '@chakra-ui/react'
+import CreatorListingSkeleton from 'components/molecules/CreatorListingSkeleton'
+import NotFound from 'components/organisms/404'
 import { PAYING, SUBMITTING } from 'shared/constants'
 import Layout from 'components/organisms/Layout'
 import { NextPage } from 'next'
@@ -44,27 +45,8 @@ const components = {
   [PAYING]: PayingStage,
 }
 
-const Loading = () => (
-  <>
-    <Container mt={4} mb={[6, 10]}>
-      <Skeleton w="300px" height="160px" />
-    </Container>
-    <Divider />
-    <Container mt={6}>
-      <Skeleton mb={5} w="150px">
-        <Text textStyle="h4">yo</Text>
-      </Skeleton>
-      <Skeleton pt={5} w="100%" maxWidth="700px" h="149px" />
-      <Skeleton pt={5} w="100%" maxWidth="700px" h="149px" />
-      <Skeleton pt={5} w="100%" maxWidth="700px" h="149px" />
-    </Container>
-  </>
-)
-
-const NotFound = () => <Box>Not Found</Box>
-
 function getComponent(loading, deal: Deal | null): FC<{ deal: Deal }> {
-  if (loading) return Loading
+  if (loading) return CreatorListingSkeleton
   if (!deal || !deal.status) return NotFound
 
   return components[deal.status]
