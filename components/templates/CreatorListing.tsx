@@ -3,7 +3,7 @@ import { gql, useQuery } from '@apollo/client'
 import { Listing, User } from 'shared/types'
 import { useEffect, useState } from 'react'
 import Layout from 'components/organisms/Layout'
-import { Box } from '@chakra-ui/react'
+import { Text, Divider, Skeleton, Container, Box } from '@chakra-ui/react'
 import { getListingOrDealStatus } from 'utils/helpers'
 import OfferStage from 'components/organisms/OfferStage'
 import SelectStage from 'components/organisms/SelectStage'
@@ -60,7 +60,22 @@ const stageComponents = {
   [DECIDED]: DecidedStage,
 }
 
-const Loading = () => <Box>Loading</Box>
+const Loading = () => (
+  <>
+    <Container mt={4} mb={[6, 10]}>
+      <Skeleton w="300px" height="160px" />
+    </Container>
+    <Divider />
+    <Container mt={6}>
+      <Skeleton mb={5} w="150px">
+        <Text textStyle="h4">yo</Text>
+      </Skeleton>
+      <Skeleton pt={5} w="100%" maxWidth="700px" h="149px" />
+      <Skeleton pt={5} w="100%" maxWidth="700px" h="149px" />
+      <Skeleton pt={5} w="100%" maxWidth="700px" h="149px" />
+    </Container>
+  </>
+)
 
 const NotFound = () => <Box>Not Found</Box>
 
