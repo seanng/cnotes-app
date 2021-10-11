@@ -1,7 +1,7 @@
 import { gql } from '@apollo/client'
 import Image from 'next/image'
 import { Box, Center, Flex, Text, Container, Link } from '@chakra-ui/react'
-import { useTransposeColor, useColors } from 'utils/colors'
+import { useColors, useTransposeColor } from 'hooks'
 import IsVerifiedTag from 'components/atoms/IsVerifiedTag'
 import { GetServerSideProps, NextPage } from 'next'
 import Layout from 'components/organisms/Layout'

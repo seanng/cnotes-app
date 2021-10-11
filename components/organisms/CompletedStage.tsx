@@ -2,7 +2,7 @@ import { Text } from '@chakra-ui/react'
 import DealStageBody from 'components/molecules/DealStageBody'
 import { Deal } from 'shared/types'
 import LinkText from 'components/atoms/LinkText'
-import { useColors } from 'utils/colors'
+import { useColors } from 'hooks'
 
 interface Props {
   deal: Deal

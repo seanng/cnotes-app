@@ -3,7 +3,7 @@ import LinkText from 'components/atoms/LinkText'
 import StageHeading from 'components/molecules/StageHeading'
 import { ReactNode } from 'react'
 import { Deal } from 'shared/types'
-import { useColors } from 'utils/colors'
+import { useColors } from 'hooks'
 
 interface Props {
   deal: Deal

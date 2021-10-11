@@ -5,7 +5,7 @@ import { useEffect, useState } from 'react'
 import Layout from 'components/organisms/Layout'
 import CreatorListingSkeleton from 'components/molecules/CreatorListingSkeleton'
 import NotFound from 'components/organisms/404'
-import { getListingOrDealStatus } from 'utils/helpers'
+import { getCreatorListingOrDealStatus } from 'utils/helpers'
 import OfferStage from 'components/organisms/OfferStage'
 import SelectStage from 'components/organisms/SelectStage'
 import DecidedStage from 'components/organisms/DecidedStage'
@@ -68,7 +68,7 @@ function getComponent(
   if (loading) return CreatorListingSkeleton
   if (!listing || !listing.status) return NotFound
 
-  const status = getListingOrDealStatus(listing)
+  const status = getCreatorListingOrDealStatus(listing)
   return stageComponents[status]
 }
 

@@ -14,17 +14,16 @@ import {
 } from '@chakra-ui/react'
 import { Deal, Listing, DealStatus, ListingStatus } from 'shared/types'
 import { LISTING } from 'shared/constants'
-import { useColors } from 'utils/colors'
-import { getListingOrDealStatus } from 'utils/helpers'
+import { useColors } from 'hooks'
+import { getCreatorListingOrDealStatus } from 'utils/helpers'
 import { memo } from 'react'
 import dynamic from 'next/dynamic'
 import { statusConfigs } from 'utils/configs'
 import { CARD_HEIGHT, CARD_ASPECT_RATIO } from 'shared/metrics'
 
-const CountdownTimerLabel = dynamic(
-  () => import('components/atoms/CountdownTimerLabel'),
-  { ssr: false }
-)
+const TimerLabel = dynamic(() => import('components/atoms/TimerLabel'), {
+  ssr: false,
+})
 
 interface Data extends Omit<Listing, 'status'>, Omit<Deal, 'status'> {
   status: DealStatus | ListingStatus
@@ -36,7 +35,7 @@ type Props = {
 
 function CreatorDashboardCard({ data }: Props): JSX.Element {
   const { gray } = useColors()
-  const status = getListingOrDealStatus(data)
+  const status = getCreatorListingOrDealStatus(data)
   const config = statusConfigs[status]
 
   return (
@@ -57,7 +56,7 @@ function CreatorDashboardCard({ data }: Props): JSX.Element {
           >
             <Flex direction="column" justify="space-between">
               {data.auctionEndsAt && (
-                <CountdownTimerLabel
+                <TimerLabel
                   pl={2}
                   borderRightRadius="full"
                   end={data.auctionEndsAt}

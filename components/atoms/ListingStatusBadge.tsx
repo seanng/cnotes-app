@@ -1,25 +1,31 @@
 import { FC } from 'react'
 import { Badge } from '@chakra-ui/react'
+import { ACTIVE, AWAITING } from 'shared/constants'
+// import { useColors } from 'hooks'
 
 type Props = {
   status: string
 }
 
 const ListingStatusBadge: FC<Props> = ({ status }: Props) => {
-  // TODO: (after designer) add 50, 200, 400 etc to colors.ts so colors will show
-  const colors = {
-    WON: 'teal',
-    LOST: 'pink',
-    SELECTING: 'purple',
-    TRANSACTING: 'pink',
-    PAYING: 'pink',
+  // const { cyan, yellow } = useColors()
+  const statusProps = {
+    [ACTIVE]: {
+      color: 'black',
+      bgColor: 'cyan.500',
+    },
+    [AWAITING]: {
+      color: 'black',
+      bgColor: 'yellow.400',
+    },
   }
+
   const display = {
     TRANSACTING: 'DELIVERING',
     PAYING: 'OUTSTANDING',
   }
   return (
-    <Badge colorScheme={colors[status] || 'teal'}>
+    <Badge px={2} borderRadius="full" {...statusProps[status]}>
       {display[status] || status}
     </Badge>
   )

@@ -34,7 +34,6 @@
     "@emotion/styled": "^11",
     "@fontsource/anton": "^4.5.0",
     "@fontsource/asap": "^4.5.0",
-    "@fontsource/poppins": "^4.5.0",
     "@fontsource/roboto-mono": "^4.5.0",
     "@googleapis/youtube": "^2.0.0",
     "@iconify/react": "^3.0.1",

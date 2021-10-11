@@ -12,7 +12,7 @@ import { useRouter } from 'next/router'
 import { GetServerSideProps, NextPage } from 'next'
 import { getUserPayload } from 'utils/auth'
 import NextLink from 'next/link'
-import { useColors } from 'utils/colors'
+import { useColors } from 'hooks'
 
 const Link = c(NextLink)
 

@@ -14,5 +14,19 @@ export default {
         },
       },
     }),
+    new: props => ({
+      tab: {
+        fontWeight: 600,
+        fontSize: '18px',
+        color: mode('gray.500', 'gray.400')(props),
+        borderBottom: '5px solid',
+        borderBottomColor: 'transparent',
+        paddingBottom: 4,
+        _selected: {
+          color: mode('gray.900', 'gray.50')(props),
+          borderBottomColor: 'green.500',
+        },
+      },
+    }),
   },
 }

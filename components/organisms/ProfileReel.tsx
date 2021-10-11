@@ -18,7 +18,7 @@ import { TransformedProfile } from 'shared/types'
 import { TIKTOK } from 'shared/constants'
 import IsVerifiedTag from 'components/atoms/IsVerifiedTag'
 import { Icon as Iconify } from '@iconify/react'
-import { useColors } from 'utils/colors'
+import { useColors } from 'hooks'
 import { formatCountNumber } from 'utils/helpers'
 
 type Props = {

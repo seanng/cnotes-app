@@ -5,7 +5,7 @@ import { useState, useEffect } from 'react'
 import OfferDetailsCard from 'components/molecules/OfferDetailsCard'
 import FeedbackModal from 'components/molecules/FeedbackModal'
 import { useMutation, gql } from '@apollo/client'
-import { useColors } from 'utils/colors'
+import { useColors } from 'hooks'
 import OfferDetailsModal from 'components/molecules/OfferDetailsModal'
 
 const COMPLETE_LISTING = gql`

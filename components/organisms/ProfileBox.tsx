@@ -11,7 +11,7 @@ import {
   FlexProps,
   Text,
 } from '@chakra-ui/react'
-import { useColors } from 'utils/colors'
+import { useColors } from 'hooks'
 import {
   PROFILE_BOX_INNER_WIDTH,
   PROFILE_BOX_WRAPPER_PADDING,

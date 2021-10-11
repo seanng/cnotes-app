@@ -1,4 +1,4 @@
-import { useColors } from 'utils/colors'
+import { useColors } from 'hooks'
 import { Flex, Text, Box, BoxProps } from '@chakra-ui/react'
 import { GenderBreakdown } from 'shared/types'
 

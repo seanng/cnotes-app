@@ -17,6 +17,21 @@ export default {
     },
   },
   variants: {
+    brandDashboard2: props => {
+      return {
+        table: {
+          borderSpacing: '0 5px',
+          borderCollapse: 'separate',
+        },
+        td: {
+          bgColor: mode('#ececec', '#1E1E1E')(props),
+          _last: {
+            bgColor: 'transparent',
+          },
+          mb: 1,
+        },
+      }
+    },
     brandDashboard: props => {
       const darkHoverBg = transparentize(`gray.200`, 0.12)(props.theme)
       return {

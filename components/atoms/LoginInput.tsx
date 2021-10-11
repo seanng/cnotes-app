@@ -5,7 +5,7 @@ import {
   FormErrorMessage,
   FormControl,
 } from '@chakra-ui/react'
-import { useColors } from 'utils/colors'
+import { useColors } from 'hooks'
 
 interface Props extends BoxProps {
   name: string

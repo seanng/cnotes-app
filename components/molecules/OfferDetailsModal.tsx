@@ -1,7 +1,7 @@
 import FeedbackModal, { FeedbackModalProps } from './FeedbackModal'
 import { Text, Avatar, Box, Flex } from '@chakra-ui/react'
 import { OfferHistoryItem, User } from 'shared/types'
-import { useColors } from 'utils/colors'
+import { useColors } from 'hooks'
 
 type Props = {
   offer: {

@@ -8,6 +8,7 @@ import {
   queryField,
   list,
 } from 'nexus'
+import { ACTIVE } from 'shared/constants'
 import { isBrand } from 'utils/auth'
 
 export const OfferHistory = objectType({
@@ -60,13 +61,16 @@ export const Offer = objectType({
   },
 })
 
-export const myOffers = queryField('myOffers', {
+export const myActiveOffers = queryField('myActiveOffers', {
   type: list('Offer'),
   resolve: async (_, __, { user }) => {
     if (!isBrand(user)) throw new ForbiddenError('Not a brand')
     const data = await prisma.offer.findMany({
       where: {
         brandId: user.id,
+        listing: {
+          status: ACTIVE,
+        },
       },
       include: {
         listing: {

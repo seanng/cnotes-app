@@ -124,6 +124,12 @@ export default {
     boxShadow: 'lg',
   },
   sizes: {
+    table: {
+      fontSize: '14px',
+      fontWeight: 600,
+      py: '5px',
+      width: '67px',
+    },
     sm: {
       px: 5,
       height: '40px',

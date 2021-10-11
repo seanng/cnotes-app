@@ -38,6 +38,7 @@ export const DEAL = 'deal'
 // listing statuses (frontend)
 export const HISTORY = 'history'
 export const WON = 'won'
+export const AWAITING = 'awaiting'
 
 export const FROM_ADDRESS = 'no-reply@cnotes.co'
 

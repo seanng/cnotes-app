@@ -15,7 +15,7 @@ import { GetServerSideProps, NextPage } from 'next'
 import { getUserPayload } from 'utils/auth'
 import { CLOUDFRONT_URL } from 'shared/constants'
 import { redirTo } from 'utils/helpers'
-import { useColors } from 'utils/colors'
+import { useColors } from 'hooks'
 
 type LinkCardProps = {
   href: string

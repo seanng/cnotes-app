@@ -1,5 +1,5 @@
 import { Avatar, Text, Box, Flex, FlexProps } from '@chakra-ui/react'
-import { useColors } from 'utils/colors'
+import { useColors } from 'hooks'
 import { Activity } from 'shared/types'
 import LinkText from 'components/atoms/LinkText'
 

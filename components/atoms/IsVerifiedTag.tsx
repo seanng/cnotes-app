@@ -1,6 +1,6 @@
 import { Text, Icon, TextProps } from '@chakra-ui/react'
 import { Icon as Iconify } from '@iconify/react'
-import { useColors } from 'utils/colors'
+import { useColors } from 'hooks'
 
 export default function IsVerifiedTag(props: TextProps): JSX.Element {
   const { green } = useColors()

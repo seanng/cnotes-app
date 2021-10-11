@@ -83,7 +83,7 @@ export const compress = (payload: File): Promise<Blob> =>
       })
   )
 
-export function getListingOrDealStatus(data: Listing | Deal): string {
+export function getCreatorListingOrDealStatus(data: Listing | Deal): string {
   if (data.status === ACTIVE) {
     return new Date() < new Date(data.auctionEndsAt) ? LISTING : SELECTING
   }

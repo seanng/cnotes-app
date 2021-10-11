@@ -46,6 +46,12 @@ export default {
     fontSize: '18px',
     lineHeight: '27px',
   },
+  tdBold: {
+    fontFamily: 'body',
+    fontWeight: 600,
+    fontSize: '18px',
+    lineHeight: '24px',
+  },
   base: {
     fontFamily: 'body',
     fontSize: '16px',
@@ -69,6 +75,12 @@ export default {
     letterSpacing: '5%',
     fontWeight: 500,
     lineHeight: '18px',
+  },
+  tdMicro: {
+    fontFamily: 'body',
+    fontSize: '12px',
+    textTransform: 'uppercase',
+    fontWeight: 600,
   },
   nano: {
     fontFamily: 'body',

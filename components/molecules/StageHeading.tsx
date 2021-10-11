@@ -10,15 +10,14 @@ import {
 } from '@chakra-ui/react'
 import dynamic from 'next/dynamic'
 import Image from 'next/image'
-import { getListingOrDealStatus } from 'utils/helpers'
+import { getCreatorListingOrDealStatus } from 'utils/helpers'
 import { Deal, User, Listing } from 'shared/types'
 import { statusConfigs } from 'utils/configs'
 import { ArrowBackIcon } from '@chakra-ui/icons'
 
-const CountdownTimerLabel = dynamic(
-  () => import('components/atoms/CountdownTimerLabel'),
-  { ssr: false }
-)
+const TimerLabel = dynamic(() => import('components/atoms/TimerLabel'), {
+  ssr: false,
+})
 
 type Props = {
   data: (Listing | Deal) & {
@@ -31,7 +30,7 @@ type Props = {
 }
 
 export default function StageHeading({ data }: Props): JSX.Element {
-  const status = getListingOrDealStatus(data)
+  const status = getCreatorListingOrDealStatus(data)
   const config = statusConfigs[status]
 
   const imgSrc = data.iconUrl ? data.iconUrl : data.brand.avatarUrl
@@ -54,7 +53,7 @@ export default function StageHeading({ data }: Props): JSX.Element {
             />
           </NextLink>
           {config.hasTimer && data.auctionEndsAt && (
-            <CountdownTimerLabel borderRadius="full" end={data.auctionEndsAt} />
+            <TimerLabel borderRadius="full" end={data.auctionEndsAt} />
           )}
         </Flex>
         <Flex align="flex-start">

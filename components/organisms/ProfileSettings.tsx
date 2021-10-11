@@ -14,7 +14,7 @@ import { useRef, FC, ChangeEventHandler } from 'react'
 import { FieldError, UseFormRegister, DeepMap } from 'react-hook-form'
 import { BRAND, URL_REGEX, PLACEHOLDER_BANNER_URL } from 'shared/constants'
 import { SettingsFormFieldValues, User } from 'shared/types'
-import { useColors } from 'utils/colors'
+import { useColors } from 'hooks'
 
 type Props = {
   user: User
