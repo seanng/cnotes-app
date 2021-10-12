@@ -66,7 +66,7 @@ model Listing {
 
 model Deal {
   id           String    @id @default(dbgenerated()) @map("_id") @db.ObjectId
-  status       String    @default("submitting") // submitting, paying, completed
+  status       String    @default("submitting") // submitting, paying, completed, cancelled
   listing      Listing   @relation(fields: [listingId], references: [id])
   listingId    String    @db.ObjectId
   brand        User      @relation(fields: [brandId], references: [id])
@@ -78,6 +78,7 @@ model Deal {
   productValue Int
   submittedUrl String?
   submittedAt  DateTime? // date marked as submitted
+  cancelledAt  DateTime? // date marked as cancelled
   paidAt       DateTime? // date marked as paid
   createdAt    DateTime  @default(now())
   updatedAt    DateTime  @updatedAt

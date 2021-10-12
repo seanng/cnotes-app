@@ -1,3 +1,4 @@
+import { ForbiddenError } from 'apollo-server-micro'
 import prisma from 'lib/prisma'
 import {
   inputObjectType,
@@ -6,8 +7,11 @@ import {
   idArg,
   queryField,
   objectType,
+  list,
+  stringArg,
 } from 'nexus'
-import { PAYING } from 'shared/constants'
+import { PAYING, CANCELLED } from 'shared/constants'
+import { isBrand } from 'utils/auth'
 
 export const Deal = objectType({
   name: 'Deal',
@@ -44,6 +48,9 @@ export const Deal = objectType({
     t.field('paidAt', {
       type: 'DateTime',
     })
+    t.field('cancelledAt', {
+      type: 'DateTime',
+    })
     t.nonNull.field('createdAt', {
       type: 'DateTime',
     })
@@ -69,6 +76,44 @@ export const dealById = queryField('dealById', {
         },
       },
     }),
+})
+
+export const brandDashDeals = queryField('brandDashDeals', {
+  type: list('Deal'),
+  args: {
+    type: stringArg(),
+  },
+  resolve: async (_, { type }, { user }) => {
+    if (!isBrand(user)) throw new ForbiddenError('Not a brand')
+    const data = await prisma.deal.findMany({
+      where: {
+        brandId: user.id,
+        ...(type === CANCELLED
+          ? {
+              status: CANCELLED,
+            }
+          : {
+              NOT: {
+                status: CANCELLED,
+              },
+            }),
+      },
+      include: {
+        listing: {
+          include: {
+            creator: {
+              select: {
+                alias: true,
+                avatarUrl: true,
+                slug: true,
+              },
+            },
+          },
+        },
+      },
+    })
+    return data
+  },
 })
 
 export const updateDeal = mutationField('updateDeal', {

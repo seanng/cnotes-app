@@ -1,71 +1,35 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import Layout from 'components/organisms/Layout'
 import {
   Flex,
   Container,
-  chakra as c,
   Tabs,
+  Text,
   Tab,
+  // Box,
   TabList,
   TabPanels,
   TabPanel,
 } from '@chakra-ui/react'
 import { NextPage } from 'next'
-import { useQuery, gql } from '@apollo/client'
 import { User } from 'shared/types'
-import OfferingTable from 'components/organisms/OfferingTable'
-import AwaitingTable from 'components/organisms/AwaitingTable'
-import WonTable from 'components/organisms/WonTable'
-import HistoryTable from 'components/organisms/HistoryTable'
-
-const MY_BIDS = gql`
-  query myOffers {
-    myOffers {
-      id
-      isCleared
-      history {
-        productUrl
-        cashValue
-        productValue
-        message
-      }
-      listing {
-        id
-        platform
-        deliverable
-        status
-        brand {
-          id
-        }
-        highestOfferValue
-        offerCount
-        auctionEndsAt
-        creator {
-          alias
-          avatarUrl
-        }
-        completedAt
-      }
-    }
-  }
-`
+import OffersTable from 'components/organisms/OffersTable'
+import DealsTable from 'components/organisms/DealsTable'
+import ArchiveTable from 'components/organisms/ArchiveTable'
+import { useColors } from 'hooks'
 
 const tables = [
   {
-    label: 'offering',
-    Table: OfferingTable,
+    label: 'Offers',
+    Table: OffersTable,
   },
   {
-    label: 'awaiting',
-    Table: AwaitingTable,
+    label: 'Deals',
+    Table: DealsTable,
   },
   {
-    label: 'won',
-    Table: WonTable,
-  },
-  {
-    label: 'history',
-    Table: HistoryTable,
+    label: 'Archive',
+    Table: ArchiveTable,
   },
 ]
 
@@ -75,59 +39,48 @@ interface Props {
 
 const BrandDashboard: NextPage<Props> = ({ user }: Props) => {
   const [tabIdx, setTabIdx] = useState<number>(0)
-  const [offers, setOffers] = useState([])
-  const { data, loading } = useQuery(MY_BIDS, {
-    // fetchPolicy: 'no-cache',
-  })
-
-  useEffect(() => {
-    if (data && data.myOffers) {
-      setOffers(data.myOffers)
-    }
-  }, [data])
-
+  const { gray } = useColors()
   const handleTabChange = (i: number): void => {
     setTabIdx(i)
   }
 
   return (
     <Layout user={user}>
-      {loading ? (
-        <div>loading...</div>
-      ) : (
-        <Container overflowX="scroll">
-          <c.h3 textStyle="h3" mt={20} mb={14}>
-            My Deals
-          </c.h3>
-          <Tabs
-            index={tabIdx}
-            variant="pill"
-            size="sm"
-            onChange={handleTabChange}
-            isLazy
-            lazyBehavior="keepMounted"
+      <Container pt={9}>
+        <Text mb={8} textStyle={['h4', 'h2']}>
+          my dashboard
+        </Text>
+        <Tabs
+          index={tabIdx}
+          onChange={handleTabChange}
+          isLazy
+          lazyBehavior="keepMounted"
+          variant="new"
+        >
+          <Flex
+            justify="space-between"
+            align="center"
+            mb={8}
+            borderBottom="1px solid"
+            borderColor={gray[100]}
           >
-            <Flex justify="space-between" align="center" mb={10}>
-              <TabList>
-                {tables.map(({ label }) => (
-                  <Tab key={label}>{label}</Tab>
-                ))}
-              </TabList>
-              {/* <c.div display={['none', 'block']}>
-                dropdown placeholder for tab idx: {tabIdx}
-              </c.div> */}
-            </Flex>
-            <TabPanels>
-              {offers &&
-                tables.map(({ label, Table }) => (
-                  <TabPanel key={label}>
-                    <Table user={user} />
-                  </TabPanel>
-                ))}
-            </TabPanels>
-          </Tabs>
-        </Container>
-      )}
+            <TabList>
+              {tables.map(({ label }, i) => (
+                <Tab ml={i === 0 ? 0 : 12} key={label}>
+                  {label}
+                </Tab>
+              ))}
+            </TabList>
+          </Flex>
+          <TabPanels>
+            {tables.map(({ label, Table }) => (
+              <TabPanel key={label}>
+                <Table />
+              </TabPanel>
+            ))}
+          </TabPanels>
+        </Tabs>
+      </Container>
     </Layout>
   )
 }

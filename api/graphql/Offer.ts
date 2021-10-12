@@ -7,8 +7,9 @@ import {
   objectType,
   queryField,
   list,
+  stringArg,
 } from 'nexus'
-import { ACTIVE } from 'shared/constants'
+import { ACTIVE, DECIDED, REJECTED } from 'shared/constants'
 import { isBrand } from 'utils/auth'
 
 export const OfferHistory = objectType({
@@ -61,17 +62,31 @@ export const Offer = objectType({
   },
 })
 
-export const myActiveOffers = queryField('myActiveOffers', {
+export const brandDashOffers = queryField('brandDashOffers', {
   type: list('Offer'),
-  resolve: async (_, __, { user }) => {
+  args: {
+    type: stringArg(),
+  },
+  resolve: async (_, { type }, { user }) => {
     if (!isBrand(user)) throw new ForbiddenError('Not a brand')
-    const data = await prisma.offer.findMany({
-      where: {
-        brandId: user.id,
-        listing: {
-          status: ACTIVE,
+    const where = { brandId: user.id, listing: {} }
+    if (type === REJECTED) {
+      where.listing = {
+        status: DECIDED,
+        deals: {
+          none: {
+            brandId: user.id,
+          },
         },
-      },
+      }
+    } else if (type === ACTIVE) {
+      where.listing = {
+        status: ACTIVE,
+      }
+    }
+
+    const data = await prisma.offer.findMany({
+      where,
       include: {
         listing: {
           include: {
@@ -79,6 +94,7 @@ export const myActiveOffers = queryField('myActiveOffers', {
               select: {
                 alias: true,
                 avatarUrl: true,
+                slug: true,
               },
             },
           },

@@ -1,6 +1,5 @@
 import { Box, Flex, FlexProps } from '@chakra-ui/react'
 import { memo } from 'react'
-import { useColorModeValue } from '@chakra-ui/react'
 import { useColors, useTimer } from 'hooks'
 
 interface Props extends FlexProps {
@@ -9,15 +8,14 @@ interface Props extends FlexProps {
 }
 
 function TimerSmall({ start, end }: Props): JSX.Element {
-  const { DD, HH, MM, SS, isSameDay } = useTimer(start, end)
-  const { gray, cyan } = useColors()
+  const { DD, HH, MM, SS, isSameDay, isComplete } = useTimer(start, end)
+  const { red, gray, yellow } = useColors()
 
   const display = {
     textStyle: 'tdBold',
-    px: 1,
     borderRadius: '4px',
-    bgColor: useColorModeValue('#D8DADF', '#454954'),
-    ...(isSameDay && { color: cyan[700] }),
+    ...(!isComplete && isSameDay && { color: red[500] }),
+    ...(isComplete && { color: yellow[700] }),
   }
 
   const label = {
@@ -28,23 +26,25 @@ function TimerSmall({ start, end }: Props): JSX.Element {
   return (
     <Flex>
       {!isSameDay && (
-        <Box mr={2}>
+        <Box mr="10px">
           <Box {...display}>{DD}</Box>
           <Box {...label}>DD</Box>
         </Box>
       )}
-      <Box mr={2}>
+      <Box mr="10px">
         <Box {...display}>{HH}</Box>
         <Box {...label}>HH</Box>
       </Box>
-      <Box mr={2}>
+      <Box mr="10px">
         <Box {...display}>{MM}</Box>
         <Box {...label}>MM</Box>
       </Box>
       {isSameDay && (
         <Box>
           <Box {...display}>{SS}</Box>
-          <Box {...label}>SS</Box>
+          <Box pl="2px" {...label}>
+            SS
+          </Box>
         </Box>
       )}
     </Flex>
