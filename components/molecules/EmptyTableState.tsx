@@ -10,7 +10,8 @@ import LinkButton from 'components/atoms/LinkButton'
 import { CLOUDFRONT_URL } from 'shared/constants'
 import { useColors } from 'hooks'
 
-const desktopDarkImgSrc = `${CLOUDFRONT_URL}/assets/brand-dash-empty-dark.png`
+const darkImgSrc = `${CLOUDFRONT_URL}/assets/brand-dash-empty-dark.png`
+const lightImgSrc = `${CLOUDFRONT_URL}/assets/brand-dash-empty-light.png`
 
 interface Props {
   heading?: string
@@ -18,7 +19,7 @@ interface Props {
 }
 
 export default function EmptyTableState({ heading, body }: Props): JSX.Element {
-  const imgSrc = useColorModeValue(desktopDarkImgSrc, desktopDarkImgSrc)
+  const imgSrc = useColorModeValue(lightImgSrc, darkImgSrc)
   const { gray } = useColors()
   return (
     <Flex direction="column" align="center">
