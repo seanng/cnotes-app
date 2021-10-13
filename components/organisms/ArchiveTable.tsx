@@ -1,3 +1,4 @@
+import EmptyTableState from 'components/molecules/EmptyTableState'
 import {
   Th,
   Table,
@@ -113,7 +114,12 @@ export default function ArchiveTable(): JSX.Element {
     return <TableLoadingSkeleton />
   }
 
-  return (
+  return items.length === 0 ? (
+    <EmptyTableState
+      heading="Nothing's archived yet!"
+      body="Offers and deals that are rejected or cancelled will be shown here. In the meantime, you can look for more creators to place more offers!"
+    />
+  ) : (
     <Table variant="brandDashboard">
       <Thead>
         <Tr>

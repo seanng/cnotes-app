@@ -27,7 +27,17 @@ export default {
     new: props => ({
       field: {
         borderRadius: 'sm',
-        bgColor: mode('gray.100', 'gray.800')(props),
+        bgColor: mode('gray.50', 'gray.800')(props),
+      },
+    }),
+    rounded: props => ({
+      field: {
+        borderRadius: 'lg',
+        bgColor: mode('gray.50', 'gray.800')(props),
+        _disabled: {
+          color: mode('gray.300', 'gray.600')(props),
+          bgColor: mode('gray.100', 'gray.900')(props),
+        },
       },
     }),
   },

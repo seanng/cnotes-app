@@ -1,6 +1,7 @@
 import { useQuery, gql } from '@apollo/client'
 import { useState, useEffect } from 'react'
 import { format } from 'date-fns'
+import EmptyTableState from 'components/molecules/EmptyTableState'
 import ListingStatusBadge from 'components/atoms/ListingStatusBadge'
 import { Deal } from 'shared/types'
 import {
@@ -82,8 +83,12 @@ export default function DealsTable(): JSX.Element {
     return <TableLoadingSkeleton />
   }
 
-  // handle empty state
-  return (
+  return deals.length === 0 ? (
+    <EmptyTableState
+      heading="You're almost set!"
+      body="Deals will be created here when your offers have been successfully selected by the creators. In the meantime, you can look for more creators to place more offers!"
+    />
+  ) : (
     <Table variant="brandDashboard">
       <Thead>
         <Tr>
@@ -114,10 +119,10 @@ export default function DealsTable(): JSX.Element {
                   </Flex>
                 </Flex>
               </Td>
-              <Td>
+              <Td minWidth={110}>
                 <BrandDashOfferValue offer={deal} />
               </Td>
-              <Td textStyle="tdBold">
+              <Td textStyle="tdBold" minWidth={145}>
                 {format(new Date(deal.createdAt), 'd MMM y')}
               </Td>
               <Td>

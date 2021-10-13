@@ -18,6 +18,8 @@ import {
 import { useColors } from 'hooks'
 import { ACTIVE, AWAITING } from 'shared/constants'
 import TableLoadingSkeleton from 'components/molecules/TableLoadingSkeleton'
+import EmptyTableState from 'components/molecules/EmptyTableState'
+import OfferModal from 'components/molecules/OfferModal'
 import ListingStatusBadge from 'components/atoms/ListingStatusBadge'
 import BrandDashOfferValue from 'components/atoms/BrandDashOfferValue'
 
@@ -67,6 +69,8 @@ const columns = [
 
 export default function OffersTable(): JSX.Element {
   const [isLoading, setIsLoading] = useState(true)
+  const [isModalOpen, setIsModalOpen] = useState(false)
+  const [selectedOffer, setSelectedOffer] = useState(null)
   const [offers, setOffers] = useState<Offer[]>([])
   const { data } = useQuery(MY_ACTIVE_OFFERS, {
     // fetchPolicy: 'no-cache',
@@ -91,8 +95,9 @@ export default function OffersTable(): JSX.Element {
     }
   }, [data])
 
-  const handleUpdateClick = () => {
-    console.log('handleUpdateClick: ', handleUpdateClick)
+  const handleUpdateClick = i => () => {
+    setSelectedOffer(offers[i])
+    setIsModalOpen(true)
   }
 
   const handleViewClick = () => {
@@ -103,8 +108,16 @@ export default function OffersTable(): JSX.Element {
     return <TableLoadingSkeleton />
   }
 
+  const selectedLastOffer =
+    selectedOffer?.history[selectedOffer.history.length - 1]
+
   // handle empty state.
-  return (
+  return offers.length === 0 ? (
+    <EmptyTableState
+      heading="Start by making your first offer!"
+      body="Making an offer will bring you a step closer towards working with your preferred creators."
+    />
+  ) : (
     <>
       <Table variant="brandDashboard">
         <Thead>
@@ -139,7 +152,7 @@ export default function OffersTable(): JSX.Element {
                     </Flex>
                   </Flex>
                 </Td>
-                <Td>
+                <Td minWidth={123}>
                   <BrandDashOfferValue offer={lastOffer} />
                   <Text textStyle="tdMicro" color={gray[500]}>
                     {`${formatDistanceToNow(
@@ -147,7 +160,7 @@ export default function OffersTable(): JSX.Element {
                     )} ago`}
                   </Text>
                 </Td>
-                <Td>
+                <Td minWidth={123}>
                   <Text textStyle="tdBold">${listing.highestOfferValue}</Text>
                   <Text textStyle="tdMicro" color={gray[500]}>
                     {`${listing.offerCount} total offers`}
@@ -174,7 +187,7 @@ export default function OffersTable(): JSX.Element {
                 </Td>
                 <Td bgColor="transparent">
                   {status === ACTIVE ? (
-                    <Button size="table" onClick={handleUpdateClick}>
+                    <Button size="table" onClick={handleUpdateClick(i)}>
                       Update
                     </Button>
                   ) : (
@@ -192,6 +205,21 @@ export default function OffersTable(): JSX.Element {
           })}
         </Tbody>
       </Table>
+      <OfferModal
+        isUpdate
+        listing={selectedOffer?.listing}
+        onClose={(): void => {
+          setIsModalOpen(false)
+        }}
+        isOpen={isModalOpen}
+        defaultValues={{
+          message: selectedLastOffer?.message,
+          productUrl: selectedLastOffer?.productUrl,
+          productName: selectedLastOffer?.productName,
+          productValue: selectedLastOffer?.productValue,
+          cashValue: selectedLastOffer?.cashValue,
+        }}
+      />
     </>
   )
 }

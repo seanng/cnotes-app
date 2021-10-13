@@ -1,27 +1,29 @@
 import { useMutation, gql } from '@apollo/client'
 import {
   Modal,
+  FormControl,
+  FormLabel,
+  Textarea,
   ModalOverlay,
   ModalContent,
   ModalHeader,
+  Text,
   ModalCloseButton,
+  Flex,
   ModalBody,
   ModalFooter,
   Button,
   Box,
-  FormControl,
-  FormLabel,
-  Textarea,
-  Flex,
-  Spacer,
+  useColorModeValue,
 } from '@chakra-ui/react'
-import { useState, FC, useEffect } from 'react'
-import FormInput from 'components/atoms/FormInput'
 import { useForm } from 'react-hook-form'
 import { Listing } from 'shared/types'
+import { useColors } from 'hooks'
+import FormInput from 'components/atoms/FormInput'
+import { useState, useEffect } from 'react'
 import { URL_REGEX } from 'shared/constants'
 
-const PLACE_BID = gql`
+const PLACE_OFFER = gql`
   mutation placeOffer($input: PlaceOfferInput!) {
     placeOffer(input: $input) {
       id
@@ -40,54 +42,78 @@ const PLACE_BID = gql`
   }
 `
 
-type OnConfirmProps = {
-  message: string
-  productUrl: string
-}
-
-type DefaultValues = {
-  message: string
-  productUrl: string
-}
-
-type ModalProps = {
+interface ModalProps {
   onClose: () => void
   isOpen: boolean
-  cashValue: number
+  heading?: string
   listing: Listing
-  defaultValues?: DefaultValues
+  isUpdate?: boolean
+  defaultValues?: {
+    message: string
+    productUrl: string
+    productName: string
+    productValue?: number
+    cashValue?: number
+  }
 }
 
-const OfferModal: FC<ModalProps> = ({
+const defaultDefaultValues = {
+  message: '',
+  productUrl: '',
+  productName: '',
+  productValue: 0,
+  cashValue: 0,
+}
+
+export default function OfferModal({
   onClose,
   isOpen,
-  cashValue,
   listing,
-  defaultValues = { message: '', productUrl: '' },
-}: ModalProps) => {
+  defaultValues = defaultDefaultValues,
+  isUpdate = false,
+}: ModalProps): JSX.Element {
   const {
     handleSubmit,
     register,
     reset,
+    watch,
+    setValue,
     formState: { isSubmitting, errors },
   } = useForm({
     defaultValues,
   })
-  const [placeOffer] = useMutation(PLACE_BID)
+  const productValue = watch('productValue')
+  const cashValue = watch('cashValue')
+  const hasProductValue = productValue > 0
+  const [minTotalValue, setMinTotalValue] = useState(0)
+  const [showMinValueError, setShowMinValueError] = useState(false)
   const [showSuccess, setShowSuccess] = useState(false)
+  const [placeOffer] = useMutation(PLACE_OFFER)
+  const { gray } = useColors()
+  console.log('listing: ', listing)
 
   useEffect(() => {
     setShowSuccess(false)
     reset(defaultValues)
+    setMinTotalValue(defaultValues.cashValue + defaultValues.productValue)
+    setShowMinValueError(false)
   }, [defaultValues])
 
-  const onConfirm = async (input: OnConfirmProps): Promise<void> => {
+  useEffect(() => {
+    const totalValue = productValue + cashValue
+    setShowMinValueError(totalValue < minTotalValue)
+  }, [cashValue, productValue])
+
+  const onConfirm = async (input): Promise<void> => {
     await placeOffer({
       variables: {
         input: {
-          ...input,
+          cashValue: input.cashValue,
+          productValue: input.productValue,
+          productName: hasProductValue ? input.productName : '',
+          productUrl: hasProductValue ? input.productUrl : '',
+          message: input.message,
           listingId: listing.id,
-          cashValue,
         },
       },
     })
@@ -98,20 +124,38 @@ const OfferModal: FC<ModalProps> = ({
     onClose()
   }
 
+  const handleNumberInputBlur = e => {
+    if (e.target.value === '') {
+      setValue(e.target.name, 0)
+    }
+  }
+
   if (!listing) {
     return <Box />
   }
 
   return (
-    <Modal onClose={onClose} isOpen={isOpen} closeOnOverlayClick={false}>
+    <Modal
+      onClose={onClose}
+      isOpen={isOpen}
+      closeOnOverlayClick={false}
+      variant="new"
+      size="xl"
+    >
       <ModalOverlay />
       <ModalContent>
-        <ModalHeader>Place an offer</ModalHeader>
-        <ModalCloseButton />
+        <ModalHeader textAlign="left">
+          <Text textStyle="xLarge">
+            {isUpdate ? 'Update Offer' : 'place offer'}
+          </Text>
+        </ModalHeader>
+        <ModalCloseButton top={6} right={6} />
         {showSuccess ? (
           <>
             <ModalBody textStyle="base" mb={10}>
-              {`You have successfully placed an offer of $${cashValue} for a ${listing.platform} ${listing.deliverable} from ${listing.creator.alias}.`}
+              {`You have successfully ${
+                isUpdate ? 'updated your' : 'placed an'
+              } offer.`}
             </ModalBody>
             <ModalFooter>
               <Button onClick={onSuccess}>Close</Button>
@@ -120,60 +164,142 @@ const OfferModal: FC<ModalProps> = ({
         ) : (
           <form onSubmit={handleSubmit(onConfirm)}>
             <ModalBody>
-              <Box textStyle="base" mb={10}>
-                {`You are about to make an offer for a ${listing.platform} ${listing.deliverable} from ${listing.creator.alias}`}
+              <Box
+                fontWeight={600}
+                pb={8}
+                borderBottom="1px solid"
+                borderColor={gray[50]}
+                mb={8}
+              >
+                {/* general info box */}
+                <Text
+                  fontWeight={600}
+                  textStyle="base"
+                  textTransform="capitalize"
+                >
+                  {`${listing.platform} ${listing.deliverable}`}
+                </Text>
+                <Text
+                  fontWeight={600}
+                  textStyle="micro"
+                  color={gray[500]}
+                  mb={5}
+                >
+                  {`48h media preview 2 revisions`}
+                </Text>
+                <Flex>
+                  <Box mr={6}>
+                    <Text fontWeight={600} textStyle="base">
+                      ${listing.highestOfferValue}
+                    </Text>
+                    <Text fontWeight={600} textStyle="micro" color={gray[500]}>
+                      Highest
+                    </Text>
+                  </Box>
+                  <Box>
+                    <Text fontWeight={600} textStyle="base">
+                      6
+                    </Text>
+                    <Text fontWeight={600} textStyle="micro" color={gray[500]}>
+                      Offers
+                    </Text>
+                  </Box>
+                </Flex>
               </Box>
-              <Flex mb={1} color="gray.600" textStyle="small">
-                <Box>Time left</Box>
-                <Spacer />
-                <Box>3 hours 3 minutes left</Box>
+              {/* form */}
+              <Flex>
+                <FormInput
+                  label="Cash value"
+                  inputProps={{
+                    type: 'number',
+                    ...register('cashValue', {
+                      valueAsNumber: true,
+                      min: 0,
+                    }),
+                    onBlur: handleNumberInputBlur,
+                  }}
+                  mr={2}
+                />
+                <FormInput
+                  label="Product value"
+                  inputProps={{
+                    type: 'number',
+                    ...register('productValue', {
+                      valueAsNumber: true,
+                      min: 0,
+                    }),
+                    onBlur: handleNumberInputBlur,
+                  }}
+                />
               </Flex>
-              <Flex mb={2} color="gray.600" textStyle="small">
-                <Box>Total number of offers</Box>
-                <Spacer />
-                <Box>3</Box>
-              </Flex>
-              <Flex textStyle="base" fontWeight={700} mb={6}>
-                <Box>Your offer</Box>
-                <Spacer />
-                <Box>{`$${cashValue}`}</Box>
-              </Flex>
+              <Text color="red" mb={5}>
+                {showMinValueError
+                  ? `Total offer value must not be lower than your previous total offer value ($${minTotalValue})`
+                  : ''}
+              </Text>
               <FormInput
-                label="Link to Product"
+                label="Product name"
+                error={errors.productName}
+                inputProps={{
+                  placeholder: hasProductValue
+                    ? 'Enter product name'
+                    : 'Product value required',
+                  ...register('productName', {
+                    disabled: !hasProductValue,
+                    required: hasProductValue,
+                  }),
+                }}
+                mb={5}
+              />
+              <FormInput
+                label="Product URL (optional)"
                 error={errors.productUrl}
                 inputProps={{
+                  placeholder: hasProductValue
+                    ? 'https://www.apple.com/shop/buy-iphone/iphone-11'
+                    : 'Product value required',
                   ...register('productUrl', {
-                    required: true,
+                    disabled: !hasProductValue,
                     pattern: {
                       value: URL_REGEX,
                       message: 'Enter a valid url',
                     },
                   }),
-                  placeholder:
-                    'https://www.apple.com/shop/buy-iphone/iphone-11',
                 }}
-                mb={10}
+                mb={5}
               />
               <FormControl isInvalid={!!errors.message}>
-                <FormLabel htmlFor="description">Message To Creator</FormLabel>
+                <FormLabel
+                  textTransform="none"
+                  fontWeight={600}
+                  fontSize="16px"
+                  color={gray[1000]}
+                  htmlFor="message"
+                >
+                  Message
+                </FormLabel>
                 <Textarea
                   placeholder={`eg. I want you to shine for me like a whistle.`}
-                  // mb={8}
+                  rows={4}
+                  bgColor={useColorModeValue('gray.50', 'gray.800')}
+                  borderWidth={0}
                   {...register('message')}
                 />
               </FormControl>
             </ModalBody>
             <ModalFooter>
-              <Button type="submit" disabled={isSubmitting} mr={4}>
-                Place offer
-              </Button>
-              <Button
-                disabled={isSubmitting}
-                variant="outline"
-                onClick={onClose}
-              >
-                Cancel
-              </Button>
+              <Flex justify="space-between" w="full">
+                <Button colorScheme="gray" isFullWidth onClick={onClose} mr={4}>
+                  Cancel
+                </Button>
+                <Button
+                  disabled={showMinValueError || isSubmitting}
+                  isFullWidth
+                  type="submit"
+                >
+                  {isUpdate ? 'Update' : 'Place'}
+                </Button>
+              </Flex>
             </ModalFooter>
           </form>
         )}
@@ -181,5 +307,3 @@ const OfferModal: FC<ModalProps> = ({
     </Modal>
   )
 }
-
-export default OfferModal

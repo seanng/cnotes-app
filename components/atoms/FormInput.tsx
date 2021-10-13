@@ -1,4 +1,5 @@
 import { FC } from 'react'
+import { useColors } from 'hooks'
 import { Icon as Iconify } from '@iconify/react'
 import {
   FormControl,
@@ -26,10 +27,16 @@ const FormInput: FC<Props> = ({
   helpText,
   ...props
 }: Props) => {
+  const { gray } = useColors()
   return (
     <FormControl isInvalid={!!error} {...props}>
       {label && (
-        <FormLabel>
+        <FormLabel
+          textTransform="none"
+          fontWeight={600}
+          fontSize="16px"
+          color={gray[1000]}
+        >
           {label}
           {helpText && (
             <Tooltip label={helpText} hasArrow placement="right">
@@ -38,7 +45,7 @@ const FormInput: FC<Props> = ({
           )}
         </FormLabel>
       )}
-      <Input {...inputProps} />
+      <Input variant="rounded" {...inputProps} />
       {!hideMessage && (
         <FormErrorMessage color="red">{error?.message}</FormErrorMessage>
       )}
