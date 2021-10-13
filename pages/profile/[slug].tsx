@@ -1,22 +1,22 @@
 import { gql } from '@apollo/client'
 import Image from 'next/image'
 import { Box, Center, Flex, Text, Container, Link } from '@chakra-ui/react'
-import { useColors, useTransposeColor } from 'hooks'
+import { useColors } from 'hooks'
 import IsVerifiedTag from 'components/atoms/IsVerifiedTag'
 import { GetServerSideProps, NextPage } from 'next'
 import Layout from 'components/organisms/Layout'
 import { User, TransformedProfile } from 'shared/types'
-import { PLACEHOLDER_BANNER_URL } from 'shared/constants'
 import client from 'lib/apollo-client'
 import { getUserPayload } from 'utils/auth'
 import {
-  NAVBAR_HEIGHT,
   PROFILE_BOX_INNER_WIDTH,
   PROFILE_BOX_WRAPPER_PADDING,
 } from 'shared/metrics'
 import { format } from 'date-fns'
+import ProfileBanner from 'components/atoms/ProfileBanner'
 import ProfileBox from 'components/organisms/ProfileBox'
 import ProfileReel from 'components/organisms/ProfileReel'
+import { profileTransformer } from 'utils/helpers'
 
 const ABOUT_PLACEHOLDER =
   'Thanks for visiting my profile! Here are some of my featured works.'
@@ -49,36 +49,15 @@ type Props = {
   user: User
 }
 
-const toCssVar = (colorCode: string): string => {
-  const [color, hue] = colorCode.split('.')
-  return `var(--chakra-colors-${color}-${hue})`
-}
-
 const ProfilePage: NextPage<Props> = ({ profile, user }: Props) => {
-  const bgImage = profile.bannerUrl || PLACEHOLDER_BANNER_URL
   const profileBodyWidth = `calc(100% - ${PROFILE_BOX_INNER_WIDTH}px - ${PROFILE_BOX_WRAPPER_PADDING}px)`
-  const bannerBgColor = toCssVar(useTransposeColor('gray.50'))
   const { gray } = useColors()
 
   return (
     <Layout user={user}>
-      <Box
-        h={408}
-        mt={NAVBAR_HEIGHT * -1}
-        w="100%"
-        position="relative"
-        zIndex="-1"
-      >
-        <Image layout="fill" src={bgImage} objectFit="cover" />
-        <Box
-          position="absolute"
-          w="full"
-          h="full"
-          background={`linear-gradient(${bannerBgColor} 0%, transparent 40%, transparent 70%, ${bannerBgColor} 100%)`}
-        />
-      </Box>
+      <ProfileBanner src={profile.bannerUrl} />
       <Container display={{ md: 'flex' }} maxWidth={1280}>
-        <ProfileBox profile={profile} />
+        <ProfileBox profile={profile} withStats />
         <Box
           width={['100%', null, profileBodyWidth]}
           pl={[0, null, '5%', 20]}
@@ -129,39 +108,14 @@ const ProfilePage: NextPage<Props> = ({ profile, user }: Props) => {
           ))}
         </Box>
       </Container>
-      <ProfileReel profile={profile} />
+      <Container py={[4, null, 14]}>
+        <ProfileReel profile={profile} />
+      </Container>
     </Layout>
   )
 }
 
 export default ProfilePage
-
-function profileTransformer(data: User): TransformedProfile {
-  const portfolio = data.portfolio
-    .slice()
-    .map(vid => ({
-      ...vid,
-      rating: (
-        (Number(vid.likeCount) /
-          (Number(vid.likeCount) + Number(vid.dislikeCount))) *
-        100
-      ).toFixed(0),
-      engagementRate: (
-        (Number(vid.commentCount) / Number(vid.viewCount)) *
-        100
-      ).toFixed(0),
-    }))
-    .sort(
-      (a, b) =>
-        new Date(b.publishedAt).valueOf() - new Date(a.publishedAt).valueOf()
-    )
-
-  return {
-    ...data,
-    portfolio,
-    collabs: portfolio.filter(item => !!item.companyName),
-  }
-}
 
 export const getServerSideProps: GetServerSideProps = async ctx => {
   const {

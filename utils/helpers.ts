@@ -3,7 +3,7 @@ import Compressor from 'compressorjs'
 import { GetServerSidePropsResult, Redirect } from 'next'
 import S3 from 'lib/s3'
 import { Blob } from 'buffer'
-import { Listing, Deal } from 'shared/types'
+import { Listing, Deal, User, TransformedProfile } from 'shared/types'
 import { ACTIVE, SELECTING, LISTING } from 'shared/constants'
 
 export function getErrorMessage(error: Record<string, any>): string {
@@ -108,4 +108,31 @@ export const calculateTimeLeft = (
   }
 
   return timeLeft
+}
+
+export function profileTransformer(data: User): TransformedProfile {
+  const portfolio = data.portfolio
+    .slice()
+    .map(vid => ({
+      ...vid,
+      rating: (
+        (Number(vid.likeCount) /
+          (Number(vid.likeCount) + Number(vid.dislikeCount))) *
+        100
+      ).toFixed(0),
+      engagementRate: (
+        (Number(vid.commentCount) / Number(vid.viewCount)) *
+        100
+      ).toFixed(0),
+    }))
+    .sort(
+      (a, b) =>
+        new Date(b.publishedAt).valueOf() - new Date(a.publishedAt).valueOf()
+    )
+
+  return {
+    ...data,
+    portfolio,
+    collabs: portfolio.filter(item => !!item.companyName),
+  }
 }

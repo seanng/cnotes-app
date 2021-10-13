@@ -10,7 +10,7 @@ interface Props {
 
 export default function BrandDashOfferValue({ offer }: Props): JSX.Element {
   return (
-    <Text textStyle="tdBold">
+    <Text textStyle="largeBold">
       ${offer.cashValue + offer.productValue}
       <Tooltip
         label={

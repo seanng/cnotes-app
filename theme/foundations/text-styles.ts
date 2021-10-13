@@ -46,7 +46,7 @@ export default {
     fontSize: '18px',
     lineHeight: '27px',
   },
-  tdBold: {
+  largeBold: {
     fontFamily: 'body',
     fontWeight: 600,
     fontSize: '18px',
@@ -56,6 +56,12 @@ export default {
     fontFamily: 'body',
     fontSize: '16px',
     lineHeight: '22px',
+  },
+  baseBold: {
+    fontFamily: 'body',
+    fontSize: '16px',
+    lineHeight: '22px',
+    fontWeight: 600,
   },
   small: {
     fontFamily: 'body',

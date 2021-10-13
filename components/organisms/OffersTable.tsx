@@ -145,7 +145,7 @@ export default function OffersTable(): JSX.Element {
                       size="sm"
                     />
                     <Flex direction="column" ml={2}>
-                      <Text textStyle="tdBold">{listing.creator.alias}</Text>
+                      <Text textStyle="largeBold">{listing.creator.alias}</Text>
                     </Flex>
                   </Flex>
                 </Td>
@@ -158,7 +158,9 @@ export default function OffersTable(): JSX.Element {
                   </Text>
                 </Td>
                 <Td minWidth={123}>
-                  <Text textStyle="tdBold">${listing.highestOfferValue}</Text>
+                  <Text textStyle="largeBold">
+                    ${listing.highestOfferValue}
+                  </Text>
                   <Text textStyle="tdMicro" color={gray[500]}>
                     {`${listing.offerCount} total offers`}
                   </Text>
@@ -167,7 +169,7 @@ export default function OffersTable(): JSX.Element {
                   <TimerSmall end={listing.auctionEndsAt} />
                 </Td>
                 <Td>
-                  <Text textStyle="tdBold" textTransform="capitalize">
+                  <Text textStyle="largeBold" textTransform="capitalize">
                     {listing.deliverable}
                   </Text>
                   <Text textStyle="tdMicro" color={gray[500]}>

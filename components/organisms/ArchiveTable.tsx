@@ -145,7 +145,7 @@ export default function ArchiveTable(): JSX.Element {
                     size="sm"
                   />
                   <Flex direction="column" ml={2}>
-                    <Text textStyle="tdBold">{item.creator.alias}</Text>
+                    <Text textStyle="largeBold">{item.creator.alias}</Text>
                   </Flex>
                 </Flex>
               </Td>
@@ -157,7 +157,7 @@ export default function ArchiveTable(): JSX.Element {
                   format(new Date(item.archivedAt), 'd MMM y')}
               </Td>
               <Td>
-                <Text textStyle="tdBold" textTransform="capitalize">
+                <Text textStyle="largeBold" textTransform="capitalize">
                   {item.deliverable}
                 </Text>
                 <Text textStyle="tdMicro" color={gray[500]}>

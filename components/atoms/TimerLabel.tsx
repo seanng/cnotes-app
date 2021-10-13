@@ -3,11 +3,17 @@ import { memo } from 'react'
 import { useTimer } from 'hooks'
 
 interface Props extends FlexProps {
+  withEmoji?: boolean
   start?: string
   end: string
 }
 
-function TimerLabel({ start, end, ...props }: Props): JSX.Element {
+function TimerLabel({
+  start,
+  end,
+  withEmoji = true,
+  ...props
+}: Props): JSX.Element {
   const { DD, HH, MM, SS, isComplete, isSameDay } = useTimer(start, end)
 
   const clockEmoji = !isSameDay ? '🕕' : isComplete ? '🕛' : '🕙'
@@ -20,10 +26,11 @@ function TimerLabel({ start, end, ...props }: Props): JSX.Element {
       fontSize={24}
       pl={4}
       pr={4}
-      py={1}
+      pt={1}
+      pb={2}
       {...props}
     >
-      <Box mr={3}>{clockEmoji}</Box>
+      {withEmoji && <Box mr={3}>{clockEmoji}</Box>}
       <Box>
         <Box color={isSameDay ? 'cyan.500' : 'white'} fontFamily="digital">
           {isSameDay ? `${HH}:${MM}:${SS}` : `${DD}:${HH}:${MM}`}

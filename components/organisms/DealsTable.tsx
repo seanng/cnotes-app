@@ -111,18 +111,18 @@ export default function DealsTable(): JSX.Element {
                     size="sm"
                   />
                   <Flex direction="column" ml={2}>
-                    <Text textStyle="tdBold">{listing.creator.alias}</Text>
+                    <Text textStyle="largeBold">{listing.creator.alias}</Text>
                   </Flex>
                 </Flex>
               </Td>
               <Td minWidth={110}>
                 <BrandDashOfferValue offer={deal} />
               </Td>
-              <Td textStyle="tdBold" minWidth={145}>
+              <Td textStyle="largeBold" minWidth={145}>
                 {format(new Date(deal.createdAt), 'd MMM y')}
               </Td>
               <Td>
-                <Text textStyle="tdBold" textTransform="capitalize">
+                <Text textStyle="largeBold" textTransform="capitalize">
                   {listing.deliverable}
                 </Text>
                 <Text textStyle="tdMicro" color={gray[500]}>

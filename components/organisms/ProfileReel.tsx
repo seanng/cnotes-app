@@ -3,7 +3,6 @@ import {
   Grid,
   Button,
   Flex,
-  Container,
   Icon,
   Tag,
   GridItem,
@@ -13,6 +12,7 @@ import {
   Center,
   Image,
   AspectRatio,
+  GridProps,
 } from '@chakra-ui/react'
 import { TransformedProfile } from 'shared/types'
 import { TIKTOK } from 'shared/constants'
@@ -23,12 +23,13 @@ import { formatCountNumber } from 'utils/helpers'
 
 type Props = {
   profile: TransformedProfile
+  gridProps?: GridProps
 }
 
-const ProfileReel = ({ profile }: Props): JSX.Element => {
+const ProfileReel = ({ profile, gridProps }: Props): JSX.Element => {
   const { green } = useColors()
   return (
-    <Container py={[4, null, 14]}>
+    <>
       <Text textStyle="h2" mb={5}>
         Content Reel
       </Text>
@@ -40,6 +41,7 @@ const ProfileReel = ({ profile }: Props): JSX.Element => {
           'repeat(3, 1fr)',
         ]}
         gap={6}
+        {...gridProps}
       >
         {profile.portfolio.map((item, i) => (
           <AspectRatio
@@ -161,7 +163,7 @@ const ProfileReel = ({ profile }: Props): JSX.Element => {
           </AspectRatio>
         ))}
       </Grid>
-    </Container>
+    </>
   )
 }
 export default ProfileReel

@@ -50,6 +50,7 @@ export interface User {
   password?: string // omitted unless it's in the password reset token
   viewerCount?: number
   about?: string
+  category?: string
   websiteUrl?: string
   avatarUrl?: string
   bannerUrl?: string

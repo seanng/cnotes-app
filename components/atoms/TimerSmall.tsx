@@ -12,7 +12,7 @@ function TimerSmall({ start, end }: Props): JSX.Element {
   const { red, gray, yellow } = useColors()
 
   const display = {
-    textStyle: 'tdBold',
+    textStyle: 'largeBold',
     borderRadius: '4px',
     ...(!isComplete && isSameDay && { color: red[500] }),
     ...(isComplete && { color: yellow[700] }),

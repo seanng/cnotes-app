@@ -2,12 +2,10 @@ import { format, formatDistanceToNow } from 'date-fns'
 import {
   Icon,
   Divider,
-  Tooltip,
-  SimpleGrid,
   Avatar,
+  Button,
   Flex,
   Box,
-  SimpleGridProps,
   FlexProps,
   Text,
 } from '@chakra-ui/react'
@@ -16,15 +14,17 @@ import {
   PROFILE_BOX_INNER_WIDTH,
   PROFILE_BOX_WRAPPER_PADDING,
 } from 'shared/metrics'
-import { TransformedProfile, CreatorStats } from 'shared/types'
+import { TransformedProfile, Listing, Offer } from 'shared/types'
+import dynamic from 'next/dynamic'
 import GenderChart from 'components/atoms/GenderChart'
 import LocationChart from 'components/atoms/LocationChart'
+import StatNumbers from 'components/molecules/StatNumbers'
 import { Icon as Iconify } from '@iconify/react'
-import { CREATOR } from 'shared/constants'
+import { CREATOR, ACTIVE } from 'shared/constants'
 
-type Props = {
-  profile: TransformedProfile
-}
+const TimerLabel = dynamic(() => import('components/atoms/TimerLabel'), {
+  ssr: false,
+})
 
 const Social = ({ profile, ...props }: Props & FlexProps): JSX.Element => {
   const { tiktokUrl, youtubeUrl, instagramUrl, facebookUrl } = profile
@@ -79,58 +79,46 @@ const Social = ({ profile, ...props }: Props & FlexProps): JSX.Element => {
   )
 }
 
-function formatStatTitle(key: string): string {
-  const map = {
-    followerCount: '# of followers',
-    verifiedCollabsCount: 'Verified Collabs',
-    avgImpressions: 'Avg Impressions',
-    avgEngagement: 'Avg Engagement',
-  }
-  return map[key] || key
-}
+const ListingRow = ({
+  label,
+  value,
+}: {
+  label: string
+  value: string | number
+}): JSX.Element => (
+  <Flex justify="space-between" mb={1} w="full">
+    <Text color="#757474" textStyle="base">
+      {label}
+    </Text>
+    <Text textTransform="capitalize" textStyle="baseBold">
+      {value}
+    </Text>
+  </Flex>
+)
 
-type StatNumbersProps = {
-  data: CreatorStats
-} & SimpleGridProps
+type Props = {
+  profile: TransformedProfile
+  withStats?: boolean
+  isShort?: boolean
+  onOfferClick?: () => void
+  listing?: Listing & { offer: Offer }
+} & FlexProps
 
-const StatNumbers = ({ data, ...props }: StatNumbersProps): JSX.Element => {
-  const { gray } = useColors()
-  const stats = [
-    { key: 'verifiedCollabsCount' },
-    { key: 'followerCount' },
-    { key: 'avgImpressions', helpText: 'Total Views / Total Videos' },
-    { key: 'avgEngagement', helpText: 'Total Comments / Total Views' },
-  ]
-  return (
-    <SimpleGrid columns={2} spacingX={8} spacingY={5} {...props}>
-      {stats.map(stat => (
-        <Box key={stat.key}>
-          <Text textStyle="micro" color={gray[600]}>
-            {formatStatTitle(stat.key)}
-            {stat.helpText && (
-              <Tooltip label={stat.helpText} hasArrow placement="top">
-                <Icon ml={1} mb={1} as={Iconify} icon="bx:bxs-help-circle" />
-              </Tooltip>
-            )}
-          </Text>
-          <Text textStyle="h4" fontSize={26} color={gray[1000]}>
-            {data?.[stat.key] || '-'}
-          </Text>
-        </Box>
-      ))}
-    </SimpleGrid>
-  )
-}
-
-const ProfileBox = ({ profile }: Props): JSX.Element => {
+const ProfileBox = ({
+  profile,
+  withStats,
+  isShort,
+  listing,
+  onOfferClick,
+  ...props
+}: Props): JSX.Element => {
   const { gray } = useColors()
   const genderChart = profile.creatorStats?.genderBreakdown
   const locationChart = profile.creatorStats?.locationBreakdown
-
   return (
     <Flex
       w={`${2 * PROFILE_BOX_WRAPPER_PADDING + PROFILE_BOX_INNER_WIDTH}px`}
-      pt={`${PROFILE_BOX_WRAPPER_PADDING}px`}
+      pt={isShort ? '20px' : `${PROFILE_BOX_WRAPPER_PADDING}px`}
       mx="auto"
       mt={-40}
       direction="column"
@@ -138,19 +126,28 @@ const ProfileBox = ({ profile }: Props): JSX.Element => {
       bg={gray[0]}
       boxShadow="lg"
       borderRadius="xl"
+      alignSelf="flex-start"
+      {...props}
     >
-      <Avatar name={profile.alias} size="2xl" src={profile.avatarUrl} mb={7} />
-      <Text color="gray.500" textStyle="micro" mb={1}>
-        {`Joined ${formatDistanceToNow(new Date(profile.createdAt))} ago`}
-      </Text>
+      <Avatar
+        name={profile.alias}
+        size="2xl"
+        src={profile.avatarUrl}
+        mb={isShort ? 4 : 7}
+      />
+      {!isShort && profile.createdAt && (
+        <Text color="gray.500" textStyle="micro" mb={1}>
+          {`Joined ${formatDistanceToNow(new Date(profile.createdAt))} ago`}
+        </Text>
+      )}
       <Text textStyle="h4" mb={2}>
         {profile.alias}
       </Text>
       <Text color={gray[1000]} textStyle="micro" fontWeight={500} mb={3}>
         {profile.genre || ''}
       </Text>
-      <Social profile={profile} mb={8} />
-      {profile.role === CREATOR && (
+      <Social profile={profile} mb={isShort ? 3 : 8} />
+      {profile.role === CREATOR && withStats && (
         <>
           <Divider mb={8} opacity={0.4} />
           <Box px={`${PROFILE_BOX_WRAPPER_PADDING}px`} pb={5}>
@@ -165,6 +162,41 @@ const ProfileBox = ({ profile }: Props): JSX.Element => {
                 </Box>
               </Text>
             )}
+          </Box>
+        </>
+      )}
+      {listing && (
+        <>
+          <Divider mb={isShort ? 4 : 7} opacity={0.4} />
+          {listing.status === ACTIVE && (
+            <TimerLabel
+              pl={6}
+              withEmoji={false}
+              borderRadius="full"
+              end={listing.auctionEndsAt}
+              mb={3}
+            />
+          )}
+          <Box w={230}>
+            <ListingRow
+              label="Category"
+              value={profile.category || 'Keyboards'}
+            />
+            <ListingRow label="Platform" value={listing.platform} />
+            <ListingRow
+              label="Deliverable"
+              value={listing.deliverable || 'Keyboards'}
+            />
+            <ListingRow label="Revisions" value="2" />
+            <ListingRow label="Media Preview" value="48 H" />
+            <ListingRow label="Total Offers" value={listing.offerCount} />
+            <ListingRow
+              label="Highest Offer"
+              value={`$${listing.highestOfferValue}`}
+            />
+            <Button onClick={onOfferClick} isFullWidth mt={3} mb={6}>
+              {listing.offer ? 'Place offer' : 'Update offer'}
+            </Button>
           </Box>
         </>
       )}
