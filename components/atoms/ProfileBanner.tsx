@@ -18,7 +18,7 @@ export default function ProfileBanner({ src }: Props): JSX.Element {
   const bannerBgColor = toCssVar(useTransposeColor('gray.50'))
   return (
     <Box
-      h={408}
+      h={[306, null, 408]}
       mt={NAVBAR_HEIGHT * -1}
       w="100%"
       position="relative"

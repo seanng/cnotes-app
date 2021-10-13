@@ -160,7 +160,7 @@ export default function ArchiveTable(): JSX.Element {
                 <Text textStyle="largeBold" textTransform="capitalize">
                   {item.deliverable}
                 </Text>
-                <Text textStyle="tdMicro" color={gray[500]}>
+                <Text textStyle="microBold" color={gray[500]}>
                   {item.platform}
                 </Text>
               </Td>

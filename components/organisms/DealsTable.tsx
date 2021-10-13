@@ -125,7 +125,7 @@ export default function DealsTable(): JSX.Element {
                 <Text textStyle="largeBold" textTransform="capitalize">
                   {listing.deliverable}
                 </Text>
-                <Text textStyle="tdMicro" color={gray[500]}>
+                <Text textStyle="microBold" color={gray[500]}>
                   {listing.platform}
                 </Text>
               </Td>

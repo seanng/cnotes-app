@@ -82,7 +82,7 @@ export default {
     fontWeight: 500,
     lineHeight: '18px',
   },
-  tdMicro: {
+  microBold: {
     fontFamily: 'body',
     fontSize: '12px',
     textTransform: 'uppercase',

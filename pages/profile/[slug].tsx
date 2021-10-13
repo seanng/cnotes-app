@@ -63,11 +63,11 @@ const ProfilePage: NextPage<Props> = ({ profile, user }: Props) => {
           pl={[0, null, '5%', 20]}
           mt={[7, null, -8]}
         >
-          <Text textStyle="h2" mb={3}>
+          <Text textStyle={['h3', 'h2']} mb={3}>
             About
           </Text>
           <Text textStyle="base">{profile.about || ABOUT_PLACEHOLDER}</Text>
-          <Text textStyle="h2" mt={10} mb={7}>
+          <Text textStyle={['h3', 'h2']} mt={10} mb={7}>
             Collabs
           </Text>
           {profile?.collabs.map(collab => (

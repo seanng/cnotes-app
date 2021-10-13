@@ -30,7 +30,7 @@ const ProfileReel = ({ profile, gridProps }: Props): JSX.Element => {
   const { green } = useColors()
   return (
     <>
-      <Text textStyle="h2" mb={5}>
+      <Text textStyle={['h3', 'h2']} mb={5}>
         Content Reel
       </Text>
       <Grid
@@ -88,7 +88,7 @@ const ProfileReel = ({ profile, gridProps }: Props): JSX.Element => {
                     h="full"
                   >
                     <Flex alignItems="center" direction="column">
-                      <Center
+                      {/* <Center
                         borderRadius="full"
                         bgColor="white"
                         height="30px"
@@ -100,7 +100,7 @@ const ProfileReel = ({ profile, gridProps }: Props): JSX.Element => {
                           width="20px"
                           height={item.platform === 'youtube' ? '15px' : '20px'}
                         />
-                      </Center>
+                      </Center> */}
                       {item.companyName && (
                         <Text
                           color="white"

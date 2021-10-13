@@ -19,7 +19,7 @@ function TimerSmall({ start, end }: Props): JSX.Element {
   }
 
   const label = {
-    textStyle: 'tdMicro',
+    textStyle: 'microBold',
     color: gray[500],
   }
 

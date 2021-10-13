@@ -151,7 +151,7 @@ export default function OffersTable(): JSX.Element {
                 </Td>
                 <Td minWidth={123}>
                   <BrandDashOfferValue offer={lastOffer} />
-                  <Text textStyle="tdMicro" color={gray[500]}>
+                  <Text textStyle="microBold" color={gray[500]}>
                     {`${formatDistanceToNow(
                       new Date(lastOffer.createdAtString)
                     )} ago`}
@@ -161,7 +161,7 @@ export default function OffersTable(): JSX.Element {
                   <Text textStyle="largeBold">
                     ${listing.highestOfferValue}
                   </Text>
-                  <Text textStyle="tdMicro" color={gray[500]}>
+                  <Text textStyle="microBold" color={gray[500]}>
                     {`${listing.offerCount} total offers`}
                   </Text>
                 </Td>
@@ -172,7 +172,7 @@ export default function OffersTable(): JSX.Element {
                   <Text textStyle="largeBold" textTransform="capitalize">
                     {listing.deliverable}
                   </Text>
-                  <Text textStyle="tdMicro" color={gray[500]}>
+                  <Text textStyle="microBold" color={gray[500]}>
                     {listing.platform}
                   </Text>
                 </Td>
