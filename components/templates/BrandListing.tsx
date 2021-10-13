@@ -25,6 +25,7 @@ import {
 } from 'shared/metrics'
 import ProfileReel from 'components/organisms/ProfileReel'
 import StatNumbers from 'components/molecules/StatNumbers'
+import OfferModal from 'components/molecules/OfferModal'
 
 const LISTING_BY_ID = gql`
   query listingById($id: ID) {
@@ -98,6 +99,7 @@ function BottomCardInfoItem({
 const BrandListing: NextPage<Props> = ({ user, listingId }: Props) => {
   const [listing, setListing] = useState(null)
   const [isLoading, setIsLoading] = useState(true)
+  const [isModalOpen, setIsModalOpen] = useState(false)
   const { data } = useQuery(LISTING_BY_ID, {
     variables: { id: listingId },
   })
@@ -135,12 +137,13 @@ const BrandListing: NextPage<Props> = ({ user, listingId }: Props) => {
   }, [data])
 
   const handleOfferClick = () => {
-    console.log('click offer btn')
+    setIsModalOpen(true)
   }
 
   const profileBodyWidth = `calc(100% - ${PROFILE_BOX_INNER_WIDTH}px - ${PROFILE_BOX_WRAPPER_PADDING}px)`
   const genderChart = listing?.profile?.creatorStats?.genderBreakdown
   const locationChart = listing?.profile?.creatorStats?.locationBreakdown
+  const lastOffer = listing?.offer?.history[listing?.offer?.history.length - 1]
 
   return (
     <Layout user={user}>
@@ -149,7 +152,7 @@ const BrandListing: NextPage<Props> = ({ user, listingId }: Props) => {
       ) : (
         <>
           <ProfileBanner src={listing?.profile?.bannerUrl} />
-          <Container display={{ md: 'flex' }} maxWidth={1280} pb={290}>
+          <Container display={{ md: 'flex' }} maxWidth={1280}>
             {listing.profile && (
               <ProfileBox
                 profile={listing.profile}
@@ -165,6 +168,7 @@ const BrandListing: NextPage<Props> = ({ user, listingId }: Props) => {
               width={['100%', null, profileBodyWidth]}
               pl={[0, null, '5%', 20]}
               mt={-8}
+              pb={[285, null, 0]}
             >
               <Text textStyle={['h3', 'h2']} mb={3}>
                 stats
@@ -250,13 +254,28 @@ const BrandListing: NextPage<Props> = ({ user, listingId }: Props) => {
                 </Text>
                 <TimerText end={listing.auctionEndsAt} />
               </Box>
-              <Button w="60%">
+              <Button w="60%" onClick={handleOfferClick}>
                 {listing.offer ? 'Update offer' : 'Place offer'}
               </Button>
             </Flex>
           </Box>
         </>
       )}
+      <OfferModal
+        isUpdate={!!listing?.offer}
+        listing={listing}
+        onClose={(): void => {
+          setIsModalOpen(false)
+        }}
+        isOpen={isModalOpen}
+        defaultValues={{
+          message: lastOffer?.message,
+          productUrl: lastOffer?.productUrl,
+          productName: lastOffer?.productName,
+          productValue: lastOffer?.productValue,
+          cashValue: lastOffer?.cashValue,
+        }}
+      />
     </Layout>
   )
 }

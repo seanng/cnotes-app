@@ -195,7 +195,7 @@ const ProfileBox = ({
               value={`$${listing.highestOfferValue}`}
             />
             <Button onClick={onOfferClick} isFullWidth mt={3} mb={6}>
-              {listing.offer ? 'Place offer' : 'Update offer'}
+              {listing.offer ? 'Update offer' : 'Place offer'}
             </Button>
           </Box>
         </>
