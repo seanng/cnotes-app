@@ -1,4 +1,5 @@
 import { ForbiddenError } from 'apollo-server-micro'
+import * as R from 'ramda'
 import prisma from 'lib/prisma'
 import {
   arg,
@@ -106,22 +107,6 @@ export const brandDashOffers = queryField('brandDashOffers', {
   },
 })
 
-export const updateOffer = mutationField('updateOffer', {
-  type: list('Offer'),
-  args: {
-    input: arg({ type: 'UpdateOfferInput' }),
-  },
-  resolve: async (ctx, { input }, { user }) => {
-    if (!isBrand(user)) throw new ForbiddenError('Not a brand')
-    const { id, ...data } = input
-    const offer = await prisma.offer.update({
-      data,
-      where: { id },
-    })
-    return offer
-  },
-})
-
 export const placeOffer = mutationField('placeOffer', {
   type: 'Offer',
   args: {
@@ -129,9 +114,7 @@ export const placeOffer = mutationField('placeOffer', {
   },
   resolve: async (ctx, { input }, { user }) => {
     if (!isBrand(user)) throw new ForbiddenError('Not a brand')
-    const { listingId, productUrl, message } = input
-    const cashValue = Number(input.cashValue)
-    const productValue = Number(input.productValue)
+    const { listingId, cashValue, productValue } = input
 
     let offer = await prisma.offer.findFirst({
       where: { brandId: user.id, listingId },
@@ -141,10 +124,7 @@ export const placeOffer = mutationField('placeOffer', {
     const now = new Date()
 
     const historyItem = {
-      cashValue,
-      productValue,
-      productUrl,
-      message,
+      ...R.omit('listingId', input),
       createdAtString: now.toString(),
     } // cant put date obj in json
 
@@ -200,18 +180,10 @@ export const placeOfferInput = inputObjectType({
   name: 'PlaceOfferInput',
   definition(t) {
     t.nonNull.string('listingId')
-    t.string('cashValue')
-    t.string('productValue')
+    t.int('cashValue')
+    t.int('productValue')
     t.string('productName')
     t.string('productUrl')
     t.string('message')
-  },
-})
-
-export const updateOfferInput = inputObjectType({
-  name: 'UpdateOfferInput',
-  definition(t) {
-    t.string('id')
-    t.boolean('isCleared')
   },
 })

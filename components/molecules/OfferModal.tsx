@@ -90,13 +90,9 @@ export default function OfferModal({
   const [showSuccess, setShowSuccess] = useState(false)
   const [placeOffer] = useMutation(PLACE_OFFER)
   const { gray } = useColors()
-  console.log('listing: ', listing)
 
   useEffect(() => {
-    setShowSuccess(false)
-    reset(defaultValues)
     setMinTotalValue(defaultValues.cashValue + defaultValues.productValue)
-    setShowMinValueError(false)
   }, [defaultValues])
 
   useEffect(() => {
@@ -120,8 +116,11 @@ export default function OfferModal({
     setShowSuccess(true)
   }
 
-  const onSuccess = (): void => {
+  const handleClose = () => {
     onClose()
+    setShowSuccess(false)
+    reset(defaultValues)
+    setShowMinValueError(false)
   }
 
   const handleNumberInputBlur = e => {
@@ -130,17 +129,13 @@ export default function OfferModal({
     }
   }
 
-  if (!listing) {
-    return <Box />
-  }
-
   return (
     <Modal
-      onClose={onClose}
+      onClose={handleClose}
       isOpen={isOpen}
       closeOnOverlayClick={false}
       variant="new"
-      size="xl"
+      size={showSuccess ? 'md' : 'xl'}
     >
       <ModalOverlay />
       <ModalContent>
@@ -152,13 +147,15 @@ export default function OfferModal({
         <ModalCloseButton top={6} right={6} />
         {showSuccess ? (
           <>
-            <ModalBody textStyle="base" mb={10}>
+            <ModalBody textStyle="base" mb={4}>
               {`You have successfully ${
                 isUpdate ? 'updated your' : 'placed an'
               } offer.`}
             </ModalBody>
             <ModalFooter>
-              <Button onClick={onSuccess}>Close</Button>
+              <Button isFullWidth onClick={handleClose}>
+                Close
+              </Button>
             </ModalFooter>
           </>
         ) : (
@@ -177,7 +174,7 @@ export default function OfferModal({
                   textStyle="base"
                   textTransform="capitalize"
                 >
-                  {`${listing.platform} ${listing.deliverable}`}
+                  {`${listing?.platform} ${listing?.deliverable}`}
                 </Text>
                 <Text
                   fontWeight={600}
@@ -190,7 +187,7 @@ export default function OfferModal({
                 <Flex>
                   <Box mr={6}>
                     <Text fontWeight={600} textStyle="base">
-                      ${listing.highestOfferValue}
+                      ${listing?.highestOfferValue}
                     </Text>
                     <Text fontWeight={600} textStyle="micro" color={gray[500]}>
                       Highest
@@ -289,7 +286,12 @@ export default function OfferModal({
             </ModalBody>
             <ModalFooter>
               <Flex justify="space-between" w="full">
-                <Button colorScheme="gray" isFullWidth onClick={onClose} mr={4}>
+                <Button
+                  colorScheme="gray"
+                  isFullWidth
+                  onClick={handleClose}
+                  mr={4}
+                >
                   Cancel
                 </Button>
                 <Button

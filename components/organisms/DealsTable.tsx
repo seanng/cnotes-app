@@ -1,12 +1,12 @@
 import { useQuery, gql } from '@apollo/client'
 import { useState, useEffect } from 'react'
+import LinkButton from 'components/atoms/LinkButton'
 import { format } from 'date-fns'
 import EmptyTableState from 'components/molecules/EmptyTableState'
 import ListingStatusBadge from 'components/atoms/ListingStatusBadge'
 import { Deal } from 'shared/types'
 import {
   Th,
-  Button,
   Table,
   Thead,
   Tbody,
@@ -75,10 +75,6 @@ export default function DealsTable(): JSX.Element {
     }
   }, [data])
 
-  const handleViewClick = () => {
-    console.log('handleViewClick: ', handleViewClick)
-  }
-
   if (isLoading) {
     return <TableLoadingSkeleton />
   }
@@ -142,13 +138,13 @@ export default function DealsTable(): JSX.Element {
                 <ListingStatusBadge status={deal.status} />
               </Td>
               <Td bgColor="transparent">
-                <Button
+                <LinkButton
                   size="table"
-                  onClick={handleViewClick}
                   variant="outline"
+                  href={`/listing/${listing.id}`}
                 >
                   View
-                </Button>
+                </LinkButton>
               </Td>
             </Tr>
           )

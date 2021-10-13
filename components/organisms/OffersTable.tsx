@@ -21,6 +21,7 @@ import TableLoadingSkeleton from 'components/molecules/TableLoadingSkeleton'
 import EmptyTableState from 'components/molecules/EmptyTableState'
 import OfferModal from 'components/molecules/OfferModal'
 import ListingStatusBadge from 'components/atoms/ListingStatusBadge'
+import LinkButton from 'components/atoms/LinkButton'
 import BrandDashOfferValue from 'components/atoms/BrandDashOfferValue'
 
 const TimerSmall = dynamic(() => import('components/atoms/TimerSmall'), {
@@ -98,10 +99,6 @@ export default function OffersTable(): JSX.Element {
   const handleUpdateClick = i => () => {
     setSelectedOffer(offers[i])
     setIsModalOpen(true)
-  }
-
-  const handleViewClick = () => {
-    console.log('handleViewClick: ', handleViewClick)
   }
 
   if (isLoading) {
@@ -191,13 +188,13 @@ export default function OffersTable(): JSX.Element {
                       Update
                     </Button>
                   ) : (
-                    <Button
+                    <LinkButton
                       size="table"
-                      onClick={handleViewClick}
                       variant="outline"
+                      href={`/listing/${listing.id}`}
                     >
                       View
-                    </Button>
+                    </LinkButton>
                   )}
                 </Td>
               </Tr>
