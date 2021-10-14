@@ -13,6 +13,7 @@ import {
   Container,
   SimpleGrid,
   Text,
+  Skeleton,
 } from '@chakra-ui/react'
 import ProfileBox from 'components/organisms/ProfileBox'
 import ProfileBanner from 'components/atoms/ProfileBanner'
@@ -70,13 +71,52 @@ const LISTING_BY_ID = gql`
   }
 `
 
-const LoadingSkeleton = () => {
-  return <Box>loading...</Box>
-}
+const profileBodyWidth = `calc(100% - ${PROFILE_BOX_INNER_WIDTH}px - ${PROFILE_BOX_WRAPPER_PADDING}px)`
 
-interface Props {
-  user: User
-  listingId: string
+const LoadingSkeleton = () => {
+  return (
+    <>
+      <ProfileBanner isLoading />
+      <Container display={{ md: 'flex' }} maxWidth={1280}>
+        <Skeleton
+          borderRadius="xl"
+          width={356}
+          height={600}
+          position="sticky"
+          top={2}
+          alignSelf="flex-start"
+          display={['none', null, 'flex']}
+        />
+        <Box
+          width={['100%', null, profileBodyWidth]}
+          pl={[0, null, '5%', 20]}
+          mt={-8}
+          pb={[285, null, 0]}
+        >
+          <Skeleton
+            borderRadius="xl"
+            textStyle={['h3', 'h2']}
+            mb={5}
+            width="120px"
+            height="70px"
+          />
+          <Skeleton height={228} mb={10} borderRadius="xl" />
+          <Skeleton borderRadius="xl" mb={7} width="120px" height="70px" />
+          <Skeleton borderRadius="xl" mb={5} height="45px" />
+          <Skeleton borderRadius="xl" mb={5} height="45px" />
+          <Skeleton borderRadius="xl" mb={5} height="45px" />
+        </Box>
+      </Container>
+      <Skeleton
+        position="fixed"
+        bottom={0}
+        w="full"
+        display={['block', null, 'none']}
+        borderTopRadius="lg"
+        height="280px"
+      />
+    </>
+  )
 }
 
 function BottomCardInfoItem({
@@ -94,6 +134,11 @@ function BottomCardInfoItem({
       </Text>
     </Box>
   )
+}
+
+interface Props {
+  user: User
+  listingId: string
 }
 
 const BrandListing: NextPage<Props> = ({ user, listingId }: Props) => {
@@ -140,7 +185,6 @@ const BrandListing: NextPage<Props> = ({ user, listingId }: Props) => {
     setIsModalOpen(true)
   }
 
-  const profileBodyWidth = `calc(100% - ${PROFILE_BOX_INNER_WIDTH}px - ${PROFILE_BOX_WRAPPER_PADDING}px)`
   const genderChart = listing?.profile?.creatorStats?.genderBreakdown
   const locationChart = listing?.profile?.creatorStats?.locationBreakdown
   const lastOffer = listing?.offer?.history[listing?.offer?.history.length - 1]

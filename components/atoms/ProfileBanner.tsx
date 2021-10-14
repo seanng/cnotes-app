@@ -11,11 +11,14 @@ const toCssVar = (colorCode: string): string => {
 
 interface Props {
   src?: string
+  isLoading?: boolean
 }
 
-export default function ProfileBanner({ src }: Props): JSX.Element {
-  const bgImage = src || PLACEHOLDER_BANNER_URL
+export default function ProfileBanner({ src, isLoading }: Props): JSX.Element {
   const bannerBgColor = toCssVar(useTransposeColor('gray.50'))
+  const overlayBgColor = isLoading
+    ? toCssVar(useTransposeColor('gray.300'))
+    : 'transparent'
   return (
     <Box
       h={[306, null, 408]}
@@ -24,12 +27,18 @@ export default function ProfileBanner({ src }: Props): JSX.Element {
       position="relative"
       zIndex="-1"
     >
-      <Image layout="fill" src={bgImage} objectFit="cover" />
+      {!isLoading && (
+        <Image
+          layout="fill"
+          src={src || PLACEHOLDER_BANNER_URL}
+          objectFit="cover"
+        />
+      )}
       <Box
         position="absolute"
         w="full"
         h="full"
-        background={`linear-gradient(${bannerBgColor} 0%, transparent 40%, transparent 70%, ${bannerBgColor} 100%)`}
+        background={`linear-gradient(${bannerBgColor} 0%, ${overlayBgColor} 40%, ${overlayBgColor} 70%, ${bannerBgColor} 100%)`}
       />
     </Box>
   )
