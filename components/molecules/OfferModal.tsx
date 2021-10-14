@@ -46,7 +46,9 @@ interface ModalProps {
   onClose: () => void
   isOpen: boolean
   heading?: string
-  listing: Listing
+  listing: Listing & {
+    minCashValue: number
+  }
   isUpdate?: boolean
   defaultValues?: {
     message: string
@@ -141,7 +143,7 @@ export default function OfferModal({
       <ModalContent>
         <ModalHeader textAlign="left">
           <Text textStyle="xLarge">
-            {isUpdate ? 'Update Offer' : 'place offer'}
+            {isUpdate ? 'Update Offer' : 'Place Offer'}
           </Text>
         </ModalHeader>
         <ModalCloseButton top={6} right={6} />
@@ -206,12 +208,15 @@ export default function OfferModal({
               {/* form */}
               <Flex>
                 <FormInput
-                  label="Cash value"
+                  label="Cash offer"
+                  prefixElement="$"
+                  error={errors?.cashValue}
                   inputProps={{
+                    placeholder: 'The monetary offer amount',
                     type: 'number',
                     ...register('cashValue', {
                       valueAsNumber: true,
-                      min: 0,
+                      min: listing?.minCashValue || 0,
                     }),
                     onBlur: handleNumberInputBlur,
                   }}
@@ -219,6 +224,7 @@ export default function OfferModal({
                 />
                 <FormInput
                   label="Product value"
+                  prefixElement="$"
                   inputProps={{
                     type: 'number',
                     ...register('productValue', {

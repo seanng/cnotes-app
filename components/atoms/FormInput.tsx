@@ -1,4 +1,4 @@
-import { FC } from 'react'
+import { FC, ReactNode } from 'react'
 import { useColors } from 'hooks'
 import { Icon as Iconify } from '@iconify/react'
 import {
@@ -7,7 +7,9 @@ import {
   Icon,
   FormLabel,
   FormErrorMessage,
+  InputLeftElement,
   Input,
+  InputGroup,
   FormControlProps,
 } from '@chakra-ui/react'
 
@@ -17,6 +19,7 @@ interface Props extends FormControlProps {
   inputProps: Record<string, any>
   hideMessage?: boolean
   helpText?: string
+  prefixElement?: ReactNode
 }
 
 const FormInput: FC<Props> = ({
@@ -25,6 +28,7 @@ const FormInput: FC<Props> = ({
   inputProps,
   hideMessage,
   helpText,
+  prefixElement,
   ...props
 }: Props) => {
   const { gray } = useColors()
@@ -45,7 +49,14 @@ const FormInput: FC<Props> = ({
           )}
         </FormLabel>
       )}
-      <Input variant="rounded" {...inputProps} />
+      <InputGroup>
+        {prefixElement && (
+          <InputLeftElement pointerEvents="none">
+            {prefixElement}
+          </InputLeftElement>
+        )}
+        <Input variant="rounded" {...inputProps} />
+      </InputGroup>
       {!hideMessage && (
         <FormErrorMessage color="red">{error?.message}</FormErrorMessage>
       )}
