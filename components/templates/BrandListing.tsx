@@ -27,6 +27,7 @@ import {
 import ProfileReel from 'components/organisms/ProfileReel'
 import StatNumbers from 'components/molecules/StatNumbers'
 import OfferModal from 'components/molecules/OfferModal'
+import ProfileCollabs from 'components/organisms/ProfileCollabs'
 
 const LISTING_BY_ID = gql`
   query listingById($id: ID) {
@@ -230,6 +231,9 @@ const BrandListing: NextPage<Props> = ({ user, listingId }: Props) => {
                   {locationChart && <LocationChart data={locationChart} />}
                 </Box>
               </Box>
+              {listing?.profile?.collabs && (
+                <ProfileCollabs collabs={listing.profile.collabs} mb={12} />
+              )}
 
               <ProfileReel
                 profile={listing.profile}
