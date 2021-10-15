@@ -46,11 +46,13 @@ const MY_ACTIVE_OFFERS = gql`
         deliverable
         status
         highestOfferValue
-        offerCount
         auctionEndsAt
         creator {
           alias
           avatarUrl
+        }
+        offers {
+          id
         }
         decidedAt
       }
@@ -162,7 +164,7 @@ export default function OffersTable(): JSX.Element {
                     ${listing.highestOfferValue}
                   </Text>
                   <Text textStyle="microBold" color={gray[500]}>
-                    {`${listing.offerCount} total offers`}
+                    {`${listing.offers.length} total offers`}
                   </Text>
                 </Td>
                 <Td>

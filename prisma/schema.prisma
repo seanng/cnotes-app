@@ -50,7 +50,6 @@ model Listing {
   offers            Offer[]
   deals             Deal[]
   highestOfferValue Int?
-  offerCount        Int?
   minCashValue      Int?
   platform          String?
   deliverable       String?

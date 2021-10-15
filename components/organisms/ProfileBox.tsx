@@ -101,7 +101,7 @@ type Props = {
   withStats?: boolean
   isShort?: boolean
   onOfferClick?: () => void
-  listing?: Listing & { offer: Offer }
+  listing?: Listing & { offer: Offer; offerCount: number }
 } & FlexProps
 
 const ProfileBox = ({

@@ -27,7 +27,6 @@ export const Listing = objectType({
     t.field('specs', {
       type: 'JSON',
     })
-    t.int('offerCount')
     t.int('minCashValue')
     t.int('highestOfferValue')
     t.list.field('offers', {
@@ -130,7 +129,6 @@ export const createListing = mutationField('createListing', {
           connect: { id: user.id },
         },
         highestOfferValue: 0,
-        offerCount: 0,
         createdAt: now,
         updatedAt: now,
       },

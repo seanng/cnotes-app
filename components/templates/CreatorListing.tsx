@@ -20,7 +20,6 @@ const LISTING_BY_ID = gql`
       iconUrl
       highestOfferValue
       status
-      offerCount
       platform
       deliverable
       deals {

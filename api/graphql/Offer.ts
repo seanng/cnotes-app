@@ -98,6 +98,10 @@ export const brandDashOffers = queryField('brandDashOffers', {
                 slug: true,
               },
             },
+            // TODO: return an offerCount instead of array of offers..
+            offers: {
+              select: { id: true },
+            },
           },
         },
       },
@@ -163,9 +167,6 @@ export const placeOffer = mutationField('placeOffer', {
         ...(totalValue > offer.listing.highestOfferValue && {
           highestOfferValue: totalValue,
         }),
-        offerCount: {
-          increment: 1,
-        },
         updatedAt: now,
       },
     })

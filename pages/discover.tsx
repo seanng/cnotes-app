@@ -25,7 +25,6 @@ const ListingsQuery = gql`
     discoveryListings {
       id
       highestOfferValue
-      offerCount
       platform
       deliverable
       description
@@ -33,6 +32,9 @@ const ListingsQuery = gql`
         alias
         slug
         avatarUrl
+      }
+      offers {
+        id
       }
       createdAt
       auctionEndsAt
@@ -105,7 +107,9 @@ const DiscoverPage: NextPage<Props> = ({ user }: Props) => {
                         <Box textStyle="xLarge">
                           ${listing.highestOfferValue.toLocaleString()}
                         </Box>
-                        <Box textStyle="mini">{listing.offerCount} offers</Box>
+                        <Box textStyle="mini">
+                          {listing.offers.length} offers
+                        </Box>
                       </Box>
                     </Box>
                   </LinkOverlay>

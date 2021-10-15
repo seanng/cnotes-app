@@ -102,7 +102,6 @@ export interface Listing {
   deliverable: string
   offers?: Offer[]
   auctionEndsAt: string
-  offerCount: number
   highestOfferValue: number
   specs: ListingSpecs
   deals: Deal[]

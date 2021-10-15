@@ -35,7 +35,6 @@ const PLACE_OFFER = gql`
       }
       listing {
         id
-        offerCount
         highestOfferValue
       }
     }
