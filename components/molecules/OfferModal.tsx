@@ -3,7 +3,6 @@ import {
   Modal,
   FormControl,
   FormLabel,
-  Textarea,
   ModalOverlay,
   ModalContent,
   ModalHeader,
@@ -14,8 +13,8 @@ import {
   ModalFooter,
   Button,
   Box,
-  useColorModeValue,
 } from '@chakra-ui/react'
+import Textarea from 'components/atoms/Textarea'
 import { useForm } from 'react-hook-form'
 import { Listing } from 'shared/types'
 import { useColors } from 'hooks'
@@ -269,20 +268,10 @@ export default function OfferModal({
                 mb={5}
               />
               <FormControl isInvalid={!!errors.message}>
-                <FormLabel
-                  textTransform="none"
-                  fontWeight={600}
-                  fontSize="16px"
-                  color={gray[1000]}
-                  htmlFor="message"
-                >
-                  Message
-                </FormLabel>
+                <FormLabel htmlFor="message">Message</FormLabel>
                 <Textarea
                   placeholder={`eg. I want you to shine for me like a whistle.`}
                   rows={4}
-                  bgColor={useColorModeValue('gray.50', 'gray.800')}
-                  borderWidth={0}
                   {...register('message')}
                 />
               </FormControl>

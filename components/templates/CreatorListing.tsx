@@ -17,6 +17,7 @@ const LISTING_BY_ID = gql`
       id
       name
       specs
+      description
       iconUrl
       highestOfferValue
       status

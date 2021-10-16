@@ -11,7 +11,7 @@ import {
 import dynamic from 'next/dynamic'
 import Image from 'next/image'
 import { getCreatorListingOrDealStatus } from 'utils/helpers'
-import { Deal, User, Listing } from 'shared/types'
+import { Deal, User, Listing, Offer } from 'shared/types'
 import { statusConfigs } from 'utils/configs'
 import { ArrowBackIcon } from '@chakra-ui/icons'
 
@@ -26,17 +26,20 @@ type Props = {
     name?: string
     brand?: User
     listing?: Listing
+    offers?: Offer[]
+    highestOfferValue?: number
+    description?: string
   }
 }
 
 export default function StageHeading({ data }: Props): JSX.Element {
   const status = getCreatorListingOrDealStatus(data)
   const config = statusConfigs[status]
-
   const imgSrc = data.iconUrl ? data.iconUrl : data.brand.avatarUrl
   const name = data.name
     ? data.name
     : `${data.listing.deliverable} for ${data.brand.alias}`
+  const offerCount = data.offers?.length || 0
   return (
     <>
       <Container mt={4} mb={[6, 10]}>
@@ -68,6 +71,26 @@ export default function StageHeading({ data }: Props): JSX.Element {
             </Tag>
             <Text textStyle="h4" mt={1}>
               {name}
+            </Text>
+            <Text textStyle="micro" mt={1} noOfLines={1} maxWidth={600}>
+              {offerCount === 0 && (
+                <Box as="span">
+                  {data.description || data.listing?.description}
+                </Box>
+              )}
+              {offerCount === 1 && (
+                <Box as="span" mr={2}>
+                  1 Brand
+                </Box>
+              )}
+              {offerCount > 1 && (
+                <>
+                  <Box as="span" mr={2}>
+                    🔥{offerCount} brands
+                  </Box>
+                  <Box as="span">📈${data.highestOfferValue} Highest Offer</Box>
+                </>
+              )}
             </Text>
           </Box>
         </Flex>

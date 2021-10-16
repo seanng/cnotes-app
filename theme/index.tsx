@@ -11,7 +11,6 @@ import Tag from './components/tag'
 import Modal from './components/modal'
 import Accordion from './components/accordion'
 import Input from './components/input'
-import Textarea from './components/textarea'
 import Avatar from './components/avatar'
 import { mode } from '@chakra-ui/theme-tools'
 
@@ -33,7 +32,6 @@ const components = {
   Container,
   FormLabel,
   Input,
-  Textarea,
   Accordion,
   Tag,
   Table,

@@ -1,5 +1,4 @@
 import {
-  Textarea,
   Box,
   FormControl,
   FormLabel,
@@ -9,6 +8,7 @@ import {
   SimpleGrid,
 } from '@chakra-ui/react'
 import NextImage from 'next/image'
+import Textarea from 'components/atoms/Textarea'
 import FormInput from 'components/atoms/FormInput'
 import { useRef, FC, ChangeEventHandler } from 'react'
 import { FieldError, UseFormRegister, DeepMap } from 'react-hook-form'

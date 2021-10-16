@@ -8,19 +8,21 @@ import {
   Text,
   FormControl,
   FormLabel,
-  Textarea,
   Button,
   Accordion,
   AccordionItem,
   AccordionButton,
   AccordionIcon,
   AccordionPanel,
+  SelectProps,
   Spacer,
   Select,
+  FlexProps,
 } from '@chakra-ui/react'
 import { useMutation, gql } from '@apollo/client'
 import { useState } from 'react'
 import FormInput from 'components/atoms/FormInput'
+import Textarea from 'components/atoms/Textarea'
 import { NextPage } from 'next'
 import { useColors } from 'hooks'
 import Layout from 'components/organisms/Layout'
@@ -72,6 +74,34 @@ const icons = [
   { label: 'donut2', url: `${S3_LISTING_ICONS_FOLDER}/9.png` },
   { label: 'tube', url: `${S3_LISTING_ICONS_FOLDER}/10.png` },
 ]
+
+interface AdvancedRowProps extends FlexProps {
+  label: string
+  selectProps: SelectProps
+  description?: string
+}
+
+function AdvancedRow({
+  label,
+  selectProps,
+  description,
+}: AdvancedRowProps): JSX.Element {
+  const { gray } = useColors()
+  return (
+    <Flex mb={6} align="center">
+      <Flex direction="column">
+        <Box mb={1}>{label}</Box>
+        {description && (
+          <Box textStyle="small" fontWeight={400} color={gray[600]}>
+            {description}
+          </Box>
+        )}
+      </Flex>
+      <Spacer />
+      <Select w={110} variant="rounded" {...selectProps} />
+    </Flex>
+  )
+}
 
 const CreateListingForm: NextPage<Props> = ({
   user,
@@ -146,6 +176,7 @@ const CreateListingForm: NextPage<Props> = ({
                 mr={5}
                 label="Listing Name"
                 error={errors.name}
+                variant="outline"
                 inputProps={{
                   placeholder: 'eg. My First Integration',
                   ...register('name', {
@@ -155,7 +186,10 @@ const CreateListingForm: NextPage<Props> = ({
               />
               <FormControl flex={1}>
                 <FormLabel>Deliverable</FormLabel>
-                <Select {...register('platformAndDeliverable')}>
+                <Select
+                  variant="rounded"
+                  {...register('platformAndDeliverable')}
+                >
                   <option value={''}>I&apos;m not sure</option>
                   <option>YouTube Integration</option>
                   <option>YouTube Dedicated</option>
@@ -164,54 +198,14 @@ const CreateListingForm: NextPage<Props> = ({
                 </Select>
               </FormControl>
             </Flex>
-            {/* <FormControl mb={10}>
-              <FormLabel
-                htmlFor="when"
-                color={
-                  errors.deliveryStartsAt || errors.end ? 'red' : 'gray.500'
-                }
-              >
-                When are you available to post the sponsored work?
-              </FormLabel>
-              <Flex>
-                <DatePicker
-                  controllerProps={{
-                    control: control,
-                    name: 'deliveryStartsAt',
-                    rules: { required: true },
-                  }}
-                  inputProps={{
-                    w: 140,
-                    id: 'deliveryStartsAt',
-                    mr: 10,
-                    isInvalid: errors.deliveryStartsAt,
-                  }}
-                  minDate={new Date()}
-                  placeholderText="Start"
-                />
-                <DatePicker
-                  controllerProps={{
-                    control: control,
-                    name: 'deliveryEndsAt',
-                    rules: { required: true },
-                  }}
-                  inputProps={{
-                    w: 140,
-                    id: 'deliveryEndsAt',
-                    isInvalid: errors.deliveryEndsAt,
-                  }}
-                  minDate={deliveryStartsAt}
-                  placeholderText="End"
-                />
-              </Flex>
-            </FormControl> */}
             <FormControl maxW={MAX_COL_WIDTH} isInvalid={errors.description}>
               <FormLabel htmlFor="description">
                 Describe what you&apos;d like to do for a sponsorship?
               </FormLabel>
               <Textarea
                 placeholder={`eg. "I will promote your product for 30 seconds on my YouTube videos until they reach 150k total views."`}
-                mb={10}
+                rows={4}
+                mb={8}
                 {...register('description', { required: true })}
               />
             </FormControl>
@@ -230,71 +224,70 @@ const CreateListingForm: NextPage<Props> = ({
           <AccordionItem>
             <h2>
               <AccordionButton>
-                <Box textAlign="left" textStyle="small" fontWeight={700} mr={4}>
+                <Box textAlign="left" textStyle="baseBold" mr={4}>
                   Advanced Options
                 </Box>
                 <AccordionIcon />
               </AccordionButton>
             </h2>
-            <AccordionPanel textStyle="base">
-              <Flex mb={6}>
-                <Flex direction="column">
-                  <Box mb={1}>Number of Revisions</Box>
-                  <Box textStyle="mini" color={gray[600]}>
-                    How many times can a brand suggest non-major changes to the
-                    sponsored work?
-                  </Box>
-                </Flex>
-                <Spacer />
-                <Select w={110} {...register('numberOfRevisions')}>
-                  <option value={''}>-</option>
-                  <option>1</option>
-                  <option>2</option>
-                  <option>3</option>
-                </Select>
-              </Flex>
-              <Flex mb={6}>
-                <Flex direction="column">
-                  <Box mb={1}>Revision Time</Box>
-                  <Box textStyle="mini" color={gray[600]}>
-                    When can the brand preview your work and suggest edits
-                    before it goes live?
-                  </Box>
-                </Flex>
-                <Spacer />
-                <Select w={110} {...register('revisionDays')}>
-                  <option value={''}>-</option>
-                  <option value={3}>3 days</option>
-                  <option value={7}>7 days</option>
-                  <option value={14}>14 days</option>
-                </Select>
-              </Flex>
-              <Flex mb={6}>
-                <Flex direction="column">
-                  <Box mb={1}>Will the media be reusable?</Box>
-                  <Box textStyle="mini" color={gray[600]}>
-                    Will the brand get a license to reuse the work in other
-                    places? (eg. making it into a Facebook ad)
-                  </Box>
-                </Flex>
-                <Spacer />
-                <Select w={110} {...register('canReuse')}>
-                  <option value={''}>-</option>
-                  <option>Yes</option>
-                  <option>No</option>
-                </Select>
-              </Flex>
-              <Flex align="center">
-                <Flex direction="column">
-                  <Box>Would you follow a script provided by the sponsor?</Box>
-                </Flex>
-                <Spacer />
-                <Select w={110} {...register('willFollowScript')}>
-                  <option value={''}>-</option>
-                  <option>Yes</option>
-                  <option>No</option>
-                </Select>
-              </Flex>
+            <AccordionPanel textStyle="baseBold">
+              <AdvancedRow
+                label="Number of Revisions"
+                description="How many times can a brand suggest non-major changes to the sponsored work?"
+                selectProps={{
+                  children: (
+                    <>
+                      <option value={''}>-</option>
+                      <option>1</option>
+                      <option>2</option>
+                      <option>3</option>
+                    </>
+                  ),
+                  ...register('numberOfRevisions'),
+                }}
+              />
+              <AdvancedRow
+                label="Revision Time"
+                description="When can the brand preview your work and suggest edits before it goes live?"
+                selectProps={{
+                  children: (
+                    <>
+                      <option value={''}>-</option>
+                      <option value={3}>3 days</option>
+                      <option value={7}>7 days</option>
+                      <option value={14}>14 days</option>
+                    </>
+                  ),
+                  ...register('revisionDays'),
+                }}
+              />
+              <AdvancedRow
+                label="Will the media be reusable?"
+                description="Can the brand reuse the work in other places? (eg. making it a Facebook ad)"
+                selectProps={{
+                  children: (
+                    <>
+                      <option value={''}>-</option>
+                      <option>Yes</option>
+                      <option>No</option>
+                    </>
+                  ),
+                  ...register('canReuse'),
+                }}
+              />
+              <AdvancedRow
+                label="Would you follow a script provided by the sponsor?"
+                selectProps={{
+                  children: (
+                    <>
+                      <option value={''}>-</option>
+                      <option>Yes</option>
+                      <option>No</option>
+                    </>
+                  ),
+                  ...register('willFollowScript'),
+                }}
+              />
             </AccordionPanel>
           </AccordionItem>
         </Accordion>

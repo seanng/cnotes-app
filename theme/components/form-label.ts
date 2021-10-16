@@ -1,14 +1,14 @@
-import textStyles from 'theme/foundations/text-styles'
+import { mode } from '@chakra-ui/theme-tools'
+
 export default {
-  baseStyle: {
-    ...textStyles.micro,
+  baseStyle: props => ({
     fontFamily: 'body',
-    letterSpacing: '0.1px',
-    fontWeight: 500,
-    color: 'gray.400',
+    fontWeight: 600,
+    color: mode('black', 'white')(props),
+    fontSize: '16px',
     mb: 3,
     _invalid: {
       color: 'red',
     },
-  },
+  }),
 }

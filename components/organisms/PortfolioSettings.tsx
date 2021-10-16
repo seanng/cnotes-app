@@ -70,7 +70,7 @@ const Portfolio: FC<Props> = ({ register, control, errors }: Props) => {
             <FormInput
               mb={4}
               error={errors.collabs?.[i]?.url}
-              label="url"
+              label="Media URL"
               inputProps={{
                 defaultValue: field.url,
                 placeholder: 'eg. https://www.youtube.com/watch?v=l7FV87ocmwM',
@@ -100,7 +100,7 @@ const Portfolio: FC<Props> = ({ register, control, errors }: Props) => {
             <FormInput
               mb={4}
               error={errors.collabs?.[i]?.companyUrl}
-              label="sponsor url"
+              label="Sponsor URL"
               hideMessage
               inputProps={{
                 defaultValue: field.companyUrl,
@@ -118,11 +118,8 @@ const Portfolio: FC<Props> = ({ register, control, errors }: Props) => {
               <FormControl maxW={180} mr={4} mb={4}>
                 <FormLabel>Job Type</FormLabel>
                 <Select
+                  variant="rounded"
                   {...register(`collabs.${i}.deliverable`)}
-                  _hover={{ borderWidth: 2 }}
-                  size="lg"
-                  borderWidth={2}
-                  borderRadius="xl"
                 >
                   <option value={''}>-</option>
                   <option>Integration</option>
@@ -169,7 +166,7 @@ const Portfolio: FC<Props> = ({ register, control, errors }: Props) => {
             <FormInput
               mb={4}
               error={errors.samples?.[i]?.url}
-              label="url"
+              label="Media URL"
               mr={4}
               inputProps={{
                 defaultValue: field.url,

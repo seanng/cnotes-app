@@ -56,7 +56,7 @@ export default function SubmittingStage({ deal }: Props): JSX.Element {
       >
         <InputGroup size="lg">
           <Input
-            variant="new"
+            variant="rounded"
             {...register('submittedUrl', {
               required: true,
               pattern: {

@@ -21,6 +21,7 @@ const DEAL_BY_ID = gql`
       message
       listing {
         platform
+        description
         deliverable
         specs
       }
