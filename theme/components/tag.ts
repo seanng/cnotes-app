@@ -1,27 +1,21 @@
 export default {
   variants: {
-    reel: {
+    app: {
       container: {
         borderRadius: 'full',
-        bgColor: 'black',
-        color: 'white',
-        fontSize: '10px',
-      },
-    },
-    card: {
-      container: {
-        borderRadius: 'full',
+        fontFamily: 'body',
+        fontWeight: 600,
         fontSize: '12px',
+        minHeight: '17px',
+        textTransform: 'uppercase',
+        bgColor: 'yellow.400',
+        color: 'black',
+        py: '2px',
       },
     },
   },
-  baseStyle: {
-    container: {
-      fontFamily: 'body',
-      fontWeight: 600,
-      minHeight: '15px',
-      textTransform: 'uppercase',
-      py: 0,
-    },
+  defaultProps: {
+    // default variant = subtle
+    variant: 'app',
   },
 }

@@ -27,7 +27,7 @@ export const Listing = objectType({
     t.field('specs', {
       type: 'JSON',
     })
-    t.int('minCashValue')
+    t.int('askingPrice')
     t.int('highestOfferValue')
     t.list.field('offers', {
       type: 'Offer',
@@ -237,8 +237,15 @@ export const discoveryListings = queryField('discoveryListings', {
           select: {
             avatarUrl: true,
             alias: true,
+            bannerUrl: true,
+            creatorStats: true,
+            genre: true,
             slug: true,
           },
+        },
+        // TODO: return an offerCount instead of array of offers..
+        offers: {
+          select: { id: true },
         },
       },
     })

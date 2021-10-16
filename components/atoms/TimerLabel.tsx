@@ -27,7 +27,7 @@ function TimerLabel({
       pl={4}
       pr={4}
       pt={1}
-      pb={2}
+      pb={1}
       {...props}
     >
       {withEmoji && <Box mr={3}>{clockEmoji}</Box>}

@@ -63,12 +63,7 @@ export default function StageHeading({ data }: Props): JSX.Element {
             </Box>
           )}
           <Box>
-            <Tag
-              color="black"
-              bgColor="yellow.400"
-              variant="card"
-              {...config.tagProps}
-            >
+            <Tag fontSize="12px" {...config.tagProps}>
               {config.text}
             </Tag>
             <Text textStyle="h4" mt={1}>

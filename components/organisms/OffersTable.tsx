@@ -218,10 +218,7 @@ export default function OffersTable(): JSX.Element {
           productUrl: selectedLastOffer?.productUrl,
           productName: selectedLastOffer?.productName,
           productValue: selectedLastOffer?.productValue || 0,
-          cashValue:
-            selectedLastOffer?.cashValue ||
-            selectedOffer?.listing?.minCashValue ||
-            0,
+          cashValue: selectedLastOffer?.cashValue || 0,
         }}
       />
     </>

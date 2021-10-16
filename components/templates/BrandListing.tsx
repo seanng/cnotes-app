@@ -34,7 +34,6 @@ const LISTING_BY_ID = gql`
     listingById(id: $id) {
       id
       status
-      minCashValue
       specs
       highestOfferValue
       offers {
@@ -163,7 +162,7 @@ const BrandListing: NextPage<Props> = ({ user, listingId }: Props) => {
         platform: payload.platform,
         auctionEndsAt: payload.auctionEndsAt,
         highestOfferValue: payload.highestOfferValue,
-        minCashValue: payload.minCashValue,
+        askingPrice: payload.askingPrice,
         offerCount: payload.offers.length,
         offer,
         profile: profileTransformer(payload.creator),
@@ -321,7 +320,7 @@ const BrandListing: NextPage<Props> = ({ user, listingId }: Props) => {
           productUrl: lastOffer?.productUrl,
           productName: lastOffer?.productName,
           productValue: lastOffer?.productValue || 0,
-          cashValue: lastOffer?.cashValue || listing?.minCashValue || 0,
+          cashValue: lastOffer?.cashValue || 0,
         }}
       />
     </Layout>

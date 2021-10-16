@@ -45,9 +45,7 @@ interface ModalProps {
   onClose: () => void
   isOpen: boolean
   heading?: string
-  listing: Listing & {
-    minCashValue: number
-  }
+  listing: Listing
   isUpdate?: boolean
   defaultValues?: {
     message: string
@@ -215,7 +213,7 @@ export default function OfferModal({
                     type: 'number',
                     ...register('cashValue', {
                       valueAsNumber: true,
-                      min: listing?.minCashValue || 0,
+                      min: 0,
                     }),
                     onBlur: handleNumberInputBlur,
                   }}

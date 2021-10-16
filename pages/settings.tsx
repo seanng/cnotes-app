@@ -19,7 +19,6 @@ import {
 import * as R from 'ramda'
 import FeedbackModal from 'components/molecules/FeedbackModal'
 import Layout from 'components/organisms/Layout'
-import LinkButton from 'components/atoms/LinkButton'
 import { useRouter } from 'next/router'
 import { ChangeEventHandler, useState } from 'react'
 import { useForm } from 'react-hook-form'
@@ -270,14 +269,15 @@ const SettingsPage: NextPage<Props> = ({ user }: Props) => {
               >
                 Save Changes
               </Button>
-              <LinkButton
-                type="button"
-                variant="outline"
-                size="md"
+              <a
                 href={`/profile/${user.slug}`}
+                target="_blank"
+                rel="noopener noreferrer"
               >
-                Preview
-              </LinkButton>
+                <Button type="button" variant="outline" size="md">
+                  Preview
+                </Button>
+              </a>
             </HStack>
           </Box>
         </Container>

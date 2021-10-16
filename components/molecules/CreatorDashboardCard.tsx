@@ -16,7 +16,6 @@ import { Deal, Listing, DealStatus, ListingStatus } from 'shared/types'
 import { LISTING } from 'shared/constants'
 import { useColors } from 'hooks'
 import { getCreatorListingOrDealStatus } from 'utils/helpers'
-import { memo } from 'react'
 import dynamic from 'next/dynamic'
 import { statusConfigs } from 'utils/configs'
 import { CARD_HEIGHT, CARD_ASPECT_RATIO } from 'shared/metrics'
@@ -114,13 +113,7 @@ function CreatorDashboardCard({ data }: Props): JSX.Element {
               )}
             </Flex>
             <Box>
-              <Tag
-                mr={4}
-                color="black"
-                bgColor="yellow.400"
-                variant="card"
-                {...config.tagProps}
-              >
+              <Tag mr={4} {...config.tagProps}>
                 {config.text}
               </Tag>
               {config.type === LISTING ? (
@@ -177,4 +170,4 @@ function CreatorDashboardCard({ data }: Props): JSX.Element {
   )
 }
 
-export default memo(CreatorDashboardCard)
+export default CreatorDashboardCard

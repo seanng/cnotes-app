@@ -98,11 +98,13 @@ export interface Listing {
   status: ListingStatus
   iconUrl?: string
   brandId?: string
+  description?: string
   platform: string
   deliverable: string
   offers?: Offer[]
   auctionEndsAt: string
   highestOfferValue: number
+  askingPrice?: number
   specs: ListingSpecs
   deals: Deal[]
   deliveryEndsAt: string

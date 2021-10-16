@@ -12,16 +12,21 @@ const toCssVar = (colorCode: string): string => {
 interface Props {
   src?: string
   isLoading?: boolean
+  height?: Array<string | number> | string | number
 }
 
-export default function ProfileBanner({ src, isLoading }: Props): JSX.Element {
+export default function ProfileBanner({
+  src,
+  isLoading,
+  height = [306, null, 408],
+}: Props): JSX.Element {
   const bannerBgColor = toCssVar(useTransposeColor('gray.50'))
   const overlayBgColor = isLoading
     ? toCssVar(useTransposeColor('gray.300'))
     : 'transparent'
   return (
     <Box
-      h={[306, null, 408]}
+      h={height}
       mt={NAVBAR_HEIGHT * -1}
       w="100%"
       position="relative"

@@ -66,16 +66,16 @@ const ProfileReel = ({ profile, gridProps }: Props): JSX.Element => {
                   >
                     {item.companyName && (
                       <Flex direction="row" alignItems="flex-start">
-                        <Tag variant="reel" mr={1} mb={1}>
+                        <Tag mr={1} mb={1} fontSize="10px">
                           {item.companyName}
                         </Tag>
-                        <Tag variant="reel" mb={1}>
+                        <Tag mb={1} fontSize="10px">
                           {item.deliverable}
                         </Tag>
                       </Flex>
                     )}
                     {item.isVerified && (
-                      <Tag variant="reel" bgColor={green[600]}>
+                      <Tag bgColor={green[600]}>
                         <IsVerifiedTag color="black" />
                       </Tag>
                     )}
