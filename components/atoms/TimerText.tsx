@@ -1,5 +1,5 @@
 import { memo } from 'react'
-import { Text } from '@chakra-ui/react'
+import { Text, FlexProps } from '@chakra-ui/react'
 import { useTimer } from 'hooks'
 
 interface Props extends FlexProps {
