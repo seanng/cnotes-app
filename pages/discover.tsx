@@ -1,6 +1,7 @@
 import NextLink from 'next/link'
 import { useQuery, gql } from '@apollo/client'
 import {
+  Skeleton,
   Avatar,
   Container,
   Tag,
@@ -53,6 +54,17 @@ const ListingsQuery = gql`
   }
 `
 
+function LoadingSkeleton(): JSX.Element {
+  const arr = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
+  return (
+    <SimpleGrid columns={[1, 2, null, 3, 4]} gap={4}>
+      {arr.map(a => (
+        <Skeleton key={a} borderRadius="xl" height={384} />
+      ))}
+    </SimpleGrid>
+  )
+}
+
 interface StatProps extends IconProps {
   icon: string
   helpText: string
@@ -93,12 +105,12 @@ const DiscoverPage: NextPage<Props> = ({ user }: Props) => {
   return (
     <Layout user={user}>
       <Container pt={9}>
-        <Text mb={8} textStyle={['h4', 'h2']}>
+        <Text mb={8} textStyle={['h3', 'h2']}>
           discover new listings
         </Text>
 
         {isLoading ? (
-          <Box>Loading listings...</Box>
+          <LoadingSkeleton />
         ) : (
           <SimpleGrid columns={[1, 2, null, 3, 4]} gap={4}>
             {listings.map(listing => (
