@@ -26,9 +26,9 @@ function LoginInput({
       <Box position="relative" {...props}>
         <Box
           position="absolute"
-          top="32px"
+          top={['18px', '28px']}
           right="24px"
-          left="24px"
+          left="20px"
           textStyle="nano"
           lineHeight={0}
         >
@@ -38,8 +38,8 @@ function LoginInput({
           <chakra.input
             name={name}
             w="100%"
-            h="80px"
-            p="18px 22px 0"
+            h={['60px', '80px']}
+            p="20px 16px 0"
             borderRadius="12px"
             border="2px"
             borderColor={errors[name] ? 'red' : 'transparent'}

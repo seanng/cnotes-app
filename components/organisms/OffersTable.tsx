@@ -1,3 +1,4 @@
+import NextLink from 'next/link'
 import { useQuery, gql } from '@apollo/client'
 import dynamic from 'next/dynamic'
 import { useState, useEffect } from 'react'
@@ -10,17 +11,21 @@ import {
   Text,
   Thead,
   Tbody,
+  LinkBox,
+  LinkOverlay,
+  Box,
   Avatar,
   Flex,
   Td,
   Tr,
 } from '@chakra-ui/react'
 import { useColors } from 'hooks'
-import { ACTIVE, AWAITING } from 'shared/constants'
+import { STATUS, ACTIVE, AWAITING } from 'shared/constants'
 import TableLoadingSkeleton from 'components/molecules/TableLoadingSkeleton'
 import EmptyTableState from 'components/molecules/EmptyTableState'
 import OfferModal from 'components/molecules/OfferModal'
 import ListingStatusBadge from 'components/atoms/ListingStatusBadge'
+import Helptip from 'components/atoms/Helptip'
 import LinkButton from 'components/atoms/LinkButton'
 import BrandDashOfferValue from 'components/atoms/BrandDashOfferValue'
 
@@ -48,6 +53,7 @@ const MY_ACTIVE_OFFERS = gql`
         highestOfferValue
         auctionEndsAt
         creator {
+          slug
           alias
           avatarUrl
         }
@@ -66,7 +72,7 @@ const columns = [
   'Highest offer',
   'Time left',
   'Deliverable',
-  'Status',
+  STATUS,
   '', // Button
 ]
 
@@ -122,7 +128,32 @@ export default function OffersTable(): JSX.Element {
         <Thead>
           <Tr>
             {columns.map(col => (
-              <Th key={col}>{col}</Th>
+              <Th key={col}>
+                {col}
+                {col === STATUS && (
+                  // status tooltip
+                  <Helptip
+                    label={
+                      <Box textStyle="micro">
+                        <Flex>
+                          <Box as="span" color="cyan.500">
+                            ACTIVE
+                          </Box>
+                          <span>: Creator is accepting offers and updates</span>
+                        </Flex>
+                        <Flex>
+                          <Box as="span" color="yellow.400">
+                            AWAITING
+                          </Box>
+                          <span>: Creator is selecting who to work with</span>
+                        </Flex>
+                      </Box>
+                    }
+                    hasArrow
+                    placement="top"
+                  />
+                )}
+              </Th>
             ))}
           </Tr>
         </Thead>
@@ -140,7 +171,11 @@ export default function OffersTable(): JSX.Element {
                     borderBottomLeftRadius: 'lg',
                   })}
                 >
-                  <Flex align="center">
+                  <LinkBox
+                    display="flex"
+                    flexDirection="row"
+                    alignItems="center"
+                  >
                     <Avatar
                       name={listing.creator.alias}
                       src={listing.creator.avatarUrl}
@@ -149,7 +184,13 @@ export default function OffersTable(): JSX.Element {
                     <Flex direction="column" ml={2}>
                       <Text textStyle="largeBold">{listing.creator.alias}</Text>
                     </Flex>
-                  </Flex>
+                    <NextLink
+                      href={`/profile/${listing.creator.slug}`}
+                      passHref
+                    >
+                      <LinkOverlay isExternal />
+                    </NextLink>
+                  </LinkBox>
                 </Td>
                 <Td minWidth={123}>
                   <BrandDashOfferValue offer={lastOffer} />

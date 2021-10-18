@@ -1,14 +1,7 @@
-import {
-  Icon,
-  Tooltip,
-  SimpleGrid,
-  Box,
-  SimpleGridProps,
-  Text,
-} from '@chakra-ui/react'
+import { SimpleGrid, Box, SimpleGridProps, Text } from '@chakra-ui/react'
 import { CreatorStats } from 'shared/types'
 import { useColors } from 'hooks'
-import { Icon as Iconify } from '@iconify/react'
+import Helptip from 'components/atoms/Helptip'
 
 type StatNumbersProps = {
   data: CreatorStats
@@ -42,9 +35,7 @@ export default function StatNumbers({
           <Text textStyle="micro" color={gray[600]}>
             {formatStatTitle(stat.key)}
             {stat.helpText && (
-              <Tooltip label={stat.helpText} hasArrow placement="top">
-                <Icon ml={1} mb={1} as={Iconify} icon="bx:bxs-help-circle" />
-              </Tooltip>
+              <Helptip label={stat.helpText} hasArrow placement="top" />
             )}
           </Text>
           <Text textStyle="h4" fontSize={26} color={gray[1000]}>

@@ -1,9 +1,6 @@
 import { FC, ReactNode } from 'react'
-import { Icon as Iconify } from '@iconify/react'
 import {
   FormControl,
-  Tooltip,
-  Icon,
   FormLabel,
   FormErrorMessage,
   InputLeftElement,
@@ -11,6 +8,7 @@ import {
   InputGroup,
   FormControlProps,
 } from '@chakra-ui/react'
+import Helptip from 'components/atoms/Helptip'
 
 interface Props extends FormControlProps {
   label?: string
@@ -35,11 +33,7 @@ const FormInput: FC<Props> = ({
       {label && (
         <FormLabel>
           {label}
-          {helpText && (
-            <Tooltip label={helpText} hasArrow placement="right">
-              <Icon ml={1} mb={1} as={Iconify} icon="bx:bxs-help-circle" />
-            </Tooltip>
-          )}
+          {helpText && <Helptip label={helpText} hasArrow placement="right" />}
         </FormLabel>
       )}
       <InputGroup>

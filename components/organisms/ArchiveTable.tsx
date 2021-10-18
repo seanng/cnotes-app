@@ -1,3 +1,4 @@
+import NextLink from 'next/link'
 import EmptyTableState from 'components/molecules/EmptyTableState'
 import {
   Th,
@@ -9,6 +10,8 @@ import {
   Flex,
   Td,
   Tr,
+  LinkBox,
+  LinkOverlay,
 } from '@chakra-ui/react'
 import { useState, useEffect } from 'react'
 import { useQuery, gql } from '@apollo/client'
@@ -138,7 +141,7 @@ export default function ArchiveTable(): JSX.Element {
                   borderBottomLeftRadius: 'lg',
                 })}
               >
-                <Flex align="center">
+                <LinkBox display="flex" flexDirection="row" alignItems="center">
                   <Avatar
                     name={item.creator.alias}
                     src={item.creator.avatarUrl}
@@ -147,7 +150,10 @@ export default function ArchiveTable(): JSX.Element {
                   <Flex direction="column" ml={2}>
                     <Text textStyle="largeBold">{item.creator.alias}</Text>
                   </Flex>
-                </Flex>
+                  <NextLink href={`/profile/${item.creator.slug}`} passHref>
+                    <LinkOverlay isExternal />
+                  </NextLink>
+                </LinkBox>
               </Td>
               <Td>
                 <BrandDashOfferValue offer={item} />

@@ -8,6 +8,7 @@ import FormLabel from './components/form-label'
 import Tabs from './components/tabs'
 import Table from './components/table'
 import Tag from './components/tag'
+import Tooltip from './components/tooltip'
 import Modal from './components/modal'
 import Accordion from './components/accordion'
 import Input from './components/input'
@@ -36,6 +37,7 @@ const components = {
   Tag,
   Table,
   Select: Input,
+  Tooltip,
   Tabs,
   Avatar,
   Modal,

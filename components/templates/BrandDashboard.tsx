@@ -46,7 +46,7 @@ const BrandDashboard: NextPage<Props> = ({ user }: Props) => {
 
   return (
     <Layout user={user}>
-      <Container pt={9}>
+      <Container pt={9} overflowX="scroll">
         <Text mb={8} textStyle={['h4', 'h2']}>
           my dashboard
         </Text>

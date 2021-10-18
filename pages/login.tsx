@@ -41,7 +41,7 @@ const Login: NextPage = () => {
     formState: { errors, isSubmitting },
   } = useForm()
 
-  const { gray } = useColors()
+  const { gray, blue } = useColors()
 
   const onSubmit = async (data: OnSubmitProps): Promise<void> => {
     try {
@@ -87,7 +87,7 @@ const Login: NextPage = () => {
       </Box>
       <Box w={{ base: '100%', lg: '60%' }} p={20}>
         <c.form onSubmit={handleSubmit(onSubmit)} maxW={412} m="auto">
-          <Box textStyle="h5" mb={12}>
+          <Box textStyle="h5" mb={[8, 12]}>
             Sign in to cnotes
           </Box>
           <Input
@@ -120,7 +120,7 @@ const Login: NextPage = () => {
               }),
             }}
           />
-          <Box textStyle="small" fontWeight={500} mt={8} mb={6}>
+          <Box textStyle="small" fontWeight={500} mt={[4, 8]} mb={[3, 6]}>
             If you made an account before 07/20/21 you will need to create a new
             account.
           </Box>
@@ -128,7 +128,7 @@ const Login: NextPage = () => {
             textAlign="right"
             fontWeight={700}
             textStyle="small"
-            color="blue"
+            color={blue[600]}
             mb={4}
           >
             <Link href="/forgot-password">Forgot Password?</Link>
@@ -145,7 +145,7 @@ const Login: NextPage = () => {
           </Button>
           <Flex justify="center" textStyle="small" fontWeight={700}>
             <Box mr={4}>Not a member?</Box>
-            <Box color="blue">
+            <Box color={blue[600]}>
               <Link href="/signup">Sign up now</Link>
             </Box>
           </Flex>

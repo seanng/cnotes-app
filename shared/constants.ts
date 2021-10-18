@@ -20,6 +20,7 @@ export const INCORRECT_PASSWORD = 'Invalid name and password combination.'
 export const INVALID_TOKEN = 'Token is either invalid or has expired.'
 
 // statuses
+export const STATUS = 'Status'
 export const UNVERIFIED = 'unverified'
 export const VERIFIED = 'verified' // just user status
 // export const SUSPENDED = 'SUSPENDED' // just user status

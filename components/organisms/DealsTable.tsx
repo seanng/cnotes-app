@@ -1,3 +1,4 @@
+import NextLink from 'next/link'
 import { useQuery, gql } from '@apollo/client'
 import { useState, useEffect } from 'react'
 import LinkButton from 'components/atoms/LinkButton'
@@ -5,6 +6,7 @@ import { format } from 'date-fns'
 import EmptyTableState from 'components/molecules/EmptyTableState'
 import ListingStatusBadge from 'components/atoms/ListingStatusBadge'
 import { Deal } from 'shared/types'
+import { STATUS } from 'shared/constants'
 import {
   Th,
   Table,
@@ -15,8 +17,8 @@ import {
   Flex,
   Td,
   Tr,
-  // LinkBox,
-  // LinkOverlay,
+  LinkBox,
+  LinkOverlay,
 } from '@chakra-ui/react'
 import { useColors } from 'hooks'
 import TableLoadingSkeleton from 'components/molecules/TableLoadingSkeleton'
@@ -50,7 +52,7 @@ const columns = [
   'Deal size',
   'Date created',
   'Deliverable',
-  'Status',
+  STATUS,
   '', // Button
 ]
 
@@ -104,7 +106,7 @@ export default function DealsTable(): JSX.Element {
                   borderBottomLeftRadius: 'lg',
                 })}
               >
-                <Flex align="center">
+                <LinkBox display="flex" flexDirection="row" alignItems="center">
                   <Avatar
                     name={listing.creator.alias}
                     src={listing.creator.avatarUrl}
@@ -113,7 +115,10 @@ export default function DealsTable(): JSX.Element {
                   <Flex direction="column" ml={2}>
                     <Text textStyle="largeBold">{listing.creator.alias}</Text>
                   </Flex>
-                </Flex>
+                  <NextLink href={`/profile/${listing.creator.slug}`} passHref>
+                    <LinkOverlay isExternal />
+                  </NextLink>
+                </LinkBox>
               </Td>
               <Td minWidth={110}>
                 <BrandDashOfferValue offer={deal} />

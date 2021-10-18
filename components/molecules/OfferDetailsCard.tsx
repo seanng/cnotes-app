@@ -35,7 +35,7 @@ export default function OfferDetailsCard({
             textStyle={['base', 'large']}
             fontWeight={700}
             mb={2}
-            isTruncated
+            noOfLines={1}
           >
             {`$${totalValue} by ${activity.brand.alias}`}
           </Text>
