@@ -22,6 +22,7 @@ export default {
         borderBottom: '5px solid',
         borderBottomColor: 'transparent',
         paddingBottom: 4,
+        outline: 'none',
         _selected: {
           color: mode('gray.900', 'gray.50')(props),
           borderBottomColor: 'green.500',

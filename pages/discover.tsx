@@ -117,6 +117,7 @@ const DiscoverPage: NextPage<Props> = ({ user }: Props) => {
               <LinkBox
                 boxShadow="md"
                 _hover={{ boxShadow: '0 0 0 2px #18E739' }}
+                _pressed={{ boxShadow: 'none' }}
                 borderRadius="xl"
                 bgColor={gray[0]}
                 key={listing.id}

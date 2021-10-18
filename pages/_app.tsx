@@ -1,3 +1,4 @@
+import Head from 'next/head'
 import { ApolloProvider } from '@apollo/client'
 import { useEffect } from 'react'
 import { ChakraProvider } from 'providers/chakra'
@@ -26,12 +27,26 @@ function MyApp({ Component, pageProps }: AppProps): JSX.Element {
     AOS.init()
   }, [])
   return (
-    <ApolloProvider client={client}>
-      <ChakraProvider cookies={pageProps.cookies}>
-        <Component {...pageProps} />
-        <CrispWithNoSSR />
-      </ChakraProvider>
-    </ApolloProvider>
+    <>
+      <Head>
+        <title>cnotes</title>
+        <meta
+          name="description"
+          content="Sponsor creators that have the most engaged viewers"
+        />
+        <meta name="robots" content="noindex,nofollow" />
+        <meta
+          name="viewport"
+          content="width=device-width, initial-scale=1, maximum-scale=1"
+        />
+      </Head>
+      <ApolloProvider client={client}>
+        <ChakraProvider cookies={pageProps.cookies}>
+          <Component {...pageProps} />
+          <CrispWithNoSSR />
+        </ChakraProvider>
+      </ApolloProvider>
+    </>
   )
 }
 
