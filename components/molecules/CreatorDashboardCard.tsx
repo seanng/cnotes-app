@@ -38,7 +38,7 @@ function CreatorDashboardCard({ data }: Props): JSX.Element {
   const config = statusConfigs[status]
 
   return (
-    <Box position="relative">
+    <Box position="relative" maxW={412}>
       <AspectRatio ratio={CARD_ASPECT_RATIO}>
         <LinkBox
           borderRadius="xl"

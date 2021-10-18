@@ -1,6 +1,7 @@
 import { useColors } from 'hooks'
 import { NextPage } from 'next'
 import { gql, useQuery } from '@apollo/client'
+import { format, isFuture } from 'date-fns'
 import { User } from 'shared/types'
 import Layout from 'components/organisms/Layout'
 import { profileTransformer } from 'utils/helpers'
@@ -188,6 +189,7 @@ const BrandListing: NextPage<Props> = ({ user, listingId }: Props) => {
   const genderChart = listing?.profile?.creatorStats?.genderBreakdown
   const locationChart = listing?.profile?.creatorStats?.locationBreakdown
   const lastOffer = listing?.offer?.history[listing?.offer?.history.length - 1]
+  const hasTimeLeft = isFuture(new Date(listing?.auctionEndsAt))
 
   return (
     <Layout user={user}>
@@ -270,7 +272,12 @@ const BrandListing: NextPage<Props> = ({ user, listingId }: Props) => {
                 )}
               </Box>
             </Flex>
-            <SimpleGrid columns={4} px={6}>
+            <SimpleGrid
+              columns={4}
+              px={6}
+              borderBottom="1px solid"
+              borderColor={gray[50]}
+            >
               <BottomCardInfoItem label="Category" value="Keyboards" />
               <BottomCardInfoItem label="Platform" value={listing.platform} />
               <BottomCardInfoItem
@@ -288,23 +295,29 @@ const BrandListing: NextPage<Props> = ({ user, listingId }: Props) => {
                 value={`$${listing.highestOfferValue}`}
               />
             </SimpleGrid>
-            <Flex
-              borderTop="1px solid"
-              borderColor={gray[50]}
-              justify="space-between"
-              px={6}
-              py={5}
-            >
-              <Box>
-                <Text color="#757474" textStyle="small" mb={1}>
-                  Time left
-                </Text>
-                <TimerText end={listing.auctionEndsAt} />
-              </Box>
-              <Button w="60%" onClick={handleOfferClick}>
-                {listing.offer ? 'Update offer' : 'Place offer'}
-              </Button>
-            </Flex>
+            {hasTimeLeft ? (
+              <Flex justify="space-between" px={6} py={5}>
+                <Box>
+                  <Text color="#757474" textStyle="small" mb={1}>
+                    Time left
+                  </Text>
+                  <TimerText end={listing.auctionEndsAt} />
+                </Box>
+                <Button w="60%" onClick={handleOfferClick}>
+                  {listing.offer ? 'Update offer' : 'Place offer'}
+                </Button>
+              </Flex>
+            ) : (
+              <Text
+                px={6}
+                py={5}
+                textStyle="small"
+                color={gray[700]}
+              >{`Listing ended on ${format(
+                new Date(listing.auctionEndsAt),
+                'd MMM y'
+              )}`}</Text>
+            )}
           </Box>
         </>
       )}

@@ -99,7 +99,7 @@ const CreatorDashboard: NextPage<Props> = ({ user }: Props) => {
             Create New
           </LinkButton>
         </Flex>
-        <SimpleGrid columns={[1, null, 2, null, 3]} spacing={7}>
+        <SimpleGrid columns={[1, null, 2, null, 3, 4]} spacing={7}>
           {isLoading ? (
             <>
               <LoadingSkeletonCard />

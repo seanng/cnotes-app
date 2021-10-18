@@ -20,7 +20,7 @@ import GenderChart from 'components/atoms/GenderChart'
 import LocationChart from 'components/atoms/LocationChart'
 import StatNumbers from 'components/molecules/StatNumbers'
 import { Icon as Iconify } from '@iconify/react'
-import { CREATOR, ACTIVE } from 'shared/constants'
+import { CREATOR } from 'shared/constants'
 
 const TimerLabel = dynamic(() => import('components/atoms/TimerLabel'), {
   ssr: false,
@@ -102,6 +102,7 @@ type Props = {
   isShort?: boolean
   onOfferClick?: () => void
   listing?: Listing & { offer: Offer; offerCount: number }
+  hasTimeLeft?: boolean
 } & FlexProps
 
 const ProfileBox = ({
@@ -110,6 +111,7 @@ const ProfileBox = ({
   isShort,
   listing,
   onOfferClick,
+  hasTimeLeft,
   ...props
 }: Props): JSX.Element => {
   const { gray } = useColors()
@@ -168,7 +170,7 @@ const ProfileBox = ({
       {listing && (
         <>
           <Divider mb={isShort ? 4 : 7} opacity={0.4} />
-          {listing.status === ACTIVE && (
+          {hasTimeLeft && (
             <TimerLabel
               pl={6}
               withEmoji={false}
@@ -194,9 +196,22 @@ const ProfileBox = ({
               label="Highest Offer"
               value={`$${listing.highestOfferValue}`}
             />
-            <Button onClick={onOfferClick} isFullWidth mt={3} mb={6}>
-              {listing.offer ? 'Update offer' : 'Place offer'}
-            </Button>
+            <Divider my={4} />
+            {hasTimeLeft ? (
+              <Button onClick={onOfferClick} isFullWidth mb={6}>
+                {listing.offer ? 'Update offer' : 'Place offer'}
+              </Button>
+            ) : (
+              <Text
+                textStyle="base"
+                color={gray[700]}
+                mb={6}
+                textAlign="center"
+              >{`Listing ended on ${format(
+                new Date(listing.auctionEndsAt),
+                'd MMM y'
+              )}`}</Text>
+            )}
           </Box>
         </>
       )}
