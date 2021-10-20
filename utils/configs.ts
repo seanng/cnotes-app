@@ -4,6 +4,7 @@ import {
   SELECTING,
   LISTING,
   PAYING,
+  COMPLETED,
   DECIDED,
   YOUTUBE,
   TIKTOK,
@@ -56,6 +57,11 @@ export const statusConfigs = {
   [PAYING]: {
     text: 'Payment Processing',
     type: DEAL,
+  },
+  [COMPLETED]: {
+    text: 'Completed',
+    type: DEAL,
+    tagProps: completedTagProps,
   },
 }
 

@@ -98,7 +98,7 @@ function AdvancedRow({
         )}
       </Flex>
       <Spacer />
-      <Select w={110} variant="rounded" {...selectProps} />
+      <Select w={110} minW="80px" variant="rounded" {...selectProps} />
     </Flex>
   )
 }
@@ -151,7 +151,7 @@ const CreateListingForm: NextPage<Props> = ({
 
   return (
     <Layout user={user}>
-      <Container as="form" py={[16, 20]} onSubmit={handleSubmit(onSubmit)}>
+      <Container as="form" py={9} onSubmit={handleSubmit(onSubmit)}>
         <chakra.h2 textStyle={['h4', 'h2']} mb={6}>
           Create a Sponsorship Listing
         </chakra.h2>
@@ -223,7 +223,7 @@ const CreateListingForm: NextPage<Props> = ({
         <Accordion allowToggle maxW={MAX_COL_WIDTH + 100} mb={8}>
           <AccordionItem>
             <h2>
-              <AccordionButton>
+              <AccordionButton mb={6}>
                 <Box textAlign="left" textStyle="baseBold" mr={4}>
                   Advanced Options
                 </Box>

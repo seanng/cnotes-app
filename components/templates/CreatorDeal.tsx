@@ -3,11 +3,12 @@ import { useEffect, useState, FC } from 'react'
 import { Deal, User } from 'shared/types'
 import CreatorListingSkeleton from 'components/molecules/CreatorListingSkeleton'
 import NotFound from 'components/organisms/404'
-import { PAYING, SUBMITTING } from 'shared/constants'
+import { COMPLETED, PAYING, SUBMITTING } from 'shared/constants'
 import Layout from 'components/organisms/Layout'
 import { NextPage } from 'next'
 import SubmittingStage from 'components/organisms/SubmittingStage'
 import PayingStage from 'components/organisms/PayingStage'
+import CompletedStage from 'components/organisms/CompletedStage'
 
 const DEAL_BY_ID = gql`
   query dealById($id: ID) {
@@ -18,6 +19,7 @@ const DEAL_BY_ID = gql`
       productName
       productValue
       cashValue
+      submittedUrl
       message
       listing {
         platform
@@ -32,6 +34,8 @@ const DEAL_BY_ID = gql`
         avatarUrl
       }
       createdAt
+      submittedAt
+      paidAt
     }
   }
 `
@@ -44,6 +48,7 @@ interface Props {
 const components = {
   [SUBMITTING]: SubmittingStage,
   [PAYING]: PayingStage,
+  [COMPLETED]: CompletedStage,
 }
 
 function getComponent(loading, deal: Deal | null): FC<{ deal: Deal }> {

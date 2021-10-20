@@ -1,5 +1,5 @@
 import { FC } from 'react'
-import { SimpleGrid } from '@chakra-ui/react'
+import { Box } from '@chakra-ui/react'
 import { DeepMap, FieldError, UseFormRegister } from 'react-hook-form'
 import { SettingsFormFieldValues, User } from 'shared/types'
 import FormInput from 'components/atoms/FormInput'
@@ -12,7 +12,7 @@ type Props = {
 
 const SocialSettings: FC<Props> = ({ errors, register }: Props) => {
   return (
-    <SimpleGrid columns={[1, 2]} spacingX={4} maxW={600}>
+    <Box maxW={600}>
       <FormInput
         label="YouTube URL (optional)"
         mb={8}
@@ -73,7 +73,7 @@ const SocialSettings: FC<Props> = ({ errors, register }: Props) => {
           }),
         }}
       />
-    </SimpleGrid>
+    </Box>
   )
 }
 

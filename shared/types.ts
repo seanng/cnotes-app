@@ -125,6 +125,7 @@ export interface Deal {
   createdAt?: string
   submittedUrl?: string
   submittedAt?: string
+  paidAt?: string
 }
 
 export interface Token {

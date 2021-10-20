@@ -18,7 +18,7 @@ export default function DealStageBody({ deal, children }: Props): JSX.Element {
   return (
     <>
       <StageHeading data={deal} />
-      <Container mt={6}>
+      <Container my={6}>
         <Text textStyle="h4" mb={5}>
           offer details
         </Text>
@@ -45,6 +45,7 @@ export default function DealStageBody({ deal, children }: Props): JSX.Element {
                 {...(deal.productUrl && {
                   href: deal.productUrl,
                   display: 'inline',
+                  isExternal: true,
                 })}
               >
                 {`🎁 ${deal.productName} ($${deal.productValue})`}

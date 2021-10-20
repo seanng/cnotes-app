@@ -87,7 +87,12 @@ const Login: NextPage = () => {
         </Box>
       </Box>
       <Box w={{ base: '100%', lg: '60%' }} p={20}>
-        <c.form onSubmit={handleSubmit(onSubmit)} maxW={412} m="auto">
+        <c.form
+          onSubmit={handleSubmit(onSubmit)}
+          maxW={412}
+          m="auto"
+          noValidate
+        >
           <Flex textStyle="h5" mb={[8, 12]} align="center">
             <IconButton
               size="lg"
@@ -109,7 +114,7 @@ const Login: NextPage = () => {
             errors={errors}
             mb={3}
             inputProps={{
-              type: 'text',
+              type: 'email',
               ...register('email', {
                 required: true,
                 pattern: {
@@ -122,7 +127,7 @@ const Login: NextPage = () => {
           <Input
             name="password"
             errors={errors}
-            mb={2}
+            mb={3}
             inputProps={{
               type: 'password',
               ...register('password', {

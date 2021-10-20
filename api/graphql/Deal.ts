@@ -10,7 +10,7 @@ import {
   list,
   stringArg,
 } from 'nexus'
-import { PAYING, CANCELLED } from 'shared/constants'
+import { PAYING, CANCELLED, COMPLETED } from 'shared/constants'
 import { isBrand } from 'utils/auth'
 
 export const Deal = objectType({
@@ -127,9 +127,11 @@ export const updateDeal = mutationField('updateDeal', {
 
     const data = {
       ...payload,
-      ...(payload.submittedUrl && {
-        status: PAYING,
+      ...(payload.status === PAYING && {
         submittedAt: now,
+      }),
+      ...(payload.status === COMPLETED && {
+        paidAt: now,
       }),
       updatedAt: now,
     }
@@ -144,5 +146,6 @@ export const updateDealInput = inputObjectType({
   name: 'UpdateDealInput',
   definition(t) {
     t.string('submittedUrl')
+    t.string('status')
   },
 })

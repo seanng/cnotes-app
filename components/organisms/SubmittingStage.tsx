@@ -9,7 +9,7 @@ import {
 } from '@chakra-ui/react'
 import DealStageBody from 'components/molecules/DealStageBody'
 import { useForm } from 'react-hook-form'
-import { URL_REGEX } from 'shared/constants'
+import { PAYING, URL_REGEX } from 'shared/constants'
 import { useMutation, gql } from '@apollo/client'
 import { Deal } from 'shared/types'
 
@@ -37,7 +37,9 @@ export default function SubmittingStage({ deal }: Props): JSX.Element {
   const [updateDeal] = useMutation(UPDATE_DEAL)
 
   const onSubmit = async ({ submittedUrl }): Promise<void> => {
-    await updateDeal({ variables: { id: deal.id, payload: { submittedUrl } } })
+    await updateDeal({
+      variables: { id: deal.id, payload: { submittedUrl, status: PAYING } },
+    })
   }
 
   return (
@@ -47,7 +49,7 @@ export default function SubmittingStage({ deal }: Props): JSX.Element {
         your brand partner.
       </Text>
       <Text textStyle="base" mb={5}>
-        Once your video is final, enter the URL here to complete the job.
+        Once your video is final, paste the URL here to complete the job.
       </Text>
       <FormControl
         as="form"
@@ -57,11 +59,12 @@ export default function SubmittingStage({ deal }: Props): JSX.Element {
         <InputGroup size="lg">
           <Input
             variant="rounded"
+            placeholder="https://youtube.com/watch?v=Z59dZw5yuNQ"
             {...register('submittedUrl', {
               required: true,
               pattern: {
                 value: URL_REGEX,
-                message: 'Invalid URL',
+                message: 'URL must be valid and contain "https://"',
               },
             })}
           />

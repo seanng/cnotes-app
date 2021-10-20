@@ -12,6 +12,7 @@ const UPDATE_DEAL = gql`
       status
       submittedUrl
       submittedAt
+      paidAt
     }
   }
 `

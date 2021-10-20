@@ -118,9 +118,14 @@ export const createListing = mutationField('createListing', {
       }
     })
 
+    const { deliverable, platform } = fromPlatformAndDeliverableInput(
+      input.platformAndDeliverable
+    )
+
     const listing = await prisma.listing.create({
       data: {
-        ...fromPlatformAndDeliverableInput(input.platformAndDeliverable),
+        deliverable,
+        platform,
         specs,
         iconUrl: input.iconUrl,
         description: input.description,
@@ -143,8 +148,8 @@ export const createListing = mutationField('createListing', {
           <h1>${user.alias} has submitted an listing:</h1>
           <p>User ID: ${user.id} </p>
           <p>Listing ID: ${listing.id} </p>
-          <p>Platform: ${input.platform} </p>
-          <p>Deliverable: ${input.deliverable} </p>
+          <p>Platform: ${platform} </p>
+          <p>Deliverable: ${deliverable} </p>
           <p>Description: ${input.description} </p>
           <p>${Object.entries(input.specs).map(
             item => `${item[0]}: ${item[1]}`
