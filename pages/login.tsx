@@ -1,4 +1,4 @@
-import { chakra as c, Box, Flex, Button } from '@chakra-ui/react'
+import { IconButton, chakra as c, Box, Flex, Button } from '@chakra-ui/react'
 import { useMutation, useApolloClient, gql } from '@apollo/client'
 import Input from 'components/atoms/LoginInput'
 import { useForm } from 'react-hook-form'
@@ -12,6 +12,7 @@ import { useRouter } from 'next/router'
 import { GetServerSideProps, NextPage } from 'next'
 import { getUserPayload } from 'utils/auth'
 import NextLink from 'next/link'
+import { ArrowBackIcon } from '@chakra-ui/icons'
 import { useColors } from 'hooks'
 
 const Link = c(NextLink)
@@ -87,15 +88,28 @@ const Login: NextPage = () => {
       </Box>
       <Box w={{ base: '100%', lg: '60%' }} p={20}>
         <c.form onSubmit={handleSubmit(onSubmit)} maxW={412} m="auto">
-          <Box textStyle="h5" mb={[8, 12]}>
-            Sign in to cnotes
-          </Box>
+          <Flex textStyle="h5" mb={[8, 12]} align="center">
+            <IconButton
+              size="lg"
+              fontSize="24px"
+              variant="unstyled"
+              colorScheme="gray"
+              icon={<ArrowBackIcon />}
+              aria-label="back"
+              mr={2}
+              ml={-4}
+              onClick={(): void => {
+                router.back()
+              }}
+            />
+            <span>Sign in</span>
+          </Flex>
           <Input
             name="email"
             errors={errors}
             mb={3}
             inputProps={{
-              type: 'email',
+              type: 'text',
               ...register('email', {
                 required: true,
                 pattern: {
@@ -108,7 +122,7 @@ const Login: NextPage = () => {
           <Input
             name="password"
             errors={errors}
-            mb={3}
+            mb={2}
             inputProps={{
               type: 'password',
               ...register('password', {
@@ -120,16 +134,12 @@ const Login: NextPage = () => {
               }),
             }}
           />
-          <Box textStyle="small" fontWeight={500} mt={[4, 8]} mb={[3, 6]}>
-            If you made an account before 07/20/21 you will need to create a new
-            account.
-          </Box>
           <Box
             textAlign="right"
             fontWeight={700}
             textStyle="small"
             color={blue[600]}
-            mb={4}
+            mb={6}
           >
             <Link href="/forgot-password">Forgot Password?</Link>
           </Box>
