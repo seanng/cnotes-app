@@ -13,6 +13,11 @@ const COMPLETE_LISTING = gql`
     completeListing(id: $id, input: $input) {
       id
       status
+      deals {
+        brand {
+          id
+        }
+      }
       decidedAt
     }
   }

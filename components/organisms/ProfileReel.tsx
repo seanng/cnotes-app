@@ -5,6 +5,8 @@ import {
   Flex,
   Icon,
   Tag,
+  Link,
+  Box,
   GridItem,
   LinkBox,
   LinkOverlay,
@@ -17,6 +19,7 @@ import {
 import { TransformedProfile } from 'shared/types'
 import { TIKTOK } from 'shared/constants'
 import IsVerifiedTag from 'components/atoms/IsVerifiedTag'
+import { platformIconSlugs } from 'utils/configs'
 import { Icon as Iconify } from '@iconify/react'
 import { useColors } from 'hooks'
 import { formatCountNumber } from 'utils/helpers'
@@ -27,7 +30,7 @@ type Props = {
 }
 
 const ProfileReel = ({ profile, gridProps }: Props): JSX.Element => {
-  const { green } = useColors()
+  const { green, gray } = useColors()
   return (
     <>
       <Text textStyle={['h3', 'h2']} mb={5}>
@@ -44,44 +47,29 @@ const ProfileReel = ({ profile, gridProps }: Props): JSX.Element => {
         {...gridProps}
       >
         {profile.portfolio.map((item, i) => (
-          <AspectRatio
+          <GridItem
             key={i}
-            ratio={item.platform === TIKTOK ? 9 / 16 : 640 / 480}
+            colSpan={1}
+            rowSpan={item.platform === TIKTOK ? 2 : 1}
           >
-            <GridItem
-              colSpan={1}
-              rowSpan={item.platform === TIKTOK ? 2 : 1}
-              borderRadius="xl"
-            >
-              <LinkBox position="relative">
+            <AspectRatio ratio={item.platform === TIKTOK ? 9 / 16 : 640 / 480}>
+              <LinkBox position="relative" borderRadius="xl">
                 <LinkOverlay href={item.url} isExternal>
-                  <Flex
-                    direction="row-reverse"
-                    justify="space-between"
-                    position="absolute"
-                    p={3}
-                    w="full"
-                    h="full"
-                    alignItems="flex-start"
-                  >
-                    {item.companyName && (
-                      <Flex direction="row" alignItems="flex-start">
-                        <Tag mr={1} mb={1} fontSize="10px">
-                          {item.companyName}
-                        </Tag>
-                        <Tag mb={1} fontSize="10px">
-                          {item.deliverable}
-                        </Tag>
-                      </Flex>
-                    )}
-                    {item.isVerified && (
-                      <Tag bgColor={green[600]}>
-                        <IsVerifiedTag color="black" />
-                      </Tag>
-                    )}
-                  </Flex>
+                  {item.isVerified && (
+                    <Tag
+                      bgColor={green[600]}
+                      position="absolute"
+                      left={3}
+                      top={3}
+                      minHeight="12px"
+                    >
+                      <IsVerifiedTag color="black" />
+                    </Tag>
+                  )}
+                  {/* Video Hover State */}
                   <Center
                     position="absolute"
+                    top={0}
                     opacity={0}
                     _hover={{ bgColor: 'rgba(0,0,0,0.7)', opacity: 1 }}
                     w="full"
@@ -159,8 +147,46 @@ const ProfileReel = ({ profile, gridProps }: Props): JSX.Element => {
                   h="full"
                 />
               </LinkBox>
-            </GridItem>
-          </AspectRatio>
+            </AspectRatio>
+            <Box textStyle="base" mt={3} mb={5} display="inline-block">
+              <Icon
+                mr={2}
+                as={Iconify}
+                icon={platformIconSlugs[item.platform]}
+                fontSize="20px"
+                mb="2px"
+              />
+              <Box
+                as="span"
+                fontWeight={600}
+                {...(item.url && {
+                  as: Link,
+                  href: item.url,
+                  isExternal: true,
+                })}
+              >
+                {item.deliverable || 'Original Content'}
+              </Box>
+              {item.companyName && (
+                <>
+                  <Text as="span" color={gray[600]}>
+                    &nbsp;for&nbsp;
+                  </Text>
+                  <Box
+                    as="span"
+                    fontWeight={600}
+                    {...(item.companyUrl && {
+                      as: Link,
+                      href: item.companyUrl,
+                      isExternal: true,
+                    })}
+                  >
+                    {item.companyName}
+                  </Box>
+                </>
+              )}
+            </Box>
+          </GridItem>
         ))}
       </Grid>
     </>

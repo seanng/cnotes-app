@@ -84,17 +84,23 @@ const ListingRow = ({
   value,
 }: {
   label: string
-  value: string | number
-}): JSX.Element => (
-  <Flex justify="space-between" mb={1} w="full">
-    <Text color="#757474" textStyle="base">
-      {label}
-    </Text>
-    <Text textTransform="capitalize" textStyle="baseBold">
-      {value}
-    </Text>
-  </Flex>
-)
+  value: string | number | boolean | undefined
+}): JSX.Element => {
+  let val = value
+  if (typeof value === 'boolean') {
+    val = value ? 'Yes' : 'No'
+  }
+  return value !== undefined ? (
+    <Flex justify="space-between" mb={1} w="full">
+      <Text color="#757474" textStyle="base">
+        {label}
+      </Text>
+      <Text textTransform="capitalize" textStyle="baseBold">
+        {val}
+      </Text>
+    </Flex>
+  ) : null
+}
 
 type Props = {
   profile: TransformedProfile
@@ -180,17 +186,20 @@ const ProfileBox = ({
             />
           )}
           <Box w={230}>
-            <ListingRow
+            {/* <ListingRow
               label="Category"
               value={profile.category || 'Keyboards'}
-            />
+            /> */}
             <ListingRow label="Platform" value={listing.platform} />
+            <ListingRow label="Deliverable" value={listing.deliverable} />
             <ListingRow
-              label="Deliverable"
-              value={listing.deliverable || 'Keyboards'}
+              label="Revisions"
+              value={listing.specs?.numberOfRevisions}
             />
-            <ListingRow label="Revisions" value="2" />
-            <ListingRow label="Media Preview" value="48 H" />
+            <ListingRow
+              label="Scripted?"
+              value={listing.specs?.willFollowScript}
+            />
             <ListingRow label="Total Offers" value={listing.offerCount} />
             <ListingRow
               label="Highest Offer"

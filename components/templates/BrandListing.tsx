@@ -207,6 +207,7 @@ const BrandListing: NextPage<Props> = ({ user, listingId }: Props) => {
                 isShort
                 position="sticky"
                 top={2}
+                hasTimeLeft={hasTimeLeft}
                 display={['none', null, 'flex']}
               />
             )}
@@ -243,6 +244,7 @@ const BrandListing: NextPage<Props> = ({ user, listingId }: Props) => {
                     'repeat(1, 1fr)',
                     'repeat(2, 1fr)',
                     'repeat(1, 1fr)',
+                    null,
                     'repeat(2, 1fr)',
                   ],
                 }}

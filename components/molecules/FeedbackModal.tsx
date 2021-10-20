@@ -42,7 +42,7 @@ const FeedbackModal: FC<FeedbackModalProps> = ({
       <ModalOverlay />
       <ModalContent>
         <ModalHeader>{header}</ModalHeader>
-        {hasCloseButton && <ModalCloseButton _focus={{ boxShadow: 'none' }} />}
+        {hasCloseButton && <ModalCloseButton />}
         <ModalBody textStyle="base">{body}</ModalBody>
         <ModalFooter>
           {button && typeof button !== 'string' ? (

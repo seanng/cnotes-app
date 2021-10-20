@@ -157,10 +157,23 @@ const DiscoverPage: NextPage<Props> = ({ user }: Props) => {
                       name={listing.creator.alias}
                       size="xl"
                     />
-                    <Text textStyle="h5" fontSize="26px">
+                    <Text
+                      textAlign="center"
+                      textStyle="h5"
+                      fontSize="26px"
+                      isTruncated
+                      w="full"
+                    >
                       {listing.creator.alias}
                     </Text>
-                    <Text textStyle="microBold">{listing.creator.genre}</Text>
+                    <Text
+                      textAlign="center"
+                      isTruncated
+                      w="full"
+                      textStyle="microBold"
+                    >
+                      {listing.creator.genre}
+                    </Text>
                     <Text textStyle="mini" zIndex={1} my={3}>
                       {listing.creator.creatorStats?.avgImpressions && (
                         <Stat
@@ -190,7 +203,13 @@ const DiscoverPage: NextPage<Props> = ({ user }: Props) => {
                         ml={2}
                       />
                     </Text>
-                    <Text color={gray[600]} noOfLines={1} mb={5} height="24px">
+                    <Text
+                      color={gray[600]}
+                      isTruncated
+                      w="full"
+                      mb={5}
+                      height="24px"
+                    >
                       {listing.description ? `"${listing.description}"` : ''}
                     </Text>
                     <NextLink href={`/listing/${listing.id}`} passHref>

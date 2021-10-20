@@ -10,6 +10,7 @@ import Table from './components/table'
 import Tag from './components/tag'
 import Tooltip from './components/tooltip'
 import Modal from './components/modal'
+import CloseButton from './components/close-button'
 import Accordion from './components/accordion'
 import Input from './components/input'
 import Avatar from './components/avatar'
@@ -39,6 +40,7 @@ const components = {
   Select: Input,
   Tooltip,
   Tabs,
+  CloseButton,
   Avatar,
   Modal,
 }

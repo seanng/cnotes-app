@@ -37,16 +37,33 @@ export default function ProfileCollabs({
           </Center>
           <Flex direction="column">
             <Box textStyle="base" mb={1} display="inline-block">
-              <Text as="span" fontWeight={600}>
-                <Link href={collab.url}>{collab.deliverable}</Link>
-              </Text>
+              <Box
+                as="span"
+                fontWeight={600}
+                {...(collab.url && {
+                  as: Link,
+                  href: collab.url,
+                  isExternal: true,
+                })}
+              >
+                {collab.deliverable}
+              </Box>
               <Text as="span" color={gray[600]}>
                 &nbsp;for&nbsp;
               </Text>
-              <Text as="span" fontWeight={600} mr={2}>
-                <Link href={collab.companyUrl}>{collab.companyName}</Link>
-              </Text>
-              {collab.isVerified && <IsVerifiedTag />}
+              <Box
+                as="span"
+                fontWeight={600}
+                mr={2}
+                {...(collab.companyUrl && {
+                  as: Link,
+                  href: collab.companyUrl,
+                  isExternal: true,
+                })}
+              >
+                {collab.companyName}
+              </Box>
+              {collab.isVerified && <IsVerifiedTag float="right" />}
             </Box>
             <Text textStyle="small" color={gray[600]}>
               {collab.publishedAt &&

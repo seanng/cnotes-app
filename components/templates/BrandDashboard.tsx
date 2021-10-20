@@ -66,12 +66,7 @@ const BrandDashboard: NextPage<Props> = ({ user }: Props) => {
           >
             <TabList>
               {tables.map(({ label }, i) => (
-                <Tab
-                  ml={i === 0 ? 0 : 12}
-                  key={label}
-                  // removes the blue outline from mobile view
-                  css={{ '&::-webkit-tap-highlight-color': 'transparent' }}
-                >
+                <Tab ml={i === 0 ? 0 : 12} key={label}>
                   {label}
                 </Tab>
               ))}
