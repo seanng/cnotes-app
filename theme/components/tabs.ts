@@ -2,10 +2,13 @@ import { mode } from '@chakra-ui/theme-tools'
 
 export default {
   baseStyle: {
-    _focus: {
-      // removes the ugly blue outline on mobile
-      // alternative: https://medium.com/@keeganfamouss/accessibility-on-demand-with-chakra-ui-and-focus-visible-19413b1bc6f9
-      boxShadow: 'none',
+    tab: {
+      _focus: {
+        // removes the ugly blue outline on mobile
+        // https://github.com/chakra-ui/chakra-ui/issues/708
+        // alternative: https://medium.com/@keeganfamouss/accessibility-on-demand-with-chakra-ui-and-focus-visible-19413b1bc6f9
+        boxShadow: 'none',
+      },
     },
   },
   variants: {

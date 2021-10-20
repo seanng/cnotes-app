@@ -29,7 +29,7 @@ export default function OfferDetailsModal({
           <Text color={gray[800]} textStyle="large" fontWeight={700} mb={2}>
             {`$${offer?.cashValue + offer?.productValue}`}
           </Text>
-          <Text textStyle="small" textAlign="center" mb={4}>
+          <Box textStyle="small" textAlign="center" mb={4}>
             {offer?.cashValue > 0 && (
               <Box as="span" mr={3}>
                 💰${offer.cashValue}
@@ -37,19 +37,20 @@ export default function OfferDetailsModal({
             )}
             {offer?.productName && (
               <Box
-                as={offer.productUrl ? LinkText : 'span'}
+                as="span"
+                display="inline"
                 textTransform="uppercase"
-                color={cyan[600]}
                 {...(offer.productUrl && {
-                  href: offer.productUrl,
-                  display: 'inline',
+                  as: LinkText,
                   isExternal: true,
+                  color: cyan[600],
+                  href: offer.productUrl,
                 })}
               >
                 {`🎁 ${offer.productName} ($${offer.productValue})`}
               </Box>
             )}
-          </Text>
+          </Box>
           <Text
             textStyle={['small', 'base']}
             color={gray[500]}

@@ -48,13 +48,15 @@ export default function OfferDetailsCard({
             )}
             {activity.productName && (
               <Box
-                as={activity.productUrl && !props.onClick ? LinkText : 'span'}
-                {...(activity.productUrl && {
-                  href: activity.productUrl,
-                  display: 'inline',
-                  isExternal: !props.onClick,
-                  color: !props.onClick ? cyan[600] : 'inherit',
-                })}
+                as="span"
+                display="inline"
+                {...(activity.productUrl &&
+                  !props.onClick && {
+                    as: LinkText,
+                    isExternal: true,
+                    color: cyan[600],
+                    href: activity.productUrl,
+                  })}
               >
                 {`🎁 ${activity.productName} ($${activity.productValue})`}
               </Box>
