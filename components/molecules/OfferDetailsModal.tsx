@@ -2,6 +2,7 @@ import FeedbackModal, { FeedbackModalProps } from './FeedbackModal'
 import { Text, Avatar, Box, Flex } from '@chakra-ui/react'
 import { OfferHistoryItem, User } from 'shared/types'
 import { useColors } from 'hooks'
+import LinkText from 'components/atoms/LinkText'
 
 type Props = {
   offer: {
@@ -29,10 +30,25 @@ export default function OfferDetailsModal({
             {`$${offer?.cashValue + offer?.productValue}`}
           </Text>
           <Text textStyle="small" textAlign="center" mb={4}>
-            {offer?.cashValue > 0 && `💰 $${offer?.cashValue} + `}
-            <Box as="span" color={cyan[600]}>
-              🎁 WH-1000MX4 Wireless noise cancelling headphones ($200)
-            </Box>
+            {offer?.cashValue > 0 && (
+              <Box as="span" mr={3}>
+                💰${offer.cashValue}
+              </Box>
+            )}
+            {offer?.productName && (
+              <Box
+                as={offer.productUrl ? LinkText : 'span'}
+                textTransform="uppercase"
+                color={cyan[600]}
+                {...(offer.productUrl && {
+                  href: offer.productUrl,
+                  display: 'inline',
+                  isExternal: true,
+                })}
+              >
+                {`🎁 ${offer.productName} ($${offer.productValue})`}
+              </Box>
+            )}
           </Text>
           <Text
             textStyle={['small', 'base']}

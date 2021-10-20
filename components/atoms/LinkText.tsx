@@ -5,13 +5,19 @@ import { FC } from 'react'
 
 interface Props extends LinkBoxProps {
   href: string
+  isExternal?: boolean
 }
 
 // Link with custom style
-const LinkText: FC<Props> = ({ href, children, ...props }: Props) => (
+const LinkText: FC<Props> = ({
+  href,
+  children,
+  isExternal,
+  ...props
+}: Props) => (
   <LinkBox {...props}>
     <NextLink href={href} passHref>
-      <LinkOverlay isExternal>{children}</LinkOverlay>
+      <LinkOverlay isExternal={isExternal}>{children}</LinkOverlay>
     </NextLink>
   </LinkBox>
 )

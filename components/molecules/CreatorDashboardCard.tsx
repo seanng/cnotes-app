@@ -1,10 +1,12 @@
 import NextLink from 'next/link'
 import { format } from 'date-fns'
+import { Icon as Iconify } from '@iconify/react'
 import Image from 'next/image'
 import {
   Tag,
   AvatarGroup,
   Avatar,
+  Icon,
   Text,
   AspectRatio,
   LinkBox,
@@ -13,11 +15,11 @@ import {
   Box,
 } from '@chakra-ui/react'
 import { Deal, Listing, DealStatus, ListingStatus } from 'shared/types'
-import { LISTING } from 'shared/constants'
+import { DEAL, LISTING } from 'shared/constants'
 import { useColors } from 'hooks'
 import { getCreatorListingOrDealStatus } from 'utils/helpers'
 import dynamic from 'next/dynamic'
-import { statusConfigs } from 'utils/configs'
+import { platformIconSlugs, statusConfigs } from 'utils/configs'
 import { CARD_HEIGHT, CARD_ASPECT_RATIO } from 'shared/metrics'
 
 const TimerLabel = dynamic(() => import('components/atoms/TimerLabel'), {
@@ -54,64 +56,83 @@ function CreatorDashboardCard({ data }: Props): JSX.Element {
             position="relative"
           >
             <Flex direction="column" justify="space-between">
-              {data.auctionEndsAt && (
-                <TimerLabel
-                  pl={2}
-                  borderRightRadius="full"
-                  end={data.auctionEndsAt}
-                />
-              )}
-              <Box
-                pl={4}
-                position="absolute"
-                top={`${(102 / CARD_HEIGHT) * 100}%`}
-              >
-                <Text
-                  fontSize="20px"
-                  fontFamily="anton"
-                  color={config.isUrgent ? 'gray.900' : gray[900]}
-                  textTransform="capitalize"
-                  maxWidth="210px"
-                  isTruncated
-                >
-                  {config.type === LISTING
-                    ? data.name
-                    : `${data.deliverable} for ${data.brand.alias}`}
-                </Text>
-                <Text
-                  textStyle="micro"
-                  color={config.isUrgent ? 'gray.600' : 'gray.500'}
-                  fontWeight={600}
-                  mt={1}
-                >
-                  {`${
-                    config.type === LISTING ? 'Posted' : 'Commenced'
-                  } ${format(new Date(data.createdAt), 'dd MMMM')}`}
-                </Text>
-              </Box>
-              {config.type === LISTING && (
-                <Flex align="center" pb={4} pl={4}>
-                  <AvatarGroup spacing={-2} size="sm" max={3}>
-                    {data.offers.map(({ brand }) => (
-                      <Avatar
-                        key={brand.alias}
-                        name={brand.alias}
-                        src={brand.avatarUrl}
-                      />
-                    ))}
-                  </AvatarGroup>
+              {config.type === DEAL ? (
+                <>
+                  <Box />
                   <Text
-                    textStyle="micro"
-                    fontWeight={600}
+                    pb={4}
+                    pl={4}
+                    textStyle="microBold"
                     color={config.isUrgent ? 'gray.600' : 'gray.500'}
-                    pl={1}
                   >
-                    {data.offers.length > 1 &&
-                      `🔥 ${data.offers.length} Brands`}
+                    <Icon
+                      as={Iconify}
+                      mb="3px"
+                      ml={1}
+                      mr={2}
+                      fontSize="16px"
+                      icon={platformIconSlugs[data.platform]}
+                    />
+                    <span>{data.deliverable}</span>
                   </Text>
-                </Flex>
+                </>
+              ) : (
+                <>
+                  <TimerLabel
+                    pl={2}
+                    borderRightRadius="full"
+                    end={data.auctionEndsAt}
+                  />
+                  <Flex align="center" pb={4} pl={4}>
+                    <AvatarGroup spacing={-2} size="sm" max={3}>
+                      {data.offers.map(({ brand }) => (
+                        <Avatar
+                          key={brand.alias}
+                          name={brand.alias}
+                          src={brand.avatarUrl}
+                        />
+                      ))}
+                    </AvatarGroup>
+                    <Text
+                      textStyle="micro"
+                      fontWeight={600}
+                      color={config.isUrgent ? 'gray.600' : 'gray.500'}
+                      pl={1}
+                    >
+                      {data.offers.length > 1 &&
+                        `🔥 ${data.offers.length} Brands`}
+                    </Text>
+                  </Flex>
+                </>
               )}
             </Flex>
+            <Box
+              pl={4}
+              position="absolute"
+              top={`${(102 / CARD_HEIGHT) * 100}%`}
+            >
+              <Text
+                fontSize="20px"
+                fontFamily="anton"
+                color={config.isUrgent ? 'gray.900' : gray[900]}
+                textTransform="capitalize"
+                maxWidth="210px"
+                isTruncated
+              >
+                {config.type === LISTING ? data.name : data.brand.alias}
+              </Text>
+              <Text
+                textStyle="micro"
+                color={config.isUrgent ? 'gray.600' : 'gray.500'}
+                fontWeight={600}
+                mt={1}
+              >
+                {`${config.type === LISTING ? 'Posted' : 'Commenced'} ${format(
+                  new Date(data.createdAt),
+                  'dd MMMM'
+                )}`}
+              </Text>
+            </Box>
             <Box>
               <Tag mr={4} {...config.tagProps}>
                 {config.text}

@@ -5,6 +5,9 @@ import {
   LISTING,
   PAYING,
   DECIDED,
+  YOUTUBE,
+  TIKTOK,
+  NO_OFFERS,
 } from 'shared/constants'
 
 const completedTagProps = {
@@ -36,6 +39,15 @@ export const statusConfigs = {
     isUrgent: true,
     hasTimer: true,
   },
+  [NO_OFFERS]: {
+    text: 'Listing Ended',
+    type: LISTING,
+    hasTimer: true,
+    tagProps: {
+      color: 'white',
+      bgColor: 'blue',
+    },
+  },
   [DECIDED]: {
     text: 'Offers Selected',
     type: LISTING,
@@ -45,4 +57,9 @@ export const statusConfigs = {
     text: 'Payment Processing',
     type: DEAL,
   },
+}
+
+export const platformIconSlugs = {
+  [YOUTUBE]: 'akar-icons:youtube-fill',
+  [TIKTOK]: 'bx:bxl-tiktok',
 }

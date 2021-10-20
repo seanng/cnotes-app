@@ -4,7 +4,7 @@ import { GetServerSidePropsResult, Redirect } from 'next'
 import S3 from 'lib/s3'
 import { Blob } from 'buffer'
 import { Listing, Deal, User, TransformedProfile } from 'shared/types'
-import { ACTIVE, SELECTING, LISTING } from 'shared/constants'
+import { ACTIVE, SELECTING, LISTING, NO_OFFERS } from 'shared/constants'
 
 export function getErrorMessage(error: Record<string, any>): string {
   if (error.graphQLErrors) {
@@ -85,7 +85,10 @@ export const compress = (payload: File): Promise<Blob> =>
 
 export function getCreatorListingOrDealStatus(data: Listing | Deal): string {
   if (data.status === ACTIVE) {
-    return new Date() < new Date(data.auctionEndsAt) ? LISTING : SELECTING
+    if (new Date(data.auctionEndsAt) < new Date()) {
+      return data.offers.length > 0 ? SELECTING : NO_OFFERS
+    }
+    return LISTING
   }
   return data.status
 }

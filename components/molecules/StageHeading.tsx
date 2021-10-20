@@ -78,7 +78,10 @@ export default function StageHeading({ data }: Props): JSX.Element {
               />
             </Box>
           )}
-          <Box maxWidth={CREATOR_DASH_DETAILS_CARD_WIDTH - IMG_MR - IMG_WIDTH}>
+          <Box
+            width={`calc(100% - ${IMG_MR}px - ${IMG_WIDTH}px)`}
+            maxWidth={CREATOR_DASH_DETAILS_CARD_WIDTH - IMG_MR - IMG_WIDTH}
+          >
             <Tag fontSize="12px" {...config.tagProps}>
               {config.text}
             </Tag>

@@ -6,6 +6,7 @@ import { useColors } from 'hooks'
 import { lightFormat, formatDistanceToNowStrict } from 'date-fns'
 import { Activity } from 'shared/types'
 import OfferDetailsCard from 'components/molecules/OfferDetailsCard'
+import LinkButton from 'components/atoms/LinkButton'
 
 type Props = {
   listing: Listing
@@ -70,13 +71,23 @@ export default function OfferStage({ listing }: Props): JSX.Element {
         <Text textStyle="h4" mb={5}>
           offer activity
         </Text>
+        {timeline.length === 0 && (
+          <>
+            <Text textStyle="base" mb={8}>
+              There are currently no offers.
+            </Text>
+            <LinkButton size="sm" href="/dashboard">
+              Go to Dashboard
+            </LinkButton>
+          </>
+        )}
         {/* TIMELINE GOES HERE */}
         {timeline.map(day => (
           <Box key={day.day} pt={5}>
             <Flex align="center" position="relative" ml={2} pl={4}>
               <Box
                 borderWidth="1px"
-                borderColor={gray[500]}
+                borderColor={gray[200]}
                 bgColor="transparent"
                 position="absolute"
                 borderRadius="full"
@@ -95,11 +106,11 @@ export default function OfferStage({ listing }: Props): JSX.Element {
                 pt={i === 0 ? 2 : 6}
                 pb={6}
                 borderLeftWidth="1px"
-                borderLeftColor="gray.500"
+                borderLeftColor={gray[100]}
               >
                 <Box position="relative" pl={4} mb={5}>
                   <Box
-                    bgColor={gray[500]}
+                    bgColor={gray[300]}
                     position="absolute"
                     borderRadius="full"
                     left="-5px"

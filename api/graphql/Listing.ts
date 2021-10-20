@@ -1,4 +1,5 @@
 import sgMail from 'lib/sendgrid'
+import add from 'date-fns/add'
 import { ForbiddenError } from 'apollo-server-micro'
 import prisma from 'lib/prisma'
 import {
@@ -328,5 +329,25 @@ export const createDealsInput = inputObjectType({
     t.string('message')
     t.string('productUrl')
     t.string('productName')
+  },
+})
+
+export const resetListing = mutationField('resetListing', {
+  type: 'Listing',
+  args: {
+    id: idArg(),
+  },
+  resolve: async (_, { id }) => {
+    const now = new Date()
+
+    const data = {
+      // TODO: change # of days
+      auctionEndsAt: add(now, { days: 3 }),
+      updatedAt: now,
+    }
+    return prisma.listing.update({
+      where: { id },
+      data,
+    })
   },
 })

@@ -9,7 +9,8 @@ import { getCreatorListingOrDealStatus } from 'utils/helpers'
 import OfferStage from 'components/organisms/OfferStage'
 import SelectStage from 'components/organisms/SelectStage'
 import DecidedStage from 'components/organisms/DecidedStage'
-import { DECIDED, LISTING, SELECTING } from 'shared/constants'
+import NoOffersStage from 'components/organisms/NoOffersStage'
+import { DECIDED, LISTING, SELECTING, NO_OFFERS } from 'shared/constants'
 
 const LISTING_BY_ID = gql`
   query listingById($id: ID) {
@@ -58,6 +59,7 @@ interface Props {
 const stageComponents = {
   [LISTING]: OfferStage,
   [SELECTING]: SelectStage,
+  [NO_OFFERS]: NoOffersStage,
   [DECIDED]: DecidedStage,
 }
 
