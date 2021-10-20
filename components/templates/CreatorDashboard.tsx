@@ -50,7 +50,7 @@ const MY_LISTINGS = gql`
 
 const LoadingSkeletonCard = () => (
   <AspectRatio ratio={CARD_ASPECT_RATIO}>
-    <Skeleton borderRadius="xl" />
+    <Skeleton borderRadius="xl" maxW={412} />
   </AspectRatio>
 )
 

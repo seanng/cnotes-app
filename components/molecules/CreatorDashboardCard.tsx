@@ -145,13 +145,20 @@ function CreatorDashboardCard({ data }: Props): JSX.Element {
                   />
                 </AspectRatio>
               ) : (
-                <Avatar
-                  name={data?.brand?.alias}
+                <AspectRatio
+                  ratio={1}
                   position="absolute"
-                  size="2xl"
-                  bottom={-5}
-                  right={-5}
-                />
+                  width="45%"
+                  right="-6%"
+                  bottom="-10%"
+                >
+                  <Avatar
+                    name={data?.brand?.alias}
+                    size="full"
+                    fontSize={86}
+                    opacity="70%"
+                  />
+                </AspectRatio>
               )}
             </Box>
           </Flex>

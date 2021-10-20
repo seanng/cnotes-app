@@ -1,6 +1,7 @@
 import { Avatar, Text, Box, Flex, FlexProps } from '@chakra-ui/react'
 import { useColors } from 'hooks'
 import { Activity } from 'shared/types'
+import { CREATOR_DASH_DETAILS_CARD_WIDTH } from 'shared/metrics'
 import LinkText from 'components/atoms/LinkText'
 
 type Props = {
@@ -20,7 +21,7 @@ export default function OfferDetailsCard({
       borderRadius="xl"
       bgColor={gray[0]}
       boxShadow="sm"
-      maxWidth={700}
+      maxWidth={CREATOR_DASH_DETAILS_CARD_WIDTH}
       p={5}
       {...props}
     >
@@ -47,12 +48,13 @@ export default function OfferDetailsCard({
             )}
             {activity.productName && (
               <Box
-                as={activity.productUrl ? LinkText : 'span'}
+                as={activity.productUrl && !props.onClick ? LinkText : 'span'}
                 color={cyan[600]}
-                {...(activity.productUrl && {
-                  href: activity.productUrl,
-                  display: 'inline',
-                })}
+                {...(activity.productUrl &&
+                  !props.onClick && {
+                    href: activity.productUrl,
+                    display: 'inline',
+                  })}
               >
                 {`🎁 ${activity.productName} ($${activity.productValue})`}
               </Box>

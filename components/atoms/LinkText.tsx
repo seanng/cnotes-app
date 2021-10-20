@@ -11,7 +11,7 @@ interface Props extends LinkBoxProps {
 const LinkText: FC<Props> = ({ href, children, ...props }: Props) => (
   <LinkBox {...props}>
     <NextLink href={href} passHref>
-      <LinkOverlay>{children}</LinkOverlay>
+      <LinkOverlay isExternal>{children}</LinkOverlay>
     </NextLink>
   </LinkBox>
 )

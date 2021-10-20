@@ -173,7 +173,7 @@ const DiscoverPage: NextPage<Props> = ({ user }: Props) => {
                         helpText={
                           listing.offers?.length > 0
                             ? 'Current highest offer'
-                            : "The creator's asking price"
+                            : "Since there are no offers yet, this is the creator's asking price"
                         }
                         icon="bi:arrow-up-circle"
                         label={`$${
