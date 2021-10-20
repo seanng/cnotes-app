@@ -122,6 +122,11 @@ export default {
     fontFamily: 'body',
     fontSize: '16px',
     boxShadow: 'lg',
+    _focus: {
+      // removes the ugly blue outline on mobile
+      // alternative: https://medium.com/@keeganfamouss/accessibility-on-demand-with-chakra-ui-and-focus-visible-19413b1bc6f9
+      boxShadow: 'none',
+    },
   },
   sizes: {
     table: {

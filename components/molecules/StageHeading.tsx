@@ -15,8 +15,9 @@ import { Deal, User, Listing, Offer } from 'shared/types'
 import { CREATOR_DASH_DETAILS_CARD_WIDTH } from 'shared/metrics'
 import { statusConfigs } from 'utils/configs'
 import { ArrowBackIcon } from '@chakra-ui/icons'
+import { useColors } from 'hooks'
 
-const IMG_WIDTH = 100
+const IMG_WIDTH = 75
 const IMG_MR = 32
 
 const TimerLabel = dynamic(() => import('components/atoms/TimerLabel'), {
@@ -40,6 +41,7 @@ export default function StageHeading({ data }: Props): JSX.Element {
   const status = getCreatorListingOrDealStatus(data)
   const config = statusConfigs[status]
   const imgSrc = data.iconUrl ? data.iconUrl : data.brand.avatarUrl
+  const { gray } = useColors()
   const name = data.name
     ? data.name
     : `${data.listing.deliverable} for ${data.brand.alias}`
@@ -88,10 +90,15 @@ export default function StageHeading({ data }: Props): JSX.Element {
             <Text textStyle={'h4'} mt={1} noOfLines={1}>
               {name}
             </Text>
-            <Text fontSize={['12px', '14px']} mt={1} noOfLines={1}>
+            <Text
+              fontSize={['12px', '14px']}
+              mt={1}
+              noOfLines={1}
+              color={gray[600]}
+            >
               {data.description || data.listing?.description}
             </Text>
-            <Text textStyle="micro" my={2} noOfLines={1}>
+            <Text textStyle="microBold" my={2} noOfLines={1} color={gray[600]}>
               {offerCount === 1 && (
                 <Box as="span" mr={2}>
                   1 Brand

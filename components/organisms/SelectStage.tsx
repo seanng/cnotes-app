@@ -106,8 +106,15 @@ export default function SelectingStage({ listing }: Props): JSX.Element {
     <>
       <StageHeading data={listing} />
       <Container mt={[6, 10]} mb={110}>
-        <Text textStyle="h4" mb={[5, 8]}>
+        <Text textStyle="h4" mb={5}>
           select offers
+        </Text>
+        <Text textStyle="base" mb={3}>
+          Congratulations! You have received offers for your listing!
+        </Text>
+        <Text textStyle="base" mb={8}>
+          Click on a card to view more information. You can select multiple
+          offers to initiate separate deals.
         </Text>
         {offers.map((offer, i) => (
           <OfferDetailsCard
