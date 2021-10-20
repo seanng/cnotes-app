@@ -127,25 +127,31 @@ function CreatorDashboardCard({ data }: Props): JSX.Element {
                 >
                   <Image layout="fill" src={data.iconUrl} />
                 </AspectRatio>
+              ) : data?.brand?.avatarUrl ? (
+                // BRAND LOGO
+                <AspectRatio
+                  ratio={1}
+                  position="absolute"
+                  width="50%"
+                  right="-3%"
+                  bottom="-20%"
+                >
+                  <Box
+                    as={Image}
+                    borderRadius="full"
+                    objectFit="contain"
+                    layout="fill"
+                    src={data.brand.avatarUrl}
+                  />
+                </AspectRatio>
               ) : (
-                data?.brand?.avatarUrl && (
-                  // BRAND LOGO
-                  <AspectRatio
-                    ratio={1}
-                    position="absolute"
-                    width="50%"
-                    right="-3%"
-                    bottom="-20%"
-                  >
-                    <Box
-                      as={Image}
-                      borderRadius="full"
-                      objectFit="contain"
-                      layout="fill"
-                      src={data.brand.avatarUrl}
-                    />
-                  </AspectRatio>
-                )
+                <Avatar
+                  name={data?.brand?.alias}
+                  position="absolute"
+                  size="2xl"
+                  bottom={-5}
+                  right={-5}
+                />
               )}
             </Box>
           </Flex>
