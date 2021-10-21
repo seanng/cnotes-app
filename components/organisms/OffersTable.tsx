@@ -189,10 +189,7 @@ export default function OffersTable(): JSX.Element {
                     <Flex direction="column" ml={2}>
                       <Text textStyle="largeBold">{listing.creator.alias}</Text>
                     </Flex>
-                    <NextLink
-                      href={`/profile/${listing.creator.slug}`}
-                      passHref
-                    >
+                    <NextLink href={`/listing/${listing.id}`} passHref>
                       <LinkOverlay isExternal />
                     </NextLink>
                   </LinkBox>
