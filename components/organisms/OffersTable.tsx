@@ -193,7 +193,7 @@ export default function OffersTable(): JSX.Element {
                     </NextLink>
                   </LinkBox>
                 </Td>
-                <Td minWidth={123}>
+                <Td minWidth={150}>
                   <BrandDashOfferValue offer={lastOffer} />
                   <Text textStyle="microBold" color={gray[500]}>
                     {`${formatDistanceToNow(
@@ -201,7 +201,7 @@ export default function OffersTable(): JSX.Element {
                     )} ago`}
                   </Text>
                 </Td>
-                <Td minWidth={123}>
+                <Td minWidth={150}>
                   <Text textStyle="largeBold">
                     ${listing.highestOfferValue.toLocaleString()}
                   </Text>

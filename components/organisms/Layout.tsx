@@ -12,7 +12,7 @@ export default function Layout({ children, user }: Props): JSX.Element {
     <>
       <Navbar user={user} />
       {children}
-      <Box pt={20} />
+      <Box pt={40} />
       {/* TODO: Footer */}
     </>
   )
