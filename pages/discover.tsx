@@ -97,7 +97,12 @@ const DiscoverPage: NextPage<Props> = ({ user }: Props) => {
   useEffect(() => {
     if (data && data.discoveryListings) {
       setIsLoading(true)
-      setListings(data.discoveryListings)
+      const sortedListings = [...data.discoveryListings].sort((a, b) => {
+        const aEndsAt = new Date(a.auctionEndsAt)
+        const bEndsAt = new Date(b.auctionEndsAt)
+        return aEndsAt.getTime() - bEndsAt.getTime()
+      })
+      setListings(sortedListings)
       setIsLoading(false)
     }
   }, [data])
