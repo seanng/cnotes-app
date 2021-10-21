@@ -2,7 +2,6 @@ export interface PortfolioItem {
   platformMediaId: string
   url: string
   thumbnailUrl: string
-  description?: string
   isVerified?: boolean
   publishedAt?: string
   companyUrl?: string
@@ -141,8 +140,6 @@ export interface SettingsFormFieldValues {
   alias: string
   websiteUrl: string
   about: string
-  collabs?: PortfolioItem[]
-  samples?: PortfolioItem[]
   portfolio?: PortfolioItem[]
   avatarUrl?: string
   bannerUrl?: string

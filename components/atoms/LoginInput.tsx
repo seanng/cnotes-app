@@ -52,6 +52,7 @@ function LoginInput({
               borderColor: errors[name] ? 'red' : 'blue',
               backgroundColor: gray[0],
             }}
+            autoComplete="off"
             {...inputProps}
           />
         </div>

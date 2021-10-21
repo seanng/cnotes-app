@@ -16,7 +16,6 @@ import {
   TabList,
   Flex,
 } from '@chakra-ui/react'
-import * as R from 'ramda'
 import FeedbackModal from 'components/molecules/FeedbackModal'
 import Layout from 'components/organisms/Layout'
 import { useRouter } from 'next/router'
@@ -53,24 +52,12 @@ const defaultValues = {
   tiktokUrl: '',
   youtubeUrl: '',
   genre: '',
-  collabs: [],
-  samples: [],
+  portfolio: [],
 }
 
 // refactor out to helpers for use with profile.. use on getServerSideProps
 const getFormData = (user: User): SettingsFormFieldValues => {
   if (!user) return defaultValues
-
-  const collabs = []
-  const samples = []
-
-  if (user.portfolio) {
-    for (let i = 0; i < user.portfolio.length; i++) {
-      const item = user.portfolio[i]
-      const list = item.companyName ? collabs : samples
-      list.push(item)
-    }
-  }
 
   return {
     ...defaultValues,
@@ -84,8 +71,7 @@ const getFormData = (user: User): SettingsFormFieldValues => {
     tiktokUrl: user.tiktokUrl,
     facebookUrl: user.facebookUrl,
     instagramUrl: user.instagramUrl,
-    collabs,
-    samples,
+    portfolio: user.portfolio,
   }
 }
 
@@ -140,9 +126,9 @@ const SettingsPage: NextPage<Props> = ({ user }: Props) => {
   // )
 
   const onSubmit = async (data: SettingsFormFieldValues): Promise<void> => {
+    const input = { ...data }
     try {
       setIsSuccess(true)
-      const input = R.omit(['collabs', 'samples'], data)
       if (avatarFile) {
         const file = await compress(avatarFile)
         input.avatarUrl = await uploadToS3(file, 'avatars', user.id)
@@ -150,9 +136,6 @@ const SettingsPage: NextPage<Props> = ({ user }: Props) => {
       if (bannerFile) {
         const file = await compress(bannerFile)
         input.bannerUrl = await uploadToS3(file, 'banners', user.id)
-      }
-      if (user.role === CREATOR) {
-        input.portfolio = data.collabs.concat(data.samples)
       }
       await updateUser({ variables: { input } })
       onOpen()
@@ -178,8 +161,7 @@ const SettingsPage: NextPage<Props> = ({ user }: Props) => {
       alias: () => setTabIdx(0),
       firstName: () => setTabIdx(0),
       lastName: () => setTabIdx(0),
-      collabs: () => setTabIdx(1),
-      samples: () => setTabIdx(1),
+      portfolio: () => setTabIdx(1),
       youtubeUrl: () => setTabIdx(2),
       tiktokUrl: () => setTabIdx(2),
       instagramUrl: () => setTabIdx(2),

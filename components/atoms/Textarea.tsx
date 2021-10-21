@@ -1,12 +1,16 @@
-import { Textarea, useColorModeValue, TextareaProps } from '@chakra-ui/react'
+import {
+  forwardRef,
+  Textarea,
+  useColorModeValue,
+  TextareaProps,
+} from '@chakra-ui/react'
 
-export default function TextArea(props: TextareaProps): JSX.Element {
-  return (
-    <Textarea
-      borderWidth={0}
-      bgColor={useColorModeValue('#ECECEC', 'gray.800')}
-      _focus={{ boxShadow: 'none' }}
-      {...props}
-    />
-  )
-}
+export default forwardRef<TextareaProps, 'textarea'>((props, ref) => (
+  <Textarea
+    ref={ref}
+    borderWidth={0}
+    bgColor={useColorModeValue('#ECECEC', 'gray.800')}
+    _focus={{ boxShadow: 'none' }}
+    {...props}
+  />
+))

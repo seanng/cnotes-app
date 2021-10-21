@@ -31,7 +31,7 @@ model User {
   twitterUrl          String?
   facebookUrl         String?
   // creator-specific
-  portfolio           Json[] // {url, thumbnailUrl, description, companyName?, companyUrl?, executedAt, deliverable?, platform}
+  portfolio           Json[] // {url, thumbnailUrl, companyName?, companyUrl?, executedAt, deliverable?, platform}
   primaryPlatform     String?
   genre               String?
   listings            Listing[]

@@ -5,17 +5,19 @@ import {
   Box,
   Button,
   Select,
-  Flex,
-  SimpleGrid,
+  HStack,
   FormControl,
   FormLabel,
   IconButton,
 } from '@chakra-ui/react'
+import { useColors } from 'hooks'
 import {
   Control,
   useFieldArray,
+  useWatch,
   UseFormRegister,
   DeepMap,
+  Controller,
   FieldError,
 } from 'react-hook-form'
 import FormInput from 'components/atoms/FormInput'
@@ -28,53 +30,107 @@ type Props = {
   errors: DeepMap<SettingsFormFieldValues, FieldError>
 }
 
+const SponsoredFields = ({ control, i, field, errors, children }) => {
+  const value = useWatch<SettingsFormFieldValues>({
+    name: 'portfolio',
+    control,
+  })
+  const required = value?.[i]?.deliverable !== ''
+  return (
+    <>
+      <Controller
+        control={control}
+        name={`portfolio.${i}.companyName`}
+        rules={{ required }}
+        render={() =>
+          required ? (
+            <FormInput
+              display="inline-block"
+              mb={4}
+              mr={4}
+              w={170}
+              error={errors.portfolio?.[i]?.companyName}
+              label="Sponsor Name"
+              hideMessage
+              inputProps={{
+                defaultValue: field.companyName,
+                placeholder: 'eg. Drop',
+              }}
+            />
+          ) : null
+        }
+      />
+      <HStack display="inline-block">
+        <Controller
+          control={control}
+          name={`portfolio.${i}.companyUrl`}
+          rules={{
+            required,
+            pattern: {
+              value: URL_REGEX,
+              message: 'Enter a valid website url',
+            },
+          }}
+          render={() =>
+            required ? (
+              <FormInput
+                display="inline-block"
+                mb={4}
+                w={200}
+                error={errors.portfolio?.[i]?.companyUrl}
+                label="Sponsor URL"
+                hideMessage
+                inputProps={{
+                  defaultValue: field.companyUrl,
+                  placeholder: 'eg. https://dollarshaveclub.com/',
+                }}
+              />
+            ) : null
+          }
+        />
+        {children}
+      </HStack>
+    </>
+  )
+}
+
 const Portfolio: FC<Props> = ({ register, control, errors }: Props) => {
-  const {
-    fields: collabsFields,
-    append: appendCollab,
-    remove: removeCollab,
-  } = useFieldArray({
-    name: 'collabs',
+  const { fields, append, remove } = useFieldArray({
+    name: 'portfolio',
     control,
     shouldUnregister: true,
   })
 
-  const {
-    fields: samplesFields,
-    append: appendSample,
-    remove: removeSample,
-  } = useFieldArray({
-    name: 'samples',
-    control,
-    shouldUnregister: true,
-  })
+  const { gray } = useColors()
 
   return (
     <Box>
-      <Box textStyle="xLarge" fontWeight={700} mb={8}>
-        Past Collabs
-      </Box>
-      {collabsFields.length === 0 && (
+      {fields.length === 0 && (
         <Box textStyle="base" mb={8}>
-          Worked with brands in the past? Showcase your work here!
+          Add samples to showcase your past work!
         </Box>
       )}
-      {collabsFields.map((field, i) => {
+
+      {fields.map((field, i) => {
         return (
-          <SimpleGrid
+          <Box
             key={field.id}
-            columns={[1, 2, null, 4]}
-            spacingX={4}
-            mb={6}
+            pb={5}
+            mb={7}
+            borderBottom="1px solid"
+            borderColor={gray[100]}
           >
             <FormInput
+              display="inline-block"
+              w={200}
               mb={4}
-              error={errors.collabs?.[i]?.url}
+              mr={4}
+              error={errors.portfolio?.[i]?.url}
               label="Media URL"
               inputProps={{
                 defaultValue: field.url,
                 placeholder: 'eg. https://www.youtube.com/watch?v=l7FV87ocmwM',
-                ...register(`collabs.${i}.url` as const, {
+                ...register(`portfolio.${i}.url` as const, {
                   required: true,
                   pattern: {
                     value: PLATFORM_URL_REGEX,
@@ -83,140 +139,38 @@ const Portfolio: FC<Props> = ({ register, control, errors }: Props) => {
                 }),
               }}
             />
-            <FormInput
-              mb={4}
-              error={errors.collabs?.[i]?.description}
-              label="Caption"
-              hideMessage
-              mr={4}
-              inputProps={{
-                defaultValue: field.companyUrl,
-                placeholder: 'Max 250 characters',
-                ...register(`collabs.${i}.description` as const, {
-                  required: true,
-                }),
-              }}
-            />
-            <FormInput
-              mb={4}
-              error={errors.collabs?.[i]?.companyUrl}
-              label="Sponsor URL"
-              hideMessage
-              inputProps={{
-                defaultValue: field.companyUrl,
-                placeholder: 'eg. https://dollarshaveclub.com/',
-                ...register(`collabs.${i}.companyUrl` as const, {
-                  required: true,
-                  pattern: {
-                    value: URL_REGEX,
-                    message: 'Enter a valid website url',
-                  },
-                }),
-              }}
-            />
-            <Flex position="relative" align="center" justify="space-between">
-              <FormControl maxW={180} mr={4} mb={4}>
-                <FormLabel>Job Type</FormLabel>
-                <Select
-                  variant="rounded"
-                  {...register(`collabs.${i}.deliverable`)}
-                >
-                  <option value={''}>-</option>
-                  <option>Integration</option>
-                  <option>Dedicated</option>
-                  <option>I don&apos;t know</option>
-                </Select>
-              </FormControl>
+            <FormControl maxW={150} mr={4} mb={4} display="inline-block">
+              <FormLabel>Job Type</FormLabel>
+              <Select
+                variant="rounded"
+                {...register(`portfolio.${i}.deliverable`)}
+              >
+                <option value={''}>Not sponsored</option>
+                <option>Integration</option>
+                <option>Dedicated</option>
+                <option>I don&apos;t know</option>
+              </Select>
+            </FormControl>
+            <SponsoredFields {...{ control, i, field, errors }}>
               <IconButton
-                mt={3}
                 size="sm"
-                borderRadius="full"
+                variant="unstyled"
                 aria-label="Remove"
-                colorScheme="red"
-                minWidth="40px"
                 onClick={(): void => {
-                  removeCollab(i)
+                  remove(i)
                 }}
-                icon={<CloseIcon boxSize={3} />}
+                icon={<CloseIcon color="red" fontSize="12px" />}
               />
-            </Flex>
-          </SimpleGrid>
-        )
-      })}
-      <Button
-        size="sm"
-        onClick={(): void => {
-          appendCollab({})
-        }}
-        mb={16}
-      >
-        Add
-      </Button>
-      <Box textStyle="xLarge" fontWeight={700} mb={8}>
-        Highlights
-      </Box>
-      {samplesFields.length === 0 && (
-        <Box textStyle="base" mb={8}>
-          Showcase work that aren&apos;t brand collabs here.
-        </Box>
-      )}
-      {samplesFields.map((field, i) => {
-        return (
-          <Box key={field.id} display={['block', 'flex']} mb={6}>
-            <FormInput
-              mb={4}
-              error={errors.samples?.[i]?.url}
-              label="Media URL"
-              mr={4}
-              inputProps={{
-                defaultValue: field.url,
-                placeholder: 'eg. https://www.youtube.com/watch?v=l7FV87ocmwM',
-                ...register(`samples.${i}.url` as const, {
-                  required: true,
-                  pattern: {
-                    value: PLATFORM_URL_REGEX,
-                    message: 'Invalid YouTube or TikTok URL',
-                  },
-                }),
-              }}
-            />
-            <Flex w="100%" align="center">
-              <FormInput
-                mb={4}
-                error={errors.samples?.[i]?.description}
-                label="Caption"
-                hideMessage
-                mr={4}
-                inputProps={{
-                  defaultValue: field.description,
-                  placeholder: 'A short description (max 250 chars)',
-                  ...register(`samples.${i}.description` as const, {
-                    required: true,
-                  }),
-                }}
-              />
-              <IconButton
-                mt={3}
-                size="sm"
-                borderRadius="full"
-                minWidth="40px"
-                aria-label="Remove"
-                colorScheme="red"
-                onClick={(): void => {
-                  removeSample(i)
-                }}
-                icon={<CloseIcon boxSize={3} />}
-              />
-            </Flex>
+            </SponsoredFields>
           </Box>
         )
       })}
       <Button
         size="sm"
         onClick={(): void => {
-          appendSample({})
+          append({})
         }}
-        mb={12}
+        mb={16}
       >
         Add
       </Button>
