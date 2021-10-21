@@ -68,7 +68,7 @@ export const updateUser = mutationField('updateUser', {
   resolve: async (_, { input }, { user, res }) => {
     if (!user) throw new ForbiddenError('Not authorized')
     const now = new Date()
-    const data = { ...input }
+    const data = R.omit(['password'], input)
 
     data.slug = slugify(input.alias.toLowerCase())
 
@@ -93,7 +93,7 @@ export const updateUser = mutationField('updateUser', {
       where: { id: user.id },
       data: {
         ...data,
-        ...(data.password && { password: createPassword(data.password) }),
+        ...(input.password && { password: createPassword(input.password) }),
         updatedAt: now,
       },
     })

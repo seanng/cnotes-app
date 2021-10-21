@@ -182,6 +182,7 @@ const ProfileSettings: FC<Props> = ({
           mb={8}
           error={errors.websiteUrl}
           inputProps={{
+            autoComplete: 'off',
             placeholder: isBrand
               ? 'eg. https://drop.com'
               : 'eg. https://www.youtube.com/channel/UCfRKvxo',
