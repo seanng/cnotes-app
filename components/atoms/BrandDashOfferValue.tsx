@@ -11,17 +11,17 @@ interface Props {
 export default function BrandDashOfferValue({ offer }: Props): JSX.Element {
   return (
     <Text textStyle="largeBold">
-      ${offer.cashValue + offer.productValue}
+      ${(offer.cashValue + offer.productValue).toLocaleString()}
       <Tooltip
         label={
           <>
             {offer.cashValue > 0 && (
               <Box as="span" mr={2}>
-                {`💰$${offer.cashValue}`}
+                {`💰$${offer.cashValue.toLocaleString()}`}
               </Box>
             )}
             {offer.productValue > 0 && (
-              <Box as="span">{`🛍 $${offer.productValue}`}</Box>
+              <Box as="span">{`🛍 $${offer.productValue.toLocaleString()}`}</Box>
             )}
           </>
         }

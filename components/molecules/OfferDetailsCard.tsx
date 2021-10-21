@@ -38,12 +38,12 @@ export default function OfferDetailsCard({
             mb={2}
             noOfLines={1}
           >
-            {`$${totalValue} by ${activity.brand.alias}`}
+            {`$${totalValue.toLocaleString()} by ${activity.brand.alias}`}
           </Text>
           <Box textStyle={['micro', 'mini']} mb={2}>
             {activity.cashValue > 0 && (
               <Box as="span" mr={3}>
-                💰${activity.cashValue}
+                💰${activity.cashValue.toLocaleString()}
               </Box>
             )}
             {activity.productName && (
@@ -58,7 +58,9 @@ export default function OfferDetailsCard({
                     href: activity.productUrl,
                   })}
               >
-                {`🎁 ${activity.productName} ($${activity.productValue})`}
+                {`🎁 ${
+                  activity.productName
+                } ($${activity.productValue.toLocaleString()})`}
               </Box>
             )}
           </Box>

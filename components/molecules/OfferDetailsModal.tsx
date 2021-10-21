@@ -27,12 +27,12 @@ export default function OfferDetailsModal({
         <Flex direction="column" align="center">
           <Avatar mt={2} mb={5} size="xl" src={offer?.brand?.avatarUrl} />
           <Text color={gray[800]} textStyle="large" fontWeight={700} mb={2}>
-            {`$${offer?.cashValue + offer?.productValue}`}
+            {`$${(offer?.cashValue + offer?.productValue).toLocaleString()}`}
           </Text>
           <Box textStyle="small" textAlign="center" mb={4}>
             {offer?.cashValue > 0 && (
               <Box as="span" mr={3}>
-                💰${offer.cashValue}
+                💰${offer.cashValue.toLocaleString()}
               </Box>
             )}
             {offer?.productName && (
@@ -47,7 +47,9 @@ export default function OfferDetailsModal({
                   href: offer.productUrl,
                 })}
               >
-                {`🎁 ${offer.productName} ($${offer.productValue})`}
+                {`🎁 ${
+                  offer.productName
+                } ($${offer.productValue.toLocaleString()})`}
               </Box>
             )}
           </Box>

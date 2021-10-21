@@ -110,7 +110,7 @@ export default function StageHeading({ data }: Props): JSX.Element {
                     🔥 {offerCount} brands
                   </Box>
                   <Box as="span">
-                    📈 ${data.highestOfferValue} Highest Offer
+                    📈 ${data.highestOfferValue.toLocaleString()} Highest Offer
                   </Box>
                 </>
               )}

@@ -1,4 +1,5 @@
-import { useState } from 'react'
+import { useRouter } from 'next/router'
+import { useEffect, useState } from 'react'
 import Layout from 'components/organisms/Layout'
 import {
   Flex,
@@ -40,13 +41,21 @@ interface Props {
 const BrandDashboard: NextPage<Props> = ({ user }: Props) => {
   const [tabIdx, setTabIdx] = useState<number>(0)
   const { gray } = useColors()
+  const router = useRouter()
+
+  useEffect(() => {
+    const idx = Number(router.query.tab || 0)
+    setTabIdx(idx)
+  }, [router.query.tab])
+
   const handleTabChange = (i: number): void => {
-    setTabIdx(i)
+    const href = `/dashboard?tab=${i}`
+    router.push(href, href, { shallow: true })
   }
 
   return (
     <Layout user={user}>
-      <Container pt={9} overflowX="scroll">
+      <Container pt={9}>
         <Text mb={8} textStyle={['h4', 'h2']}>
           my dashboard
         </Text>

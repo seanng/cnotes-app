@@ -129,29 +129,34 @@ export default function OffersTable(): JSX.Element {
           <Tr>
             {columns.map(col => (
               <Th key={col}>
-                {col}
-                {col === STATUS && (
-                  // status tooltip
-                  <Helptip
-                    label={
-                      <Box textStyle="micro">
-                        <Flex>
-                          <Box as="span" color="cyan.500">
-                            ACTIVE
-                          </Box>
-                          <span>: Creator is accepting offers and updates</span>
-                        </Flex>
-                        <Flex>
-                          <Box as="span" color="yellow.400">
-                            AWAITING
-                          </Box>
-                          <span>: Creator is selecting who to work with</span>
-                        </Flex>
-                      </Box>
-                    }
-                    hasArrow
-                    placement="top"
-                  />
+                {col === STATUS ? (
+                  <Flex align="flex-end">
+                    {col}
+                    <Helptip
+                      label={
+                        <Box textStyle="micro">
+                          <Flex>
+                            <Box as="span" color="cyan.500">
+                              ACTIVE
+                            </Box>
+                            <span>
+                              : Creator is accepting offers and updates
+                            </span>
+                          </Flex>
+                          <Flex>
+                            <Box as="span" color="yellow.400">
+                              AWAITING
+                            </Box>
+                            <span>: Creator is selecting who to work with</span>
+                          </Flex>
+                        </Box>
+                      }
+                      hasArrow
+                      placement="top"
+                    />
+                  </Flex>
+                ) : (
+                  col
                 )}
               </Th>
             ))}
@@ -202,7 +207,7 @@ export default function OffersTable(): JSX.Element {
                 </Td>
                 <Td minWidth={123}>
                   <Text textStyle="largeBold">
-                    ${listing.highestOfferValue}
+                    ${listing.highestOfferValue.toLocaleString()}
                   </Text>
                   <Text textStyle="microBold" color={gray[500]}>
                     {`${listing.offers.length} total offers`}

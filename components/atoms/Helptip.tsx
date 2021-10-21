@@ -6,13 +6,7 @@ export default function Helptip(
 ): JSX.Element {
   return (
     <Tooltip {...props}>
-      <Icon
-        as={Iconify}
-        mb={1}
-        ml={1}
-        icon="bx:bxs-help-circle"
-        cursor="pointer"
-      />
+      <Icon as={Iconify} ml={1} icon="bx:bxs-help-circle" cursor="pointer" />
     </Tooltip>
   )
 }

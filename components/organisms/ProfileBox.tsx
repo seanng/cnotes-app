@@ -203,7 +203,7 @@ const ProfileBox = ({
             <ListingRow label="Total Offers" value={listing.offerCount} />
             <ListingRow
               label="Highest Offer"
-              value={`$${listing.highestOfferValue}`}
+              value={`$${listing.highestOfferValue.toLocaleString()}`}
             />
             <Divider my={4} />
             {hasTimeLeft ? (

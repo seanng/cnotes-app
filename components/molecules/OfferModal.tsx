@@ -187,7 +187,7 @@ export default function OfferModal({
                 <Flex>
                   <Box mr={6}>
                     <Text fontWeight={600} textStyle="base">
-                      ${listing?.highestOfferValue}
+                      ${listing?.highestOfferValue.toLocaleString()}
                     </Text>
                     <Text fontWeight={600} textStyle="micro" color={gray[500]}>
                       Highest
@@ -233,7 +233,7 @@ export default function OfferModal({
                   }}
                 />
               </Flex>
-              <Text color="red" mb={5}>
+              <Text color="red" mb={1} height="22px">
                 {showMinValueError
                   ? `Total offer value must not be lower than your previous total offer value ($${minTotalValue})`
                   : ''}

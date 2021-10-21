@@ -30,12 +30,12 @@ export default function DealStageBody({ deal, children }: Props): JSX.Element {
           mb={10}
         >
           <Text textStyle={['large', 'xLarge']} fontWeight={700} mb={[2, 4]}>
-            {`$${totalValue}`}
+            {`$${totalValue.toLocaleString()}`}
           </Text>
           <Box textStyle={['mini', 'small']} mb={[2, 4]}>
             {deal.cashValue > 0 && (
               <Box as="span" mr={3}>
-                💰${deal.cashValue}
+                💰${deal.cashValue.toLocaleString()}
               </Box>
             )}
             {deal.productName && (
@@ -48,7 +48,9 @@ export default function DealStageBody({ deal, children }: Props): JSX.Element {
                   isExternal: true,
                 })}
               >
-                {`🎁 ${deal.productName} ($${deal.productValue})`}
+                {`🎁 ${
+                  deal.productName
+                } ($${deal.productValue.toLocaleString()})`}
               </Box>
             )}
           </Box>
