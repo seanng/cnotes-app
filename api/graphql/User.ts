@@ -13,7 +13,12 @@ import {
 } from 'nexus'
 import slugify from 'slugify'
 import { ALIAS_TAKEN, userPublicFields } from 'shared/constants'
-import { encryptToken, serializeCookie, isCreator } from 'utils/auth'
+import {
+  encryptToken,
+  serializeCookie,
+  isCreator,
+  createPassword,
+} from 'utils/auth'
 import { populatePortfolioData } from 'utils/backend'
 
 export const User = objectType({
@@ -64,6 +69,7 @@ export const updateUser = mutationField('updateUser', {
     if (!user) throw new ForbiddenError('Not authorized')
     const now = new Date()
     const data = { ...input }
+
     data.slug = slugify(input.alias.toLowerCase())
 
     const aliasUser = await prisma.user.findUnique({
@@ -87,6 +93,7 @@ export const updateUser = mutationField('updateUser', {
       where: { id: user.id },
       data: {
         ...data,
+        ...(data.password && { password: createPassword(data.password) }),
         updatedAt: now,
       },
     })
@@ -106,6 +113,7 @@ export const UserInput = inputObjectType({
     t.nonNull.string('alias')
     t.string('websiteUrl')
     t.string('avatarUrl')
+    t.string('password')
     t.string('bannerUrl')
     t.field('portfolio', {
       type: list('JSON'),

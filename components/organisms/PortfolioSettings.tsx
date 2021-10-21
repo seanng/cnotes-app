@@ -17,7 +17,6 @@ import {
   useWatch,
   UseFormRegister,
   DeepMap,
-  Controller,
   FieldError,
 } from 'react-hook-form'
 import FormInput from 'components/atoms/FormInput'
@@ -30,7 +29,7 @@ type Props = {
   errors: DeepMap<SettingsFormFieldValues, FieldError>
 }
 
-const SponsoredFields = ({ control, i, field, errors, children }) => {
+const SponsoredFields = ({ control, i, field, errors, register, children }) => {
   const value = useWatch<SettingsFormFieldValues>({
     name: 'portfolio',
     control,
@@ -38,56 +37,46 @@ const SponsoredFields = ({ control, i, field, errors, children }) => {
   const required = value?.[i]?.deliverable !== ''
   return (
     <>
-      <Controller
-        control={control}
-        name={`portfolio.${i}.companyName`}
-        rules={{ required }}
-        render={() =>
-          required ? (
-            <FormInput
-              display="inline-block"
-              mb={4}
-              mr={4}
-              w={170}
-              error={errors.portfolio?.[i]?.companyName}
-              label="Sponsor Name"
-              hideMessage
-              inputProps={{
-                defaultValue: field.companyName,
-                placeholder: 'eg. Drop',
-              }}
-            />
-          ) : null
-        }
-      />
-      <HStack display="inline-block">
-        <Controller
-          control={control}
-          name={`portfolio.${i}.companyUrl`}
-          rules={{
-            required,
-            pattern: {
-              value: URL_REGEX,
-              message: 'Enter a valid website url',
-            },
+      {required && (
+        <FormInput
+          display="inline-block"
+          mb={4}
+          mr={4}
+          w={170}
+          error={errors.portfolio?.[i]?.companyName}
+          label="Sponsor Name"
+          hideMessage
+          inputProps={{
+            defaultValue: field.companyName,
+            placeholder: 'eg. Drop',
+            ...register(`portfolio.${i}.companyName`, {
+              required,
+            }),
           }}
-          render={() =>
-            required ? (
-              <FormInput
-                display="inline-block"
-                mb={4}
-                w={200}
-                error={errors.portfolio?.[i]?.companyUrl}
-                label="Sponsor URL"
-                hideMessage
-                inputProps={{
-                  defaultValue: field.companyUrl,
-                  placeholder: 'eg. https://dollarshaveclub.com/',
-                }}
-              />
-            ) : null
-          }
         />
+      )}
+      <HStack display="inline-block">
+        {required && (
+          <FormInput
+            display="inline-block"
+            mb={4}
+            w={200}
+            error={errors.portfolio?.[i]?.companyUrl}
+            label="Sponsor URL"
+            hideMessage
+            inputProps={{
+              defaultValue: field.companyUrl,
+              placeholder: 'eg. https://dollarshaveclub.com/',
+              ...register(`portfolio.${i}.companyUrl`, {
+                required,
+                pattern: {
+                  value: URL_REGEX,
+                  message: 'Enter a valid website url',
+                },
+              }),
+            }}
+          />
+        )}
         {children}
       </HStack>
     </>
@@ -151,7 +140,7 @@ const Portfolio: FC<Props> = ({ register, control, errors }: Props) => {
                 <option>I don&apos;t know</option>
               </Select>
             </FormControl>
-            <SponsoredFields {...{ control, i, field, errors }}>
+            <SponsoredFields {...{ control, i, field, errors, register }}>
               <IconButton
                 size="sm"
                 variant="unstyled"

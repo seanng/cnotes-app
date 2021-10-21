@@ -148,6 +148,8 @@ export interface SettingsFormFieldValues {
   youtubeUrl?: string
   facebookUrl?: string
   instagramUrl?: string
+  password?: string
+  passwordConfirm?: string
 }
 
 // Profile Page

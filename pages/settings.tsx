@@ -26,6 +26,7 @@ import { getErrorMessage, redirTo, uploadToS3, compress } from 'utils/helpers'
 import { ALIAS_TAKEN, CREATOR } from 'shared/constants'
 import ProfileSettings from 'components/organisms/ProfileSettings'
 import SocialSettings from 'components/organisms/SocialSettings'
+import AccountSettings from 'components/organisms/AccountSettings'
 import { getUserPayload } from 'utils/auth'
 
 const Portfolio = dynamic(
@@ -52,6 +53,8 @@ const defaultValues = {
   tiktokUrl: '',
   youtubeUrl: '',
   genre: '',
+  password: '',
+  passwordConfirm: '',
   portfolio: [],
 }
 
@@ -80,12 +83,20 @@ const brandTabs = [
     label: 'profile',
     Component: ProfileSettings,
   },
+  {
+    label: 'account',
+    Component: AccountSettings,
+  },
 ]
 
 const creatorTabs = [
   {
     label: 'profile',
     Component: ProfileSettings,
+  },
+  {
+    label: 'account',
+    Component: AccountSettings,
   },
   {
     label: 'portfolio',
@@ -127,6 +138,7 @@ const SettingsPage: NextPage<Props> = ({ user }: Props) => {
 
   const onSubmit = async (data: SettingsFormFieldValues): Promise<void> => {
     const input = { ...data }
+    delete input.passwordConfirm
     try {
       setIsSuccess(true)
       if (avatarFile) {
@@ -147,7 +159,6 @@ const SettingsPage: NextPage<Props> = ({ user }: Props) => {
         })
         return
       }
-      console.log('error: ', error)
       // error could come from alias taken.
       setIsSuccess(false)
       onOpen()
@@ -161,11 +172,13 @@ const SettingsPage: NextPage<Props> = ({ user }: Props) => {
       alias: () => setTabIdx(0),
       firstName: () => setTabIdx(0),
       lastName: () => setTabIdx(0),
-      portfolio: () => setTabIdx(1),
-      youtubeUrl: () => setTabIdx(2),
-      tiktokUrl: () => setTabIdx(2),
-      instagramUrl: () => setTabIdx(2),
-      facebookUrl: () => setTabIdx(2),
+      password: () => setTabIdx(1),
+      passwordConfirm: () => setTabIdx(1),
+      portfolio: () => setTabIdx(2),
+      youtubeUrl: () => setTabIdx(3),
+      tiktokUrl: () => setTabIdx(3),
+      instagramUrl: () => setTabIdx(3),
+      facebookUrl: () => setTabIdx(3),
     }
     showError[Object.keys(data)[0]]()
   }
