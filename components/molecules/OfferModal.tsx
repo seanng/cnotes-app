@@ -90,8 +90,9 @@ export default function OfferModal({
   const { gray } = useColors()
 
   useEffect(() => {
+    reset(defaultValues)
     setMinTotalValue(defaultValues.cashValue + defaultValues.productValue)
-  }, [defaultValues])
+  }, [defaultValues, reset])
 
   useEffect(() => {
     const totalValue = productValue + cashValue
@@ -114,10 +115,11 @@ export default function OfferModal({
     setShowSuccess(true)
   }
 
+  // useEffect(() => {}, [isOpen])
+
   const handleClose = () => {
     onClose()
     setShowSuccess(false)
-    reset(defaultValues)
     setShowMinValueError(false)
   }
 
