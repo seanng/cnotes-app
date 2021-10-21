@@ -60,6 +60,7 @@ export default function SubmittingStage({ deal }: Props): JSX.Element {
           <Input
             variant="rounded"
             placeholder="https://youtube.com/watch?v=Z59dZw5yuNQ"
+            autoComplete="off"
             {...register('submittedUrl', {
               required: true,
               pattern: {
