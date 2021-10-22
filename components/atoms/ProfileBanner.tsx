@@ -37,6 +37,7 @@ export default function ProfileBanner({
           layout="fill"
           src={src || PLACEHOLDER_BANNER_URL}
           objectFit="cover"
+          alt="banner"
         />
       )}
       <Box

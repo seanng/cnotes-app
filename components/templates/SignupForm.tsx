@@ -1,3 +1,4 @@
+import Head from 'next/head'
 import { useMutation, gql } from '@apollo/client'
 import { Box, Text, chakra as c, Container, Button } from '@chakra-ui/react'
 import omit from 'ramda/src/omit'
@@ -65,6 +66,9 @@ function SignupForm({ isBrand }: TemplateProps): JSX.Element {
 
   return (
     <Layout>
+      <Head>
+        <meta name="robots" content="noindex,nofollow" />
+      </Head>
       <Container centerContent py={[16, 20]}>
         <Box w={900} maxW="100%">
           <c.h2

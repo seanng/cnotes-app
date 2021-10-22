@@ -19,15 +19,13 @@ const CrispWithNoSSR = dynamic(() => import('components/imports/Crisp'), {
 })
 
 function MyApp({ Component, pageProps }: AppProps): JSX.Element {
+  const metaDesc = 'Sponsor creators that have the most engaged viewers'
   return (
     <>
       <Head>
         <title>sponsored.so</title>
-        <meta
-          name="description"
-          content="Sponsor creators that have the most engaged viewers"
-        />
-        <meta name="robots" content="noindex,nofollow" />
+        <meta name="description" content={metaDesc} />
+        <meta property="og:description" content={metaDesc} />
         <meta
           name="viewport"
           content="width=device-width, initial-scale=1, maximum-scale=1"

@@ -142,16 +142,23 @@ const ProfileBox = ({
         size="2xl"
         src={profile.avatarUrl}
         mb={isShort ? 4 : 7}
+        alt="avatar"
       />
       {!isShort && profile.createdAt && (
         <Text color="gray.500" textStyle="micro" mb={1}>
           {`Joined ${formatDistanceToNow(new Date(profile.createdAt))} ago`}
         </Text>
       )}
-      <Text textStyle="h4" mb={2}>
+      <Text as="h1" textStyle="h4" mb={2}>
         {profile.alias}
       </Text>
-      <Text color={gray[1000]} textStyle="micro" fontWeight={500} mb={3}>
+      <Text
+        as="h2"
+        color={gray[1000]}
+        textStyle="micro"
+        fontWeight={500}
+        mb={3}
+      >
         {profile.genre || ''}
       </Text>
       <Social profile={profile} mb={isShort ? 3 : 8} />

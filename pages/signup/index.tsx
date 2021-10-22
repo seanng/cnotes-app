@@ -1,3 +1,4 @@
+import Head from 'next/head'
 import Layout from 'components/organisms/Layout'
 import NextImage from 'next/image'
 import NextLink from 'next/link'
@@ -62,6 +63,9 @@ const SignupFoyer: NextPage = () => {
   const { gray } = useColors()
   return (
     <Layout>
+      <Head>
+        <meta name="robots" content="noindex,nofollow" />
+      </Head>
       <Container
         display="flex"
         flexDir="column"

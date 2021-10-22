@@ -5,7 +5,7 @@ import theme from 'theme'
 export default class Document extends NextDocument {
   render(): JSX.Element {
     return (
-      <Html>
+      <Html lang="en">
         <Head />
         <body>
           {/* Make Color mode persist when you refresh the page. */}

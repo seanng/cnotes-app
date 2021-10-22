@@ -59,7 +59,7 @@ const ProfilePage: NextPage<Props> = ({ profile, user }: Props) => {
         <meta property="og:image" content={profile.avatarUrl} />
         <link
           rel="canonical"
-          href={`https://sponsored.so/profile/${profile.slug}`}
+          href={`${process.env.NEXT_PUBLIC_BASE_URL}/profile/${profile.slug}`}
         />
       </Head>
       <ProfileBanner src={profile.bannerUrl} />

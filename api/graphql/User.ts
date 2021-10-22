@@ -21,6 +21,7 @@ import {
   createPassword,
 } from 'utils/auth'
 import { populatePortfolioData } from 'utils/backend'
+import { CREATOR } from 'shared/constants'
 
 export const User = objectType({
   name: 'User',
@@ -132,4 +133,19 @@ export const profileBySlug = queryField('profileBySlug', {
   type: 'User',
   args: { slug: stringArg() },
   resolve: async (_, { slug }) => prisma.user.findUnique({ where: { slug } }),
+})
+
+export const creatorSlugs = queryField('creatorSlugs', {
+  type: list('User'),
+  resolve: async (_, __) => {
+    console.log('finding.')
+    const users = await prisma.user.findMany({
+      where: { role: CREATOR },
+      select: {
+        slug: true,
+      },
+    })
+    console.log('users: ', users)
+    return users
+  },
 })

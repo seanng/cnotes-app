@@ -33,6 +33,7 @@ export default function ProfileCollabs({
               src={`/logos/${collab.platform}.png`}
               width="20px"
               height={collab.platform === 'youtube' ? '15px' : '20px'}
+              alt={collab.platform}
             />
           </Center>
           <Flex direction="column">

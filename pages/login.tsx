@@ -1,3 +1,4 @@
+import Head from 'next/head'
 import { IconButton, chakra as c, Box, Flex, Button } from '@chakra-ui/react'
 import { useMutation, useApolloClient, gql } from '@apollo/client'
 import Input from 'components/atoms/LoginInput'
@@ -70,103 +71,108 @@ const Login: NextPage = () => {
   }
 
   return (
-    <Flex minH="100vh">
-      <Box
-        display={{ base: 'none', lg: 'block' }}
-        color={gray[0]}
-        w="40%"
-        px={20}
-        py={120}
-        bgColor={gray[900]}
-      >
-        <Box textStyle="h1" mb={4}>
-          cnotes
-        </Box>
-        <Box textStyle="base" fontWeight={500}>
-          Making sponsorships more transparent.
-        </Box>
-      </Box>
-      <Box w={{ base: '100%', lg: '60%' }} p={20}>
-        <c.form
-          onSubmit={handleSubmit(onSubmit)}
-          maxW={412}
-          m="auto"
-          noValidate
+    <>
+      <Head>
+        <meta name="robots" content="noindex,nofollow" />
+      </Head>
+      <Flex minH="100vh">
+        <Box
+          display={{ base: 'none', lg: 'block' }}
+          color={gray[0]}
+          w="40%"
+          px={20}
+          py={120}
+          bgColor={gray[900]}
         >
-          <Flex textStyle="h5" mb={[8, 12]} align="center">
-            <IconButton
-              size="lg"
-              fontSize="24px"
-              variant="unstyled"
-              colorScheme="gray"
-              icon={<ArrowBackIcon />}
-              aria-label="back"
-              mr={2}
-              ml={-4}
-              onClick={(): void => {
-                router.back()
+          <Box textStyle="h1" mb={4}>
+            cnotes
+          </Box>
+          <Box textStyle="base" fontWeight={500}>
+            Making sponsorships more transparent.
+          </Box>
+        </Box>
+        <Box w={{ base: '100%', lg: '60%' }} p={20}>
+          <c.form
+            onSubmit={handleSubmit(onSubmit)}
+            maxW={412}
+            m="auto"
+            noValidate
+          >
+            <Flex textStyle="h5" mb={[8, 12]} align="center">
+              <IconButton
+                size="lg"
+                fontSize="24px"
+                variant="unstyled"
+                colorScheme="gray"
+                icon={<ArrowBackIcon />}
+                aria-label="back"
+                mr={2}
+                ml={-4}
+                onClick={(): void => {
+                  router.back()
+                }}
+              />
+              <span>Sign in</span>
+            </Flex>
+            <Input
+              name="email"
+              errors={errors}
+              mb={3}
+              inputProps={{
+                type: 'email',
+                ...register('email', {
+                  required: true,
+                  pattern: {
+                    value: EMAIL_REGEX,
+                    message: 'Enter a valid email address',
+                  },
+                }),
               }}
             />
-            <span>Sign in</span>
-          </Flex>
-          <Input
-            name="email"
-            errors={errors}
-            mb={3}
-            inputProps={{
-              type: 'email',
-              ...register('email', {
-                required: true,
-                pattern: {
-                  value: EMAIL_REGEX,
-                  message: 'Enter a valid email address',
-                },
-              }),
-            }}
-          />
-          <Input
-            name="password"
-            errors={errors}
-            mb={3}
-            inputProps={{
-              type: 'password',
-              ...register('password', {
-                required: true,
-                minLength: {
-                  value: 6,
-                  message: 'Password must have at least 6 characters',
-                },
-              }),
-            }}
-          />
-          <Box
-            textAlign="right"
-            fontWeight={700}
-            textStyle="small"
-            color={blue[600]}
-            mb={6}
-          >
-            <Link href="/forgot-password">Forgot Password?</Link>
-          </Box>
-          <Button
-            borderRadius="lg"
-            type="submit"
-            isLoading={isSubmitting}
-            fontSize={14}
-            isFullWidth
-            mb={6}
-          >
-            Sign in
-          </Button>
-          <Flex justify="center" textStyle="small" fontWeight={700}>
-            <Box mr={4}>Not a member?</Box>
-            <Box color={blue[600]}>
-              <Link href="/signup">Sign up now</Link>
+            <Input
+              name="password"
+              errors={errors}
+              mb={3}
+              inputProps={{
+                type: 'password',
+                ...register('password', {
+                  required: true,
+                  minLength: {
+                    value: 6,
+                    message: 'Password must have at least 6 characters',
+                  },
+                }),
+              }}
+            />
+            <Box
+              textAlign="right"
+              fontWeight={700}
+              textStyle="small"
+              color={blue[600]}
+              mb={6}
+            >
+              <Link href="/forgot-password">Forgot Password?</Link>
             </Box>
-          </Flex>
-        </c.form>
-      </Box>
-    </Flex>
+            <Button
+              borderRadius="lg"
+              type="submit"
+              isLoading={isSubmitting}
+              fontSize={14}
+              isFullWidth
+              mb={6}
+            >
+              Sign in
+            </Button>
+            <Flex justify="center" textStyle="small" fontWeight={700}>
+              <Box mr={4}>Not a member?</Box>
+              <Box color={blue[600]}>
+                <Link href="/signup">Sign up now</Link>
+              </Box>
+            </Flex>
+          </c.form>
+        </Box>
+      </Flex>
+    </>
   )
 }
 
