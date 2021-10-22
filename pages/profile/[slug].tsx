@@ -10,6 +10,7 @@ import { PROFILE_BODY_WIDTH } from 'shared/metrics'
 import { useEffect, useState } from 'react'
 import ProfileBanner from 'components/atoms/ProfileBanner'
 import ProfileBox from 'components/organisms/ProfileBox'
+import NotFound from 'components/organisms/404'
 import ProfileLoadingSkeleton from 'components/molecules/ProfileLoadingSkeleton'
 import { profileTransformer } from 'utils/helpers'
 
@@ -66,18 +67,23 @@ const ProfilePage: NextPage<Props> = ({ slug, user }: Props) => {
     setIsLoading(true)
     if (data && data.profileBySlug) {
       setProfile(profileTransformer(data.profileBySlug))
-      setIsLoading(false)
     }
+    setIsLoading(false)
   }, [data])
 
   const metaDesc = `Sponsor, contact or work with ${profile?.alias} (${profile?.genre})`
+  const doesNotExist = !isLoading && !profile
   return (
     <Layout user={user}>
-      <ProfileBanner src={profile?.bannerUrl} isLoading={isLoading} />
+      {!doesNotExist && (
+        <ProfileBanner src={profile?.bannerUrl} isLoading={isLoading} />
+      )}
       <Container display={{ md: 'flex' }} maxWidth={1280}>
         {isLoading ? (
-          <ProfileLoadingSkeleton />
-        ) : (
+          <>
+            <ProfileLoadingSkeleton />
+          </>
+        ) : profile ? (
           <>
             <Head>
               <title>{`${profile?.alias} | ${profile?.genre} | sponsored.so profile`}</title>
@@ -102,9 +108,11 @@ const ProfilePage: NextPage<Props> = ({ slug, user }: Props) => {
               {profile?.collabs && <ProfileCollabs collabs={profile.collabs} />}
             </Box>
           </>
+        ) : (
+          <NotFound />
         )}
       </Container>
-      {!isLoading && (
+      {!isLoading && profile && (
         <Container py={[4, null, 14]}>
           <ProfileReel profile={profile} />
         </Container>
