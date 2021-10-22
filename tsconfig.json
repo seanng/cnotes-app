@@ -26,6 +26,6 @@
     "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx",
-    "components/atoms/Crisp.js"
+    "components/imports/Crisp.js"
   ]
 }

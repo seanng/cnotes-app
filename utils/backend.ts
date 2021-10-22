@@ -75,13 +75,6 @@ export const populatePortfolioData = async (
   return combinedItems
 }
 
-// export const populateUserStatsData = async (url): Promise<void> => {
-//   const { id, service } = getVideoId(url)
-//   if (!service) {
-//   }
-//   // if (service)
-// }
-
 export default function noOp() {
   // no op
 }

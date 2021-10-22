@@ -1,5 +1,5 @@
 import { useColors } from 'hooks'
-import { Doughnut } from 'react-chartjs-2'
+import { Doughnut } from 'components/imports/chart'
 import { LocationBreakdown } from 'shared/types'
 import { Flex, Text, Box, BoxProps } from '@chakra-ui/react'
 
@@ -26,8 +26,8 @@ export default function LocationChart({ data, ...props }: Props): JSX.Element {
                   display: false,
                 },
               },
-              // @ts-ignore
               cutout: '85%',
+              // @ts-ignore
               borderWidth: 0,
             }}
             data={{

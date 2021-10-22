@@ -44,8 +44,6 @@ const ListingStatusBadge: FC<Props> = ({ status }: Props) => {
   }
 
   const display = {
-    TRANSACTING: 'DELIVERING',
-    PAYING: 'OUTSTANDING',
     [SUBMITTING]: 'Submitting Video',
     [PAYING]: 'Payment Outstanding',
   }

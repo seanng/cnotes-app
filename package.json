@@ -6,6 +6,9 @@
   "license": "MIT",
   "author": "",
   "scripts": {
+    "analyze": "cross-env ANALYZE=true next build",
+    "analyze:server": "cross-env BUNDLE_ANALYZE=server next build",
+    "analyze:browser": "cross-env BUNDLE_ANALYZE=browser next build",
     "dev": "next",
     "build": "next build",
     "format": "prettier --write .",
@@ -62,7 +65,6 @@
     "ramda": "^0.27.1",
     "react": "17.0.2",
     "react-aws-s3": "^1.5.0",
-    "react-chartjs-2": "^3.0.5",
     "react-datepicker": "^4.2.1",
     "react-dom": "17.0.2",
     "react-hook-form": "^7.13.0",
@@ -72,6 +74,7 @@
     "tiktok-scraper": "^1.4.36"
   },
   "devDependencies": {
+    "@next/bundle-analyzer": "^11.1.2",
     "@testing-library/react": "^11.2.5",
     "@types/bcryptjs": "^2.4.2",
     "@types/cookie": "^0.4.1",
@@ -86,6 +89,7 @@
     "@typescript-eslint/eslint-plugin": "^4.29.2",
     "@typescript-eslint/parser": "^4.14.2",
     "babel-jest": "^27.0.2",
+    "cross-env": "^7.0.3",
     "eslint": "^7.32.0",
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-react": "^7.19.0",

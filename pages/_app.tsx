@@ -18,7 +18,7 @@ import 'styles/slick/slick.css'
 import 'styles/slick/slick-theme.css'
 import 'animate.css'
 
-const CrispWithNoSSR = dynamic(() => import('components/atoms/Crisp'), {
+const CrispWithNoSSR = dynamic(() => import('components/imports/Crisp'), {
   ssr: false,
 })
 

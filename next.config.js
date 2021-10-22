@@ -1,4 +1,8 @@
-module.exports = {
+const withBundleAnalyzer = require('@next/bundle-analyzer')({
+  enabled: process.env.ANALYZE === 'true',
+})
+
+module.exports = withBundleAnalyzer({
   images: {
     domains: [
       'cnotes-dev.s3-ap-southeast-1.amazonaws.com',
@@ -7,4 +11,4 @@ module.exports = {
       'i.imgur.com',
     ],
   },
-}
+})
