@@ -1,3 +1,4 @@
+import Head from 'next/head'
 import { gql } from '@apollo/client'
 import { Box, Text, Container } from '@chakra-ui/react'
 import { GetServerSideProps, NextPage } from 'next'
@@ -48,9 +49,19 @@ type Props = {
 
 const ProfilePage: NextPage<Props> = ({ profile, user }: Props) => {
   const profileBodyWidth = `calc(100% - ${PROFILE_BOX_INNER_WIDTH}px - ${PROFILE_BOX_WRAPPER_PADDING}px)`
-
+  const metaDesc = `Sponsor, contact or work with ${profile.alias} (${profile.genre})`
   return (
     <Layout user={user}>
+      <Head>
+        <title>{`${profile.alias} | ${profile.genre} | sponsored.so profile`}</title>
+        <meta name="description" content={metaDesc} />
+        <meta property="og:description" content={metaDesc} />
+        <meta property="og:image" content={profile.avatarUrl} />
+        <link
+          rel="canonical"
+          href={`https://sponsored.so/profile/${profile.slug}`}
+        />
+      </Head>
       <ProfileBanner src={profile.bannerUrl} />
       <Container display={{ md: 'flex' }} maxWidth={1280}>
         <ProfileBox profile={profile} withStats />

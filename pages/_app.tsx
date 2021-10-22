@@ -22,7 +22,7 @@ function MyApp({ Component, pageProps }: AppProps): JSX.Element {
   return (
     <>
       <Head>
-        <title>cnotes</title>
+        <title>sponsored.so</title>
         <meta
           name="description"
           content="Sponsor creators that have the most engaged viewers"

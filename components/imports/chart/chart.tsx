@@ -1,13 +1,13 @@
 import React, { useEffect, useRef, useState, forwardRef } from 'react'
 import type { ForwardedRef, MouseEvent } from 'react'
-import { Chart as ChartJS, DoughnutController } from 'chart.js'
+import { Chart as ChartJS, DoughnutController, ArcElement } from 'chart.js'
 import type { ChartData, ChartType, DefaultDataPoint } from 'chart.js'
 
 import type { Props, TypedChartComponent } from './types'
 import { reforwardRef, setNextDatasets } from './utils'
 
 // ADD TO THIS FOR TREE SHAKING CHART JS
-ChartJS.register(DoughnutController)
+ChartJS.register(ArcElement, DoughnutController)
 
 const noopData = {
   datasets: [],
