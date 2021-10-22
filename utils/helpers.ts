@@ -115,7 +115,6 @@ export const calculateTimeLeft = (
 
 export function profileTransformer(data: User): TransformedProfile {
   const portfolio = data.portfolio
-    .slice()
     .map(vid => ({
       ...vid,
       rating: (

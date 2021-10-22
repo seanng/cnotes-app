@@ -1,6 +1,7 @@
 import Head from 'next/head'
 import { gql } from '@apollo/client'
 import { Box, Text, Container } from '@chakra-ui/react'
+import dynamic from 'next/dynamic'
 import { GetServerSideProps, NextPage } from 'next'
 import Layout from 'components/organisms/Layout'
 import { User, TransformedProfile } from 'shared/types'
@@ -12,9 +13,17 @@ import {
 } from 'shared/metrics'
 import ProfileBanner from 'components/atoms/ProfileBanner'
 import ProfileBox from 'components/organisms/ProfileBox'
-import ProfileReel from 'components/organisms/ProfileReel'
-import ProfileCollabs from 'components/organisms/ProfileCollabs'
 import { profileTransformer } from 'utils/helpers'
+
+const ProfileReel = dynamic(() => import('components/organisms/ProfileReel'), {
+  ssr: false,
+})
+const ProfileCollabs = dynamic(
+  () => import('components/organisms/ProfileCollabs'),
+  {
+    ssr: false,
+  }
+)
 
 const ABOUT_PLACEHOLDER =
   'Thanks for visiting my profile! Here are some of my featured works.'

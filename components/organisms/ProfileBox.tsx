@@ -16,13 +16,19 @@ import {
 } from 'shared/metrics'
 import { TransformedProfile, Listing, Offer } from 'shared/types'
 import dynamic from 'next/dynamic'
-import GenderChart from 'components/atoms/GenderChart'
-import LocationChart from 'components/atoms/LocationChart'
-import StatNumbers from 'components/molecules/StatNumbers'
 import { Icon as Iconify } from '@iconify/react'
 import { CREATOR } from 'shared/constants'
 
 const TimerLabel = dynamic(() => import('components/atoms/TimerLabel'), {
+  ssr: false,
+})
+const LocationChart = dynamic(() => import('components/atoms/LocationChart'), {
+  ssr: false,
+})
+const GenderChart = dynamic(() => import('components/atoms/GenderChart'), {
+  ssr: false,
+})
+const StatNumbers = dynamic(() => import('components/molecules/StatNumbers'), {
   ssr: false,
 })
 
@@ -166,9 +172,9 @@ const ProfileBox = ({
         <>
           <Divider mb={8} opacity={0.4} />
           <Box px={`${PROFILE_BOX_WRAPPER_PADDING}px`} pb={5}>
-            <StatNumbers data={profile.creatorStats} mb={10} />
-            {genderChart && <GenderChart mb={10} data={genderChart} />}
-            {locationChart && <LocationChart data={locationChart} />}
+            <StatNumbers data={profile.creatorStats} mb={7} />
+            {genderChart && <GenderChart mb={7} data={genderChart} />}
+            {locationChart && <LocationChart mb={7} data={locationChart} />}
             {profile.statsLastVerifiedAt && (
               <Text color={gray[500]} textStyle="micro" fontWeight={600}>
                 *Stats were last verified on
