@@ -4,7 +4,7 @@ import { Box, Text, Container } from '@chakra-ui/react'
 import dynamic from 'next/dynamic'
 import { GetServerSideProps, NextPage } from 'next'
 import Layout from 'components/organisms/Layout'
-import { User } from 'shared/types'
+import { TransformedProfile, User } from 'shared/types'
 import { getUserPayload } from 'utils/auth'
 import { PROFILE_BODY_WIDTH } from 'shared/metrics'
 import { useEffect, useState } from 'react'
@@ -55,68 +55,81 @@ type Props = {
   user: User
 }
 
+const LOADING = 'loading'
+const READY = 'ready'
+const NOTFOUND = 'notfound'
+
 const ProfilePage: NextPage<Props> = ({ slug, user }: Props) => {
-  const [isLoading, setIsLoading] = useState(true)
-  const [profile, setProfile] = useState(null)
+  const [mode, setMode] = useState(LOADING)
+  // @ts-ignore
+  const [profile, setProfile] = useState<TransformedProfile>({})
 
   const { data } = useQuery(PROFILE_BY_SLUG, {
     variables: { slug },
   })
 
   useEffect(() => {
-    setIsLoading(true)
-    if (data && data.profileBySlug) {
-      setProfile(profileTransformer(data.profileBySlug))
+    if (data) {
+      if (data.profileBySlug) {
+        setProfile(profileTransformer(data.profileBySlug))
+        setMode(READY)
+      } else {
+        setMode(NOTFOUND)
+      }
     }
-    setIsLoading(false)
   }, [data])
 
+  if (mode === LOADING) {
+    return (
+      <Layout user={user}>
+        <ProfileBanner src={profile?.bannerUrl} isLoading />
+        <Container display={{ md: 'flex' }} maxWidth={1280}>
+          <ProfileLoadingSkeleton />
+        </Container>
+      </Layout>
+    )
+  }
+
+  if (mode === NOTFOUND) {
+    return (
+      <Layout user={user}>
+        <NotFound />
+      </Layout>
+    )
+  }
+
   const metaDesc = `Sponsor, contact or work with ${profile?.alias} (${profile?.genre})`
-  const doesNotExist = !isLoading && !profile
+
   return (
     <Layout user={user}>
-      {!doesNotExist && (
-        <ProfileBanner src={profile?.bannerUrl} isLoading={isLoading} />
-      )}
+      <Head>
+        <title>{`${profile?.alias} | ${profile?.genre} | sponsored.so profile`}</title>
+        <meta name="description" content={metaDesc} />
+        <meta property="og:description" content={metaDesc} />
+        <meta property="og:image" content={profile?.avatarUrl} />
+        <link
+          rel="canonical"
+          href={`${process.env.NEXT_PUBLIC_BASE_URL}/profile/${profile?.slug}`}
+        />
+      </Head>
+      <ProfileBanner src={profile?.bannerUrl} />
       <Container display={{ md: 'flex' }} maxWidth={1280}>
-        {isLoading ? (
-          <>
-            <ProfileLoadingSkeleton />
-          </>
-        ) : profile ? (
-          <>
-            <Head>
-              <title>{`${profile?.alias} | ${profile?.genre} | sponsored.so profile`}</title>
-              <meta name="description" content={metaDesc} />
-              <meta property="og:description" content={metaDesc} />
-              <meta property="og:image" content={profile?.avatarUrl} />
-              <link
-                rel="canonical"
-                href={`${process.env.NEXT_PUBLIC_BASE_URL}/profile/${profile?.slug}`}
-              />
-            </Head>
-            <ProfileBox profile={profile} withStats />
-            <Box
-              width={['100%', null, PROFILE_BODY_WIDTH]}
-              pl={[0, null, '5%', 20]}
-              mt={[7, null, -8]}
-            >
-              <Text textStyle={['h3', 'h2']} mb={3}>
-                About
-              </Text>
-              <Text textStyle="base">{profile.about || ABOUT_PLACEHOLDER}</Text>
-              {profile?.collabs && <ProfileCollabs collabs={profile.collabs} />}
-            </Box>
-          </>
-        ) : (
-          <NotFound />
-        )}
+        <ProfileBox profile={profile} withStats />
+        <Box
+          width={['100%', null, PROFILE_BODY_WIDTH]}
+          pl={[0, null, '5%', 20]}
+          mt={[7, null, -8]}
+        >
+          <Text textStyle={['h3', 'h2']} mb={3}>
+            About
+          </Text>
+          <Text textStyle="base">{profile.about || ABOUT_PLACEHOLDER}</Text>
+          {profile?.collabs && <ProfileCollabs collabs={profile.collabs} />}
+        </Box>
       </Container>
-      {!isLoading && profile && (
-        <Container py={[4, null, 14]}>
-          <ProfileReel profile={profile} />
-        </Container>
-      )}
+      <Container py={[4, null, 14]}>
+        <ProfileReel profile={profile} />
+      </Container>
     </Layout>
   )
 }
