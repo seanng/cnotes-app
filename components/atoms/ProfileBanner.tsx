@@ -21,9 +21,7 @@ export default function ProfileBanner({
   height = [306, null, 408],
 }: Props): JSX.Element {
   const bannerBgColor = toCssVar(useTransposeColor('gray.50'))
-  const overlayBgColor = isLoading
-    ? toCssVar(useTransposeColor('gray.300'))
-    : 'transparent'
+  const overlayBgColor = isLoading ? toCssVar('gray.500') : 'transparent'
   return (
     <Box
       h={height}

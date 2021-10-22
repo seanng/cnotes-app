@@ -10,13 +10,15 @@ import { PROFILE_BODY_WIDTH } from 'shared/metrics'
 import { useEffect, useState } from 'react'
 import ProfileBanner from 'components/atoms/ProfileBanner'
 import ProfileBox from 'components/organisms/ProfileBox'
-import NotFound from 'components/organisms/404'
 import ProfileLoadingSkeleton from 'components/molecules/ProfileLoadingSkeleton'
 import { profileTransformer } from 'utils/helpers'
 
 const ProfileReel = dynamic(() => import('components/organisms/ProfileReel'), {
   ssr: false,
 })
+
+const NotFound = dynamic(() => import('components/organisms/404'))
+
 const ProfileCollabs = dynamic(
   () => import('components/organisms/ProfileCollabs'),
   {
