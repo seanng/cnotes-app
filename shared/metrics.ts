@@ -1,6 +1,7 @@
 export const NAVBAR_HEIGHT = 100
 export const PROFILE_BOX_WRAPPER_PADDING = 40
 export const PROFILE_BOX_INNER_WIDTH = 290
+export const PROFILE_BODY_WIDTH = `calc(100% - ${PROFILE_BOX_INNER_WIDTH}px - ${PROFILE_BOX_WRAPPER_PADDING}px)`
 
 const CARD_WIDTH = 368
 export const CARD_HEIGHT = 242

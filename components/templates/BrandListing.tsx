@@ -14,20 +14,17 @@ import {
   Container,
   SimpleGrid,
   Text,
-  Skeleton,
 } from '@chakra-ui/react'
 import ProfileBox from 'components/organisms/ProfileBox'
 import ProfileBanner from 'components/atoms/ProfileBanner'
 import TimerText from 'components/atoms/TimerText'
 import GenderChart from 'components/atoms/GenderChart'
 import LocationChart from 'components/atoms/LocationChart'
-import {
-  PROFILE_BOX_INNER_WIDTH,
-  PROFILE_BOX_WRAPPER_PADDING,
-} from 'shared/metrics'
+import { PROFILE_BODY_WIDTH } from 'shared/metrics'
 import ProfileReel from 'components/organisms/ProfileReel'
 import StatNumbers from 'components/molecules/StatNumbers'
 import OfferModal from 'components/molecules/OfferModal'
+import ProfileLoadingSkeleton from 'components/molecules/ProfileLoadingSkeleton'
 import ProfileCollabs from 'components/organisms/ProfileCollabs'
 
 const LISTING_BY_ID = gql`
@@ -71,54 +68,6 @@ const LISTING_BY_ID = gql`
     }
   }
 `
-
-const profileBodyWidth = `calc(100% - ${PROFILE_BOX_INNER_WIDTH}px - ${PROFILE_BOX_WRAPPER_PADDING}px)`
-
-const LoadingSkeleton = () => {
-  return (
-    <>
-      <ProfileBanner isLoading />
-      <Container display={{ md: 'flex' }} maxWidth={1280}>
-        <Skeleton
-          borderRadius="xl"
-          width={356}
-          height={600}
-          position="sticky"
-          top={2}
-          alignSelf="flex-start"
-          display={['none', null, 'flex']}
-        />
-        <Box
-          width={['100%', null, profileBodyWidth]}
-          pl={[0, null, '5%', 20]}
-          mt={-8}
-          pb={[285, null, 0]}
-        >
-          <Skeleton
-            borderRadius="xl"
-            textStyle={['h3', 'h2']}
-            mb={5}
-            width="120px"
-            height="70px"
-          />
-          <Skeleton height={228} mb={10} borderRadius="xl" />
-          <Skeleton borderRadius="xl" mb={7} width="120px" height="70px" />
-          <Skeleton borderRadius="xl" mb={5} height="45px" />
-          <Skeleton borderRadius="xl" mb={5} height="45px" />
-          <Skeleton borderRadius="xl" mb={5} height="45px" />
-        </Box>
-      </Container>
-      <Skeleton
-        position="fixed"
-        bottom={0}
-        w="full"
-        display={['block', null, 'none']}
-        borderTopRadius="lg"
-        height="280px"
-      />
-    </>
-  )
-}
 
 function BottomCardInfoItem({
   label,
@@ -193,12 +142,12 @@ const BrandListing: NextPage<Props> = ({ user, listingId }: Props) => {
 
   return (
     <Layout user={user}>
-      {isLoading ? (
-        <LoadingSkeleton />
-      ) : (
-        <>
-          <ProfileBanner src={listing?.profile?.bannerUrl} />
-          <Container display={{ md: 'flex' }} maxWidth={1280}>
+      <ProfileBanner src={listing?.profile?.bannerUrl} isLoading={isLoading} />
+      <Container display={{ md: 'flex' }} maxWidth={1280}>
+        {isLoading ? (
+          <ProfileLoadingSkeleton />
+        ) : (
+          <>
             {listing.profile && (
               <ProfileBox
                 profile={listing.profile}
@@ -212,7 +161,7 @@ const BrandListing: NextPage<Props> = ({ user, listingId }: Props) => {
               />
             )}
             <Box
-              width={['100%', null, profileBodyWidth]}
+              width={['100%', null, PROFILE_BODY_WIDTH]}
               pl={[0, null, '5%', 20]}
               mt={-8}
               pb={[285, null, 0]}
@@ -250,79 +199,73 @@ const BrandListing: NextPage<Props> = ({ user, listingId }: Props) => {
                 }}
               />
             </Box>
-          </Container>
-          {/* mobile card */}
-          <Box
-            position="fixed"
-            bottom={0}
-            w="full"
-            display={['block', null, 'none']}
-            bgColor={gray[0]}
-            borderTopRadius="lg"
-            pt={4}
-          >
-            <Flex px={6} align="center" pb={4}>
-              <Avatar
-                name={listing.profile.alias}
-                src={listing.profile.avatarUrl}
-                mr={5}
-              />
-              <Box>
-                <Text textStyle="h5">{listing.profile.alias}</Text>
-                {listing.profile.genre && (
-                  <Text textStyle="microBold">{listing.profile.genre}</Text>
-                )}
-              </Box>
-            </Flex>
-            <SimpleGrid
-              columns={4}
-              px={6}
-              borderBottom="1px solid"
-              borderColor={gray[50]}
-            >
-              <BottomCardInfoItem label="Category" value="Keyboards" />
-              <BottomCardInfoItem label="Platform" value={listing.platform} />
-              <BottomCardInfoItem
-                label="Deliverable"
-                value={listing.deliverable}
-              />
-              <BottomCardInfoItem label="Revisions" value={2} />
-              <BottomCardInfoItem label="Media Preview" value="48 H" />
-              <BottomCardInfoItem
-                label="Total Offers"
-                value={listing.offerCount}
-              />
-              <BottomCardInfoItem
-                label="Highest Offer"
-                value={`$${listing.highestOfferValue}`}
-              />
-            </SimpleGrid>
-            {hasTimeLeft ? (
-              <Flex justify="space-between" px={6} py={5}>
-                <Box>
-                  <Text color="#757474" textStyle="small" mb={1}>
-                    Time left
-                  </Text>
-                  <TimerText end={listing.auctionEndsAt} />
-                </Box>
-                <Button w="60%" onClick={handleOfferClick}>
-                  {listing.offer ? 'Update offer' : 'Place offer'}
-                </Button>
-              </Flex>
-            ) : (
-              <Text
-                px={6}
-                py={5}
-                textStyle="small"
-                color={gray[700]}
-              >{`Listing ended on ${format(
-                new Date(listing.auctionEndsAt),
-                'd MMM y'
-              )}`}</Text>
+          </>
+        )}
+      </Container>
+      {/* mobile card */}
+      <Box
+        position="fixed"
+        bottom={0}
+        w="full"
+        display={['block', null, 'none']}
+        bgColor={gray[0]}
+        borderTopRadius="lg"
+        pt={4}
+      >
+        <Flex px={6} align="center" pb={4}>
+          <Avatar
+            name={listing.profile.alias}
+            src={listing.profile.avatarUrl}
+            mr={5}
+          />
+          <Box>
+            <Text textStyle="h5">{listing.profile.alias}</Text>
+            {listing.profile.genre && (
+              <Text textStyle="microBold">{listing.profile.genre}</Text>
             )}
           </Box>
-        </>
-      )}
+        </Flex>
+        <SimpleGrid
+          columns={4}
+          px={6}
+          borderBottom="1px solid"
+          borderColor={gray[50]}
+        >
+          <BottomCardInfoItem label="Category" value="Keyboards" />
+          <BottomCardInfoItem label="Platform" value={listing.platform} />
+          <BottomCardInfoItem label="Deliverable" value={listing.deliverable} />
+          <BottomCardInfoItem label="Revisions" value={2} />
+          <BottomCardInfoItem label="Media Preview" value="48 H" />
+          <BottomCardInfoItem label="Total Offers" value={listing.offerCount} />
+          <BottomCardInfoItem
+            label="Highest Offer"
+            value={`$${listing.highestOfferValue}`}
+          />
+        </SimpleGrid>
+        {hasTimeLeft ? (
+          <Flex justify="space-between" px={6} py={5}>
+            <Box>
+              <Text color="#757474" textStyle="small" mb={1}>
+                Time left
+              </Text>
+              <TimerText end={listing.auctionEndsAt} />
+            </Box>
+            <Button w="60%" onClick={handleOfferClick}>
+              {listing.offer ? 'Update offer' : 'Place offer'}
+            </Button>
+          </Flex>
+        ) : (
+          <Text
+            px={6}
+            py={5}
+            textStyle="small"
+            color={gray[700]}
+          >{`Listing ended on ${format(
+            new Date(listing.auctionEndsAt),
+            'd MMM y'
+          )}`}</Text>
+        )}
+      </Box>
       <OfferModal
         isUpdate={!!listing?.offer}
         listing={listing}
