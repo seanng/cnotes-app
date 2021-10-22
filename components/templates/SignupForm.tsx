@@ -1,6 +1,6 @@
 import { useMutation, gql } from '@apollo/client'
 import { Box, Text, chakra as c, Container, Button } from '@chakra-ui/react'
-import * as R from 'ramda'
+import omit from 'ramda/src/omit'
 import Layout from 'components/organisms/Layout'
 import { useForm } from 'react-hook-form'
 import { EMAIL_REGEX, EMAIL_TAKEN } from 'shared/constants'
@@ -48,7 +48,7 @@ function SignupForm({ isBrand }: TemplateProps): JSX.Element {
         variables: {
           input: {
             role: isBrand ? 'BRAND' : 'CREATOR',
-            ...R.omit(['passwordConfirm'], data),
+            ...omit(['passwordConfirm'], data),
           },
         },
       })

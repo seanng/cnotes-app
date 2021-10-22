@@ -1,4 +1,5 @@
-import * as R from 'ramda'
+import omit from 'ramda/src/omit'
+import pick from 'ramda/src/pick'
 import { AuthenticationError, ForbiddenError } from 'apollo-server-errors'
 import prisma from 'lib/prisma'
 import { User as UserType } from '@prisma/client'
@@ -68,7 +69,7 @@ export const updateUser = mutationField('updateUser', {
   resolve: async (_, { input }, { user, res }) => {
     if (!user) throw new ForbiddenError('Not authorized')
     const now = new Date()
-    const data = R.omit(['password'], input)
+    const data = omit(['password'], input)
 
     data.slug = slugify(input.alias.toLowerCase())
 
@@ -97,7 +98,7 @@ export const updateUser = mutationField('updateUser', {
         updatedAt: now,
       },
     })
-    const userObj = R.pick(userPublicFields, updated) as UserType
+    const userObj = pick(userPublicFields, updated) as UserType
     const token = encryptToken(userObj)
 
     res.setHeader('Set-Cookie', serializeCookie(token))

@@ -27,11 +27,14 @@ import { NextPage } from 'next'
 import { useColors } from 'hooks'
 import Layout from 'components/organisms/Layout'
 import { useForm } from 'react-hook-form'
-import * as R from 'ramda'
+import omit from 'ramda/src/omit'
+import set from 'ramda/src/set'
+import pipe from 'ramda/src/pipe'
+import lensProp from 'ramda/src/lensProp'
 import { ArrowForwardIcon } from '@chakra-ui/icons'
 import IconSelector from 'components/molecules/IconSelector'
 // import DatePicker from 'components/atoms/DatePicker'
-import 'react-datepicker/dist/react-datepicker.css'
+// import 'react-datepicker/dist/react-datepicker.css'
 import { S3_LISTING_ICONS_FOLDER } from 'shared/constants'
 import { User } from 'shared/types'
 
@@ -118,14 +121,14 @@ const CreateListingForm: NextPage<Props> = ({
 
   const onSubmit = async (data: OnSubmitProps): Promise<void> => {
     try {
-      const input = R.pipe(
-        R.omit([
+      const input = pipe(
+        omit([
           'numberOfRevisions',
           'revisionDays',
           'canReuse',
           'willFollowScript',
         ]),
-        R.set(R.lensProp('specs'), {})
+        set(lensProp('specs'), {})
       )(data)
 
       input.specs = {

@@ -1,4 +1,4 @@
-import * as R from 'ramda'
+import pick from 'ramda/src/pick'
 import jwt from 'jsonwebtoken'
 import slugify from 'slugify'
 import sgMail from 'lib/sendgrid'
@@ -58,7 +58,7 @@ export const Signup = mutationField('signup', {
       },
     })
     // todo: send welcome email.
-    const userObj = R.pick(userPublicFields, user) as User
+    const userObj = pick(userPublicFields, user) as User
     const token = encryptToken(userObj)
     res.setHeader('Set-Cookie', serializeCookie(token))
     return { token, user }
@@ -84,7 +84,7 @@ export const Login = mutationField('login', {
       throw new UserInputError(INCORRECT_PASSWORD)
     }
 
-    const userObj = R.pick(userPublicFields, user) as User
+    const userObj = pick(userPublicFields, user) as User
     const token = encryptToken(userObj)
     res.setHeader('Set-Cookie', serializeCookie(token))
     return { token, user }
@@ -153,7 +153,7 @@ export const ResetPassword = mutationField('resetPassword', {
           updatedAt: new Date(),
         },
       })
-      const userObj = R.pick(userPublicFields, newUser) as User
+      const userObj = pick(userPublicFields, newUser) as User
       const newToken = encryptToken(userObj)
       res.setHeader('Set-Cookie', serializeCookie(newToken))
       return true

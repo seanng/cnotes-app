@@ -1,11 +1,15 @@
 import { GetServerSideProps, NextPage } from 'next'
-import 'react-datepicker/dist/react-datepicker.css'
+import dynamic from 'next/dynamic'
+// import 'react-datepicker/dist/react-datepicker.css'
 import { getUserPayload, isCreator } from 'utils/auth'
 import { redirTo } from 'utils/helpers'
 import { User } from 'shared/types'
 import CreateListingForm from 'components/templates/CreateListingForm'
-import CreateListingSuccess from 'components/templates/CreateListingSuccess'
 import { useState } from 'react'
+
+const CreateListingSuccess = dynamic(
+  () => import('components/templates/CreateListingSuccess')
+)
 
 interface Props {
   user: User

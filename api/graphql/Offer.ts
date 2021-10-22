@@ -1,6 +1,6 @@
 import { ForbiddenError } from 'apollo-server-micro'
-import * as R from 'ramda'
 import prisma from 'lib/prisma'
+import omit from 'ramda/src/omit'
 import {
   arg,
   inputObjectType,
@@ -128,7 +128,7 @@ export const placeOffer = mutationField('placeOffer', {
     const now = new Date()
 
     const historyItem = {
-      ...R.omit('listingId', input),
+      ...omit('listingId', input),
       createdAtString: now.toString(),
     } // cant put date obj in json
 

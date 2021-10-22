@@ -1,5 +1,8 @@
 import { ValidationError } from 'apollo-server-errors'
-import * as R from 'ramda'
+import merge from 'ramda/src/merge'
+import prop from 'ramda/src/prop'
+import map from 'ramda/src/map'
+import groupBy from 'ramda/src/groupBy'
 import getVideoId from 'get-video-id'
 import { PortfolioItem } from 'shared/types'
 import youtubeClient from 'lib/youtube'
@@ -67,9 +70,9 @@ export const populatePortfolioData = async (
   }
 
   const youtubeList = await getYoutubeData(youtubeIds)
-  const youtubeListById = R.groupBy(R.prop('platformMediaId'), youtubeList)
-  const combinedItems = R.map<PortfolioItem, PortfolioItem>(item =>
-    R.merge(item, youtubeListById[item.platformMediaId][0])
+  const youtubeListById = groupBy(prop('platformMediaId'), youtubeList)
+  const combinedItems = map<PortfolioItem, PortfolioItem>(item =>
+    merge(item, youtubeListById[item.platformMediaId][0])
   )(items)
 
   return combinedItems
