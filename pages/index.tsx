@@ -1,13 +1,12 @@
 import { GetServerSideProps, NextPage } from 'next'
 import Layout from 'components/organisms/Layout'
-import LandingTemp from 'components/templates/LandingTemp'
 import { getUserPayload } from 'utils/auth'
 import { redirTo } from 'utils/helpers'
 
 const IndexPage: NextPage = () => {
   return (
     <Layout>
-      <LandingTemp />
+      <div>landing page goes here..</div>
     </Layout>
   )
 }

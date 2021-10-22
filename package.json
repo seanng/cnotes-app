@@ -43,7 +43,6 @@
     "@prisma/client": "2.29.1",
     "@sendgrid/mail": "^7.4.6",
     "animate.css": "^4.1.1",
-    "aos": "^2.3.4",
     "apollo-server-micro": "3.1.2",
     "bcryptjs": "^2.4.3",
     "chart.js": "^3.5.1",
