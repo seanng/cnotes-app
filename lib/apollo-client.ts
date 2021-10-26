@@ -2,11 +2,9 @@
 
 import { ApolloClient, InMemoryCache } from '@apollo/client'
 
-const baseUrl = process.env.NEXT_PUBLIC_BASE_URL
-
 const client = new ApolloClient({
   cache: new InMemoryCache(),
-  uri: `${baseUrl}/api`,
+  uri: `/api`,
   ssrMode: typeof window === 'undefined',
 })
 
