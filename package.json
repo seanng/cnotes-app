@@ -46,7 +46,6 @@
     "animate.css": "^4.1.1",
     "apollo-server-micro": "3.1.2",
     "bcryptjs": "^2.4.3",
-    "chart.js": "^3.5.1",
     "compressorjs": "^1.0.7",
     "cookie": "^0.4.1",
     "date-fns": "^2.23.0",

@@ -1,5 +1,4 @@
 import { useColors } from 'hooks'
-import { Doughnut } from 'components/imports/chart'
 import { LocationBreakdown } from 'shared/types'
 import { Flex, Text, Box, BoxProps } from '@chakra-ui/react'
 
@@ -19,7 +18,8 @@ export default function LocationChart({ data, ...props }: Props): JSX.Element {
       </Text>
       <Flex justify="space-between" mb={2}>
         <Box w={120}>
-          <Doughnut
+          {/* todo: re-implement chart with small bundle size */}
+          {/* <Doughnut
             options={{
               plugins: {
                 legend: {
@@ -39,7 +39,7 @@ export default function LocationChart({ data, ...props }: Props): JSX.Element {
                 },
               ],
             }}
-          />
+          /> */}
         </Box>
         <Flex w={110} direction="column" justify="center">
           {data.map((item, i) => (
