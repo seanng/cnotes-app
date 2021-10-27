@@ -4,11 +4,12 @@ import { Box, chakra as c, Container, Button } from '@chakra-ui/react'
 import FormInput from 'components/atoms/FormInput'
 import FeedbackModal from 'components/molecules/FeedbackModal'
 import Layout from 'components/organisms/Layout'
-import { NextPage } from 'next'
+import { GetServerSideProps, NextPage } from 'next'
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { EMAIL_REGEX, USER_NOT_FOUND } from 'shared/constants'
-import { getErrorMessage } from 'utils/helpers'
+import { getErrorMessage, redirTo } from 'utils/helpers'
+import { getUserPayload } from 'utils/auth'
 
 type OnSubmitProps = {
   email: string
@@ -102,3 +103,12 @@ const ForgotPasswordPage: NextPage = () => {
 }
 
 export default ForgotPasswordPage
+
+// TODO: replace with static props?
+export const getServerSideProps: GetServerSideProps = async ctx => {
+  // Automatically navigate user to dashboard if already signed in
+  if (getUserPayload(ctx.req.headers?.cookie)) {
+    return redirTo('/dashboard')
+  }
+  return { props: {} }
+}

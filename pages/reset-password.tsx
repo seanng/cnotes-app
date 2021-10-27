@@ -1,14 +1,16 @@
+import Head from 'next/head'
 import { useMutation, gql } from '@apollo/client'
 import { Box, Button, chakra as c, Container } from '@chakra-ui/react'
 import Layout from 'components/organisms/Layout'
-import { NextPage } from 'next'
+import { GetServerSideProps, NextPage } from 'next'
 import { useForm } from 'react-hook-form'
 import { useRouter } from 'next/router'
-import { getErrorMessage } from 'utils/helpers'
+import { getErrorMessage, redirTo } from 'utils/helpers'
 import { INVALID_TOKEN } from 'shared/constants'
 import FormInput from 'components/atoms/FormInput'
 import { useState } from 'react'
 import FeedbackModal from 'components/molecules/FeedbackModal'
+import { getUserPayload } from 'utils/auth'
 
 type OnSubmitProps = {
   password: string
@@ -62,6 +64,9 @@ const ResetPasswordPage: NextPage = () => {
 
   return (
     <>
+      <Head>
+        <meta name="robots" content="noindex,nofollow" />
+      </Head>
       <Layout>
         <Container py={[16, 20]}>
           <Box as="form" onSubmit={handleSubmit(onSubmit)} w={600} maxW="100%">
@@ -126,3 +131,12 @@ const ResetPasswordPage: NextPage = () => {
 }
 
 export default ResetPasswordPage
+
+// TODO: replace with static props?
+export const getServerSideProps: GetServerSideProps = async ctx => {
+  // Automatically navigate user to dashboard if already signed in
+  if (getUserPayload(ctx.req.headers?.cookie)) {
+    return redirTo('/dashboard')
+  }
+  return { props: {} }
+}

@@ -1,5 +1,5 @@
 import { gql } from '@apollo/client'
-import client from 'lib/apollo-client'
+import { initializeApollo } from 'lib/apollo-client'
 
 const CREATOR_SLUGS = gql`
   query creatorSlugs {
@@ -34,6 +34,7 @@ function SiteMap() {
 }
 
 export async function getServerSideProps({ res }) {
+  const client = initializeApollo()
   // We make an API call to gather the URLs for our site
   const {
     data: { creatorSlugs: data },
