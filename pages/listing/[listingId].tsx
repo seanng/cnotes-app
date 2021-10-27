@@ -6,21 +6,28 @@ import { getUserPayload } from 'utils/auth'
 import { redirTo } from 'utils/helpers'
 import BrandListing from 'components/templates/BrandListing'
 import CreatorListing from 'components/templates/CreatorListing'
+import NotFound from 'components/organisms/404'
 
 interface Props {
   user: User
 }
 
 const ListingPage: NextPage<Props> = ({ user }: Props) => {
-  const {
-    query: { listingId },
-  } = useRouter()
+  const router = useRouter()
 
-  if (user.role === BRAND) {
-    return <BrandListing user={user} listingId={listingId as string} />
+  if (!router?.query?.listingId) {
+    return <NotFound />
   }
 
-  return <CreatorListing user={user} listingId={listingId as string} />
+  if (user.role === BRAND) {
+    return (
+      <BrandListing user={user} listingId={router.query.listingId as string} />
+    )
+  }
+
+  return (
+    <CreatorListing user={user} listingId={router.query.listingId as string} />
+  )
 }
 
 export default ListingPage
@@ -28,8 +35,8 @@ export default ListingPage
 export const getServerSideProps: GetServerSideProps = async ctx => {
   const user = getUserPayload(ctx.req.headers.cookie)
   if (!user) {
-    return redirTo('/login')
+    redirTo('/login')
+  } else {
+    return { props: { user } }
   }
-
-  return { props: { user } }
 }

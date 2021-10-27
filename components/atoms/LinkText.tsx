@@ -16,7 +16,7 @@ const LinkText: FC<Props> = ({
   ...props
 }: Props) => (
   <LinkBox {...props}>
-    <NextLink href={href} passHref>
+    <NextLink prefetch={false} href={href} passHref>
       <LinkOverlay isExternal={isExternal}>{children}</LinkOverlay>
     </NextLink>
   </LinkBox>

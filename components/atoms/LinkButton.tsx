@@ -20,7 +20,7 @@ const Button = forwardRef<ButtonProps, 'button'>(
 
 function LinkButton({ href, ...props }: Props): JSX.Element {
   return (
-    <Link href={href} passHref>
+    <Link href={href} prefetch={false} passHref>
       <Button {...props} />
     </Link>
   )

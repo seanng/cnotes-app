@@ -176,12 +176,13 @@ const Login: NextPage = () => {
   )
 }
 
+export default Login
+
 export const getServerSideProps: GetServerSideProps = async ctx => {
   // Automatically navigate user to dashboard if already signed in
   if (getUserPayload(ctx.req.headers?.cookie)) {
-    return redirTo('/dashboard')
+    redirTo('/dashboard')
+  } else {
+    return { props: {} }
   }
-  return { props: {} }
 }
-
-export default Login

@@ -5,7 +5,7 @@ import { getUserPayload } from 'utils/auth'
 import { redirTo } from 'utils/helpers'
 import BrandDashboard from 'components/templates/BrandDashboard'
 import CreatorDashboard from 'components/templates/CreatorDashboard'
-import CreatorDashboardUnverified from 'components/templates/CreatorDashboardUnverified'
+import UnverifiedState from 'components/templates/UnverifiedState'
 
 interface Props {
   user: User
@@ -17,19 +17,19 @@ const DashboardPage: NextPage<Props> = ({ user }: Props) => {
   }
 
   if (user.status === UNVERIFIED) {
-    return <CreatorDashboardUnverified user={user} />
+    return <UnverifiedState user={user} />
   }
 
   return <CreatorDashboard user={user} />
 }
 
-export const getServerSideProps: GetServerSideProps = async ctx => {
-  const user = getUserPayload(ctx.req.headers.cookie)
-  if (!user) {
-    return redirTo('/login')
-  }
-
-  return { props: { user } }
-}
-
 export default DashboardPage
+
+export const getServerSideProps: GetServerSideProps = async ctx => {
+  const user = getUserPayload(ctx.req?.headers?.cookie)
+  if (!user) {
+    redirTo('/login')
+  } else {
+    return { props: { user } }
+  }
+}

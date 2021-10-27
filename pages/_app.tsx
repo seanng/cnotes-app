@@ -2,7 +2,7 @@ import Head from 'next/head'
 import { ApolloProvider } from '@apollo/client'
 import { ChakraProvider } from 'providers/chakra'
 import type { AppProps } from 'next/app'
-import client from 'lib/apollo-client'
+import { useApollo } from 'lib/apollo-client'
 import dynamic from 'next/dynamic'
 import '@fontsource/anton'
 import '@fontsource/asap/400.css'
@@ -19,9 +19,10 @@ const CrispWithNoSSR = dynamic(() => import('components/imports/Crisp'), {
 })
 
 function MyApp({ Component, pageProps }: AppProps): JSX.Element {
+  const apolloClient = useApollo(pageProps.initialApolloState)
   const metaDesc = 'Sponsor creators that have the most engaged viewers'
   return (
-    <ApolloProvider client={client}>
+    <ApolloProvider client={apolloClient}>
       <ChakraProvider cookies={pageProps.cookies}>
         <Head>
           <title>sponsored.so</title>

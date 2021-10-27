@@ -25,7 +25,7 @@ async function getApolloServerHandler(): Promise<NextApiHandler> {
     await apolloServer.start()
 
     apolloServerHandler = apolloServer.createHandler({
-      path: '/api',
+      path: '/api/graphql',
     })
   }
 

@@ -66,6 +66,7 @@ const ProfilePage: NextPage<Props> = ({ slug, user }: Props) => {
   // @ts-ignore
   const [profile, setProfile] = useState<TransformedProfile>({})
 
+  // TODO: move to useStaticProps for autogenerate blablabla
   const { data } = useQuery(PROFILE_BY_SLUG, {
     variables: { slug },
   })

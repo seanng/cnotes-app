@@ -7,7 +7,6 @@ import {
   Tabs,
   Text,
   Tab,
-  // Box,
   TabList,
   TabPanels,
   TabPanel,
@@ -44,9 +43,11 @@ const BrandDashboard: NextPage<Props> = ({ user }: Props) => {
   const router = useRouter()
 
   useEffect(() => {
-    const idx = Number(router.query.tab || 0)
-    setTabIdx(idx)
-  }, [router.query.tab])
+    if (router?.query?.tab) {
+      const idx = Number(router.query.tab || 0)
+      setTabIdx(idx)
+    }
+  }, [router?.query?.tab])
 
   const handleTabChange = (i: number): void => {
     const href = `/dashboard?tab=${i}`

@@ -1,3 +1,4 @@
+import Head from 'next/head'
 import { useMutation, gql } from '@apollo/client'
 import { Box, chakra as c, Container, Button } from '@chakra-ui/react'
 import FormInput from 'components/atoms/FormInput'
@@ -52,6 +53,9 @@ const ForgotPasswordPage: NextPage = () => {
 
   return (
     <>
+      <Head>
+        <meta name="robots" content="noindex,nofollow" />
+      </Head>
       <Layout>
         <Container py={[16, 20]}>
           <Box as="form" onSubmit={handleSubmit(onSubmit)} w={500} maxW="100%">

@@ -33,7 +33,7 @@ export default function EmptyTableState({ heading, body }: Props): JSX.Element {
         <Text textStyle={['small', 'base']} color={gray[700]} mb={[8, 12]}>
           {body}
         </Text>
-        <LinkButton href="/discovery">Take me to discovery</LinkButton>
+        <LinkButton href="/discover">Take me to the discover page</LinkButton>
       </Box>
     </Flex>
   )

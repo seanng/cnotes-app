@@ -75,7 +75,7 @@ const ProfileSettings: FC<Props> = ({
             variant="outline"
             bgColor={gray[50]}
           >
-            Upload Cover Photo
+            Upload cover photo
           </Button>
           {bannerFile && (
             <Button
@@ -108,7 +108,7 @@ const ProfileSettings: FC<Props> = ({
         />
         <Flex direction="column" justifyContent="center">
           <Box mb={2} textStyle="base">
-            Profile Photo
+            Profile photo
           </Box>
           <Box textStyle="mini" color="gray.600" mb={3}>
             We recommend an image of at least 400 x 400
@@ -145,7 +145,7 @@ const ProfileSettings: FC<Props> = ({
       </Flex>
       <SimpleGrid columns={[1, 2]} spacingX={4}>
         <FormInput
-          label="First Name"
+          label="First name"
           mb={8}
           error={errors.firstName}
           inputProps={{
@@ -156,7 +156,7 @@ const ProfileSettings: FC<Props> = ({
           }}
         />
         <FormInput
-          label="Last Name"
+          label="Last name"
           mb={8}
           error={errors.lastName}
           inputProps={{
@@ -167,7 +167,7 @@ const ProfileSettings: FC<Props> = ({
           }}
         />
         <FormInput
-          label={isBrand ? 'Company Name' : 'Creator Name'}
+          label={isBrand ? 'Company name' : 'Creator name'}
           error={errors.alias}
           mb={8}
           inputProps={{
@@ -178,7 +178,7 @@ const ProfileSettings: FC<Props> = ({
           }}
         />
         <FormInput
-          label={isBrand ? 'Website URL' : 'Main Channel URL'}
+          label={isBrand ? 'Website URL' : 'Main channel URL'}
           mb={8}
           error={errors.websiteUrl}
           inputProps={{

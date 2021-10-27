@@ -4,7 +4,7 @@ import { Box, Text, chakra as c, Container, Button } from '@chakra-ui/react'
 import omit from 'ramda/src/omit'
 import Layout from 'components/organisms/Layout'
 import { useForm } from 'react-hook-form'
-import { EMAIL_REGEX, EMAIL_TAKEN } from 'shared/constants'
+import { EMAIL_REGEX, EMAIL_TAKEN, BRAND, CREATOR } from 'shared/constants'
 import { getErrorMessage } from 'utils/helpers'
 import { useRouter } from 'next/router'
 import FormInput from 'components/atoms/FormInput'
@@ -48,12 +48,12 @@ function SignupForm({ isBrand }: TemplateProps): JSX.Element {
       await signup({
         variables: {
           input: {
-            role: isBrand ? 'BRAND' : 'CREATOR',
+            role: isBrand ? BRAND : CREATOR,
             ...omit(['passwordConfirm'], data),
           },
         },
       })
-      router.push('/account')
+      router.push('/settings')
     } catch (error) {
       if (getErrorMessage(error) === EMAIL_TAKEN) {
         setError('email', {
@@ -74,11 +74,11 @@ function SignupForm({ isBrand }: TemplateProps): JSX.Element {
           <c.h2
             textStyle="h2"
             fontFamily="body"
-            textTransform="capitalize"
+            textTransform="none"
             fontWeight={700}
             mb={5}
           >
-            Create Account
+            Create account
           </c.h2>
           <Text color="gray.600" mb={16}>
             Start getting more transparency into sponsorships.
@@ -86,7 +86,7 @@ function SignupForm({ isBrand }: TemplateProps): JSX.Element {
           <Box w={['90%', '60%']}>
             <form onSubmit={handleSubmit(onSubmit)}>
               <FormInput
-                label="First Name"
+                label="First name"
                 mb={8}
                 error={errors.lastName}
                 inputProps={{
@@ -97,7 +97,7 @@ function SignupForm({ isBrand }: TemplateProps): JSX.Element {
                 }}
               />
               <FormInput
-                label="Last Name"
+                label="Last name"
                 mb={8}
                 error={errors.lastName}
                 inputProps={{
@@ -108,7 +108,7 @@ function SignupForm({ isBrand }: TemplateProps): JSX.Element {
                 }}
               />
               <FormInput
-                label={isBrand ? 'Company Name' : 'Creator Name'}
+                label={isBrand ? 'Company name' : 'Creator name'}
                 error={errors.alias}
                 mb={8}
                 inputProps={{
@@ -119,7 +119,7 @@ function SignupForm({ isBrand }: TemplateProps): JSX.Element {
                 }}
               />
               <FormInput
-                label="Email Address"
+                label="Email address"
                 error={errors.email}
                 mb={8}
                 inputProps={{

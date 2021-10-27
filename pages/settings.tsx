@@ -262,7 +262,7 @@ const SettingsPage: NextPage<Props> = ({ user }: Props) => {
                 isLoading={isSubmitting}
                 mr={4}
               >
-                Save Changes
+                Save changes
               </Button>
               <a
                 href={`/profile/${user.slug}`}
@@ -300,8 +300,8 @@ export default SettingsPage
 export const getServerSideProps: GetServerSideProps = async ctx => {
   const user = getUserPayload(ctx.req.headers.cookie)
   if (!user) {
-    return redirTo('/login')
+    redirTo('/login')
+  } else {
+    return { props: { user } }
   }
-
-  return { props: { user } }
 }

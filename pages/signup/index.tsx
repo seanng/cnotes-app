@@ -75,7 +75,7 @@ const SignupFoyer: NextPage = () => {
         <c.h2
           textStyle="h2"
           fontFamily="body"
-          textTransform="capitalize"
+          textTransform="none"
           fontWeight={700}
           mb={6}
         >

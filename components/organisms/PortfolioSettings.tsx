@@ -44,7 +44,7 @@ const SponsoredFields = ({ control, i, field, errors, register, children }) => {
           mr={4}
           w={170}
           error={errors.portfolio?.[i]?.companyName}
-          label="Sponsor Name"
+          label="Sponsor name"
           hideMessage
           inputProps={{
             defaultValue: field.companyName,
@@ -129,7 +129,7 @@ const Portfolio: FC<Props> = ({ register, control, errors }: Props) => {
               }}
             />
             <FormControl maxW={150} mr={4} mb={4} display="inline-block">
-              <FormLabel>Job Type</FormLabel>
+              <FormLabel>Deliverable</FormLabel>
               <Select
                 variant="rounded"
                 {...register(`portfolio.${i}.deliverable`)}

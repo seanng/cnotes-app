@@ -68,7 +68,7 @@ const ResetPasswordPage: NextPage = () => {
             <c.h2
               textStyle="h2"
               fontFamily="body"
-              textTransform="capitalize"
+              textTransform="none"
               fontWeight={700}
               mb={16}
             >
@@ -77,6 +77,7 @@ const ResetPasswordPage: NextPage = () => {
             <FormInput
               label="New password"
               error={errors.password}
+              mb={4}
               inputProps={{
                 type: 'password',
                 placeholder: 'Your new password',

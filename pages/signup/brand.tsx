@@ -3,7 +3,7 @@ import { GetServerSideProps } from 'next'
 import { getUserPayload } from 'utils/auth'
 import { redirTo } from 'utils/helpers'
 
-export default function SignupCreatorPage(): JSX.Element {
+export default function SignupBrandPage(): JSX.Element {
   return <SignupForm isBrand />
 }
 
