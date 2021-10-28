@@ -6,21 +6,21 @@ import groupBy from 'ramda/src/groupBy'
 import getVideoId from 'get-video-id'
 import { PortfolioItem } from 'shared/types'
 import youtubeClient from 'lib/youtube'
-import { getVideoMeta } from 'tiktok-scraper'
+// import { getVideoMeta } from 'tiktok-scraper'
 
-const getTiktokData = async (item): Promise<PortfolioItem> => {
-  const { collector } = await getVideoMeta(item.url)
-  return {
-    ...item,
-    title: collector[0].text,
-    platformMediaId: collector[0].id,
-    thumbnailUrl: collector[0].imageUrl,
-    videoUrl: collector[0].videoUrl,
-    publishedAt: new Date(collector[0].createTime),
-    viewCount: collector[0].playCount,
-    commentCount: collector[0].commentCount,
-  }
-}
+// const getTiktokData = async (item): Promise<PortfolioItem> => {
+//   const { collector } = await getVideoMeta(item.url)
+//   return {
+//     ...item,
+//     title: collector[0].text,
+//     platformMediaId: collector[0].id,
+//     thumbnailUrl: collector[0].imageUrl,
+//     videoUrl: collector[0].videoUrl,
+//     publishedAt: new Date(collector[0].createTime),
+//     viewCount: collector[0].playCount,
+//     commentCount: collector[0].commentCount,
+//   }
+// }
 
 const getYoutubeData = async (
   ids: string[]
@@ -64,8 +64,8 @@ export const populatePortfolioData = async (
     if (service === 'youtube') {
       // so we can make 1 combined request to youtube api
       youtubeIds.push(id)
-    } else if (service === 'tiktok') {
-      items[i] = await getTiktokData(item)
+      // } else if (service === 'tiktok') {
+      //   items[i] = await getTiktokData(item)
     }
   }
 

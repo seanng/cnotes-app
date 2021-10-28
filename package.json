@@ -69,8 +69,7 @@
     "react-hook-form": "^7.13.0",
     "react-markdown": "6.0.3",
     "react-slick": "^0.28.1",
-    "slugify": "^1.6.0",
-    "tiktok-scraper": "^1.4.36"
+    "slugify": "^1.6.0"
   },
   "devDependencies": {
     "@testing-library/react": "^11.2.5",
