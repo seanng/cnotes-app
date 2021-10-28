@@ -22,7 +22,8 @@ import { useRouter } from 'next/router'
 import { ChangeEventHandler, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { SettingsFormFieldValues, User } from 'shared/types'
-import { getErrorMessage, redirTo, uploadToS3, compress } from 'utils/helpers'
+import { getErrorMessage, redirTo, uploadToS3 } from 'utils/helpers'
+import Compressor from 'compressorjs'
 import { ALIAS_TAKEN, CREATOR } from 'shared/constants'
 import ProfileSettings from 'components/organisms/ProfileSettings'
 import SocialSettings from 'components/organisms/SocialSettings'
@@ -107,6 +108,16 @@ const creatorTabs = [
     Component: SocialSettings,
   },
 ]
+
+const compress = (payload: File): Promise<Blob> =>
+  new Promise(
+    (resolve, reject) =>
+      new Compressor(payload, {
+        quality: 0.98,
+        success: resolve,
+        error: reject,
+      })
+  )
 
 interface Props {
   user: User

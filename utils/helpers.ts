@@ -1,8 +1,7 @@
 // FRONTEND ONLY.
-import Compressor from 'compressorjs'
-import { GetServerSidePropsResult, Redirect } from 'next'
+import type { GetServerSidePropsResult, Redirect } from 'next'
 import S3 from 'lib/s3'
-import { Blob } from 'buffer'
+import type { Blob } from 'buffer'
 import { Listing, Deal, User, TransformedProfile } from 'shared/types'
 import { ACTIVE, SELECTING, LISTING, NO_OFFERS } from 'shared/constants'
 
@@ -72,16 +71,6 @@ export function formatCountNumber(payload: Count): string {
   const millions = thousands / 1000
   return `${millions.toFixed(1)}m`
 }
-
-export const compress = (payload: File): Promise<Blob> =>
-  new Promise(
-    (resolve, reject) =>
-      new Compressor(payload, {
-        quality: 0.98,
-        success: resolve,
-        error: reject,
-      })
-  )
 
 export function getCreatorListingOrDealStatus(data: Listing | Deal): string {
   if (data.status === ACTIVE) {

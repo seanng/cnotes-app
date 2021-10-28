@@ -6,3 +6,5 @@ generated/
 .env*
 private/
 .DS_STORE
+
+.vercel
