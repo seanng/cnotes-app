@@ -2,9 +2,13 @@
 // Must-read: https://www.apollographql.com/docs/react/performance/server-side-rendering/
 
 import { useMemo } from 'react'
-import { ApolloClient, InMemoryCache } from '@apollo/client'
+import {
+  ApolloClient,
+  InMemoryCache,
+  NormalizedCacheObject,
+} from '@apollo/client'
 
-let apolloClient
+let apolloClient: ApolloClient<NormalizedCacheObject>
 
 function createIsomorphLink() {
   if (typeof window === 'undefined') {

@@ -139,6 +139,8 @@ const ProfilePage: NextPage<Props> = ({ slug, user }: Props) => {
 
 export default ProfilePage
 
+// TODO: change to getStaticProps for better SEO and page optimization
+// TODO: https://nextjs.org/docs/advanced-features/preview-mode
 export const getServerSideProps: GetServerSideProps = async ctx => {
   const user = getUserPayload(ctx.req.headers.cookie)
   return { props: { user, slug: ctx.params.slug } }
