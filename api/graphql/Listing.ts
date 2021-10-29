@@ -1,7 +1,6 @@
 import sgMail from 'lib/sendgrid'
 import add from 'date-fns/add'
 import { ForbiddenError } from 'apollo-server-micro'
-import prisma from 'lib/prisma'
 import {
   arg,
   inputObjectType,
@@ -11,9 +10,15 @@ import {
   list,
   idArg,
 } from 'nexus'
-import { FROM_ADDRESS, ACTIVE, UNVERIFIED, DECIDED } from 'shared/constants'
-import { SUBMITTING } from 'shared/constants'
-import { isCreator } from 'utils/auth'
+import prisma from '../../lib/prisma'
+import {
+  FROM_ADDRESS,
+  ACTIVE,
+  UNVERIFIED,
+  DECIDED,
+} from '../../shared/constants'
+import { SUBMITTING } from '../../shared/constants'
+import { isCreator } from '../../utils/auth'
 
 export const Listing = objectType({
   name: 'Listing',

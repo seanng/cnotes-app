@@ -1,5 +1,4 @@
 import { ForbiddenError } from 'apollo-server-micro'
-import prisma from 'lib/prisma'
 import omit from 'ramda/src/omit'
 import {
   arg,
@@ -10,8 +9,9 @@ import {
   list,
   stringArg,
 } from 'nexus'
-import { ACTIVE, DECIDED, REJECTED } from 'shared/constants'
-import { isBrand } from 'utils/auth'
+import prisma from '../../lib/prisma'
+import { ACTIVE, DECIDED, REJECTED } from '../../shared/constants'
+import { isBrand } from '../../utils/auth'
 
 export const OfferHistory = objectType({
   name: 'OfferHistory',

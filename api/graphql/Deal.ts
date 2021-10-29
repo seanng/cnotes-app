@@ -1,5 +1,4 @@
 import { ForbiddenError } from 'apollo-server-micro'
-import prisma from 'lib/prisma'
 import {
   inputObjectType,
   mutationField,
@@ -10,8 +9,9 @@ import {
   list,
   stringArg,
 } from 'nexus'
-import { PAYING, CANCELLED, COMPLETED } from 'shared/constants'
-import { isBrand } from 'utils/auth'
+import prisma from '../../lib/prisma'
+import { PAYING, CANCELLED, COMPLETED } from '../../shared/constants'
+import { isBrand } from '../../utils/auth'
 
 export const Deal = objectType({
   name: 'Deal',

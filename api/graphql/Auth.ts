@@ -20,16 +20,16 @@ import {
   UNVERIFIED,
   userPublicFields,
   USER_NOT_FOUND,
-} from 'shared/constants'
-import sgMail from 'lib/sendgrid'
-import prisma from 'lib/prisma'
+} from '../../shared/constants'
+import sgMail from '../../lib/sendgrid'
+import prisma from '../../lib/prisma'
 import {
   createPassword,
   encryptToken,
   isCorrectPassword,
   serializeCookie,
-} from 'utils/auth'
-import { Token } from 'shared/types'
+} from '../../utils/auth'
+import { Token } from '../../shared/types'
 
 export const Signup = mutationField('signup', {
   type: 'AuthPayload',
@@ -37,8 +37,6 @@ export const Signup = mutationField('signup', {
     input: arg({ type: 'SignupInput' }),
   },
   resolve: async (_, { input }, { res }) => {
-    console.log('incorrect password: ', INCORRECT_PASSWORD)
-    console.log('sgMail: ', sgMail)
     const foundUser = await prisma.user.findUnique({
       where: { email: input.email },
     })
