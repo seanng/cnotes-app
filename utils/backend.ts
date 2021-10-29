@@ -4,8 +4,8 @@ import prop from 'ramda/src/prop'
 import map from 'ramda/src/map'
 import groupBy from 'ramda/src/groupBy'
 import getVideoId from 'get-video-id'
-import { PortfolioItem } from 'shared/types'
-import youtubeClient from 'lib/youtube'
+import { PortfolioItem } from '../shared/types'
+import youtubeClient from '../lib/youtube'
 
 // TODO: mv to separate serverless function and make fetch once we get tiktok creators.
 // import { getVideoMeta } from 'tiktok-scraper'
