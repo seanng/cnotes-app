@@ -120,7 +120,7 @@ export const ForgotPassword = mutationField('forgotPassword', {
       html: `
         <h1>cnotes Password Reset</h1>
         <p>Forgot something did you? Please use the following link to reset your password.</p>
-        <p>${process.env.NEXT_PUBLIC_BASE_URL}/reset-password?token=${token}</p>
+        <p>${process.env.NEXT_PUBLIC_VERCEL_URL}/reset-password?token=${token}</p>
         <hr />
       `,
     })

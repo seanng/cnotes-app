@@ -6,8 +6,9 @@ import groupBy from 'ramda/src/groupBy'
 import getVideoId from 'get-video-id'
 import { PortfolioItem } from 'shared/types'
 import youtubeClient from 'lib/youtube'
-// import { getVideoMeta } from 'tiktok-scraper'
 
+// TODO: mv to separate serverless function and make fetch once we get tiktok creators.
+// import { getVideoMeta } from 'tiktok-scraper'
 // const getTiktokData = async (item): Promise<PortfolioItem> => {
 //   const { collector } = await getVideoMeta(item.url)
 //   return {
