@@ -1,4 +1,3 @@
-import sgMail from 'lib/sendgrid'
 import add from 'date-fns/add'
 import { ForbiddenError } from 'apollo-server-micro'
 import {
@@ -11,7 +10,8 @@ import {
   idArg,
 } from 'nexus'
 import prisma from 'lib/prisma'
-import { FROM_ADDRESS, ACTIVE, UNVERIFIED, DECIDED } from 'shared/constants'
+import { sendListingNotificationEmail } from 'utils/emails'
+import { ACTIVE, UNVERIFIED, DECIDED } from 'shared/constants'
 import { SUBMITTING } from 'shared/constants'
 import { isCreator } from 'utils/auth'
 
@@ -139,23 +139,13 @@ export const createListing = mutationField('createListing', {
         updatedAt: now,
       },
     })
-    if (process.env.NODE_ENV === 'production') {
-      await sgMail.send({
-        from: FROM_ADDRESS,
-        to: ['shonum@gmail.com', 'michael@cnotes.co'],
-        subject: `cnotes: ${user.alias} has submitted an listing`,
-        html: `
-          <h1>${user.alias} has submitted an listing:</h1>
-          <p>User ID: ${user.id} </p>
-          <p>Listing ID: ${listing.id} </p>
-          <p>Platform: ${platform} </p>
-          <p>Deliverable: ${deliverable} </p>
-          <p>Description: ${input.description} </p>
-          <p>${Object.entries(input.specs).map(
-            item => `${item[0]}: ${item[1]}`
-          )}</p>
-          <hr />
-        `,
+    if (process.env.VERCEL_ENV === 'production') {
+      await sendListingNotificationEmail(user, {
+        listing,
+        platform,
+        deliverable,
+        description: input.description,
+        specs: input.specs,
       })
     }
 
@@ -312,7 +302,7 @@ export const completeListing = mutationField('completeListing', {
       })),
     })
 
-    if (process.env.NODE_ENV === 'production') {
+    if (process.env.VERCEL_ENV === 'production') {
       // TODO: create email chain between brand and creator.
     }
 

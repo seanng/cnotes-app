@@ -293,7 +293,7 @@ const SettingsPage: NextPage<Props> = ({ user }: Props) => {
         body={
           isSuccess
             ? `You have successfully updated your profile.`
-            : `There was a problem updating your profile. Please contact michael@cnotes.co.`
+            : `There was a problem updating your profile. Please contact michael@collabski.com.`
         }
         isOpen={isOpen}
         button={isSuccess ? 'Okay' : 'Close'}
@@ -311,8 +311,7 @@ export default SettingsPage
 export const getServerSideProps: GetServerSideProps = async ctx => {
   const user = getUserPayload(ctx.req.headers.cookie)
   if (!user) {
-    redirTo('/login')
-  } else {
-    return { props: { user } }
+    return redirTo('/login')
   }
+  return { props: { user } }
 }

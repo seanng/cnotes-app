@@ -14,14 +14,13 @@ import { UserInputError, AuthenticationError } from 'apollo-server-micro'
 import {
   BRAND,
   EMAIL_TAKEN,
-  FROM_ADDRESS,
   INCORRECT_PASSWORD,
   INVALID_TOKEN,
   UNVERIFIED,
   userPublicFields,
   USER_NOT_FOUND,
 } from 'shared/constants'
-import sgMail from 'lib/sendgrid'
+import { sendWelcomeEmail, sendForgotPasswordEmail } from 'utils/emails'
 import prisma from 'lib/prisma'
 import {
   createPassword,
@@ -57,7 +56,7 @@ export const Signup = mutationField('signup', {
         updatedAt: now,
       },
     })
-    // todo: send welcome email.
+    await sendWelcomeEmail(input.email, input.firstName)
     const userObj = pick(userPublicFields, user) as User
     const token = encryptToken(userObj)
     res.setHeader('Set-Cookie', serializeCookie(token))
@@ -112,18 +111,7 @@ export const ForgotPassword = mutationField('forgotPassword', {
       throw new AuthenticationError(USER_NOT_FOUND)
     }
     const token = encryptToken(user)
-
-    await sgMail.send({
-      from: FROM_ADDRESS,
-      to: input,
-      subject: `cnotes: Password Reset link`,
-      html: `
-        <h1>cnotes Password Reset</h1>
-        <p>Forgot something did you? Please use the following link to reset your password.</p>
-        <p>${process.env.NEXT_PUBLIC_VERCEL_URL}/reset-password?token=${token}</p>
-        <hr />
-      `,
-    })
+    await sendForgotPasswordEmail(input, token)
     return true
   },
 })

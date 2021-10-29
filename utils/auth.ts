@@ -13,7 +13,7 @@ export function serializeCookie(token = '', maxAge = 24 * 60 * 60): string {
     path: '/',
     sameSite: 'lax',
     maxAge,
-    secure: process.env.NODE_ENV === 'production',
+    secure: process.env.VERCEL_ENV === 'production',
   })
 }
 

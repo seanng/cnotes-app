@@ -106,7 +106,7 @@ const ProfilePage: NextPage<Props> = ({ slug, user }: Props) => {
   return (
     <Layout user={user}>
       <Head>
-        <title>{`${profile?.alias} | ${profile?.genre} | sponsored.so profile`}</title>
+        <title>{`${profile?.alias} | ${profile?.genre} | Collabski profile`}</title>
         <meta name="description" content={metaDesc} />
         <meta property="og:description" content={metaDesc} />
         <meta property="og:image" content={profile?.avatarUrl} />

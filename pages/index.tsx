@@ -17,7 +17,7 @@ const IndexPage: NextPage = () => {
 
 export const getServerSideProps: GetServerSideProps = async ctx => {
   if (getUserPayload(ctx.req.headers?.cookie)) {
-    redirTo('/dashboard')
+    return redirTo('/dashboard')
   } else {
     return { props: {} }
   }

@@ -36,8 +36,7 @@ export default SignOut
 export const getServerSideProps: GetServerSideProps = async ctx => {
   const user = getUserPayload(ctx.req?.headers?.cookie)
   if (!user) {
-    redirTo('/login')
-  } else {
-    return { props: { user } }
+    return redirTo('/login')
   }
+  return { props: { user } }
 }

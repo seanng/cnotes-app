@@ -85,7 +85,7 @@ const Login: NextPage = () => {
           bgColor={gray[900]}
         >
           <Box textStyle="h1" mb={4}>
-            cnotes
+            Collabski
           </Box>
           <Box textStyle="base" fontWeight={500}>
             Making sponsorships more transparent.
@@ -181,8 +181,7 @@ export default Login
 export const getServerSideProps: GetServerSideProps = async ctx => {
   // Automatically navigate user to dashboard if already signed in
   if (getUserPayload(ctx.req.headers?.cookie)) {
-    redirTo('/dashboard')
-  } else {
-    return { props: {} }
+    return redirTo('/dashboard')
   }
+  return { props: {} }
 }

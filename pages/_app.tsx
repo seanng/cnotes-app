@@ -25,7 +25,7 @@ function MyApp({ Component, pageProps }: AppProps): JSX.Element {
     <ApolloProvider client={apolloClient}>
       <ChakraProvider cookies={pageProps.cookies}>
         <Head>
-          <title>sponsored.so</title>
+          <title>Collabski</title>
           <meta name="description" content={metaDesc} />
           <meta property="og:description" content={metaDesc} />
           <meta

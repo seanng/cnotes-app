@@ -36,7 +36,7 @@ type Props = {
 function Logo({ isLightMode }: { isLightMode: boolean }): JSX.Element {
   return (
     <LinkText href="/" textStyle="h4" color={isLightMode ? 'black' : 'white'}>
-      cnotes
+      Collabski
     </LinkText>
   )
 }
