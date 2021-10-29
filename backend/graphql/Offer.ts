@@ -9,9 +9,9 @@ import {
   list,
   stringArg,
 } from 'nexus'
-import prisma from '../../lib/prisma'
-import { ACTIVE, DECIDED, REJECTED } from '../../shared/constants'
-import { isBrand } from '../../utils/auth'
+import prisma from 'lib/prisma'
+import { ACTIVE, DECIDED, REJECTED } from 'shared/constants'
+import { isBrand } from 'utils/auth'
 
 export const OfferHistory = objectType({
   name: 'OfferHistory',

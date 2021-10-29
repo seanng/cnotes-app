@@ -12,16 +12,16 @@ import {
   objectType,
 } from 'nexus'
 import slugify from 'slugify'
-import prisma from '../../lib/prisma'
-import { ALIAS_TAKEN, userPublicFields } from '../../shared/constants'
+import prisma from 'lib/prisma'
+import { ALIAS_TAKEN, userPublicFields } from 'shared/constants'
 import {
   encryptToken,
   serializeCookie,
   isCreator,
   createPassword,
-} from '../../utils/auth'
-import { populatePortfolioData } from '../../utils/backend'
-import { CREATOR } from '../../shared/constants'
+} from 'utils/auth'
+import { populatePortfolioData } from 'utils/backend'
+import { CREATOR } from 'shared/constants'
 
 export const User = objectType({
   name: 'User',

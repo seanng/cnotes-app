@@ -10,15 +10,10 @@ import {
   list,
   idArg,
 } from 'nexus'
-import prisma from '../../lib/prisma'
-import {
-  FROM_ADDRESS,
-  ACTIVE,
-  UNVERIFIED,
-  DECIDED,
-} from '../../shared/constants'
-import { SUBMITTING } from '../../shared/constants'
-import { isCreator } from '../../utils/auth'
+import prisma from 'lib/prisma'
+import { FROM_ADDRESS, ACTIVE, UNVERIFIED, DECIDED } from 'shared/constants'
+import { SUBMITTING } from 'shared/constants'
+import { isCreator } from 'utils/auth'
 
 export const Listing = objectType({
   name: 'Listing',
