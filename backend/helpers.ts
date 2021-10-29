@@ -1,4 +1,4 @@
-import prisma from '../lib/prisma'
+import prisma from 'lib/prisma'
 
 export function getRelation(model: string, field: string) {
   return parent =>
