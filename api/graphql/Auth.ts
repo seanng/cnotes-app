@@ -1,7 +1,6 @@
 import pick from 'ramda/src/pick'
 import jwt from 'jsonwebtoken'
 import slugify from 'slugify'
-import sgMail from 'lib/sendgrid'
 import {
   objectType,
   arg,
@@ -10,7 +9,6 @@ import {
   nonNull,
   stringArg,
 } from 'nexus'
-import prisma from 'lib/prisma'
 import { User } from '@prisma/client'
 import { UserInputError, AuthenticationError } from 'apollo-server-micro'
 import {
@@ -23,6 +21,8 @@ import {
   userPublicFields,
   USER_NOT_FOUND,
 } from 'shared/constants'
+import sgMail from 'lib/sendgrid'
+import prisma from 'lib/prisma'
 import {
   createPassword,
   encryptToken,
@@ -37,6 +37,8 @@ export const Signup = mutationField('signup', {
     input: arg({ type: 'SignupInput' }),
   },
   resolve: async (_, { input }, { res }) => {
+    console.log('incorrect password: ', INCORRECT_PASSWORD)
+    console.log('sgMail: ', sgMail)
     const foundUser = await prisma.user.findUnique({
       where: { email: input.email },
     })

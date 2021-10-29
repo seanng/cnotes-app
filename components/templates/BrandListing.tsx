@@ -148,7 +148,7 @@ const BrandListing: NextPage<Props> = ({ user, listingId }: Props) => {
           <ProfileLoadingSkeleton />
         ) : (
           <>
-            {listing.profile && (
+            {listing?.profile && (
               <ProfileBox
                 profile={listing.profile}
                 listing={listing}
@@ -176,14 +176,14 @@ const BrandListing: NextPage<Props> = ({ user, listingId }: Props) => {
                 bgColor={gray[100]}
                 mb={10}
               >
-                <StatNumbers data={listing.profile.creatorStats} />
+                <StatNumbers data={listing?.profile?.creatorStats} />
                 <Box>
                   {genderChart && <GenderChart mb={10} data={genderChart} />}
                   {locationChart && <LocationChart data={locationChart} />}
                 </Box>
               </Box>
               {listing?.profile?.collabs && (
-                <ProfileCollabs collabs={listing.profile.collabs} mb={12} />
+                <ProfileCollabs collabs={listing?.profile.collabs} mb={12} />
               )}
 
               <ProfileReel
@@ -203,69 +203,77 @@ const BrandListing: NextPage<Props> = ({ user, listingId }: Props) => {
         )}
       </Container>
       {/* mobile card */}
-      <Box
-        position="fixed"
-        bottom={0}
-        w="full"
-        display={['block', null, 'none']}
-        bgColor={gray[0]}
-        borderTopRadius="lg"
-        pt={4}
-      >
-        <Flex px={6} align="center" pb={4}>
-          <Avatar
-            name={listing.profile.alias}
-            src={listing.profile.avatarUrl}
-            mr={5}
-          />
-          <Box>
-            <Text textStyle="h5">{listing.profile.alias}</Text>
-            {listing.profile.genre && (
-              <Text textStyle="microBold">{listing.profile.genre}</Text>
-            )}
-          </Box>
-        </Flex>
-        <SimpleGrid
-          columns={4}
-          px={6}
-          borderBottom="1px solid"
-          borderColor={gray[50]}
+      {!isLoading && listing && (
+        <Box
+          position="fixed"
+          bottom={0}
+          w="full"
+          display={['block', null, 'none']}
+          bgColor={gray[0]}
+          borderTopRadius="lg"
+          pt={4}
         >
-          <BottomCardInfoItem label="Category" value="Keyboards" />
-          <BottomCardInfoItem label="Platform" value={listing.platform} />
-          <BottomCardInfoItem label="Deliverable" value={listing.deliverable} />
-          <BottomCardInfoItem label="Revisions" value={2} />
-          <BottomCardInfoItem label="Media Preview" value="48 H" />
-          <BottomCardInfoItem label="Total Offers" value={listing.offerCount} />
-          <BottomCardInfoItem
-            label="Highest Offer"
-            value={`$${listing.highestOfferValue}`}
-          />
-        </SimpleGrid>
-        {hasTimeLeft ? (
-          <Flex justify="space-between" px={6} py={5}>
+          <Flex px={6} align="center" pb={4}>
+            <Avatar
+              name={listing.profile?.alias}
+              src={listing.profile?.avatarUrl}
+              mr={5}
+            />
             <Box>
-              <Text color="#757474" textStyle="small" mb={1}>
-                Time left
-              </Text>
-              <TimerText end={listing.auctionEndsAt} />
+              <Text textStyle="h5">{listing.profile?.alias}</Text>
+              {listing.profile?.genre && (
+                <Text textStyle="microBold">{listing.profile?.genre}</Text>
+              )}
             </Box>
-            <Button w="60%" onClick={handleOfferClick}>
-              {listing.offer ? 'Update offer' : 'Place offer'}
-            </Button>
           </Flex>
-        ) : (
-          <Text
+          <SimpleGrid
+            columns={4}
             px={6}
-            py={5}
-            textStyle="small"
-            color={gray[700]}
-          >{`Listing ended on ${format(
-            new Date(listing.auctionEndsAt),
-            'd MMM y'
-          )}`}</Text>
-        )}
-      </Box>
+            borderBottom="1px solid"
+            borderColor={gray[50]}
+          >
+            <BottomCardInfoItem label="Category" value="Keyboards" />
+            <BottomCardInfoItem label="Platform" value={listing.platform} />
+            <BottomCardInfoItem
+              label="Deliverable"
+              value={listing.deliverable}
+            />
+            <BottomCardInfoItem label="Revisions" value={2} />
+            <BottomCardInfoItem label="Media Preview" value="48 H" />
+            <BottomCardInfoItem
+              label="Total Offers"
+              value={listing.offerCount}
+            />
+            <BottomCardInfoItem
+              label="Highest Offer"
+              value={`$${listing.highestOfferValue}`}
+            />
+          </SimpleGrid>
+          {hasTimeLeft ? (
+            <Flex justify="space-between" px={6} py={5}>
+              <Box>
+                <Text color="#757474" textStyle="small" mb={1}>
+                  Time left
+                </Text>
+                <TimerText end={listing.auctionEndsAt} />
+              </Box>
+              <Button w="60%" onClick={handleOfferClick}>
+                {listing.offer ? 'Update offer' : 'Place offer'}
+              </Button>
+            </Flex>
+          ) : (
+            <Text
+              px={6}
+              py={5}
+              textStyle="small"
+              color={gray[700]}
+            >{`Listing ended on ${format(
+              new Date(listing.auctionEndsAt),
+              'd MMM y'
+            )}`}</Text>
+          )}
+        </Box>
+      )}
       <OfferModal
         isUpdate={!!listing?.offer}
         listing={listing}
