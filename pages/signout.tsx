@@ -1,9 +1,8 @@
 import { useEffect } from 'react'
 import { useMutation, useApolloClient, gql } from '@apollo/client'
 import { useRouter } from 'next/router'
-import { GetServerSideProps, NextPage } from 'next'
-import { getUserPayload } from 'utils/auth'
-import { redirTo } from 'utils/helpers'
+import { NextPage } from 'next'
+import { withApollo } from 'lib/apollo-client'
 
 const SIGN_OUT = gql`
   mutation signOut {
@@ -18,9 +17,7 @@ const SignOut: NextPage = () => {
 
   useEffect(() => {
     signOut().then(() => {
-      console.log('signed out')
-      client.resetStore().then(() => {
-        console.log('navigating')
+      client.clearStore().then(() => {
         router.push('/')
       })
     })
@@ -29,14 +26,4 @@ const SignOut: NextPage = () => {
   return <p>Signing out...</p>
 }
 
-export default SignOut
-
-// TODO: replace with static props?
-
-export const getServerSideProps: GetServerSideProps = async ctx => {
-  const user = getUserPayload(ctx.req?.headers?.cookie)
-  if (!user) {
-    return redirTo('/login')
-  }
-  return { props: { user } }
-}
+export default withApollo(SignOut)

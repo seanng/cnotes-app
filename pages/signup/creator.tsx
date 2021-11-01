@@ -1,11 +1,14 @@
 import SignupForm from 'components/templates/SignupForm'
+import { withApollo } from 'lib/apollo-client'
 import { GetServerSideProps } from 'next'
 import { getUserPayload } from 'utils/auth'
 import { redirTo } from 'utils/helpers'
 
-export default function SignupCreatorPage(): JSX.Element {
+function SignupCreatorPage(): JSX.Element {
   return <SignupForm />
 }
+
+export default withApollo(SignupCreatorPage)
 
 export const getServerSideProps: GetServerSideProps = async ctx => {
   // Automatically navigate user to dashboard if already signed in

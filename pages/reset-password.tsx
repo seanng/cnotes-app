@@ -11,6 +11,7 @@ import FormInput from 'components/atoms/FormInput'
 import { useState } from 'react'
 import FeedbackModal from 'components/molecules/FeedbackModal'
 import { getUserPayload } from 'utils/auth'
+import { withApollo } from 'lib/apollo-client'
 
 type OnSubmitProps = {
   password: string
@@ -130,7 +131,7 @@ const ResetPasswordPage: NextPage = () => {
   )
 }
 
-export default ResetPasswordPage
+export default withApollo(ResetPasswordPage)
 
 // TODO: replace with static props?
 export const getServerSideProps: GetServerSideProps = async ctx => {

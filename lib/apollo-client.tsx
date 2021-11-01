@@ -1,12 +1,13 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 // Must-read: https://www.apollographql.com/docs/react/performance/server-side-rendering/
-
+import { ApolloProvider } from '@apollo/client'
 import { useMemo } from 'react'
 import {
   ApolloClient,
   InMemoryCache,
   NormalizedCacheObject,
 } from '@apollo/client'
+import type { NextPage } from 'next'
 
 let apolloClient: ApolloClient<NormalizedCacheObject>
 
@@ -51,4 +52,13 @@ export function initializeApollo(initialState = null) {
 export function useApollo(initialState) {
   const store = useMemo(() => initializeApollo(initialState), [initialState])
   return store
+}
+
+export const withApollo = (Comp: NextPage) => props => {
+  const apolloStore = useApollo(props.apolloState)
+  return (
+    <ApolloProvider client={apolloStore}>
+      <Comp {...props} />
+    </ApolloProvider>
+  )
 }

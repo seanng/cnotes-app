@@ -15,6 +15,7 @@ import { getUserPayload } from 'utils/auth'
 import NextLink from 'next/link'
 import { ArrowBackIcon } from '@chakra-ui/icons'
 import { useColors } from 'hooks'
+import { withApollo } from 'lib/apollo-client'
 
 const Link = c(NextLink)
 
@@ -176,7 +177,7 @@ const Login: NextPage = () => {
   )
 }
 
-export default Login
+export default withApollo(Login)
 
 export const getServerSideProps: GetServerSideProps = async ctx => {
   // Automatically navigate user to dashboard if already signed in

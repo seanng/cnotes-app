@@ -10,6 +10,7 @@ import { useForm } from 'react-hook-form'
 import { EMAIL_REGEX, USER_NOT_FOUND } from 'shared/constants'
 import { getErrorMessage, redirTo } from 'utils/helpers'
 import { getUserPayload } from 'utils/auth'
+import { withApollo } from 'lib/apollo-client'
 
 type OnSubmitProps = {
   email: string
@@ -102,7 +103,7 @@ const ForgotPasswordPage: NextPage = () => {
   )
 }
 
-export default ForgotPasswordPage
+export default withApollo(ForgotPasswordPage)
 
 // TODO: replace with static props?
 export const getServerSideProps: GetServerSideProps = async ctx => {

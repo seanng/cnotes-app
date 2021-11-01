@@ -12,6 +12,7 @@ import ProfileBanner from 'components/atoms/ProfileBanner'
 import ProfileBox from 'components/organisms/ProfileBox'
 import ProfileLoadingSkeleton from 'components/molecules/ProfileLoadingSkeleton'
 import { profileTransformer } from 'utils/helpers'
+import { withApollo } from 'lib/apollo-client'
 
 const ProfileReel = dynamic(() => import('components/organisms/ProfileReel'), {
   ssr: false,
@@ -137,7 +138,7 @@ const ProfilePage: NextPage<Props> = ({ slug, user }: Props) => {
   )
 }
 
-export default ProfilePage
+export default withApollo(ProfilePage)
 
 // TODO: change to getStaticProps for better SEO and page optimization
 // TODO: https://nextjs.org/docs/advanced-features/preview-mode

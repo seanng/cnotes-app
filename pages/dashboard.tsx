@@ -1,3 +1,4 @@
+import { withApollo } from 'lib/apollo-client'
 import { NextPage, GetServerSideProps } from 'next'
 import { BRAND, UNVERIFIED } from 'shared/constants'
 import { User } from 'shared/types'
@@ -23,7 +24,7 @@ const DashboardPage: NextPage<Props> = ({ user }: Props) => {
   return <CreatorDashboard user={user} />
 }
 
-export default DashboardPage
+export default withApollo(DashboardPage)
 
 export const getServerSideProps: GetServerSideProps = async ctx => {
   const user = getUserPayload(ctx.req?.headers?.cookie)

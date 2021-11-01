@@ -6,6 +6,7 @@ import { redirTo } from 'utils/helpers'
 import { User } from 'shared/types'
 import CreateListingForm from 'components/templates/CreateListingForm'
 import { useState } from 'react'
+import { withApollo } from 'lib/apollo-client'
 
 const CreateListingSuccess = dynamic(
   () => import('components/templates/CreateListingSuccess')
@@ -37,4 +38,4 @@ export const getServerSideProps: GetServerSideProps = async ctx => {
   return { props: { user } }
 }
 
-export default CreatePage
+export default withApollo(CreatePage)

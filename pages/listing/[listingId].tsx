@@ -7,6 +7,7 @@ import { redirTo } from 'utils/helpers'
 import BrandListing from 'components/templates/BrandListing'
 import CreatorListing from 'components/templates/CreatorListing'
 import NotFound from 'components/organisms/404'
+import { withApollo } from 'lib/apollo-client'
 
 interface Props {
   user: User
@@ -30,7 +31,7 @@ const ListingPage: NextPage<Props> = ({ user }: Props) => {
   )
 }
 
-export default ListingPage
+export default withApollo(ListingPage)
 
 export const getServerSideProps: GetServerSideProps = async ctx => {
   const user = getUserPayload(ctx.req.headers.cookie)

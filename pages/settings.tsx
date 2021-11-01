@@ -29,6 +29,7 @@ import ProfileSettings from 'components/organisms/ProfileSettings'
 import SocialSettings from 'components/organisms/SocialSettings'
 import AccountSettings from 'components/organisms/AccountSettings'
 import { getUserPayload } from 'utils/auth'
+import { withApollo } from 'lib/apollo-client'
 
 const Portfolio = dynamic(
   () => import('components/organisms/PortfolioSettings'),
@@ -306,7 +307,7 @@ const SettingsPage: NextPage<Props> = ({ user }: Props) => {
   )
 }
 
-export default SettingsPage
+export default withApollo(SettingsPage)
 
 export const getServerSideProps: GetServerSideProps = async ctx => {
   const user = getUserPayload(ctx.req.headers.cookie)

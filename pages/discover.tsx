@@ -29,6 +29,7 @@ import { redirTo } from 'utils/helpers'
 import { PLACEHOLDER_BANNER_URL, UNVERIFIED } from 'shared/constants'
 import TimerLabel from 'components/atoms/TimerLabel'
 import UnverifiedState from 'components/templates/UnverifiedState'
+import { withApollo } from 'lib/apollo-client'
 
 const ListingsQuery = gql`
   query DiscoveryListings {
@@ -275,7 +276,7 @@ const DiscoverPage: NextPage<Props> = ({ user }: Props) => {
   )
 }
 
-export default DiscoverPage
+export default withApollo(DiscoverPage)
 
 export const getServerSideProps: GetServerSideProps = async ctx => {
   const user = getUserPayload(ctx.req.headers.cookie)
