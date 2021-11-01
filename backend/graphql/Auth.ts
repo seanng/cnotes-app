@@ -74,15 +74,12 @@ export const Login = mutationField('login', {
     const user = await prisma.user.findUnique({
       where: { email },
     })
-
     if (!user) {
       throw new AuthenticationError(USER_NOT_FOUND)
     }
-
     if (!isCorrectPassword(password, user.password)) {
       throw new UserInputError(INCORRECT_PASSWORD)
     }
-
     const userObj = pick(userPublicFields, user) as User
     const token = encryptToken(userObj)
     res.setHeader('Set-Cookie', serializeCookie(token))

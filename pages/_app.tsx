@@ -22,6 +22,7 @@ function MyApp({ Component, pageProps }: AppProps): JSX.Element {
     <ChakraProvider cookies={pageProps.cookies}>
       <Head>
         <title>Collabski</title>
+        <link rel="shortcut icon" href="/favicon.ico" />
         <meta name="description" content={metaDesc} />
         <meta property="og:description" content={metaDesc} />
         <meta

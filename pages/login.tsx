@@ -1,6 +1,6 @@
 import Head from 'next/head'
 import { IconButton, chakra as c, Box, Flex, Button } from '@chakra-ui/react'
-import { useMutation, useApolloClient, gql } from '@apollo/client'
+import { useMutation, gql } from '@apollo/client'
 import Input from 'components/atoms/LoginInput'
 import { useForm } from 'react-hook-form'
 import {
@@ -33,7 +33,6 @@ const LOGIN = gql`
 `
 
 const Login: NextPage = () => {
-  const client = useApolloClient()
   const [login] = useMutation(LOGIN)
   const router = useRouter()
 
@@ -48,7 +47,6 @@ const Login: NextPage = () => {
 
   const onSubmit = async (data: OnSubmitProps): Promise<void> => {
     try {
-      await client.resetStore()
       await login({
         variables: {
           input: data,
