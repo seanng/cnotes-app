@@ -71,8 +71,5 @@ export const userPublicFields = [
   'portfolio',
 ]
 
-export const S3_BUCKET_URL =
-  'https://cnotes-dev.s3-ap-southeast-1.amazonaws.com'
-export const CLOUDFRONT_URL = 'https://d29zuagwjyq1tv.cloudfront.net'
-export const PLACEHOLDER_BANNER_URL = `${CLOUDFRONT_URL}/placeholders/bg-profile.jpg`
-export const S3_LISTING_ICONS_FOLDER = `${CLOUDFRONT_URL}/assets/mnemonics`
+export const PLACEHOLDER_BANNER_URL = `${process.env.NEXT_PUBLIC_CLOUDFRONT_URL}/placeholders/bg-profile.jpg`
+export const S3_LISTING_ICONS_FOLDER = `${process.env.NEXT_PUBLIC_CLOUDFRONT_URL}/assets/mnemonics`

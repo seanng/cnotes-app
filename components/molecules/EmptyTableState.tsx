@@ -7,11 +7,12 @@ import {
   useColorModeValue,
 } from '@chakra-ui/react'
 import LinkButton from 'components/atoms/LinkButton'
-import { CLOUDFRONT_URL } from 'shared/constants'
 import { useColors } from 'hooks'
 
-const darkImgSrc = `${CLOUDFRONT_URL}/assets/brand-dash-empty-dark.png`
-const lightImgSrc = `${CLOUDFRONT_URL}/assets/brand-dash-empty-light.png`
+const cloudfrontUrl = process.env.NEXT_PUBLIC_CLOUDFRONT_URL
+
+const darkImgSrc = `${cloudfrontUrl}/assets/brand-dash-empty-dark.png`
+const lightImgSrc = `${cloudfrontUrl}/assets/brand-dash-empty-light.png`
 
 interface Props {
   heading?: string
