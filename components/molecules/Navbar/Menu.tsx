@@ -1,45 +1,20 @@
-// import NextLink from 'next/link'
-// import Image from 'next/image'
-import { HamburgerIcon, MoonIcon, SunIcon } from '@chakra-ui/icons'
-import LinkButton from 'components/atoms/LinkButton'
+import { MoonIcon, SunIcon } from '@chakra-ui/icons'
 import { User } from 'shared/types'
-import { BRAND } from 'shared/constants'
 import {
   Box,
   Button,
   IconButton,
-  Container,
-  Flex,
-  DrawerBody,
-  Drawer,
-  DrawerContent,
-  DrawerCloseButton,
-  DrawerHeader,
-  DrawerOverlay,
   Stack,
   Popover,
   PopoverTrigger,
-  useColorMode,
   PopoverContent,
-  useDisclosure,
   PopoverArrow,
-  PopoverBody,
   Divider,
+  PopoverBody,
 } from '@chakra-ui/react'
+import LinkButton from 'components/atoms/LinkButton'
+import { BRAND } from 'shared/constants'
 import LinkText from 'components/atoms/LinkText'
-import { NAVBAR_HEIGHT } from 'shared/metrics'
-
-type Props = {
-  user: User
-}
-
-function Logo({ isLightMode }: { isLightMode: boolean }): JSX.Element {
-  return (
-    <LinkText href="/" textStyle="h4" color={isLightMode ? 'black' : 'white'}>
-      Collabski
-    </LinkText>
-  )
-}
 
 function UserLinks(): JSX.Element {
   return (
@@ -54,15 +29,17 @@ function UserLinks(): JSX.Element {
   )
 }
 
-function MenuLinks({
-  isLightMode,
-  user,
-  toggleColorMode,
-}: {
+export interface MenuProps {
   isLightMode: boolean
   user: User
   toggleColorMode: () => void
-}): JSX.Element {
+}
+
+export default function MenuLinks({
+  isLightMode,
+  user,
+  toggleColorMode,
+}: MenuProps): JSX.Element {
   const DarkModeIcon = isLightMode ? MoonIcon : SunIcon
   const popoverBgColor = isLightMode ? 'gray.50' : 'gray.800'
 
@@ -137,43 +114,5 @@ function MenuLinks({
         </>
       )}
     </Stack>
-  )
-}
-
-export default function Navbar({ user }: Props): JSX.Element {
-  const { isOpen, onOpen, onClose } = useDisclosure()
-  const { colorMode, toggleColorMode } = useColorMode()
-  const isLightMode = colorMode === 'light'
-
-  const menuLinksProps = {
-    user,
-    isLightMode,
-    toggleColorMode,
-  }
-
-  return (
-    <Flex minHeight={NAVBAR_HEIGHT} pt={5} w="full">
-      <Container>
-        <Flex align="center" justify="space-between" wrap="wrap">
-          <Logo isLightMode={isLightMode} />
-          <Box display={['block', 'none']} onClick={onOpen}>
-            <HamburgerIcon />
-          </Box>
-          <Box display={['none', 'block']}>
-            <MenuLinks {...menuLinksProps} />
-          </Box>
-          <Drawer onClose={onClose} isOpen={isOpen}>
-            <DrawerOverlay />
-            <DrawerContent maxW={230}>
-              <DrawerCloseButton mt={3} />
-              <DrawerHeader />
-              <DrawerBody>
-                <MenuLinks {...menuLinksProps} />
-              </DrawerBody>
-            </DrawerContent>
-          </Drawer>
-        </Flex>
-      </Container>
-    </Flex>
   )
 }
