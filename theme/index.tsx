@@ -47,7 +47,10 @@ const components = {
 
 const theme = extendTheme({
   colors,
-  initialColorMode: 'dark',
+  config: {
+    initialColorMode: 'dark',
+    useSystemColorMode: false,
+  },
   fonts,
   breakpoints,
   textStyles,
