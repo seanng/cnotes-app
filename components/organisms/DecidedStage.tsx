@@ -51,7 +51,7 @@ export default function DecidedStage({ listing }: Props): JSX.Element {
 
   return (
     <>
-      <StageHeading data={listing} />
+      <StageHeading data={listing} specs={listing.specs} />
       <Container mt={6}>
         <Text textStyle="h4" mb={5}>
           what&apos;s next?

@@ -106,6 +106,7 @@ const ResetPasswordPage: NextPage = () => {
                   validate: v => v === password || 'The passwords do not match',
                 }),
               }}
+              mb={8}
             />
             <Button type="submit" isLoading={isSubmitting}>
               Update password

@@ -117,16 +117,13 @@ export const placeOffer = mutationField('placeOffer', {
     input: arg({ type: 'PlaceOfferInput' }),
   },
   resolve: async (ctx, { input }, { user }) => {
-    console.time('place offer total')
     if (!isBrand(user)) throw new ForbiddenError('Not a brand')
     const { listingId, cashValue, productValue } = input
 
-    console.time('place offer db read')
     let offer = await prisma.offer.findFirst({
       where: { brandId: user.id, listingId },
       include: { listing: true },
     })
-    console.timeEnd('place offer db read')
 
     const now = new Date()
 
@@ -139,8 +136,6 @@ export const placeOffer = mutationField('placeOffer', {
       history: offer ? [...offer.history, historyItem] : [historyItem],
       updatedAt: now,
     }
-
-    console.time('place offer db update')
 
     if (!offer) {
       offer = await prisma.offer.create({
@@ -175,10 +170,8 @@ export const placeOffer = mutationField('placeOffer', {
         updatedAt: now,
       },
     })
-    console.timeEnd('place offer db update')
 
     // TODO: send email to user
-    console.timeEnd('place offer total')
 
     return offer
   },

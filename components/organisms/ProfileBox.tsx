@@ -205,19 +205,25 @@ const ProfileBox = ({
             /> */}
             <ListingRow label="Platform" value={listing.platform} />
             <ListingRow label="Deliverable" value={listing.deliverable} />
+            <ListingRow label="Length" value={listing.specs?.videoLength} />
             <ListingRow
               label="Revisions"
               value={listing.specs?.numberOfRevisions}
             />
             <ListingRow
-              label="Scripted?"
+              label="Preview Time"
+              value={listing.specs?.previewTime}
+            />
+            <ListingRow label="Reusable" value={listing.specs?.canReuse} />
+            <ListingRow
+              label="Scripted"
               value={listing.specs?.willFollowScript}
             />
-            <ListingRow label="Total Offers" value={listing.offerCount} />
             <ListingRow
               label="Highest Offer"
               value={`$${listing.highestOfferValue.toLocaleString()}`}
             />
+            <ListingRow label="Total Offers" value={listing.offerCount} />
             <Divider my={4} />
             {hasTimeLeft ? (
               <Button onClick={onOfferClick} isFullWidth mb={6}>

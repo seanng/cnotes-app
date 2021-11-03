@@ -17,7 +17,7 @@ export default function DealStageBody({ deal, children }: Props): JSX.Element {
   const totalValue = deal.productValue + deal.cashValue
   return (
     <>
-      <StageHeading data={deal} />
+      <StageHeading data={deal} specs={deal.listing.specs} />
       <Container my={6}>
         <Text textStyle="h4" mb={5}>
           offer details
@@ -34,48 +34,39 @@ export default function DealStageBody({ deal, children }: Props): JSX.Element {
           </Text>
           <Box textStyle={['mini', 'small']} mb={[2, 4]}>
             {deal.cashValue > 0 && (
-              <Box as="span" mr={3}>
-                💰${deal.cashValue.toLocaleString()}
-              </Box>
+              <>
+                <Box as="span" mr={1}>
+                  💰
+                </Box>
+                <Box as="span" mr={3}>
+                  ${deal.cashValue.toLocaleString()}
+                </Box>
+              </>
             )}
             {deal.productName && (
-              <Box
-                as={deal.productUrl ? LinkText : 'span'}
-                color={cyan[600]}
-                {...(deal.productUrl && {
-                  href: deal.productUrl,
-                  display: 'inline',
-                  isExternal: true,
-                })}
-              >
-                {`🎁 ${
-                  deal.productName
-                } ($${deal.productValue.toLocaleString()})`}
-              </Box>
+              <>
+                <Box as="span" mr={2}>
+                  🎁
+                </Box>
+                <Box
+                  as={deal.productUrl ? LinkText : 'span'}
+                  color={cyan[600]}
+                  {...(deal.productUrl && {
+                    href: deal.productUrl,
+                    display: 'inline',
+                    isExternal: true,
+                  })}
+                >
+                  {`${
+                    deal.productName
+                  } ($${deal.productValue.toLocaleString()})`}
+                </Box>
+              </>
             )}
           </Box>
           <Text textStyle={['small', 'base']} color={gray[600]} mb={[2, 4]}>
             {`"${deal.message}"`}
           </Text>
-          <Box
-            color={gray[700]}
-            display="inline-block"
-            textTransform="uppercase"
-            textStyle={['micro', 'mini']}
-          >
-            {deal.listing.specs.revisionDays && (
-              <Box
-                mr={3}
-                as="span"
-              >{`✍🏼 ${deal.listing.specs.revisionDays} revision days`}</Box>
-            )}
-            {deal.listing.specs.willFollowScript && (
-              <Box mr={3} as="span">{`🗒 Will follow a script`}</Box>
-            )}
-            {deal.listing.specs.willFollowScript === false && (
-              <Box mr={3} as="span">{`❌ No script`}</Box>
-            )}
-          </Box>
         </Box>
         <Text textStyle="h4" mb={5}>
           submission

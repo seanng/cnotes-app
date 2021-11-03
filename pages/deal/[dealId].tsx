@@ -1,5 +1,6 @@
 import { useRouter } from 'next/router'
 import { NextPage, GetServerSideProps } from 'next'
+import { withApollo } from 'lib/apollo-client'
 // import { BRAND } from 'shared/constants'
 import { User } from 'shared/types'
 import { getUserPayload } from 'utils/auth'
@@ -23,7 +24,7 @@ const DealPage: NextPage<Props> = ({ user }: Props) => {
   return <CreatorDeal user={user} dealId={dealId as string} />
 }
 
-export default DealPage
+export default withApollo(DealPage)
 
 export const getServerSideProps: GetServerSideProps = async ctx => {
   const user = getUserPayload(ctx.req.headers.cookie)

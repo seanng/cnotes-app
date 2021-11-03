@@ -10,6 +10,8 @@ import {
   ModalCloseButton,
   Flex,
   ModalBody,
+  Wrap,
+  WrapItem,
   ModalFooter,
   Button,
   Box,
@@ -39,6 +41,23 @@ const PLACE_OFFER = gql`
     }
   }
 `
+
+const InfoGroup = ({ label, value, ...props }) => {
+  let val = value
+  if (typeof value === 'boolean') {
+    val = value ? 'Yes' : 'No'
+  }
+  return val ? (
+    <WrapItem flexDirection="column" {...props}>
+      <Text fontWeight={600} textStyle="base" textTransform="capitalize">
+        {val}
+      </Text>
+      <Text fontWeight={600} textStyle="micro" color="gray.500">
+        {label}
+      </Text>
+    </WrapItem>
+  ) : null
+}
 
 interface ModalProps {
   onClose: () => void
@@ -141,7 +160,11 @@ export default function OfferModal({
       <ModalContent>
         <ModalHeader textAlign="left">
           <Text textStyle="xLarge">
-            {isUpdate ? 'Update Offer' : 'Place Offer'}
+            {showSuccess
+              ? 'Success'
+              : isUpdate
+              ? 'Update Offer'
+              : 'Place Offer'}
           </Text>
         </ModalHeader>
         <ModalCloseButton top={6} right={6} />
@@ -166,42 +189,42 @@ export default function OfferModal({
                 pb={8}
                 borderBottom="1px solid"
                 borderColor={gray[50]}
-                mb={8}
+                mb={6}
               >
-                {/* general info box */}
-                <Text
-                  fontWeight={600}
-                  textStyle="base"
-                  textTransform="capitalize"
-                >
-                  {`${listing?.platform} ${listing?.deliverable}`}
-                </Text>
-                <Text
-                  fontWeight={600}
-                  textStyle="micro"
-                  color={gray[500]}
-                  mb={5}
-                >
-                  {`48h media preview 2 revisions`}
-                </Text>
-                <Flex>
-                  <Box mr={6}>
-                    <Text fontWeight={600} textStyle="base">
-                      ${listing?.highestOfferValue.toLocaleString()}
-                    </Text>
-                    <Text fontWeight={600} textStyle="micro" color={gray[500]}>
-                      Highest
-                    </Text>
-                  </Box>
-                  <Box>
-                    <Text fontWeight={600} textStyle="base">
-                      6
-                    </Text>
-                    <Text fontWeight={600} textStyle="micro" color={gray[500]}>
-                      Offers
-                    </Text>
-                  </Box>
-                </Flex>
+                <Wrap alignContent="center" spacing={4} mb={4}>
+                  <InfoGroup label="platform" value={listing?.platform} />
+                  <InfoGroup label="deliverable" value={listing?.deliverable} />
+                  <InfoGroup
+                    label="highest"
+                    value={`$${listing?.highestOfferValue.toLocaleString()}`}
+                  />
+                  <InfoGroup
+                    label="offers"
+                    value={listing?.offerCount ?? listing?.offers.length}
+                  />
+                </Wrap>
+                <Wrap spacing={4}>
+                  <InfoGroup
+                    label="Length"
+                    value={listing?.specs?.videoLength}
+                  />
+                  <InfoGroup
+                    label="Revisions"
+                    value={listing?.specs?.numberOfRevisions}
+                  />
+                  <InfoGroup
+                    label="Preview"
+                    value={listing?.specs?.previewTime}
+                  />
+                  <InfoGroup
+                    label="Reusable"
+                    value={listing?.specs?.canReuse}
+                  />
+                  <InfoGroup
+                    label="Scripted"
+                    value={listing?.specs?.willFollowScript}
+                  />
+                </Wrap>
               </Box>
               {/* form */}
               <Flex>
@@ -244,7 +267,7 @@ export default function OfferModal({
                 inputProps={{
                   placeholder: hasProductValue
                     ? 'Enter product name'
-                    : 'Product value required',
+                    : 'Product value must be higher than $0',
                   ...register('productName', {
                     disabled: !hasProductValue,
                     required: hasProductValue,
@@ -258,7 +281,7 @@ export default function OfferModal({
                 inputProps={{
                   placeholder: hasProductValue
                     ? 'https://www.apple.com/shop/buy-iphone/iphone-11'
-                    : 'Product value required',
+                    : 'Product value must be higher than $0',
                   ...register('productUrl', {
                     disabled: !hasProductValue,
                     pattern: {
@@ -272,7 +295,7 @@ export default function OfferModal({
               <FormControl isInvalid={!!errors.message}>
                 <FormLabel htmlFor="message">Message</FormLabel>
                 <Textarea
-                  placeholder={`eg. I want you to shine for me like a whistle.`}
+                  placeholder={`Enter a detailed description of your video brief request.`}
                   rows={4}
                   {...register('message')}
                 />
@@ -292,8 +315,9 @@ export default function OfferModal({
                   disabled={showMinValueError || isSubmitting}
                   isFullWidth
                   type="submit"
+                  isLoading={isSubmitting}
                 >
-                  {isUpdate ? 'Update' : 'Place'}
+                  {isUpdate ? 'Update' : 'Place Offer'}
                 </Button>
               </Flex>
             </ModalFooter>

@@ -2,6 +2,8 @@ import NextLink from 'next/link'
 import {
   Container,
   Divider,
+  Wrap,
+  WrapItem,
   Text,
   Box,
   Tag,
@@ -11,7 +13,7 @@ import {
 import dynamic from 'next/dynamic'
 import Image from 'next/image'
 import { getCreatorListingOrDealStatus } from 'utils/helpers'
-import { Deal, User, Listing, Offer } from 'shared/types'
+import { Deal, User, Listing, ListingSpecs, Offer } from 'shared/types'
 import { CREATOR_DASH_DETAILS_CARD_WIDTH } from 'shared/metrics'
 import { statusConfigs } from 'utils/configs'
 import { ArrowBackIcon } from '@chakra-ui/icons'
@@ -35,9 +37,10 @@ type Props = {
     highestOfferValue?: number
     description?: string
   }
+  specs: ListingSpecs
 }
 
-export default function StageHeading({ data }: Props): JSX.Element {
+export default function StageHeading({ data, specs }: Props): JSX.Element {
   const status = getCreatorListingOrDealStatus(data)
   const config = statusConfigs[status]
   const imgSrc = data.iconUrl ? data.iconUrl : data.brand.avatarUrl
@@ -98,23 +101,80 @@ export default function StageHeading({ data }: Props): JSX.Element {
             >
               {data.description || data.listing?.description}
             </Text>
-            <Text textStyle="microBold" my={2} noOfLines={1} color={gray[600]}>
-              {offerCount === 1 && (
-                <Box as="span" mr={2}>
-                  1 Brand
-                </Box>
-              )}
+            <Wrap
+              textStyle="microBold"
+              fontSize={['10px', '12px']}
+              my={2}
+              noOfLines={1}
+              color={gray[600]}
+              spacing={3}
+            >
+              {offerCount === 1 && <WrapItem>1 Brand</WrapItem>}
               {offerCount > 1 && (
                 <>
-                  <Box as="span" mr={2}>
-                    🔥 {offerCount} brands
-                  </Box>
-                  <Box as="span">
-                    📈 ${data.highestOfferValue.toLocaleString()} Highest Offer
-                  </Box>
+                  <WrapItem>
+                    <Box as="span" mr={2}>
+                      🔥
+                    </Box>
+                    <Box as="span">{offerCount} brands</Box>
+                  </WrapItem>
+                  <WrapItem>
+                    <Box as="span" mr={2}>
+                      📈
+                    </Box>
+                    <Box as="span">
+                      ${data.highestOfferValue.toLocaleString()} Highest Offer
+                    </Box>
+                  </WrapItem>
                 </>
               )}
-            </Text>
+              {specs.videoLength && (
+                <WrapItem>
+                  <Box as="span" mr={2}>
+                    🎥
+                  </Box>
+                  <Box mr={3} as="span">
+                    {specs.videoLength}
+                  </Box>
+                </WrapItem>
+              )}
+              {specs.numberOfRevisions > 0 && (
+                <WrapItem>
+                  <Box as="span" mr={2}>
+                    ✍🏼
+                  </Box>
+                  <Box mr={3} as="span">
+                    {`${specs.numberOfRevisions} revisions`}
+                  </Box>
+                </WrapItem>
+              )}
+              {specs.previewTime && (
+                <WrapItem>
+                  <Box as="span" mr={2}>
+                    👁
+                  </Box>
+                  <Box mr={3} as="span">
+                    {`${specs.previewTime} preview`}
+                  </Box>
+                </WrapItem>
+              )}
+              {specs.canReuse && (
+                <WrapItem>
+                  <Box as="span" mr={2}>
+                    🤝
+                  </Box>
+                  <Box as="span">Reusable</Box>
+                </WrapItem>
+              )}
+              {specs.willFollowScript && (
+                <WrapItem>
+                  <Box as="span" mr={2}>
+                    🗒
+                  </Box>
+                  <Box as="span">Scripted</Box>
+                </WrapItem>
+              )}
+            </Wrap>
           </Box>
         </Flex>
       </Container>

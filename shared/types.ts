@@ -83,10 +83,11 @@ export interface Offer {
 export type ListingStatus = 'unverified' | 'active' | 'decided'
 export type DealStatus = 'submitting' | 'paying' | 'completed'
 
-interface ListingSpecs {
+export interface ListingSpecs {
   canReuse?: boolean
+  videoLength?: string
+  previewTime?: string
   numberOfRevisions?: number
-  revisionDays?: number
   willFollowScript?: boolean
 }
 
@@ -101,6 +102,7 @@ export interface Listing {
   platform: string
   deliverable: string
   offers?: Offer[]
+  offerCount?: number
   auctionEndsAt: string
   highestOfferValue: number
   askingPrice?: number

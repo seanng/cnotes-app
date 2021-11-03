@@ -42,26 +42,36 @@ export default function OfferDetailsCard({
           </Text>
           <Box textStyle={['micro', 'mini']} mb={2}>
             {activity.cashValue > 0 && (
-              <Box as="span" mr={3}>
-                💰${activity.cashValue.toLocaleString()}
-              </Box>
+              <>
+                <Box as="span" mr={2}>
+                  💰
+                </Box>
+                <Box as="span" mr={3}>
+                  ${activity.cashValue.toLocaleString()}
+                </Box>
+              </>
             )}
             {activity.productName && (
-              <Box
-                as="span"
-                display="inline"
-                {...(activity.productUrl &&
-                  !props.onClick && {
-                    as: LinkText,
-                    isExternal: true,
-                    color: cyan[600],
-                    href: activity.productUrl,
-                  })}
-              >
-                {`🎁 ${
-                  activity.productName
-                } ($${activity.productValue.toLocaleString()})`}
-              </Box>
+              <>
+                <Box as="span" mr={2}>
+                  🎁
+                </Box>
+                <Box
+                  as="span"
+                  display="inline"
+                  {...(activity.productUrl &&
+                    !props.onClick && {
+                      as: LinkText,
+                      isExternal: true,
+                      color: cyan[600],
+                      href: activity.productUrl,
+                    })}
+                >
+                  {`${
+                    activity.productName
+                  } ($${activity.productValue.toLocaleString()})`}
+                </Box>
+              </>
             )}
           </Box>
           <Text

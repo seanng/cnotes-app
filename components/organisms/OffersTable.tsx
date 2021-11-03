@@ -49,6 +49,7 @@ const MY_ACTIVE_OFFERS = gql`
         id
         platform
         deliverable
+        specs
         status
         highestOfferValue
         auctionEndsAt

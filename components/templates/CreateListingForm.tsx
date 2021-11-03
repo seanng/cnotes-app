@@ -56,7 +56,7 @@ type OnSubmitProps = {
   description: string
   canReuse: string
   willFollowScript: string
-  revisionDays: string
+  previewTime: string
   numberOfRevisions: string
 }
 
@@ -124,7 +124,7 @@ const CreateListingForm: NextPage<Props> = ({
       const input = pipe(
         omit([
           'numberOfRevisions',
-          'revisionDays',
+          'previewTime',
           'canReuse',
           'willFollowScript',
         ]),
@@ -133,7 +133,7 @@ const CreateListingForm: NextPage<Props> = ({
 
       input.specs = {
         numberOfRevisions: data.numberOfRevisions,
-        revisionDays: data.revisionDays,
+        previewTime: data.previewTime,
         canReuse: data.canReuse,
         willFollowScript: data.willFollowScript,
       }
@@ -250,7 +250,7 @@ const CreateListingForm: NextPage<Props> = ({
                 }}
               />
               <AdvancedRow
-                label="Revision Time"
+                label="Preview Time"
                 description="When can the brand preview your work and suggest edits before it goes live?"
                 selectProps={{
                   children: (
@@ -261,7 +261,7 @@ const CreateListingForm: NextPage<Props> = ({
                       <option value={14}>14 days</option>
                     </>
                   ),
-                  ...register('revisionDays'),
+                  ...register('previewTime'),
                 }}
               />
               <AdvancedRow

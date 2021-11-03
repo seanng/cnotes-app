@@ -74,16 +74,20 @@ function BottomCardInfoItem({
   value,
 }: {
   label: string
-  value: string | number
+  value?: string | number
 }): JSX.Element {
-  return (
+  let val = value
+  if (typeof value === 'boolean') {
+    val = value ? 'Yes' : 'No'
+  }
+  return value !== undefined ? (
     <Box textStyle="small" mb={4}>
       <Text color="#757474">{label}</Text>
       <Text textTransform="capitalize" fontWeight={600}>
-        {value}
+        {val}
       </Text>
     </Box>
-  )
+  ) : null
 }
 
 interface Props {
@@ -114,6 +118,7 @@ const BrandListing: NextPage<Props> = ({ user, listingId }: Props) => {
         highestOfferValue: payload.highestOfferValue,
         askingPrice: payload.askingPrice,
         offerCount: payload.offers.length,
+        specs: payload.specs,
         offer,
         profile: profileTransformer(payload.creator),
       })
@@ -139,6 +144,8 @@ const BrandListing: NextPage<Props> = ({ user, listingId }: Props) => {
   const locationChart = listing?.profile?.creatorStats?.locationBreakdown
   const lastOffer = listing?.offer?.history[listing?.offer?.history.length - 1]
   const hasTimeLeft = isFuture(new Date(listing?.auctionEndsAt))
+
+  // TODO: add not found page.
 
   return (
     <Layout user={user}>
@@ -238,16 +245,31 @@ const BrandListing: NextPage<Props> = ({ user, listingId }: Props) => {
               label="Deliverable"
               value={listing.deliverable}
             />
-            <BottomCardInfoItem label="Revisions" value={2} />
-            <BottomCardInfoItem label="Media Preview" value="48 H" />
             <BottomCardInfoItem
-              label="Total Offers"
-              value={listing.offerCount}
+              label="Length"
+              value={listing.specs?.videoLength}
             />
             <BottomCardInfoItem
-              label="Highest Offer"
+              label="Revisions"
+              value={listing.specs?.numberOfRevisions}
+            />
+            <BottomCardInfoItem
+              label="Preview"
+              value={listing.specs?.previewTime}
+            />
+            <BottomCardInfoItem
+              label="Reusable"
+              value={listing.specs?.canReuse}
+            />
+            <BottomCardInfoItem
+              label="Scripted"
+              value={listing.specs?.willFollowScript}
+            />
+            <BottomCardInfoItem
+              label="Highest"
               value={`$${listing.highestOfferValue}`}
             />
+            <BottomCardInfoItem label="Offers" value={listing.offerCount} />
           </SimpleGrid>
           {hasTimeLeft ? (
             <Flex justify="space-between" px={6} py={5}>
