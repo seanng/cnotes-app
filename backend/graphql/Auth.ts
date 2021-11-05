@@ -48,11 +48,13 @@ export const Signup = mutationField('signup', {
       data: {
         ...input,
         password: createPassword(input.password),
-        ...(!isBrand && { portfolio: [] }),
+        ...(!isBrand && {
+          portfolio: [],
+          statsLastVerifiedAt: null,
+        }),
         slug: slugify(input.alias.toLowerCase()),
         status: UNVERIFIED,
         createdAt: now,
-        statsLastVerifiedAt: null,
         updatedAt: now,
       },
     })
@@ -161,6 +163,7 @@ export const SignupInput = inputObjectType({
   definition(t) {
     t.nonNull.string('email')
     t.nonNull.string('password')
+    t.nonNull.string('websiteUrl')
     t.nonNull.string('role')
     t.nonNull.string('firstName')
     t.nonNull.string('lastName')

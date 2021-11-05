@@ -4,7 +4,13 @@ import { Box, Text, chakra as c, Container, Button } from '@chakra-ui/react'
 import omit from 'ramda/src/omit'
 import Layout from 'components/organisms/Layout'
 import { useForm } from 'react-hook-form'
-import { EMAIL_REGEX, EMAIL_TAKEN, BRAND, CREATOR } from 'shared/constants'
+import {
+  EMAIL_REGEX,
+  EMAIL_TAKEN,
+  BRAND,
+  CREATOR,
+  URL_REGEX,
+} from 'shared/constants'
 import { getErrorMessage } from 'utils/helpers'
 import { useRouter } from 'next/router'
 import FormInput from 'components/atoms/FormInput'
@@ -115,6 +121,23 @@ function SignupForm({ isBrand }: TemplateProps): JSX.Element {
                   placeholder: isBrand ? 'eg. Spotify Ltd.' : 'eg. Grapplr',
                   ...register('alias', {
                     required: true,
+                  }),
+                }}
+              />
+              <FormInput
+                label={isBrand ? 'Company website URL' : 'Main channel URL'}
+                error={errors.websiteUrl}
+                mb={8}
+                inputProps={{
+                  placeholder: isBrand
+                    ? 'eg. https://drop.com'
+                    : 'eg. https://www.youtube.com/channel/UCfRKvxo',
+                  ...register('websiteUrl', {
+                    required: true,
+                    pattern: {
+                      value: URL_REGEX,
+                      message: 'Enter a valid website URL (include https://)',
+                    },
                   }),
                 }}
               />
