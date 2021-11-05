@@ -124,7 +124,7 @@ const ProfilePage: NextPage<Props> = ({ slug, user }: Props) => {
           pl={[0, null, '5%', 20]}
           mt={[7, null, -8]}
         >
-          <Text textStyle={['h3', 'h2']} mb={3}>
+          <Text textStyle="profileSectionHeading" mb={3}>
             About
           </Text>
           <Text textStyle="base">{profile.about || ABOUT_PLACEHOLDER}</Text>

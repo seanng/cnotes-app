@@ -5,6 +5,10 @@ const heading = {
 }
 
 export default {
+  profileSectionHeading: {
+    ...heading,
+    fontSize: ['40px', '48px'],
+  },
   hero: {
     ...heading,
     fontSize: '80px',

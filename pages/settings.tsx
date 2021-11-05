@@ -8,7 +8,7 @@ import {
   Button,
   useDisclosure,
   Container,
-  chakra as c,
+  Text,
   Tabs,
   TabPanels,
   TabPanel,
@@ -237,9 +237,9 @@ const SettingsPage: NextPage<Props> = ({ user }: Props) => {
       <Layout user={user}>
         <Container py={[16, 20]}>
           <Box as="form" onSubmit={handleSubmit(onSubmit, onError)}>
-            <c.h3 textStyle="h3" mb={12}>
+            <Text textStyle="h3" fontWeight={700} fontFamily="body" mb={12}>
               Settings
-            </c.h3>
+            </Text>
             <Tabs
               index={tabIdx}
               variant="pill"

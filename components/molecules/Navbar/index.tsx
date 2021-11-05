@@ -16,8 +16,13 @@ const Drawer = dynamic(() => import('./Drawer'))
 
 function Logo({ isLightMode }: { isLightMode: boolean }): JSX.Element {
   return (
-    <LinkText href="/" textStyle="h4" color={isLightMode ? 'black' : 'white'}>
-      Collabski
+    <LinkText
+      href="/"
+      fontWeight={700}
+      textStyle="h5"
+      color={isLightMode ? 'black' : 'white'}
+    >
+      collabski
     </LinkText>
   )
 }
@@ -34,7 +39,7 @@ export default function Navbar({ user }: { user: User }): JSX.Element {
   }
 
   return (
-    <Flex minHeight={NAVBAR_HEIGHT} pt={5} w="full">
+    <Flex minHeight={NAVBAR_HEIGHT} pt={9} w="full">
       <Container>
         <Flex align="center" justify="space-between" wrap="wrap">
           <Logo isLightMode={isLightMode} />

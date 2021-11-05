@@ -16,7 +16,7 @@ export default function ProfileCollabs({
   const { gray } = useColors()
   return (
     <Box {...props}>
-      <Text textStyle={['h3', 'h2']} mt={10} mb={7}>
+      <Text textStyle="profileSectionHeading" mt={10} mb={7}>
         Collabs
       </Text>
       {collabs.map(collab => (

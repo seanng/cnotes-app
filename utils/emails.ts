@@ -11,18 +11,13 @@ export async function sendWelcomeEmail(
     to,
     subject: `Welcome to Collabski! We're pleased to meet you.`,
     html: `
-        <p>Hi ${firstName},</p><br />
-        <p>Sean here, co-founder of Collabski. I want to personally welcome you to our platform. I'm happy you decided to give us a try!</p><br />
-        <p>I want to make sure you get the most out of your experience and see firsthand how we can help your business:</p><br />
-        <li>Benefit1</li>
-        <li>Benefit2</li>
-        <li>Benefit3</li>
-        <br />
-        <p>Please expect an email from a member of our team over the next few days if we haven't verified your account yet.</p><br />
-        <p>After we've verified your account, you'll be able to view and place offers for creators. In the meantime, you can update information relating to your account profile in the settings page.</p><br />
-        <p>Once again, thank you for signing up to our platform!</p><br />
-        <p>Warmly,</p>
-        <p>Sean</p>
+        <p>Hi ${firstName},</p>
+        <p>Sean here, co-founder of Collabski. I want to personally welcome you to our platform. I'm happy you decided to give us a try!</p>
+        <p>I want to make sure you get the most out of your experience and see firsthand how we can help your business grow through sponsorship marketing.</p>
+        <p>Please expect an email from a member of our team over the next few days if we haven't yet verified your account.</p>
+        <p>After we've verified your account, you'll be able to view and place offers for creators. In the meantime, you can update information relating to your account profile in the settings page.</p>
+        <p>Once again, thank you for signing up to our platform!</p>
+        <p>Warmly, <br />Sean</p>
       `,
   })
 }

@@ -155,7 +155,7 @@ const ProfileBox = ({
           {`Joined ${formatDistanceToNow(new Date(profile.createdAt))} ago`}
         </Text>
       )}
-      <Text as="h1" textStyle="h4" mb={2}>
+      <Text as="h1" fontSize="32px" fontFamily="heading" mb={2}>
         {profile.alias}
       </Text>
       <Text

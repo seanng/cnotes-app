@@ -33,7 +33,7 @@ const ProfileReel = ({ profile, gridProps }: Props): JSX.Element => {
   const { green, gray } = useColors()
   return (
     <>
-      <Text textStyle={['h3', 'h2']} mb={5}>
+      <Text textStyle="profileSectionHeading" mb={5}>
         Content Reel
       </Text>
       <Grid
