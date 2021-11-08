@@ -25,6 +25,9 @@ function MyApp({ Component, pageProps }: AppProps): JSX.Element {
         <link rel="shortcut icon" href="/favicon.ico" />
         <meta name="description" content={metaDesc} />
         <meta property="og:description" content={metaDesc} />
+        <meta property="og:title" content="Collabski" />
+        <meta property="og:type" content="website" />
+        {/* <meta property="og:image" content={profile?.avatarUrl} /> */}
         <meta
           name="viewport"
           content="width=device-width, initial-scale=1, maximum-scale=1"

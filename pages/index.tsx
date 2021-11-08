@@ -1,17 +1,24 @@
 import { GetServerSideProps, NextPage } from 'next'
 import Head from 'next/head'
-import Layout from 'components/organisms/Layout'
 import { getUserPayload } from 'utils/auth'
 import { redirTo } from 'utils/helpers'
+import html from 'components/static/index.html'
 
 const IndexPage: NextPage = () => {
   return (
-    <Layout>
+    <>
       <Head>
-        <link rel="canonical" href={process.env.NEXT_PUBLIC_VERCEL_URL} />
+        <link rel="canonical" href={`${process.env.NEXT_PUBLIC_VERCEL_URL}`} />
       </Head>
-      <div>landing page goes here..</div>
-    </Layout>
+      <div dangerouslySetInnerHTML={{ __html: html }} />
+    </>
+
+    // <Layout>
+    //   <Head>
+    //     <link rel="canonical" href={process.env.NEXT_PUBLIC_VERCEL_URL} />
+    //   </Head>
+    //   <div>landing page goes here..</div>
+    // </Layout>
   )
 }
 
