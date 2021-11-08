@@ -3,9 +3,9 @@ export default `
 
 <head>
   <meta charset="utf-8">
-  <link href="landing/css/normalize.min.css" rel="stylesheet" type="text/css">
-  <link href="landing/css/webflow.min.css" rel="stylesheet" type="text/css">
-  <link href="landing/css/cnotes-landing.webflow.min.css" rel="stylesheet" type="text/css">
+  <link href="/landing/css/normalize.min.css" rel="stylesheet" type="text/css">
+  <link href="/landing/css/webflow.min.css" rel="stylesheet" type="text/css">
+  <link href="/landing/css/cnotes-landing.webflow.min.css" rel="stylesheet" type="text/css">
   <script src="https://ajax.googleapis.com/ajax/libs/webfont/1.6.26/webfont.js" type="text/javascript"></script>
   <script type="text/javascript">WebFont.load({ google: { families: ["Asap:regular,500,600,700"] } });</script>
   <!-- [if lt IE 9]><script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.min.js" type="text/javascript"></script><![endif] -->
@@ -161,7 +161,6 @@ export default `
           <div class="button-primary-gradient _2-buttons">
             <a href="/signup/brand" class="button-primary w-button">Sign up for free</a>
           </div>
-          <a href="features.html" class="button-secondary _2-buttons hide w-button">Browse features</a>
         </div>
       </div>
       <div class="container-default home-hero w-container">
@@ -195,25 +194,6 @@ export default `
           <div class="bg-gradient-blur-circle-3"></div>
           <div class="bg-gradient-blur-circle-2 blue"></div>
           <div class="bg-gradient-blur-circle-1"></div>
-        </div>
-      </div>
-    </section>
-    <section class="section growing-community wf-section">
-      <div class="container-medium-940px home-hero community">
-        <p data-w-id="fda7a8c3-06b9-afd3-4f66-dfe28089502d"
-          style="-webkit-transform:translate3d(0, 40px, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);-moz-transform:translate3d(0, 40px, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);-ms-transform:translate3d(0, 40px, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);transform:translate3d(0, 40px, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);opacity:0"
-          class="paragraph-large home-hero">We&#x27;re a growing community of:</p>
-        <h1 data-w-id="fda7a8c3-06b9-afd3-4f66-dfe280895029"
-          style="-webkit-transform:translate3d(0, 40%, 0) scale3d(0.8, 0.8, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);-moz-transform:translate3d(0, 40%, 0) scale3d(0.8, 0.8, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);-ms-transform:translate3d(0, 40%, 0) scale3d(0.8, 0.8, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);transform:translate3d(0, 40%, 0) scale3d(0.8, 0.8, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);opacity:0"
-          class="display-1">chefs, audiophiles, djs, musicians, sketch comedians, keebs, anitubers, historians, gamers,
-          animators, artist, and more</h1>
-        <div data-w-id="48aa24c3-1bc8-63b0-0fff-1932959992fa"
-          style="-webkit-transform:translate3d(0, 40px, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);-moz-transform:translate3d(0, 40px, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);-ms-transform:translate3d(0, 40px, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);transform:translate3d(0, 40px, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);opacity:0"
-          class="_2-buttons-wrapper community">
-          <div class="button-primary-gradient _2-buttons">
-            <a href="pricing.html" class="button-primary w-button">Join the network</a>
-          </div>
-          <a href="features.html" class="button-secondary _2-buttons hide w-button">Browse features</a>
         </div>
       </div>
     </section>
@@ -258,7 +238,6 @@ export default `
             <div class="button-primary-gradient _2-buttons">
               <a href="/signup/brand" class="button-primary w-button">Get started now</a>
             </div>
-            <a href="features.html" class="button-secondary _2-buttons hide w-button">Browse features</a>
           </div>
         </div>
         <div class="bg-gradient-blur-wrapper big">
@@ -278,7 +257,7 @@ export default `
                 brand. Save time finding the right creator. </p>
               <div class="w-layout-grid home-perks-grid">
                 <div class="home-perk-wrapper"><img
-                    src="https://d2vh08r8g1sliz.cloudfront.net/landing/icon-password-dark-template.svg" loading="lazy"
+                    src="https://d2vh08r8g1sliz.cloudfront.net/landing/icon-password-dark-template.svg" loading="eager"
                     alt="" class="image home-perk">
                   <div class="home-perk-content">
                     <h3 class="title h4-size home-perk">Invite-only membership</h3>
@@ -287,7 +266,7 @@ export default `
                   </div>
                 </div>
                 <div class="home-perk-wrapper"><img src="https://d2vh08r8g1sliz.cloudfront.net/landing/Frame-37154.svg"
-                    loading="lazy" alt="" class="image home-perk">
+                    loading="eager" alt="" class="image home-perk">
                   <div class="home-perk-content">
                     <h3 class="title h4-size home-perk">Guaranteed responses</h3>
                     <p class="paragraph home-perk">Don&#x27;t get left on read. We make sure creators respond to every
@@ -295,7 +274,7 @@ export default `
                   </div>
                 </div>
                 <div class="home-perk-wrapper"><img
-                    src="https://d2vh08r8g1sliz.cloudfront.net/landing/icon-3-values-dark-template.svg" loading="lazy"
+                    src="https://d2vh08r8g1sliz.cloudfront.net/landing/icon-3-values-dark-template.svg" loading="eager"
                     alt="" class="image home-perk">
                   <div class="home-perk-content">
                     <h3 class="title h4-size home-perk">Actively seeking partnerships</h3>
@@ -384,7 +363,7 @@ export default `
             <div data-w-id="eee63602-338e-2609-c779-cb867bac28ac"
               style="-webkit-transform:translate3d(0, 40px, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);-moz-transform:translate3d(0, 40px, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);-ms-transform:translate3d(0, 40px, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);transform:translate3d(0, 40px, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);opacity:0"
               class="image-wrapper home-perks-content-bottom-image"><img
-                src="https://d2vh08r8g1sliz.cloudfront.net/landing/Dashboard-card.png" loading="lazy"
+                src="https://d2vh08r8g1sliz.cloudfront.net/landing/Dashboard-card.png" loading="eager"
                 sizes="(max-width: 767px) 93vw, (max-width: 991px) 612px, (max-width: 1919px) 50vw, 612px"
                 srcset="https://d2vh08r8g1sliz.cloudfront.net/landing/Dashboard-card-p-500.png 500w, https://d2vh08r8g1sliz.cloudfront.net/landing/Dashboard-card-p-800.png 800w, https://d2vh08r8g1sliz.cloudfront.net/landing/Dashboard-card.png 1080w"
                 alt="Your Dashboard" class="image home-perks-content-bottom-image"></div>
