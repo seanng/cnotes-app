@@ -1,4 +1,7 @@
 /* eslint-disable no-irregular-whitespace */
+
+import {Navbar, Footer} from './sections'
+
 export default `
 <html data-wf-page="6187c4ffefcbe929a240d78b" data-wf-site="617aeb5a738d7f6b279e7a99">
 
@@ -17,120 +20,7 @@ export default `
 
 <body class="bg-neutral-800">
   <div style="opacity:0" class="page-wrapper">
-    <div data-collapse="medium" data-animation="over-left" data-duration="400"
-      data-w-id="58db7844-5919-d71b-dd74-2323ed8dffe9" data-easing="ease" data-easing2="ease" role="banner"
-      class="header w-nav">
-      <div class="container-default w-container">
-        <div class="header-wrapper">
-          <div class="split-content header-right">
-            <a href="/" aria-current="page" class="brand w-nav-brand w--current">
-              <div class="text-block">collabski</div>
-            </a>
-          </div>
-          <div class="split-content header-center">
-            <nav role="navigation" class="nav-menu w-nav-menu">
-              <ul role="list" class="header-navigation w-list-unstyled">
-                <li class="nav-item-wrapper">
-                  <a href="/" aria-current="page" class="nav-link w--current">For Brands</a>
-                </li>
-                <li class="nav-item-wrapper">
-                  <a href="/for-creators" class="nav-link">For Creators</a>
-                </li>
-                <li class="nav-item-wrapper">
-                  <div data-hover="true" data-delay="0" data-w-id="f05a5eb5-5b4f-2c04-369b-54bf4593dba1"
-                    class="nav-link-dropdown w-dropdown">
-                    <div class="nav-link dropdown w-dropdown-toggle">
-                      <div>Learn&nbsp;&nbsp;<span class="dropdown-arrow"></span></div>
-                    </div>
-                    <nav class="dropdown-list w-dropdown-list">
-                      <div class="dropdown-nav-main-wrapper">
-                        <div class="dropdown-nav-pages-wrapper">
-                          <div class="title dropdown">Company</div>
-                          <div class="dropdown-nav-content">
-                            <ul role="list" class="dropdown-nav">
-                              <li class="dropdown-nav-item">
-                                <a href="/about" aria-current="page" class="dropdown-nav-link w--current">About
-                                  us</a>
-                              </li>
-                              <li class="dropdown-nav-item">
-                                <a href="/faq" aria-current="page" class="dropdown-nav-link w--current">FAQ</a>
-                              </li>
-                              <li class="dropdown-nav-item">
-                                <a href="about.html" class="dropdown-nav-link">Blog</a>
-                              </li>
-                            </ul>
-                          </div>
-                        </div>
-                        <div class="dropdown-nav-pages-wrapper">
-                          <div class="title dropdown">Brands</div>
-                          <div class="dropdown-nav-content">
-                            <ul role="list" class="dropdown-nav">
-                              <li class="dropdown-nav-item">
-                                <a href="index.html" aria-current="page" class="dropdown-nav-link w--current">Why
-                                  sponsor?</a>
-                              </li>
-                              <li class="dropdown-nav-item">
-                                <a href="index.html" aria-current="page" class="dropdown-nav-link w--current">Your first
-                                  sponsorship</a>
-                              </li>
-                              <li class="dropdown-nav-item">
-                                <a href="index.html" class="dropdown-nav-link">How to price</a>
-                              </li>
-                            </ul>
-                          </div>
-                        </div>
-                        <div class="dropdown-nav-pages-wrapper">
-                          <div class="title dropdown">Creators</div>
-                          <div class="dropdown-nav-content">
-                            <ul role="list" class="dropdown-nav">
-                              <li class="dropdown-nav-item">
-                                <a href="index.html" aria-current="page" class="dropdown-nav-link w--current">Getting
-                                  Started</a>
-                              </li>
-                              <li class="dropdown-nav-item">
-                                <a href="index.html" aria-current="page" class="dropdown-nav-link w--current">How to
-                                  price</a>
-                              </li>
-                              <li class="dropdown-nav-item">
-                                <a href="about.html" class="dropdown-nav-link">Media Kits</a>
-                              </li>
-                            </ul>
-                          </div>
-                        </div>
-                      </div>
-                    </nav>
-                  </div>
-                </li>
-                <li class="nav-item-wrapper">
-                  <a href="/pricing" class="nav-link">Pricing</a>
-                </li>
-                <li class="nav-item-wrapper mobile">
-                  <a href="/login" class="nav-link sign-in mobile">Sign in</a>
-                </li>
-                <li class="nav-item-wrapper mobile-button">
-                  <div class="button-primary-gradient header-button mobile-button">
-                    <a href="/signup/brand" class="button-primary small-v2 mobile-button w-button">Get started</a>
-                  </div>
-                </li>
-              </ul>
-            </nav>
-          </div>
-          <div class="split-content header-left">
-            <a href="/login" class="nav-link sign-in">Log in</a>
-            <a href="/signup" class="button-primary small-v2 w-button">Sign up</a>
-            <div class="menu-button w-nav-button">
-              <div class="header-menu-button-icon-wrapper">
-                <div class="icon-wrapper">
-                  <div class="header-menu-button-icon-top"></div>
-                  <div class="header-menu-button-icon-medium"></div>
-                  <div class="header-menu-button-icon-bottom"></div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+    ${Navbar}
     <section class="section home-hero wf-section">
       <div class="container-medium-940px home-hero">
         <div data-w-id="448f5ead-3667-0bad-b1a4-a6038870800b"
@@ -257,11 +147,9 @@ export default `
                   <p class="paragraph card-home-step">List your available sponsorship formats for a set time period.
                     Brands can then discover and make offers to you.</p>
                 </div>
-                <div class="image-wrapper card-home-step"><img src="images/image-1-home-steps-dark-template.jpg"
-                    loading="lazy"
-                    sizes="(max-width: 479px) 92vw, (max-width: 767px) 93vw, (max-width: 991px) 40vw, (max-width: 1919px) 26vw, 318.1875px"
-                    srcset="images/image-1-home-steps-dark-template-p-500.jpeg 500w, images/image-1-home-steps-dark-template.jpg 646w"
-                    alt="List sponsorships" class="image card-home-step" /></div>
+                <div class="image-wrapper card-home-step"><img
+                    src="https://d2vh08r8g1sliz.cloudfront.net/landing/list-offers.png" loading="lazy" alt="List offers"
+                    class="image card-home-step" /></div>
               </div>
               <div data-w-id="66be55b7-13bf-9864-46c3-3b493748a167"
                 style="-webkit-transform:translate3d(0, 40px, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);-moz-transform:translate3d(0, 40px, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);-ms-transform:translate3d(0, 40px, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);transform:translate3d(0, 40px, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);opacity:0"
@@ -338,14 +226,7 @@ export default `
         </div>
       </div>
     </section>
-    <footer class="footer">
-      <div class="container-default w-container">
-        <div data-w-id="7ddc8154-5985-c814-10de-e9f5faad4e13" class="footer-content-bottom">
-          <div class="footer-small-print">Copyright © Collabski
-          </div>
-        </div>
-      </div>
-    </footer>
+    ${Footer}
   </div>
   <script src="https://d3e54v103j8qbb.cloudfront.net/js/jquery-3.5.1.min.dc5e7f18c8.js?site=617aeb5a738d7f6b279e7a99"
     type="text/javascript" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous">
