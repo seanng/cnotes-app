@@ -1,6 +1,6 @@
 /* eslint-disable no-irregular-whitespace */
 
-import {Navbar, Footer} from './sections'
+import { Navbar, Footer } from './sections'
 
 export default `
 <html data-wf-page="6187c4ffefcbe929a240d78b" data-wf-site="617aeb5a738d7f6b279e7a99">
