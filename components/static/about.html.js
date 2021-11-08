@@ -27,7 +27,7 @@ ${Head}
           <div class="split-content story-left">
             <div class="story-left-content">
               <h2 class="title story">Our story</h2>
-              <p class="paragraph story">In todays&#x27; world, collabs have become more impactful than ever. However, the sponsorship ecosystem has remained largely underdeveloped. <br><br>As creators and brands ourselves, we have witnessed so many missed opportunities due to a lack of transparency and common practices. The biggest roadblock has always been &quot;how do I get started?&quot;.<br><br>That&#x27;s why we started Collabski. We want to help creators and brands foster meaningful relationships and form impactful partnerships easily.</p>
+              <p class="paragraph story">In today&#x27;s world, collabs have become more impactful than ever. However, the sponsorship ecosystem has remained largely underdeveloped. <br><br>As creators and brands ourselves, we have witnessed so many missed opportunities due to a lack of transparency and common practices. The biggest roadblock has always been &quot;how do I get started?&quot;.<br><br>That&#x27;s why we started Collabski. We want to help creators and brands foster meaningful relationships and form impactful partnerships easily.</p>
             </div>
           </div>
           <div class="split-content story-right">
