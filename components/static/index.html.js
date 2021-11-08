@@ -163,7 +163,7 @@ ${Head}
             <div data-w-id="ee535ac1-ec9e-b9a8-d837-c86181eda861"
               style="-webkit-transform:translate3d(0, 40px, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);-moz-transform:translate3d(0, 40px, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);-ms-transform:translate3d(0, 40px, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);transform:translate3d(0, 40px, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);opacity:0"
               class="image-wrapper home-perks-content-top-image"><img
-                src="https://d2vh08r8g1sliz.cloudfront.net/landing/Discover-card.png" loading="lazy"
+                src="https://d2vh08r8g1sliz.cloudfront.net/landing/Discover-card.png" loading="eager"
                 sizes="(max-width: 767px) 93vw, (max-width: 991px) 612px, (max-width: 1919px) 50vw, 612px"
                 srcset="https://d2vh08r8g1sliz.cloudfront.net/landing/Discover-card-p-500.png 500w, https://d2vh08r8g1sliz.cloudfront.net/landing/Discover-card-p-800.png 800w, https://d2vh08r8g1sliz.cloudfront.net/landing/Discover-card.png 1224w"
                 alt="Discover"></div>
@@ -172,7 +172,7 @@ ${Head}
             <div data-w-id="d33741e8-edd1-da97-3b24-7982c1abaa36"
               style="-webkit-transform:translate3d(0, 40px, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);-moz-transform:translate3d(0, 40px, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);-ms-transform:translate3d(0, 40px, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);transform:translate3d(0, 40px, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);opacity:0"
               class="image-wrapper home-perks-content-bottom-image"><img
-                src="https://d2vh08r8g1sliz.cloudfront.net/landing/Stats-card.png" loading="lazy"
+                src="https://d2vh08r8g1sliz.cloudfront.net/landing/Stats-card.png" loading="eager"
                 srcset="https://d2vh08r8g1sliz.cloudfront.net/landing/Stats-card-p-500.png 500w, https://d2vh08r8g1sliz.cloudfront.net/landing/Stats-card-p-800.png 800w, https://d2vh08r8g1sliz.cloudfront.net/landing/Stats-card.png 1080w"
                 sizes="(max-width: 767px) 93vw, (max-width: 991px) 612px, (max-width: 1919px) 50vw, 612px"
                 alt="Creator Stats" class="image home-perks-content-bottom-image"></div>
@@ -296,7 +296,7 @@ ${Head}
                     can make offers for. </p>
                 </div>
                 <div class="image-wrapper card-home-step"><img
-                    src="https://d2vh08r8g1sliz.cloudfront.net/landing/Find-a-creator-listing.png" loading="lazy"
+                    src="https://d2vh08r8g1sliz.cloudfront.net/landing/Find-a-creator-listing.png" loading="eager"
                     sizes="(max-width: 479px) 92vw, (max-width: 767px) 93vw, (max-width: 991px) 40vw, (max-width: 1919px) 26vw, 318.1875px"
                     srcset="https://d2vh08r8g1sliz.cloudfront.net/landing/Find-a-creator-listing-p-500.png 500w, https://d2vh08r8g1sliz.cloudfront.net/landing/Find-a-creator-listing.png 648w"
                     alt="Creator listing" class="image card-home-step"></div>
@@ -311,7 +311,7 @@ ${Head}
                     product-only, and affiliate offers.<span class="text-no-wrap"></span></p>
                 </div>
                 <div class="image-wrapper card-home-step"><img
-                    src="https://d2vh08r8g1sliz.cloudfront.net/landing/Place-an-offer.png" loading="lazy"
+                    src="https://d2vh08r8g1sliz.cloudfront.net/landing/Place-an-offer.png" loading="eager"
                     sizes="(max-width: 479px) 92vw, (max-width: 767px) 93vw, (max-width: 991px) 40vw, (max-width: 1919px) 26vw, 318.1875px"
                     srcset="https://d2vh08r8g1sliz.cloudfront.net/landing/Place-an-offer-p-500.png 500w, https://d2vh08r8g1sliz.cloudfront.net/landing/Place-an-offer.png 648w"
                     alt="Place an offer" class="image card-home-step"></div>
