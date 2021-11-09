@@ -74,7 +74,7 @@ model Deal {
   cashValue    Int
   productUrl   String?
   productName  String?
-  productValue Int
+  productMSRP Int
   submittedUrl String?
   submittedAt  DateTime? // date marked as submitted
   cancelledAt  DateTime? // date marked as cancelled
@@ -90,7 +90,7 @@ model Offer {
   brand     User     @relation(fields: [brandId], references: [id])
   brandId   String   @db.ObjectId
   isCleared Boolean?
-  history   Json[] // {cashValue, productUrl, productName, productValue, message, offeredAt} Prisma doesnt support embedded docs https://github.com/prisma/prisma/issues/6708
+  history   Json[] // {cashValue, productUrl, productName, productMSRP, message, offeredAt} Prisma doesnt support embedded docs https://github.com/prisma/prisma/issues/6708
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }

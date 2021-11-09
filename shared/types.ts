@@ -66,7 +66,7 @@ export interface User {
 export interface OfferHistoryItem {
   createdAtString?: Date
   message?: string
-  productValue?: number
+  productMSRP?: number
   productName?: string
   productUrl?: string
   cashValue?: number
@@ -118,7 +118,7 @@ export interface Deal {
   brand: User
   status: DealStatus
   listing?: Listing
-  productValue: number
+  productMSRP: number
   productName: string
   productUrl: string
   cashValue: number

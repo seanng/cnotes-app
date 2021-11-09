@@ -15,7 +15,7 @@ export default function OfferDetailsCard({
   ...props
 }: Props): JSX.Element {
   const { gray, cyan } = useColors()
-  const totalValue = activity.productValue + activity.cashValue
+  const totalValue = activity.productMSRP + activity.cashValue
   return (
     <Flex
       borderRadius="xl"
@@ -69,7 +69,7 @@ export default function OfferDetailsCard({
                 >
                   {`${
                     activity.productName
-                  } ($${activity.productValue.toLocaleString()})`}
+                  } ($${activity.productMSRP.toLocaleString()})`}
                 </Box>
               </>
             )}

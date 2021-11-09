@@ -27,7 +27,7 @@ export default function DecidedStage({ listing }: Props): JSX.Element {
         brand: offer.brand,
         message: finalOffer.message,
         cashValue: finalOffer.cashValue,
-        productValue: finalOffer.productValue,
+        productMSRP: finalOffer.productMSRP,
         productUrl: finalOffer.productUrl,
         productName: finalOffer.productName,
       }

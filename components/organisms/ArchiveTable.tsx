@@ -37,7 +37,7 @@ const MY_ARCHIVED_OFFERS = gql`
       id
       status
       cashValue
-      productValue
+      productMSRP
       listing {
         ...ListingKeys
       }
@@ -47,7 +47,7 @@ const MY_ARCHIVED_OFFERS = gql`
       id
       history {
         cashValue
-        productValue
+        productMSRP
       }
       listing {
         ...ListingKeys
@@ -84,7 +84,7 @@ export default function ArchiveTable(): JSX.Element {
           creator: offer.listing.creator,
           deliverable: offer.listing.deliverable,
           cashValue: lastOffer.cashValue,
-          productValue: lastOffer.productValue,
+          productMSRP: lastOffer.productMSRP,
           platform: offer.listing.platform,
           archivedAt: offer.listing.decidedAt,
         })
@@ -98,7 +98,7 @@ export default function ArchiveTable(): JSX.Element {
           creator: deal.listing.creator,
           deliverable: deal.listing.deliverable,
           cashValue: deal.cashValue,
-          productValue: deal.productValue,
+          productMSRP: deal.productMSRP,
           platform: deal.listing.platform,
           archivedAt: deal.cancelledAt,
         })

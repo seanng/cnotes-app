@@ -17,7 +17,7 @@ const DEAL_BY_ID = gql`
       status
       productUrl
       productName
-      productValue
+      productMSRP
       cashValue
       submittedUrl
       message

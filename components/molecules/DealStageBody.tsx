@@ -14,7 +14,7 @@ const CONTAINER_WIDTH = 600
 
 export default function DealStageBody({ deal, children }: Props): JSX.Element {
   const { cyan, gray } = useColors()
-  const totalValue = deal.productValue + deal.cashValue
+  const totalValue = deal.productMSRP + deal.cashValue
   return (
     <>
       <StageHeading data={deal} specs={deal.listing.specs} />
@@ -59,7 +59,7 @@ export default function DealStageBody({ deal, children }: Props): JSX.Element {
                 >
                   {`${
                     deal.productName
-                  } ($${deal.productValue.toLocaleString()})`}
+                  } ($${deal.productMSRP.toLocaleString()})`}
                 </Box>
               </>
             )}

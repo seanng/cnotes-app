@@ -4,14 +4,14 @@ import { Icon as Iconify } from '@iconify/react'
 interface Props {
   offer: {
     cashValue?: number
-    productValue?: number
+    productMSRP?: number
   }
 }
 
 export default function BrandDashOfferValue({ offer }: Props): JSX.Element {
   return (
     <Text textStyle="largeBold">
-      ${(offer.cashValue + offer.productValue).toLocaleString()}
+      ${(offer.cashValue + offer.productMSRP).toLocaleString()}
       <Tooltip
         label={
           <>
@@ -20,8 +20,8 @@ export default function BrandDashOfferValue({ offer }: Props): JSX.Element {
                 {`💰$${offer.cashValue.toLocaleString()}`}
               </Box>
             )}
-            {offer.productValue > 0 && (
-              <Box as="span">{`🛍 $${offer.productValue.toLocaleString()}`}</Box>
+            {offer.productMSRP > 0 && (
+              <Box as="span">{`🛍 $${offer.productMSRP.toLocaleString()}`}</Box>
             )}
           </>
         }

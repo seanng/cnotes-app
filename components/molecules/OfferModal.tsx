@@ -30,7 +30,7 @@ const PLACE_OFFER = gql`
       id
       history {
         cashValue
-        productValue
+        productMSRP
         message
         productUrl
       }
@@ -69,7 +69,7 @@ interface ModalProps {
     message: string
     productUrl: string
     productName: string
-    productValue?: number
+    productMSRP?: number
     cashValue?: number
   }
 }
@@ -78,7 +78,7 @@ const defaultDefaultValues = {
   message: '',
   productUrl: '',
   productName: '',
-  productValue: 0,
+  productMSRP: 0,
   cashValue: 0,
 }
 
@@ -99,9 +99,9 @@ export default function OfferModal({
   } = useForm({
     defaultValues,
   })
-  const productValue = watch('productValue')
+  const productMSRP = watch('productMSRP')
   const cashValue = watch('cashValue')
-  const hasProductValue = productValue > 0
+  const hasproductMSRP = productMSRP > 0
   const [minTotalValue, setMinTotalValue] = useState(0)
   const [showMinValueError, setShowMinValueError] = useState(false)
   const [showSuccess, setShowSuccess] = useState(false)
@@ -110,22 +110,22 @@ export default function OfferModal({
 
   useEffect(() => {
     reset(defaultValues)
-    setMinTotalValue(defaultValues.cashValue + defaultValues.productValue)
+    setMinTotalValue(defaultValues.cashValue + defaultValues.productMSRP)
   }, [defaultValues, reset])
 
   useEffect(() => {
-    const totalValue = productValue + cashValue
+    const totalValue = productMSRP + cashValue
     setShowMinValueError(totalValue < minTotalValue)
-  }, [cashValue, productValue])
+  }, [cashValue, productMSRP])
 
   const onConfirm = async (input): Promise<void> => {
     await placeOffer({
       variables: {
         input: {
           cashValue: input.cashValue,
-          productValue: input.productValue,
-          productName: hasProductValue ? input.productName : '',
-          productUrl: hasProductValue ? input.productUrl : '',
+          productMSRP: input.productMSRP,
+          productName: hasproductMSRP ? input.productName : '',
+          productUrl: hasproductMSRP ? input.productUrl : '',
           message: input.message,
           listingId: listing.id,
         },
@@ -145,6 +145,12 @@ export default function OfferModal({
   const handleNumberInputBlur = e => {
     if (e.target.value === '') {
       setValue(e.target.name, 0)
+    }
+  }
+
+  const handleNumberInputFocus = e => {
+    if (e.target.value === '0') {
+      setValue(e.target.name, '')
     }
   }
 
@@ -240,19 +246,22 @@ export default function OfferModal({
                       min: 0,
                     }),
                     onBlur: handleNumberInputBlur,
+                    onFocus: handleNumberInputFocus,
                   }}
                   mr={2}
                 />
                 <FormInput
-                  label="Product value"
+                  label="Product MSRP"
                   prefixElement="$"
+                  helpText="The price that the manufacturer recommends it be sold for."
                   inputProps={{
                     type: 'number',
-                    ...register('productValue', {
+                    ...register('productMSRP', {
                       valueAsNumber: true,
                       min: 0,
                     }),
                     onBlur: handleNumberInputBlur,
+                    onFocus: handleNumberInputFocus,
                   }}
                 />
               </Flex>
@@ -265,12 +274,12 @@ export default function OfferModal({
                 label="Product name"
                 error={errors.productName}
                 inputProps={{
-                  placeholder: hasProductValue
+                  placeholder: hasproductMSRP
                     ? 'Enter product name'
-                    : 'Product value must be higher than $0',
+                    : 'Product MSRP must be higher than $0',
                   ...register('productName', {
-                    disabled: !hasProductValue,
-                    required: hasProductValue,
+                    disabled: !hasproductMSRP,
+                    required: hasproductMSRP,
                   }),
                 }}
                 mb={5}
@@ -279,11 +288,11 @@ export default function OfferModal({
                 label="Product URL (optional)"
                 error={errors.productUrl}
                 inputProps={{
-                  placeholder: hasProductValue
+                  placeholder: hasproductMSRP
                     ? 'https://www.apple.com/shop/buy-iphone/iphone-11'
-                    : 'Product value must be higher than $0',
+                    : 'Product MSRP must be higher than $0',
                   ...register('productUrl', {
-                    disabled: !hasProductValue,
+                    disabled: !hasproductMSRP,
                     pattern: {
                       value: URL_REGEX,
                       message: 'Enter a valid url',

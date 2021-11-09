@@ -41,7 +41,7 @@ const LISTING_BY_ID = gql`
         history {
           message
           cashValue
-          productValue
+          productMSRP
           productName
           productUrl
         }
@@ -307,7 +307,7 @@ const BrandListing: NextPage<Props> = ({ user, listingId }: Props) => {
           message: lastOffer?.message,
           productUrl: lastOffer?.productUrl,
           productName: lastOffer?.productName,
-          productValue: lastOffer?.productValue || 0,
+          productMSRP: lastOffer?.productMSRP || 0,
           cashValue: lastOffer?.cashValue || 0,
         }}
       />

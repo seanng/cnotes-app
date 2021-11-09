@@ -30,7 +30,7 @@ const MY_DEALS = gql`
       id
       status
       createdAt
-      productValue
+      productMSRP
       productName
       cashValue
       listing {

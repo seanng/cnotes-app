@@ -34,7 +34,7 @@ const LISTING_BY_ID = gql`
         history {
           cashValue
           message
-          productValue
+          productMSRP
           productUrl
           productName
           createdAtString

@@ -26,7 +26,7 @@ import { Icon as Iconify } from '@iconify/react'
 import { getUserPayload } from 'utils/auth'
 import { useColors } from 'hooks'
 import { redirTo } from 'utils/helpers'
-import { PLACEHOLDER_BANNER_URL, UNVERIFIED } from 'shared/constants'
+import { PLACEHOLDER_BANNER_URL, UNVERIFIED, YOUTUBE } from 'shared/constants'
 import TimerLabel from 'components/atoms/TimerLabel'
 import UnverifiedState from 'components/templates/UnverifiedState'
 import { withApollo } from 'lib/apollo-client'
@@ -191,7 +191,23 @@ const DiscoverPage: NextPage<Props> = ({ user }: Props) => {
                           src={listing.creator.avatarUrl}
                           name={listing.creator.alias}
                           size="xl"
-                        />
+                          position="relative"
+                        >
+                          <Avatar
+                            position="absolute"
+                            bottom="-2px"
+                            right="-2px"
+                            size="sm"
+                            borderColor="black"
+                            borderWidth="2px"
+                            src={
+                              listing.platform === YOUTUBE
+                                ? '/logos/youtube.svg'
+                                : '/logos/tiktok.svg'
+                            }
+                            name={listing.platform}
+                          />
+                        </Avatar>
                         <Text
                           textAlign="center"
                           textStyle="h5"

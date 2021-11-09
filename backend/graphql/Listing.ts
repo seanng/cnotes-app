@@ -320,7 +320,7 @@ export const createDealsInput = inputObjectType({
   definition(t) {
     t.nonNull.string('brandId')
     t.int('cashValue')
-    t.int('productValue')
+    t.int('productMSRP')
     t.string('message')
     t.string('productUrl')
     t.string('productName')

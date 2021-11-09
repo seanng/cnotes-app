@@ -18,7 +18,7 @@ export const OfferHistory = objectType({
   definition(t) {
     t.nonNull.string('message')
     t.int('cashValue')
-    t.int('productValue')
+    t.int('productMSRP')
     t.string('productName')
     t.string('productUrl')
     t.nonNull.string('createdAtString')
@@ -118,7 +118,7 @@ export const placeOffer = mutationField('placeOffer', {
   },
   resolve: async (ctx, { input }, { user }) => {
     if (!isBrand(user)) throw new ForbiddenError('Not a brand')
-    const { listingId, cashValue, productValue } = input
+    const { listingId, cashValue, productMSRP } = input
 
     let offer = await prisma.offer.findFirst({
       where: { brandId: user.id, listingId },
@@ -159,7 +159,7 @@ export const placeOffer = mutationField('placeOffer', {
       })
     }
 
-    const totalValue = cashValue + productValue
+    const totalValue = cashValue + productMSRP
 
     await prisma.listing.update({
       where: { id: offer.listingId },
@@ -182,7 +182,7 @@ export const placeOfferInput = inputObjectType({
   definition(t) {
     t.nonNull.string('listingId')
     t.int('cashValue')
-    t.int('productValue')
+    t.int('productMSRP')
     t.string('productName')
     t.string('productUrl')
     t.string('message')

@@ -50,7 +50,7 @@ export default function SelectingStage({ listing }: Props): JSX.Element {
         brand: offer.brand,
         message: finalOffer.message,
         cashValue: finalOffer.cashValue,
-        productValue: finalOffer.productValue,
+        productMSRP: finalOffer.productMSRP,
         productUrl: finalOffer.productUrl,
         productName: finalOffer.productName,
         isSelected: false,
@@ -96,7 +96,7 @@ export default function SelectingStage({ listing }: Props): JSX.Element {
         return {
           brandId: offer.brand.id,
           cashValue: offer.cashValue,
-          productValue: offer.productValue,
+          productMSRP: offer.productMSRP,
           productName: offer.productName,
           productUrl: offer.productUrl,
           message: offer.message,

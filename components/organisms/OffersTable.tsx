@@ -41,7 +41,7 @@ const MY_ACTIVE_OFFERS = gql`
         productUrl
         productName
         cashValue
-        productValue
+        productMSRP
         message
         createdAtString
       }
@@ -260,7 +260,7 @@ export default function OffersTable(): JSX.Element {
           message: selectedLastOffer?.message,
           productUrl: selectedLastOffer?.productUrl,
           productName: selectedLastOffer?.productName,
-          productValue: selectedLastOffer?.productValue || 0,
+          productMSRP: selectedLastOffer?.productMSRP || 0,
           cashValue: selectedLastOffer?.cashValue || 0,
         }}
       />

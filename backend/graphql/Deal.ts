@@ -38,7 +38,7 @@ export const Deal = objectType({
     })
     t.nonNull.string('message')
     t.int('cashValue')
-    t.int('productValue')
+    t.int('productMSRP')
     t.string('productName')
     t.string('productUrl')
     t.string('submittedUrl')
