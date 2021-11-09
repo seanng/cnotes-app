@@ -23,19 +23,6 @@ export default `
     ${Navbar}
     <section class="section home-hero wf-section">
       <div class="container-medium-940px home-hero">
-        <div data-w-id="448f5ead-3667-0bad-b1a4-a6038870800b"
-          style="-webkit-transform:translate3d(0, 40%, 0) scale3d(0.8, 0.8, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);-moz-transform:translate3d(0, 40%, 0) scale3d(0.8, 0.8, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);-ms-transform:translate3d(0, 40%, 0) scale3d(0.8, 0.8, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);transform:translate3d(0, 40%, 0) scale3d(0.8, 0.8, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);opacity:0"
-          class="home-hero-featured-message-wrapper">
-          <div class="home-hero-featured-message-content">
-            <a data-w-id="5747d66c-b4ac-690f-6026-662ab3648be2" href="features.html"
-              class="home-hero-featured-message-link w-inline-block">
-              <div class="home-hero-featured-message-tag">New</div>
-              <div class="home-hero-featured-message-text">Learn how sponsorships work with our 101 guide</div>
-              <div class="home-hero-featured-message-icon"></div>
-            </a>
-            <div class="home-hero-featured-message-blur"></div>
-          </div>
-        </div>
         <h1 data-w-id="abc7287a-ad94-a3ec-8716-36750d55fc4e"
           style="-webkit-transform:translate3d(0, 40%, 0) scale3d(0.8, 0.8, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);-moz-transform:translate3d(0, 40%, 0) scale3d(0.8, 0.8, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);-ms-transform:translate3d(0, 40%, 0) scale3d(0.8, 0.8, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);transform:translate3d(0, 40%, 0) scale3d(0.8, 0.8, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);opacity:0"
           class="display-1 home-hero">More sponsorships.</h1>
@@ -130,7 +117,7 @@ export default `
         <div class="home-steps-wrapper">
           <div class="split-content home-steps-left">
             <h2 class="heading-4">How does it work?</h2>
-            <p class="paragraph home-steps">We designed fthe entire experience to help you do sponsorships faster and
+            <p class="paragraph home-steps">We designed the entire experience to help you do sponsorships faster and
               with more confidence.</p>
             <div class="button-primary-gradient">
               <a href="/signup/creator" class="button-primary w-button">Join for free</a>
