@@ -9,7 +9,7 @@ export default forwardRef<TextareaProps, 'textarea'>((props, ref) => (
   <Textarea
     ref={ref}
     borderWidth={0}
-    bgColor={useColorModeValue('#ECECEC', 'gray.800')}
+    bgColor={useColorModeValue('#ECECEC', 'gray.700')}
     _focus={{ boxShadow: 'none' }}
     {...props}
   />

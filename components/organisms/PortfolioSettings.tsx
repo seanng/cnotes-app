@@ -143,8 +143,12 @@ const Portfolio: FC<Props> = ({ register, control, errors }: Props) => {
                 {...register(`portfolio.${i}.deliverable`)}
               >
                 <option value={''}>Not sponsored</option>
-                <option>Integration</option>
                 <option>Dedicated</option>
+                <option>Pre-roll</option>
+                <option>Post-roll</option>
+                <option>Mid-roll</option>
+                <option>Stream</option>
+                <option>Short</option>
                 <option>I don&apos;t know</option>
               </Select>
             </FormControl>

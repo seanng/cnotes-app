@@ -61,61 +61,48 @@ export default function MenuLinks({
         icon={<DarkModeIcon />}
         aria-label="dark mode"
       />
-      {user ? (
-        <>
-          {user.role === BRAND && (
-            <LinkButton href="/discover" size="sm" mt={[4, 0]}>
-              Discover
-            </LinkButton>
-          )}
-          <Box display={['none', 'block']}>
-            <Popover gutter={16}>
-              <PopoverTrigger>
-                <Button size="sm" variant="outline" colorScheme="gray">
-                  {user.firstName}
-                </Button>
-              </PopoverTrigger>
-              <PopoverContent
-                backgroundColor={popoverBgColor}
-                mr={4}
-                w={220}
-                px={3}
-                py={3}
-              >
-                <PopoverArrow
-                  backgroundColor={popoverBgColor}
-                  borderTopWidth={1}
-                  borderLeftWidth={1}
-                />
-                <PopoverBody
-                  fontWeight={600}
-                  color={isLightMode ? 'gray.600' : 'gray.300'}
-                >
-                  <UserLinks slug={user.slug} />
-                </PopoverBody>
-              </PopoverContent>
-            </Popover>
-          </Box>
-          <Box
-            display={['block', 'none']}
-            width="full"
-            flexGrow={1}
-            alignItems="center"
-            pt={4}
-          >
-            <UserLinks slug={user.slug} />
-          </Box>
-        </>
-      ) : (
-        <>
-          <LinkButton size="sm" href="/login" variant="outline">
-            Log in
-          </LinkButton>
-          <LinkButton size="sm" href="/signup">
-            Sign up
-          </LinkButton>
-        </>
+      {user.role === BRAND && (
+        <LinkButton href="/discover" size="sm" mt={[4, 0]}>
+          Discover
+        </LinkButton>
       )}
+      <Box display={['none', 'block']}>
+        <Popover gutter={16}>
+          <PopoverTrigger>
+            <Button size="sm" variant="outline" colorScheme="gray">
+              {user.firstName}
+            </Button>
+          </PopoverTrigger>
+          <PopoverContent
+            backgroundColor={popoverBgColor}
+            mr={4}
+            w={220}
+            px={3}
+            py={3}
+          >
+            <PopoverArrow
+              backgroundColor={popoverBgColor}
+              borderTopWidth={1}
+              borderLeftWidth={1}
+            />
+            <PopoverBody
+              fontWeight={600}
+              color={isLightMode ? 'gray.600' : 'gray.300'}
+            >
+              <UserLinks slug={user.slug} />
+            </PopoverBody>
+          </PopoverContent>
+        </Popover>
+      </Box>
+      <Box
+        display={['block', 'none']}
+        width="full"
+        flexGrow={1}
+        alignItems="center"
+        pt={4}
+      >
+        <UserLinks slug={user.slug} />
+      </Box>
     </Stack>
   )
 }

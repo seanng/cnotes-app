@@ -101,7 +101,7 @@ function AdvancedRow({
         )}
       </Flex>
       <Spacer />
-      <Select w={110} minW="80px" variant="rounded" {...selectProps} />
+      <Select w="110px" minW="110px" variant="rounded" {...selectProps} />
     </Flex>
   )
 }
@@ -158,10 +158,9 @@ const CreateListingForm: NextPage<Props> = ({
         <chakra.h2 textStyle={['h4', 'h2']} mb={6}>
           Create a Sponsorship Listing
         </chakra.h2>
-        <Text color={gray[600]} mb={10} maxW={MAX_COL_WIDTH}>
-          Being connected to brands is invite only. Fill out this form to apply
-          for VIP access to our marketplace. We will reach out if there is a
-          fit.
+        <Text textStyle="small" color={gray[600]} mb={10} maxW={MAX_COL_WIDTH}>
+          Fill out this form to get sponsored! We will reach out to you
+          afterwards to verify your sponsorship listing.
         </Text>
         <Grid
           templateColumns={[
@@ -181,7 +180,7 @@ const CreateListingForm: NextPage<Props> = ({
                 error={errors.name}
                 variant="outline"
                 inputProps={{
-                  placeholder: 'eg. My First Integration',
+                  placeholder: 'eg. My First Stream',
                   ...register('name', {
                     required: true,
                   }),
@@ -193,11 +192,13 @@ const CreateListingForm: NextPage<Props> = ({
                   variant="rounded"
                   {...register('platformAndDeliverable')}
                 >
-                  <option value={''}>I&apos;m not sure</option>
-                  <option>YouTube Integration</option>
-                  <option>YouTube Dedicated</option>
-                  <option>TikTok Integration</option>
                   <option>TikTok Dedicated</option>
+                  <option>YouTube Dedicated</option>
+                  <option>YouTube Pre-roll</option>
+                  <option>YouTube Post-roll</option>
+                  <option>YouTube Mid-roll</option>
+                  <option>YouTube Stream</option>
+                  <option>YouTube Short</option>
                 </Select>
               </FormControl>
             </Flex>
@@ -206,9 +207,10 @@ const CreateListingForm: NextPage<Props> = ({
                 Describe what you&apos;d like to do for a sponsorship?
               </FormLabel>
               <Textarea
-                placeholder={`eg. "I will promote your product for 30 seconds on my YouTube videos until they reach 150k total views."`}
+                placeholder={`eg. "I will promote your product for 30 seconds on my YouTube videos until they reach 150k total views." (max. 600 characters)`}
                 rows={4}
                 mb={8}
+                maxLength={600}
                 {...register('description', { required: true })}
               />
             </FormControl>
@@ -235,7 +237,7 @@ const CreateListingForm: NextPage<Props> = ({
             </h2>
             <AccordionPanel textStyle="baseBold">
               <AdvancedRow
-                label="Number of Revisions"
+                label="Number of revisions"
                 description="How many times can a brand suggest non-major changes to the sponsored work?"
                 selectProps={{
                   children: (
@@ -250,15 +252,15 @@ const CreateListingForm: NextPage<Props> = ({
                 }}
               />
               <AdvancedRow
-                label="Preview Time"
-                description="When can the brand preview your work and suggest edits before it goes live?"
+                label="Preview days"
+                description="How long can the brand preview your work and suggest edits before it's live?"
                 selectProps={{
                   children: (
                     <>
                       <option value={''}>-</option>
-                      <option value={3}>3 days</option>
-                      <option value={7}>7 days</option>
-                      <option value={14}>14 days</option>
+                      <option value={3}>3</option>
+                      <option value={7}>7</option>
+                      <option value={14}>14</option>
                     </>
                   ),
                   ...register('previewTime'),

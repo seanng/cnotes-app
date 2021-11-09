@@ -199,6 +199,7 @@ const ProfileSettings: FC<Props> = ({
       {!isBrand && (
         <FormInput
           label="What type of creator are you?"
+          isDisabled
           mb={8}
           inputProps={{
             placeholder: 'eg. Mechanical Keyboard Reviewer',

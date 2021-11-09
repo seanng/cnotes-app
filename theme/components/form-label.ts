@@ -10,5 +10,8 @@ export default {
     _invalid: {
       color: 'red',
     },
+    _disabled: {
+      opacity: 1,
+    },
   }),
 }

@@ -17,7 +17,7 @@ const Drawer = dynamic(() => import('./Drawer'))
 function Logo({ isLightMode }: { isLightMode: boolean }): JSX.Element {
   return (
     <LinkText
-      href="/"
+      href="/dashboard"
       fontWeight={700}
       textStyle="h5"
       color={isLightMode ? 'black' : 'white'}
