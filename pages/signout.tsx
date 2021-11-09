@@ -18,7 +18,7 @@ const SignOut: NextPage = () => {
   useEffect(() => {
     signOut().then(() => {
       client.clearStore().then(() => {
-        router.push('/')
+        window.location.replace('/')
       })
     })
   }, [signOut, router, client])
