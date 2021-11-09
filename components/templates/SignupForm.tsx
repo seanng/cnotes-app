@@ -1,8 +1,15 @@
 import Head from 'next/head'
 import { useMutation, gql } from '@apollo/client'
-import { Box, Text, chakra as c, Container, Button } from '@chakra-ui/react'
+import {
+  Box,
+  Text,
+  chakra as c,
+  Container,
+  Button,
+  Flex,
+  IconButton,
+} from '@chakra-ui/react'
 import omit from 'ramda/src/omit'
-import Layout from 'components/organisms/Layout'
 import { useForm } from 'react-hook-form'
 import {
   EMAIL_REGEX,
@@ -12,6 +19,7 @@ import {
   URL_REGEX,
 } from 'shared/constants'
 import { getErrorMessage } from 'utils/helpers'
+import { ArrowBackIcon } from '@chakra-ui/icons'
 import { useRouter } from 'next/router'
 import FormInput from 'components/atoms/FormInput'
 
@@ -71,21 +79,35 @@ function SignupForm({ isBrand }: TemplateProps): JSX.Element {
   }
 
   return (
-    <Layout>
+    <>
       <Head>
         <meta name="robots" content="noindex,nofollow" />
       </Head>
       <Container centerContent py={[16, 20]}>
         <Box w={900} maxW="100%">
-          <c.h2
-            textStyle="h2"
-            fontFamily="body"
-            textTransform="none"
-            fontWeight={700}
-            mb={5}
-          >
-            Create account
-          </c.h2>
+          <Flex mb={5} align="center">
+            <IconButton
+              size="lg"
+              fontSize="24px"
+              variant="unstyled"
+              colorScheme="gray"
+              icon={<ArrowBackIcon />}
+              aria-label="back"
+              mr={2}
+              ml={-4}
+              onClick={(): void => {
+                router.back()
+              }}
+            />
+            <c.h2
+              textStyle="h2"
+              fontFamily="body"
+              textTransform="none"
+              fontWeight={700}
+            >
+              Create account
+            </c.h2>
+          </Flex>
           <Text color="gray.600" mb={16}>
             Start getting more transparency into sponsorships.
           </Text>
@@ -192,7 +214,7 @@ function SignupForm({ isBrand }: TemplateProps): JSX.Element {
           </Box>
         </Box>
       </Container>
-    </Layout>
+    </>
   )
 }
 

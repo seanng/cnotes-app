@@ -1,18 +1,20 @@
 import Head from 'next/head'
-import Layout from 'components/organisms/Layout'
 import NextImage from 'next/image'
+import { useRouter } from 'next/router'
 import NextLink from 'next/link'
 import {
   chakra as c,
-  Text,
+  IconButton,
   Box,
   Button,
+  Flex,
   AspectRatio,
   Container,
   LinkBox,
   LinkOverlay,
 } from '@chakra-ui/react'
 import { GetServerSideProps, NextPage } from 'next'
+import { ArrowBackIcon } from '@chakra-ui/icons'
 import { getUserPayload } from 'utils/auth'
 import { redirTo } from 'utils/helpers'
 import { useColors } from 'hooks'
@@ -26,6 +28,7 @@ type LinkCardProps = {
 }
 
 const Image = c(NextImage)
+const Link = c(NextLink)
 
 function LinkCard({ href, label, imgSrc }: LinkCardProps): JSX.Element {
   return (
@@ -61,9 +64,10 @@ function LinkCard({ href, label, imgSrc }: LinkCardProps): JSX.Element {
 }
 
 const SignupFoyer: NextPage = () => {
-  const { gray } = useColors()
+  const { blue } = useColors()
+  const router = useRouter()
   return (
-    <Layout>
+    <>
       <Head>
         <meta name="robots" content="noindex,nofollow" />
       </Head>
@@ -71,22 +75,38 @@ const SignupFoyer: NextPage = () => {
         display="flex"
         flexDir="column"
         alignItems="center"
-        py={[16, 20]}
+        py={[10, 16]}
       >
-        <c.h2
-          textStyle="h2"
-          fontFamily="body"
-          textTransform="none"
-          fontWeight={700}
-          mb={6}
-        >
-          Sign up
-        </c.h2>
-        <Text color={gray[600]}>
-          Select if you are a <c.span color={gray[900]}>creator</c.span> or a{' '}
-          <c.span color={gray[900]}>brand</c.span>.
-        </Text>
-        <Box display={['block', 'flex']} pt={[16, 20]}>
+        <Flex mb={6} align="center">
+          <IconButton
+            size="lg"
+            fontSize="24px"
+            variant="unstyled"
+            colorScheme="gray"
+            icon={<ArrowBackIcon />}
+            aria-label="back"
+            mr={2}
+            ml={-4}
+            onClick={(): void => {
+              router.back()
+            }}
+          />
+          <c.h2
+            textStyle="h2"
+            fontFamily="body"
+            textTransform="none"
+            fontWeight={700}
+          >
+            Sign up
+          </c.h2>
+        </Flex>
+        <Flex justify="center" textStyle="small">
+          <Box mr={2}>Already have an account?</Box>
+          <Box color={blue[600]} fontWeight={600}>
+            <Link href="/login">Sign in</Link>
+          </Box>
+        </Flex>
+        <Box display={['block', 'flex']} pt={[10, 16]}>
           <LinkCard
             href="/signup/creator"
             imgSrc={`${cloudfrontUrl}/assets/signup-cover-creator.jpg`}
@@ -99,7 +119,7 @@ const SignupFoyer: NextPage = () => {
           />
         </Box>
       </Container>
-    </Layout>
+    </>
   )
 }
 
