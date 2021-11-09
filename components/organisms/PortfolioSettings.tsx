@@ -40,12 +40,12 @@ const SponsoredFields = ({ control, i, field, errors, register, children }) => {
       {required && (
         <FormInput
           display="inline-block"
+          verticalAlign="top"
           mb={4}
           mr={4}
           w={170}
           error={errors.portfolio?.[i]?.companyName}
           label="Sponsor name"
-          hideMessage
           inputProps={{
             defaultValue: field.companyName,
             placeholder: 'eg. Drop',
@@ -59,11 +59,11 @@ const SponsoredFields = ({ control, i, field, errors, register, children }) => {
         {required && (
           <FormInput
             display="inline-block"
+            verticalAlign="top"
             mb={4}
             w={200}
             error={errors.portfolio?.[i]?.companyUrl}
             label="Sponsor URL"
-            hideMessage
             inputProps={{
               defaultValue: field.companyUrl,
               placeholder: 'eg. https://dollarshaveclub.com/',
@@ -71,7 +71,7 @@ const SponsoredFields = ({ control, i, field, errors, register, children }) => {
                 required,
                 pattern: {
                   value: URL_REGEX,
-                  message: 'Enter a valid website url',
+                  message: 'Website URL must be valid and start with https://',
                 },
               }),
             }}
@@ -111,6 +111,7 @@ const Portfolio: FC<Props> = ({ register, control, errors }: Props) => {
           >
             <FormInput
               display="inline-block"
+              verticalAlign="top"
               w={200}
               mb={4}
               mr={4}
@@ -118,17 +119,24 @@ const Portfolio: FC<Props> = ({ register, control, errors }: Props) => {
               label="Media URL"
               inputProps={{
                 defaultValue: field.url,
-                placeholder: 'eg. https://www.youtube.com/watch?v=l7FV87ocmwM',
+                placeholder: 'eg. https://youtube.com/watch?v=l7FV87ocmwM',
                 ...register(`portfolio.${i}.url` as const, {
                   required: true,
                   pattern: {
                     value: PLATFORM_URL_REGEX,
-                    message: 'Invalid YouTube or TikTok URL',
+                    message:
+                      'URL must start with https://youtube.com/ or https://tiktok.com/',
                   },
                 }),
               }}
             />
-            <FormControl maxW={150} mr={4} mb={4} display="inline-block">
+            <FormControl
+              maxW={150}
+              mr={4}
+              mb={4}
+              display="inline-block"
+              verticalAlign="top"
+            >
               <FormLabel>Deliverable</FormLabel>
               <Select
                 variant="rounded"
@@ -143,6 +151,8 @@ const Portfolio: FC<Props> = ({ register, control, errors }: Props) => {
             <SponsoredFields {...{ control, i, field, errors, register }}>
               <IconButton
                 size="sm"
+                // chakra overrides with marginTop:0 due to a pseudo :not class
+                marginTop="40px !important"
                 variant="unstyled"
                 aria-label="Remove"
                 onClick={(): void => {

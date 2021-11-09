@@ -42,9 +42,11 @@ export const Navbar = `
                 <nav class="dropdown-list w-dropdown-list">
                   <div class="dropdown-nav-main-wrapper">
                     <div class="dropdown-nav-pages-wrapper">
-                      <div class="title dropdown">Company</div>
                       <div class="dropdown-nav-content">
                         <ul role="list" class="dropdown-nav">
+                          <li class="dropdown-nav-item">
+                            <a href="/about" aria-current="page" class="dropdown-nav-link w--current">Why sponsor?</a>
+                          </li>
                           <li class="dropdown-nav-item">
                             <a href="/about" aria-current="page" class="dropdown-nav-link w--current">About
                               us</a>
@@ -53,43 +55,7 @@ export const Navbar = `
                                 <a href="/faq" aria-current="page" class="dropdown-nav-link w--current">FAQ</a>
                               </li> -->
                           <li class="dropdown-nav-item">
-                            <a href="about.html" class="dropdown-nav-link">Blog</a>
-                          </li>
-                        </ul>
-                      </div>
-                    </div>
-                    <div class="dropdown-nav-pages-wrapper">
-                      <div class="title dropdown">Brands</div>
-                      <div class="dropdown-nav-content">
-                        <ul role="list" class="dropdown-nav">
-                          <li class="dropdown-nav-item">
-                            <a href="index.html" aria-current="page" class="dropdown-nav-link w--current">Why
-                              sponsor?</a>
-                          </li>
-                          <li class="dropdown-nav-item">
-                            <a href="index.html" aria-current="page" class="dropdown-nav-link w--current">Your first
-                              sponsorship</a>
-                          </li>
-                          <li class="dropdown-nav-item">
-                            <a href="index.html" class="dropdown-nav-link">How to price</a>
-                          </li>
-                        </ul>
-                      </div>
-                    </div>
-                    <div class="dropdown-nav-pages-wrapper">
-                      <div class="title dropdown">Creators</div>
-                      <div class="dropdown-nav-content">
-                        <ul role="list" class="dropdown-nav">
-                          <li class="dropdown-nav-item">
-                            <a href="index.html" aria-current="page" class="dropdown-nav-link w--current">Getting
-                              Started</a>
-                          </li>
-                          <li class="dropdown-nav-item">
-                            <a href="index.html" aria-current="page" class="dropdown-nav-link w--current">How to
-                              price</a>
-                          </li>
-                          <li class="dropdown-nav-item">
-                            <a href="about.html" class="dropdown-nav-link">Media Kits</a>
+                            <a href="https://medium.com/@collabski" target="_blank" class="dropdown-nav-link">Blog</a>
                           </li>
                         </ul>
                       </div>

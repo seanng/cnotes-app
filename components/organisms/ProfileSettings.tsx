@@ -75,7 +75,7 @@ const ProfileSettings: FC<Props> = ({
             variant="outline"
             bgColor={gray[50]}
           >
-            Upload cover photo
+            Change cover photo
           </Button>
           {bannerFile && (
             <Button
@@ -119,7 +119,7 @@ const ProfileSettings: FC<Props> = ({
               size="sm"
               variant="outline"
             >
-              Upload
+              Change
             </Button>
             {avatarFile && (
               <Button

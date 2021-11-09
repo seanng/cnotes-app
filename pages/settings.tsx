@@ -237,7 +237,13 @@ const SettingsPage: NextPage<Props> = ({ user }: Props) => {
       <Layout user={user}>
         <Container py={[16, 20]}>
           <Box as="form" onSubmit={handleSubmit(onSubmit, onError)}>
-            <Text textStyle="h3" fontWeight={700} fontFamily="body" mb={12}>
+            <Text
+              textStyle="h3"
+              textTransform="none"
+              fontWeight={700}
+              fontFamily="body"
+              mb={12}
+            >
               Settings
             </Text>
             <Tabs

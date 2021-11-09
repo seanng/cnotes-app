@@ -16,15 +16,18 @@ import LinkButton from 'components/atoms/LinkButton'
 import { BRAND } from 'shared/constants'
 import LinkText from 'components/atoms/LinkText'
 
-function UserLinks(): JSX.Element {
+function UserLinks({ slug }: { slug: string }): JSX.Element {
   return (
     <>
       <LinkText href="/dashboard">Dashboard</LinkText>
       <LinkText href="/settings" mt={4}>
         Settings
       </LinkText>
+      <LinkText isExternal href={`/profile/${slug}`} mt={4}>
+        My profile
+      </LinkText>
       <Divider my={4} />
-      <LinkText href="/signout">Log Out</LinkText>
+      <LinkText href="/signout">Log out</LinkText>
     </>
   )
 }
@@ -88,7 +91,7 @@ export default function MenuLinks({
                   fontWeight={600}
                   color={isLightMode ? 'gray.600' : 'gray.300'}
                 >
-                  <UserLinks />
+                  <UserLinks slug={user.slug} />
                 </PopoverBody>
               </PopoverContent>
             </Popover>
@@ -100,7 +103,7 @@ export default function MenuLinks({
             alignItems="center"
             pt={4}
           >
-            <UserLinks />
+            <UserLinks slug={user.slug} />
           </Box>
         </>
       ) : (

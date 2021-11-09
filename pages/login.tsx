@@ -83,8 +83,8 @@ const Login: NextPage = () => {
           py={120}
           bgColor={gray[900]}
         >
-          <Box textStyle="h1" mb={4}>
-            Collabski
+          <Box fontWeight={700} textStyle="h1" fontFamily="body" mb={4}>
+            collabski
           </Box>
           <Box textStyle="base" fontWeight={500}>
             Making sponsorships more transparent.
