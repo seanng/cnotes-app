@@ -3,6 +3,7 @@ import {
   Container,
   Divider,
   Wrap,
+  Link,
   WrapItem,
   Text,
   Box,
@@ -54,22 +55,30 @@ export default function StageHeading({ data, specs }: Props): JSX.Element {
       <Container mt={4} mb={[3, 5]}>
         <Flex mb={7} align="center">
           <NextLink href="/dashboard">
-            <IconButton
-              size="lg"
-              fontSize="24px"
-              variant="unstyled"
-              colorScheme="gray"
-              icon={<ArrowBackIcon />}
-              aria-label="back"
-              ml={-4}
-            />
+            <Flex>
+              <IconButton
+                size="lg"
+                fontSize="24px"
+                variant="unstyled"
+                colorScheme="gray"
+                icon={<ArrowBackIcon />}
+                aria-label="back"
+                ml={-4}
+              />
+              {!config.hasTimer && (
+                <Link
+                  textStyle="large"
+                  lineHeight="48px"
+                  mb="-3px"
+                  _hover={{ textDecoration: 'none' }}
+                >
+                  Dashboard
+                </Link>
+              )}
+            </Flex>
           </NextLink>
-          {config.hasTimer && data.auctionEndsAt ? (
+          {config.hasTimer && data.auctionEndsAt && (
             <TimerLabel borderRadius="full" end={data.auctionEndsAt} ml={2} />
-          ) : (
-            <Text textStyle="large" lineHeight="48px" mb="-3px">
-              Dashboard
-            </Text>
           )}
         </Flex>
         <Flex align="flex-start">
