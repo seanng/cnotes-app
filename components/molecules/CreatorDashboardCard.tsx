@@ -46,7 +46,7 @@ function CreatorDashboardCard({ data }: Props): JSX.Element {
           borderRadius="xl"
           bgColor={gray[0]}
           boxShadow="sm"
-          bgGradient={config.isUrgent ? 'linear(to-r, #33F3FF, #BED8FF)' : null}
+          bgGradient={config.isUrgent ? 'linear(to-r, #7BD3EC, #00A3FF)' : null}
         >
           <Flex
             pt={4}

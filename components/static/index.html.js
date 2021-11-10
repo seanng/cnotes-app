@@ -101,7 +101,7 @@ ${Head}
             </div>
           </div>
           <div class="card home-feature"><img src="https://d2vh08r8g1sliz.cloudfront.net/landing/Frame-37148.svg"
-              loading="lazy" alt="" class="image card-home-feature">
+              loading="lazy" alt="Transparent prices" class="image card-home-feature" />
             <div class="card-home-feature-content">
               <h3 class="title card-home-feature">Transparent Prices</h3>
               <p class="paragraph card-home-feature">Eliminate guess work in sponsorship pricing by seeing what other
@@ -134,7 +134,7 @@ ${Head}
               <div class="w-layout-grid home-perks-grid">
                 <div class="home-perk-wrapper"><img
                     src="https://d2vh08r8g1sliz.cloudfront.net/landing/icon-password-dark-template.svg" loading="eager"
-                    alt="" class="image home-perk" />
+                    alt="Invite-only" class="image home-perk" />
                   <div class="home-perk-content">
                     <h3 class="title h4-size home-perk">Invite-only membership</h3>
                     <p class="paragraph home-perk">We invite creators based on relevance, size, content quality, and
@@ -142,7 +142,7 @@ ${Head}
                   </div>
                 </div>
                 <div class="home-perk-wrapper"><img src="https://d2vh08r8g1sliz.cloudfront.net/landing/Frame-37154.svg"
-                    loading="eager" alt="" class="image home-perk" />
+                    loading="eager" alt="Guaranteed Response" class="image home-perk" />
                   <div class="home-perk-content">
                     <h3 class="title h4-size home-perk">Guaranteed responses</h3>
                     <p class="paragraph home-perk">Don&#x27;t get left on read. We make sure creators respond to every
@@ -151,7 +151,7 @@ ${Head}
                 </div>
                 <div class="home-perk-wrapper"><img
                     src="https://d2vh08r8g1sliz.cloudfront.net/landing/icon-3-values-dark-template.svg" loading="eager"
-                    alt="" class="image home-perk" />
+                    alt="Active creators" class="image home-perk" />
                   <div class="home-perk-content">
                     <h3 class="title h4-size home-perk">Actively seeking partnerships</h3>
                     <p class="paragraph home-perk">Creators with profiles have the same goal as you, to find their next
@@ -183,7 +183,7 @@ ${Head}
               <div class="w-layout-grid home-perks-grid">
                 <div class="home-perk-wrapper"><img
                     src="https://d2vh08r8g1sliz.cloudfront.net/landing/icon-2-features-dark-template.svg" loading="lazy"
-                    alt="" class="image home-perk" />
+                    alt="Stats" class="image home-perk" />
                   <div class="home-perk-content">
                     <h3 class="title h4-size home-perk">Audience statistics</h3>
                     <p class="paragraph home-perk">Get in-depth access to sizing, demographic and geographic data about
@@ -329,7 +329,7 @@ ${Head}
                     src="https://d2vh08r8g1sliz.cloudfront.net/landing/See-live-updates.png" loading="lazy"
                     sizes="(max-width: 479px) 92vw, (max-width: 767px) 93vw, (max-width: 991px) 40vw, (max-width: 1919px) 26vw, 318.1875px"
                     srcset="https://d2vh08r8g1sliz.cloudfront.net/landing/See-live-updates-p-500.png 500w, https://d2vh08r8g1sliz.cloudfront.net/landing/See-live-updates.png 647w"
-                    alt="" class="image card-home-step" /></div>
+                    alt="Live updates" class="image card-home-step" /></div>
               </div>
               <div data-w-id="75ac40fd-fea7-3586-f026-0097732d5527"
                 style="-webkit-transform:translate3d(0, 40px, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);-moz-transform:translate3d(0, 40px, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);-ms-transform:translate3d(0, 40px, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);transform:translate3d(0, 40px, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);opacity:0"
