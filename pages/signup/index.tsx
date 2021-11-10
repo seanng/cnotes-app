@@ -8,7 +8,7 @@ import {
   Box,
   Button,
   Flex,
-  AspectRatio,
+  Center,
   Container,
   LinkBox,
   LinkOverlay,
@@ -27,7 +27,6 @@ type LinkCardProps = {
   imgSrc: string
 }
 
-const Image = c(NextImage)
 const Link = c(NextLink)
 
 function LinkCard({ href, label, imgSrc }: LinkCardProps): JSX.Element {
@@ -46,14 +45,9 @@ function LinkCard({ href, label, imgSrc }: LinkCardProps): JSX.Element {
     >
       <NextLink href={href} passHref>
         <LinkOverlay>
-          <AspectRatio ratio={1} mb={5}>
-            <Image
-              borderRadius="xl"
-              layout="fill"
-              src={imgSrc}
-              objectFit="contain"
-            />
-          </AspectRatio>
+          <Center h="300px">
+            <NextImage src={imgSrc} height="225px" width="225px" />
+          </Center>
           <Button variant="outline" colorScheme="gray">
             {label}
           </Button>
@@ -109,12 +103,12 @@ const SignupFoyer: NextPage = () => {
         <Box display={['block', 'flex']} pt={[10, 16]}>
           <LinkCard
             href="/signup/creator"
-            imgSrc={`${cloudfrontUrl}/assets/signup-cover-creator.jpg`}
+            imgSrc={`${cloudfrontUrl}/assets/signup-cover-creator.png`}
             label="Creator"
           />
           <LinkCard
             href="/signup/brand"
-            imgSrc={`${cloudfrontUrl}/assets/signup-cover-brand.jpg`}
+            imgSrc={`${cloudfrontUrl}/assets/signup-cover-brand.png`}
             label="Brand"
           />
         </Box>
