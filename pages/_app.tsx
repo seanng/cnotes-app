@@ -17,7 +17,7 @@ const CrispWithNoSSR = dynamic(() => import('components/imports/Crisp'), {
 })
 
 function MyApp({ Component, pageProps }: AppProps): JSX.Element {
-  const metaDesc = 'Sponsor creators that have the most engaged viewers'
+  const metaDesc = 'A curated sponsorship experience'
   return (
     <ChakraProvider cookies={pageProps.cookies}>
       <Head>

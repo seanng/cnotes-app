@@ -46,13 +46,13 @@ ${Head}
             loading="lazy"
             sizes="(max-width: 479px) 84vw, (max-width: 767px) 82vw, (max-width: 991px) 84vw, (max-width: 1919px) 85vw, 1054.234375px"
             srcset="https://d2vh08r8g1sliz.cloudfront.net/landing/hero-image-p-500.png 500w, https://d2vh08r8g1sliz.cloudfront.net/landing/hero-image-p-800.png 800w, https://d2vh08r8g1sliz.cloudfront.net/landing/hero-image-p-1080.png 1080w, https://d2vh08r8g1sliz.cloudfront.net/landing/hero-image.png 2386w"
-            alt="hero" class="image home-hero-1"></div>
+            alt="hero" class="image home-hero-1" /></div>
         <div class="home-hero-companies-wrapper">
           <div class="home-hero-companies">
             <!-- <img src="https://d2vh08r8g1sliz.cloudfront.net/landing/delvify.svg"
               loading="lazy" alt="delvify" class="image home-hero-company"> -->
             <img src="https://d2vh08r8g1sliz.cloudfront.net/landing/capsule48.png" loading="lazy" alt="capsule48"
-              class="image home-hero-company google">
+              class="image home-hero-company google" />
             <!-- <img
               src="images/logo-3-company-home-hero-dark-template.svg" loading="lazy" alt=""
               class="image home-hero-company youtube"><img src="images/logo-4-company-home-hero-dark-template.svg"
@@ -84,7 +84,7 @@ ${Head}
         <div class="w-layout-grid home-features-grid">
           <div class="card home-feature"><img
               src="https://d2vh08r8g1sliz.cloudfront.net/landing/icon-7-features-dark-template.svg" loading="lazy"
-              alt="quality" class="image card-home-feature">
+              alt="quality" class="image card-home-feature" />
             <div class="card-home-feature-content">
               <h3 class="title card-home-feature">High Quality Creators</h3>
               <p class="paragraph card-home-feature">We invite creators based on their previous collab work, number of
@@ -93,7 +93,7 @@ ${Head}
           </div>
           <div class="card home-feature"><img
               src="https://d2vh08r8g1sliz.cloudfront.net/landing/icon-2-features-dark-template.svg" loading="lazy"
-              alt="statistics" class="image card-home-feature">
+              alt="statistics" class="image card-home-feature" />
             <div class="card-home-feature-content">
               <h3 class="title card-home-feature">Audience Statistics</h3>
               <p class="paragraph card-home-feature">Easily access information like demo/geo and other key information
@@ -134,7 +134,7 @@ ${Head}
               <div class="w-layout-grid home-perks-grid">
                 <div class="home-perk-wrapper"><img
                     src="https://d2vh08r8g1sliz.cloudfront.net/landing/icon-password-dark-template.svg" loading="eager"
-                    alt="" class="image home-perk">
+                    alt="" class="image home-perk" />
                   <div class="home-perk-content">
                     <h3 class="title h4-size home-perk">Invite-only membership</h3>
                     <p class="paragraph home-perk">We invite creators based on relevance, size, content quality, and
@@ -142,7 +142,7 @@ ${Head}
                   </div>
                 </div>
                 <div class="home-perk-wrapper"><img src="https://d2vh08r8g1sliz.cloudfront.net/landing/Frame-37154.svg"
-                    loading="eager" alt="" class="image home-perk">
+                    loading="eager" alt="" class="image home-perk" />
                   <div class="home-perk-content">
                     <h3 class="title h4-size home-perk">Guaranteed responses</h3>
                     <p class="paragraph home-perk">Don&#x27;t get left on read. We make sure creators respond to every
@@ -151,7 +151,7 @@ ${Head}
                 </div>
                 <div class="home-perk-wrapper"><img
                     src="https://d2vh08r8g1sliz.cloudfront.net/landing/icon-3-values-dark-template.svg" loading="eager"
-                    alt="" class="image home-perk">
+                    alt="" class="image home-perk" />
                   <div class="home-perk-content">
                     <h3 class="title h4-size home-perk">Actively seeking partnerships</h3>
                     <p class="paragraph home-perk">Creators with profiles have the same goal as you, to find their next
@@ -166,7 +166,7 @@ ${Head}
                 src="https://d2vh08r8g1sliz.cloudfront.net/landing/Discover-card.png" loading="eager"
                 sizes="(max-width: 767px) 93vw, (max-width: 991px) 612px, (max-width: 1919px) 50vw, 612px"
                 srcset="https://d2vh08r8g1sliz.cloudfront.net/landing/Discover-card-p-500.png 500w, https://d2vh08r8g1sliz.cloudfront.net/landing/Discover-card-p-800.png 800w, https://d2vh08r8g1sliz.cloudfront.net/landing/Discover-card.png 1224w"
-                alt="Discover"></div>
+                alt="Discover" /></div>
           </div>
           <div class="home-perks-content-bottom-wrapper">
             <div data-w-id="d33741e8-edd1-da97-3b24-7982c1abaa36"
@@ -175,7 +175,7 @@ ${Head}
                 src="https://d2vh08r8g1sliz.cloudfront.net/landing/Stats-card.png" loading="eager"
                 srcset="https://d2vh08r8g1sliz.cloudfront.net/landing/Stats-card-p-500.png 500w, https://d2vh08r8g1sliz.cloudfront.net/landing/Stats-card-p-800.png 800w, https://d2vh08r8g1sliz.cloudfront.net/landing/Stats-card.png 1080w"
                 sizes="(max-width: 767px) 93vw, (max-width: 991px) 612px, (max-width: 1919px) 50vw, 612px"
-                alt="Creator Stats" class="image home-perks-content-bottom-image"></div>
+                alt="Creator Stats" class="image home-perks-content-bottom-image" /></div>
             <div class="home-perks-content-bottom-content">
               <h2 class="title home-perks">Get informed upfront</h2>
               <p class="paragraph home-perks">Get rid of back-and-forth conversations by getting decision-making info
@@ -183,7 +183,7 @@ ${Head}
               <div class="w-layout-grid home-perks-grid">
                 <div class="home-perk-wrapper"><img
                     src="https://d2vh08r8g1sliz.cloudfront.net/landing/icon-2-features-dark-template.svg" loading="lazy"
-                    alt="" class="image home-perk">
+                    alt="" class="image home-perk" />
                   <div class="home-perk-content">
                     <h3 class="title h4-size home-perk">Audience statistics</h3>
                     <p class="paragraph home-perk">Get in-depth access to sizing, demographic and geographic data about
@@ -192,7 +192,7 @@ ${Head}
                 </div>
                 <div class="home-perk-wrapper"><img
                     src="https://d2vh08r8g1sliz.cloudfront.net/landing/icon-1-contact-categories-dark-template.svg"
-                    loading="lazy" alt="Collabs" class="image home-perk">
+                    loading="lazy" alt="Collabs" class="image home-perk" />
                   <div class="home-perk-content">
                     <h3 class="title h4-size home-perk">Past brand collaborations</h3>
                     <p class="paragraph home-perk">Understand a fit between a creator with easy access to all their past
@@ -210,7 +210,7 @@ ${Head}
               <div class="w-layout-grid home-perks-grid">
                 <div class="home-perk-wrapper"><img
                     src="https://d2vh08r8g1sliz.cloudfront.net/landing/icon-3-careers-perks-dark-template.svg"
-                    loading="lazy" alt="Total offers" class="image home-perk">
+                    loading="lazy" alt="Total offers" class="image home-perk" />
                   <div class="home-perk-content">
                     <h3 class="title h4-size home-perk">Total number of offers</h3>
                     <p class="paragraph home-perk">Get an idea of how in-demand a creator is by seeing how many other
@@ -218,7 +218,7 @@ ${Head}
                   </div>
                 </div>
                 <div class="home-perk-wrapper"><img src="https://d2vh08r8g1sliz.cloudfront.net/landing/Frame-37148.svg"
-                    loading="lazy" alt="Highest Offer" class="image home-perk">
+                    loading="lazy" alt="Highest Offer" class="image home-perk" />
                   <div class="home-perk-content">
                     <h3 class="title h4-size home-perk">See the highest offer made</h3>
                     <p class="paragraph home-perk">Understand how competitive your offer is by seeing the highest offer
@@ -233,7 +233,7 @@ ${Head}
                 src="https://d2vh08r8g1sliz.cloudfront.net/landing/Offer-specs-card.png" loading="lazy"
                 sizes="(max-width: 767px) 93vw, (max-width: 991px) 612px, (max-width: 1919px) 50vw, 612px"
                 srcset="https://d2vh08r8g1sliz.cloudfront.net/landing/Offer-specs-card-p-500.png 500w, https://d2vh08r8g1sliz.cloudfront.net/landing/Offer-specs-card-p-800.png 800w, https://d2vh08r8g1sliz.cloudfront.net/landing/Offer-specs-card.png 1080w"
-                alt="Offer Specs" class="image home-perks-content-top-image"></div>
+                alt="Offer Specs" class="image home-perks-content-top-image" /></div>
           </div>
           <div class="home-perks-content-bottom-wrapper last">
             <div data-w-id="eee63602-338e-2609-c779-cb867bac28ac"
@@ -242,7 +242,7 @@ ${Head}
                 src="https://d2vh08r8g1sliz.cloudfront.net/landing/Dashboard-card.png" loading="eager"
                 sizes="(max-width: 767px) 93vw, (max-width: 991px) 612px, (max-width: 1919px) 50vw, 612px"
                 srcset="https://d2vh08r8g1sliz.cloudfront.net/landing/Dashboard-card-p-500.png 500w, https://d2vh08r8g1sliz.cloudfront.net/landing/Dashboard-card-p-800.png 800w, https://d2vh08r8g1sliz.cloudfront.net/landing/Dashboard-card.png 1080w"
-                alt="Your Dashboard" class="image home-perks-content-bottom-image"></div>
+                alt="Your Dashboard" class="image home-perks-content-bottom-image" /></div>
             <div class="home-perks-content-bottom-content">
               <h2 class="title home-perks">Eyes on the prize </h2>
               <p class="paragraph home-perks">Easily access all your sponsorship deals with a dashboard built for
@@ -250,7 +250,7 @@ ${Head}
               <div class="w-layout-grid home-perks-grid">
                 <div class="home-perk-wrapper"><img
                     src="https://d2vh08r8g1sliz.cloudfront.net/landing/icon-1-features-dark-template_1.svg"
-                    loading="lazy" alt="Realtime updates" class="image home-perk">
+                    loading="lazy" alt="Realtime updates" class="image home-perk" />
                   <div class="home-perk-content">
                     <h3 class="title h4-size home-perk">See updates in real time</h3>
                     <p class="paragraph home-perk">Track live updates to sponsorship offers made to your chosen creator.
@@ -259,7 +259,7 @@ ${Head}
                 </div>
                 <div class="home-perk-wrapper"><img
                     src="https://d2vh08r8g1sliz.cloudfront.net/landing/icon-3-contact-categories-dark-template.svg"
-                    loading="lazy" alt="Past sponsorships" class="image home-perk">
+                    loading="lazy" alt="Past sponsorships" class="image home-perk" />
                   <div class="home-perk-content">
                     <h3 class="title h4-size home-perk">View all past sponsorships</h3>
                     <p class="paragraph home-perk">Keep a record of whom you&#x27;ve worked with and how much your team
@@ -299,7 +299,7 @@ ${Head}
                     src="https://d2vh08r8g1sliz.cloudfront.net/landing/Find-a-creator-listing.png" loading="eager"
                     sizes="(max-width: 479px) 92vw, (max-width: 767px) 93vw, (max-width: 991px) 40vw, (max-width: 1919px) 26vw, 318.1875px"
                     srcset="https://d2vh08r8g1sliz.cloudfront.net/landing/Find-a-creator-listing-p-500.png 500w, https://d2vh08r8g1sliz.cloudfront.net/landing/Find-a-creator-listing.png 648w"
-                    alt="Creator listing" class="image card-home-step"></div>
+                    alt="Creator listing" class="image card-home-step" /></div>
               </div>
               <div data-w-id="b004a6e0-c506-f383-4ef2-7ba62c69ed92"
                 style="-webkit-transform:translate3d(0, 40px, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);-moz-transform:translate3d(0, 40px, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);-ms-transform:translate3d(0, 40px, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);transform:translate3d(0, 40px, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);opacity:0"
@@ -314,7 +314,7 @@ ${Head}
                     src="https://d2vh08r8g1sliz.cloudfront.net/landing/Place-an-offer.png" loading="eager"
                     sizes="(max-width: 479px) 92vw, (max-width: 767px) 93vw, (max-width: 991px) 40vw, (max-width: 1919px) 26vw, 318.1875px"
                     srcset="https://d2vh08r8g1sliz.cloudfront.net/landing/Place-an-offer-p-500.png 500w, https://d2vh08r8g1sliz.cloudfront.net/landing/Place-an-offer.png 648w"
-                    alt="Place an offer" class="image card-home-step"></div>
+                    alt="Place an offer" class="image card-home-step" /></div>
               </div>
               <div data-w-id="6ab9030c-f822-6a18-b144-9efcc7a7389b"
                 style="-webkit-transform:translate3d(0, 40px, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);-moz-transform:translate3d(0, 40px, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);-ms-transform:translate3d(0, 40px, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);transform:translate3d(0, 40px, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);opacity:0"
@@ -329,7 +329,7 @@ ${Head}
                     src="https://d2vh08r8g1sliz.cloudfront.net/landing/See-live-updates.png" loading="lazy"
                     sizes="(max-width: 479px) 92vw, (max-width: 767px) 93vw, (max-width: 991px) 40vw, (max-width: 1919px) 26vw, 318.1875px"
                     srcset="https://d2vh08r8g1sliz.cloudfront.net/landing/See-live-updates-p-500.png 500w, https://d2vh08r8g1sliz.cloudfront.net/landing/See-live-updates.png 647w"
-                    alt="" class="image card-home-step"></div>
+                    alt="" class="image card-home-step" /></div>
               </div>
               <div data-w-id="75ac40fd-fea7-3586-f026-0097732d5527"
                 style="-webkit-transform:translate3d(0, 40px, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);-moz-transform:translate3d(0, 40px, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);-ms-transform:translate3d(0, 40px, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);transform:translate3d(0, 40px, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);opacity:0"
@@ -344,7 +344,7 @@ ${Head}
                     src="https://d2vh08r8g1sliz.cloudfront.net/landing/Start-the-deal.png" loading="lazy"
                     sizes="(max-width: 479px) 92vw, (max-width: 767px) 93vw, (max-width: 991px) 40vw, (max-width: 1919px) 26vw, 318.1875px"
                     srcset="https://d2vh08r8g1sliz.cloudfront.net/landing/Start-the-deal-p-500.png 500w, https://d2vh08r8g1sliz.cloudfront.net/landing/Start-the-deal.png 647w"
-                    alt="Start deal" class="image card-home-step"></div>
+                    alt="Start deal" class="image card-home-step" /></div>
               </div>
             </div>
             <div class="bg-gradient-blur-wrapper home-steps">
