@@ -2,7 +2,7 @@ import sgMail from 'lib/sendgrid'
 import { FROM_ADDRESS } from 'shared/constants'
 import { User } from 'shared/types'
 
-export async function sendWelcomeEmail(
+export async function sendBrandWelcomeEmail(
   to: string,
   firstName: string
 ): Promise<void> {

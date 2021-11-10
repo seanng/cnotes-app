@@ -26,6 +26,9 @@ import youtubeClient from 'lib/youtube'
 const getYoutubeData = async (
   ids: string[]
 ): Promise<Omit<PortfolioItem, 'url'>[]> => {
+  if (!ids || ids.length === 0) {
+    return []
+  }
   const {
     data: { items },
   } = await youtubeClient.videos.list({
@@ -62,19 +65,20 @@ export const populatePortfolioData = async (
     }
     item.platform = service
     item.platformMediaId = id
-    if (service === 'youtube') {
+    if (id && service === 'youtube') {
       // so we can make 1 combined request to youtube api
       youtubeIds.push(id)
       // } else if (service === 'tiktok') {
       //   items[i] = await getTiktokData(item)
     }
   }
-
   const youtubeList = await getYoutubeData(youtubeIds)
   const youtubeListById = groupBy(prop('platformMediaId'), youtubeList)
-  const combinedItems = map<PortfolioItem, PortfolioItem>(item =>
-    merge(item, youtubeListById[item.platformMediaId][0])
-  )(items)
+
+  const combinedItems = map<PortfolioItem, PortfolioItem>(item => {
+    const populatedItem = youtubeListById[item.platformMediaId]?.[0] || {}
+    return merge(item, populatedItem)
+  })(items)
 
   return combinedItems
 }

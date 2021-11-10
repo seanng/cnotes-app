@@ -21,7 +21,7 @@ export function createPassword(password: string): string {
   if (password.length < 6) {
     throw new UserInputError('Password too short.')
   }
-  return bcrypt.hashSync(password, bcrypt.genSaltSync())
+  return bcrypt.hashSync(password, bcrypt.genSaltSync(10))
 }
 
 export function isCorrectPassword(exposed: string, hashed: string): boolean {
@@ -30,7 +30,7 @@ export function isCorrectPassword(exposed: string, hashed: string): boolean {
 
 export function encryptToken(user: PrismaUser): string {
   return jwt.sign({ user, time: new Date() }, process.env.JWT_SECRET, {
-    expiresIn: '6h',
+    expiresIn: 360000,
   })
 }
 

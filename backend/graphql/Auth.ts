@@ -21,9 +21,9 @@ import {
   USER_NOT_FOUND,
 } from 'shared/constants'
 import {
-  sendWelcomeEmail,
   sendForgotPasswordEmail,
   sendUserActivityNotificationEmail,
+  sendBrandWelcomeEmail,
 } from 'utils/emails'
 import prisma from 'lib/prisma'
 import {
@@ -63,7 +63,10 @@ export const Signup = mutationField('signup', {
       },
     })
     if (process.env.VERCEL_ENV === 'production') {
-      await sendWelcomeEmail(input.email, input.firstName)
+      if (isBrand) {
+        await sendBrandWelcomeEmail(input.email, input.firstName)
+      }
+      // TODO: send creator welcome email.
       await sendUserActivityNotificationEmail(user, now, 'SIGN UP')
     }
     const userObj = pick(userPublicFields, user) as User
