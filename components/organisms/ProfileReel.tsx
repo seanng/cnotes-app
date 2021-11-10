@@ -52,7 +52,7 @@ const ProfileReel = ({ profile, gridProps }: Props): JSX.Element => {
             colSpan={1}
             rowSpan={item.platform === TIKTOK ? 2 : 1}
           >
-            <AspectRatio ratio={item.platform === TIKTOK ? 9 / 16 : 640 / 480}>
+            <AspectRatio ratio={item.platform === TIKTOK ? 9 / 16 : 16 / 9}>
               <LinkBox position="relative" borderRadius="xl">
                 <LinkOverlay href={item.url} isExternal>
                   {item.isVerified && (
@@ -142,6 +142,7 @@ const ProfileReel = ({ profile, gridProps }: Props): JSX.Element => {
                 </LinkOverlay>
                 <Image
                   src={item.thumbnailUrl}
+                  fit="cover"
                   alt="thumbnail"
                   w="full"
                   h="full"
