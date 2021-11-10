@@ -20,7 +20,11 @@ import {
   userPublicFields,
   USER_NOT_FOUND,
 } from 'shared/constants'
-import { sendWelcomeEmail, sendForgotPasswordEmail } from 'utils/emails'
+import {
+  sendWelcomeEmail,
+  sendForgotPasswordEmail,
+  sendUserActivityNotificationEmail,
+} from 'utils/emails'
 import prisma from 'lib/prisma'
 import {
   createPassword,
@@ -58,7 +62,10 @@ export const Signup = mutationField('signup', {
         updatedAt: now,
       },
     })
-    await sendWelcomeEmail(input.email, input.firstName)
+    if (process.env.VERCEL_ENV === 'production') {
+      await sendWelcomeEmail(input.email, input.firstName)
+      await sendUserActivityNotificationEmail(user, now, 'SIGN UP')
+    }
     const userObj = pick(userPublicFields, user) as User
     const token = encryptToken(userObj)
     res.setHeader('Set-Cookie', serializeCookie(token))
@@ -85,6 +92,9 @@ export const Login = mutationField('login', {
     const userObj = pick(userPublicFields, user) as User
     const token = encryptToken(userObj)
     res.setHeader('Set-Cookie', serializeCookie(token))
+    if (process.env.VERCEL_ENV === 'production') {
+      await sendUserActivityNotificationEmail(user, new Date(), 'LOGIN')
+    }
     return { token, user }
   },
 })

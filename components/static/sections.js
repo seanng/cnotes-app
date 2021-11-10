@@ -45,7 +45,7 @@ export const Navbar = `
                       <div class="dropdown-nav-content">
                         <ul role="list" class="dropdown-nav">
                           <li class="dropdown-nav-item">
-                            <a href="/about" aria-current="page" class="dropdown-nav-link w--current">Why sponsor?</a>
+                            <a href="https://medium.com/@collabski/introduction-to-creator-partnerships-f6ba24800d63" aria-current="page" class="dropdown-nav-link w--current">Why sponsor?</a>
                           </li>
                           <li class="dropdown-nav-item">
                             <a href="/about" aria-current="page" class="dropdown-nav-link w--current">About

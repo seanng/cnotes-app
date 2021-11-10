@@ -54,7 +54,7 @@ export async function sendListingNotificationEmail(
 ): Promise<void> {
   await sgMail.send({
     from: FROM_ADDRESS,
-    to: ['shonum@gmail.com', 'michael@cnotes.co'],
+    to: ['shonum@gmail.com', 'michael@collabski.com'],
     subject: `Collabski: ${creator.alias} has submitted an listing`,
     html: `
           <h1>${creator.alias} has submitted an listing:</h1>
@@ -66,6 +66,27 @@ export async function sendListingNotificationEmail(
           <p>${Object.entries(info.specs).map(
             item => `${item[0]}: ${item[1]}`
           )}</p>
+          <hr />
+        `,
+  })
+}
+
+export async function sendUserActivityNotificationEmail(
+  user,
+  date,
+  activity: string
+): Promise<void> {
+  await sgMail.send({
+    from: FROM_ADDRESS,
+    to: ['shonum@gmail.com', 'michael@collabski.com'],
+    subject: `New Collabski Activity: ${user.alias} (${user.role}) - ${activity}`,
+    html: `
+          <h1>${user.alias} (${user.role})!</h1>
+          <p>User Activity: ${activity} </p>
+          <p>Date: ${date} </p>
+          <p>ID: ${user.id} </p>
+          <p>Name: ${user.firstName} ${user.lastName}</p>
+          <p>Email: ${user.email} </p>
           <hr />
         `,
   })

@@ -12,7 +12,7 @@ ${Head}
           style="-webkit-transform:translate3d(0, 40%, 0) scale3d(0.8, 0.8, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);-moz-transform:translate3d(0, 40%, 0) scale3d(0.8, 0.8, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);-ms-transform:translate3d(0, 40%, 0) scale3d(0.8, 0.8, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);transform:translate3d(0, 40%, 0) scale3d(0.8, 0.8, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);opacity:0"
           class="home-hero-featured-message-wrapper">
           <div class="home-hero-featured-message-content">
-            <a data-w-id="5747d66c-b4ac-690f-6026-662ab3648be2" href="features.html"
+            <a data-w-id="5747d66c-b4ac-690f-6026-662ab3648be2" href="https://medium.com/@collabski/introduction-to-creator-partnerships-f6ba24800d63"
               class="home-hero-featured-message-link w-inline-block">
               <div class="home-hero-featured-message-tag">New</div>
               <div class="home-hero-featured-message-text">Haven&#x27;t worked with creators? Read our introductory
