@@ -231,8 +231,9 @@ ${Head}
             </div>
             <div data-w-id="24a66438-d00d-342a-e10f-1469d5035cdc"
               style="-webkit-transform:translate3d(0, 40px, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);-moz-transform:translate3d(0, 40px, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);-ms-transform:translate3d(0, 40px, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);transform:translate3d(0, 40px, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);opacity:0"
-              class="image-wrapper home-perks-content-top-image"><img
-                src="https://d2vh08r8g1sliz.cloudfront.net/landing/Offer-specs-card.png" loading="lazy"
+              class="image-wrapper home-perks-content-top-image">
+              <img
+                src="https://d2vh08r8g1sliz.cloudfront.net/landing/Offer-specs-card.png" loading="eager"
                 sizes="(max-width: 767px) 93vw, (max-width: 991px) 612px, (max-width: 1919px) 50vw, 612px"
                 srcset="https://d2vh08r8g1sliz.cloudfront.net/landing/Offer-specs-card-p-500.png 500w, https://d2vh08r8g1sliz.cloudfront.net/landing/Offer-specs-card-p-800.png 800w, https://d2vh08r8g1sliz.cloudfront.net/landing/Offer-specs-card.png 1080w"
                 alt="Offer Specs" class="image home-perks-content-top-image" /></div>
