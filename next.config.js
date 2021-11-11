@@ -8,6 +8,7 @@ module.exports = withBundleAnalyzer({
       'cnotes-dev.s3-ap-southeast-1.amazonaws.com',
       'cnotes-dev.s3.ap-southeast-1.amazonaws.com',
       'd29zuagwjyq1tv.cloudfront.net',
+      'd2vh08r8g1sliz.cloudfront.net',
       'i.imgur.com',
     ],
   },
