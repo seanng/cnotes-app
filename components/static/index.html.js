@@ -32,7 +32,7 @@ ${Head}
           class="display-1">you&#x27;re looking for<span class="text-color-accent"></span></h1>
         <p data-w-id="749e645b-3b65-110f-471d-f6af6dfbc601"
           style="-webkit-transform:translate3d(0, 40px, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);-moz-transform:translate3d(0, 40px, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);-ms-transform:translate3d(0, 40px, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);transform:translate3d(0, 40px, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);opacity:0"
-          class="paragraph-large home-hero">The vetted network of mechanical keyboard creators and brands</p>
+          class="paragraph-large home-hero">The highly curated network of mechanical keyboard creators</p>
         <div data-w-id="b1ff49e2-6272-bd33-f83d-82e4206a6d65"
           style="-webkit-transform:translate3d(0, 40px, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);-moz-transform:translate3d(0, 40px, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);-ms-transform:translate3d(0, 40px, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);transform:translate3d(0, 40px, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);opacity:0"
           class="_2-buttons-wrapper">
@@ -78,8 +78,8 @@ ${Head}
     <section class="section home-features reduction wf-section">
       <div class="container-medium-756px home-features">
         <h2 class="heading">Sponsorships made easy</h2>
-        <p class="paragraph home-features">Collabski is an invite-only network of keyboard brands and creators actively
-          looking for their next sponsorship opportunity. We save you time in finding the right creator by being highly
+        <p class="paragraph home-features">Collabski is an invite-only network of keyboard creators actively
+          looking for their next sponsorship opportunity. We save you time in finding the right creator for your audience by being highly
           selective in our curation and streamlining the sponsorship process.</p>
       </div>
       <div class="container-default home-features w-container">
@@ -98,7 +98,7 @@ ${Head}
               alt="statistics" class="image card-home-feature" />
             <div class="card-home-feature-content">
               <h3 class="title card-home-feature">Audience Statistics</h3>
-              <p class="paragraph card-home-feature">Easily access information like demo/geo and other key information
+              <p class="paragraph card-home-feature">Easily access information like demo, geo and other key information
                 all on the same page.</p>
             </div>
           </div>
@@ -216,7 +216,7 @@ ${Head}
                   <div class="home-perk-content">
                     <h3 class="title h4-size home-perk">Total number of offers</h3>
                     <p class="paragraph home-perk">Get an idea of how in-demand a creator is by seeing how many other
-                      brands are interested in a partnership.</p>
+                      brands are also interested.</p>
                   </div>
                 </div>
                 <div class="home-perk-wrapper"><img src="https://d2vh08r8g1sliz.cloudfront.net/landing/Frame-37148.svg"
@@ -295,8 +295,8 @@ ${Head}
                 <div class="card-home-step-content">
                   <div class="title h3-size card-home-step-number">1</div>
                   <h3 class="title card-home-step">Find a creator listing</h3>
-                  <p class="paragraph card-home-step">Creators list sponsorships for a set period of time where brands
-                    can make offers for. </p>
+                  <p class="paragraph card-home-step">Creators list sponsorships for a set period of time for brands
+                    to make offers. </p>
                 </div>
                 <div class="image-wrapper card-home-step"><img
                     src="https://d2vh08r8g1sliz.cloudfront.net/landing/Find-a-creator-listing.png" loading="eager"

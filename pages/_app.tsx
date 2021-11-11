@@ -44,17 +44,32 @@ function renderSnippet() {
 }
 
 function MyApp({ Component, pageProps }: AppProps): JSX.Element {
-  const metaDesc = 'A curated sponsorship experience'
+  const metaTitle = 'Collabski | The Highly Curated Network of Keeb Creators'
+  const metaDesc =
+    'With Collabski, sponsorships have never been easier! Simply create a profile to access an exclusive network of mechanical keyboard creators looking for sponsorships.'
   return (
     <ChakraProvider cookies={pageProps.cookies}>
       <Head>
-        <title>Collabski</title>
+        <title>{metaTitle}</title>
         <link rel="shortcut icon" href="/favicon.ico" />
         <meta name="description" content={metaDesc} />
+        {/* FACEBOOK / OPEN GRAPH */}
         <meta property="og:description" content={metaDesc} />
-        <meta property="og:title" content="Collabski" />
+        <meta property="og:title" content={metaTitle} />
+        <meta property="og:url" content="https://collabski.com" />
         <meta property="og:type" content="website" />
-        {/* <meta property="og:image" content={profile?.avatarUrl} /> */}
+        <meta
+          property="og:image"
+          content="https://d2vh08r8g1sliz.cloudfront.net/assets/og-image.png"
+        />
+        {/* TWITTER */}
+        <meta property="twitter:title" content={metaTitle} />
+        <meta property="twitter:description" content={metaDesc} />
+        <meta property="twitter:domain" content="https://collabski.com" />
+        <meta
+          property="twitter:image"
+          content="https://d2vh08r8g1sliz.cloudfront.net/assets/og-image.png"
+        />
         <meta
           name="viewport"
           content="width=device-width, initial-scale=1, maximum-scale=1"
