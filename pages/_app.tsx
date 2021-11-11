@@ -46,7 +46,7 @@ function renderSnippet() {
 function MyApp({ Component, pageProps }: AppProps): JSX.Element {
   const metaTitle = 'Collabski | The Highly Curated Network of Keeb Creators'
   const metaDesc =
-    'With Collabski, sponsorships have never been easier! Simply create a profile to access an exclusive network of mechanical keyboard creators looking for sponsorships.'
+    'With Collabski, sponsorships have never been easier! Simply register to access an exclusive network of mechanical keyboard creators looking for sponsorships.'
   return (
     <ChakraProvider cookies={pageProps.cookies}>
       <Head>
