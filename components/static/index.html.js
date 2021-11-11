@@ -3,6 +3,7 @@ import { Head, Navbar, Footer } from './sections'
 export default `
 <html data-wf-page="6187c4ffefcbe9670f40d774" data-wf-site="617aeb5a738d7f6b279e7a99">
 ${Head}
+
 <body class="bg-neutral-800">
   <div style="opacity:0" class="page-wrapper">
     ${Navbar}
@@ -12,7 +13,8 @@ ${Head}
           style="-webkit-transform:translate3d(0, 40%, 0) scale3d(0.8, 0.8, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);-moz-transform:translate3d(0, 40%, 0) scale3d(0.8, 0.8, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);-ms-transform:translate3d(0, 40%, 0) scale3d(0.8, 0.8, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);transform:translate3d(0, 40%, 0) scale3d(0.8, 0.8, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);opacity:0"
           class="home-hero-featured-message-wrapper">
           <div class="home-hero-featured-message-content">
-            <a data-w-id="5747d66c-b4ac-690f-6026-662ab3648be2" href="https://medium.com/@collabski/introduction-to-creator-partnerships-f6ba24800d63"
+            <a data-w-id="5747d66c-b4ac-690f-6026-662ab3648be2"
+              href="https://medium.com/@collabski/introduction-to-creator-partnerships-f6ba24800d63"
               class="home-hero-featured-message-link w-inline-block">
               <div class="home-hero-featured-message-tag">New</div>
               <div class="home-hero-featured-message-text">Haven&#x27;t worked with creators? Read our introductory
@@ -49,16 +51,16 @@ ${Head}
             alt="hero" class="image home-hero-1" /></div>
         <div class="home-hero-companies-wrapper">
           <div class="home-hero-companies">
-            <!-- <img src="https://d2vh08r8g1sliz.cloudfront.net/landing/delvify.svg"
-              loading="lazy" alt="delvify" class="image home-hero-company"> -->
-            <img src="https://d2vh08r8g1sliz.cloudfront.net/landing/capsule48.png" loading="lazy" alt="capsule48"
+            <img src="https://d2vh08r8g1sliz.cloudfront.net/landing/monstargear.svg" width="147" loading="lazy"
+              alt="Monstar Gear" class="image home-hero-company">
+            <img src="https://d2vh08r8g1sliz.cloudfront.net/landing/drop.svg" width="143" loading="lazy" alt="Drop.com"
               class="image home-hero-company google" />
-            <!-- <img
-              src="images/logo-3-company-home-hero-dark-template.svg" loading="lazy" alt=""
-              class="image home-hero-company youtube"><img src="images/logo-4-company-home-hero-dark-template.svg"
-              loading="lazy" alt="" class="image home-hero-company"><img
-              src="images/logo-5-company-home-hero-dark-template.svg" loading="lazy" alt=""
-              class="image home-hero-company"> -->
+            <img src="https://d2vh08r8g1sliz.cloudfront.net/landing/stacked.svg" width="176" loading="lazy"
+              alt="Stacked.gg" class="image home-hero-company youtube" />
+            <img src="https://d2vh08r8g1sliz.cloudfront.net/landing/moyu.svg" loading="lazy" alt="Moyu Studio"
+              class="image home-hero-company" width="271" />
+            <img src="https://d2vh08r8g1sliz.cloudfront.net/landing/capsule48.svg" width="130" loading="lazy"
+              alt="Capsule 48" class="image home-hero-company" />
           </div>
         </div>
         <div data-w-id="a052a4bf-34f8-d790-1f5c-e2592094cb97" class="bg-gradient-blur-wrapper home-hero-1">
