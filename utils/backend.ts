@@ -4,40 +4,22 @@ import prop from 'ramda/src/prop'
 import map from 'ramda/src/map'
 import groupBy from 'ramda/src/groupBy'
 import getVideoId from 'get-video-id'
+import axios from 'axios'
 import { PortfolioItem } from 'shared/types'
 import youtubeClient from 'lib/youtube'
 
-// TODO: mv to separate serverless function and make fetch once we get tiktok creators.
-// import { getVideoMeta } from 'tiktok-scraper'
-// const getTiktokData = async (item): Promise<PortfolioItem> => {
-//   const { collector } = await getVideoMeta(item.url)
-//   return {
-//     ...item,
-//     title: collector[0].text,
-//     platformMediaId: collector[0].id,
-//     thumbnailUrl: collector[0].imageUrl,
-//     videoUrl: collector[0].videoUrl,
-//     publishedAt: new Date(collector[0].createTime),
-//     viewCount: collector[0].playCount,
-//     commentCount: collector[0].commentCount,
-//   }
-// }
-
-const getYoutubeData = async (
-  ids: string[]
-): Promise<Omit<PortfolioItem, 'url'>[]> => {
+const getYoutubeData = async (ids: string[]): Promise<PortfolioItem[]> => {
   if (!ids || ids.length === 0) {
     return []
   }
-  const {
-    data: { items },
-  } = await youtubeClient.videos.list({
+  const { data } = await youtubeClient.videos.list({
     id: ids,
     part: ['statistics', 'id', 'snippet'],
   })
 
-  return items.map(({ id, snippet, statistics }) => ({
+  return data.items.map(({ id, snippet, statistics }) => ({
     platformMediaId: id,
+    url: `https://www.youtube.com/watch?v=${id}`,
     title: snippet.title,
     thumbnailUrl:
       snippet?.thumbnails?.standard?.url ||
@@ -51,12 +33,26 @@ const getYoutubeData = async (
   }))
 }
 
+const getTiktokData = async (items: string[]): Promise<PortfolioItem[]> => {
+  if (!items || items.length === 0) {
+    return []
+  }
+  const { data } = await axios({
+    method: 'post',
+    url: `${process.env.NEXT_PUBLIC_VERCEL_URL}/api/tiktok-scraper`,
+    data: items,
+  })
+  return data
+}
+
 export const populatePortfolioData = async (
   portfolio: PortfolioItem[]
 ): Promise<PortfolioItem[]> => {
-  const youtubeIds = []
   const items = [...portfolio]
+  const youtubeIds = []
+  const tiktokUrls = []
 
+  // separate portfolio item into youtubeIds or tiktok
   for (let i = 0; i < items.length; i += 1) {
     const item = items[i]
     const { id, service } = getVideoId(item.url)
@@ -65,22 +61,28 @@ export const populatePortfolioData = async (
     }
     item.platform = service
     item.platformMediaId = id
-    if (id && service === 'youtube') {
-      // so we can make 1 combined request to youtube api
+    if (!id) {
+      // break if cant get id from getVideoId
+      continue
+    }
+    if (service === 'youtube') {
       youtubeIds.push(id)
-      // } else if (service === 'tiktok') {
-      //   items[i] = await getTiktokData(item)
+    } else if (service === 'tiktok') {
+      tiktokUrls.push(item.url)
     }
   }
-  const youtubeList = await getYoutubeData(youtubeIds)
-  const youtubeListById = groupBy(prop('platformMediaId'), youtubeList)
 
-  const combinedItems = map<PortfolioItem, PortfolioItem>(item => {
-    const populatedItem = youtubeListById[item.platformMediaId]?.[0] || {}
+  const tiktokData = await getTiktokData(tiktokUrls)
+  const youtubeData = await getYoutubeData(youtubeIds)
+
+  const tiktokAndYoutubeData = tiktokData.concat(youtubeData)
+  const dataById = groupBy(prop('platformMediaId'), tiktokAndYoutubeData)
+  const mergedItems = map<PortfolioItem, PortfolioItem>(item => {
+    const populatedItem = dataById[item.platformMediaId]?.[0] || {}
     return merge(item, populatedItem)
   })(items)
 
-  return combinedItems
+  return mergedItems
 }
 
 export default function noOp() {
