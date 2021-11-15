@@ -34,6 +34,7 @@ function renderSnippet() {
     // note: the page option only covers SSR tracking.
     // Page.js is used to track other events using `window.analytics.page()`
     page: true,
+    host: 'analytics.collabski.com',
   }
 
   if (process.env.NEXT_PUBLIC_VERCEL_ENV === 'development') {
