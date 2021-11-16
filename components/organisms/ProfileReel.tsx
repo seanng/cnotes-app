@@ -42,6 +42,9 @@ const ProfileReel = ({ profile, gridProps }: Props): JSX.Element => {
           null,
           'repeat(2, 1fr)',
           'repeat(3, 1fr)',
+          'repeat(4, 1fr)',
+          'repeat(5, 1fr)',
+          'repeat(6, 1fr)',
         ]}
         gap={6}
         {...gridProps}
