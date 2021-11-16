@@ -17,7 +17,7 @@ import {
   GridProps,
 } from '@chakra-ui/react'
 import { TransformedProfile } from 'shared/types'
-import { TIKTOK } from 'shared/constants'
+import { TIKTOK, YOUTUBE } from 'shared/constants'
 import IsVerifiedTag from 'components/atoms/IsVerifiedTag'
 import { platformIconSlugs } from 'utils/configs'
 import { Icon as Iconify } from '@iconify/react'
@@ -130,7 +130,9 @@ const ProfileReel = ({ profile, gridProps }: Props): JSX.Element => {
                               icon="ant-design:like-outlined"
                               mr={1}
                             />
-                            {item.rating}%
+                            {item.platform === YOUTUBE
+                              ? `${item.rating}%`
+                              : formatCountNumber(item.likeCount)}
                           </Flex>
                         )}
                         {/* <Flex color="cyan.600">
