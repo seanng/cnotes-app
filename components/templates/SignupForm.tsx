@@ -2,7 +2,6 @@ import Head from 'next/head'
 import { useMutation, gql } from '@apollo/client'
 import {
   Box,
-  Text,
   chakra as c,
   Container,
   Button,
@@ -11,6 +10,7 @@ import {
 } from '@chakra-ui/react'
 import omit from 'ramda/src/omit'
 import { useForm } from 'react-hook-form'
+import NextLink from 'next/link'
 import {
   EMAIL_REGEX,
   EMAIL_TAKEN,
@@ -22,6 +22,7 @@ import { getErrorMessage } from 'utils/helpers'
 import { ArrowBackIcon } from '@chakra-ui/icons'
 import { useRouter } from 'next/router'
 import FormInput from 'components/atoms/FormInput'
+import { useColors } from 'hooks'
 
 type TemplateProps = {
   isBrand?: boolean
@@ -44,6 +45,8 @@ const SIGN_UP = gql`
   }
 `
 
+const Link = c(NextLink)
+
 function SignupForm({ isBrand }: TemplateProps): JSX.Element {
   const [signup] = useMutation(SIGN_UP)
   const router = useRouter()
@@ -54,6 +57,7 @@ function SignupForm({ isBrand }: TemplateProps): JSX.Element {
     formState: { errors, isSubmitting },
     watch,
   } = useForm()
+  const { gray, cyan } = useColors()
 
   const password = watch('password')
 
@@ -85,7 +89,7 @@ function SignupForm({ isBrand }: TemplateProps): JSX.Element {
       </Head>
       <Container centerContent py={[16, 20]}>
         <Box w={900} maxW="100%">
-          <Flex mb={5} align="center">
+          <Flex mb={6} align="center">
             <IconButton
               size="lg"
               fontSize="24px"
@@ -100,17 +104,24 @@ function SignupForm({ isBrand }: TemplateProps): JSX.Element {
               }}
             />
             <c.h2
-              textStyle="h2"
+              textStyle="h3"
               fontFamily="body"
               textTransform="none"
               fontWeight={700}
             >
-              Create account
+              {`Sign up as a ${isBrand ? 'brand' : 'creator'}`}
             </c.h2>
           </Flex>
-          <Text color="gray.600" mb={16}>
-            Start getting more transparency into sponsorships.
-          </Text>
+          <Flex textStyle={['small', 'base']} mb={12}>
+            <Box color={gray[600]} mr={3}>
+              {`Not a ${isBrand ? 'brand' : 'creator'}?`}
+            </Box>
+            <Box color={cyan[600]} fontWeight={500}>
+              <Link href={isBrand ? '/signup/creator' : '/signup/brand'}>
+                {`Go to ${isBrand ? 'creator' : 'brand'} signup form.`}
+              </Link>
+            </Box>
+          </Flex>
           <Box w={['90%', '60%']}>
             <form onSubmit={handleSubmit(onSubmit)}>
               <FormInput
