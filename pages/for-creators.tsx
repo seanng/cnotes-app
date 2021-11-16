@@ -10,7 +10,7 @@ const ForCreatorsPage: NextPage = () => {
       <Head>
         <link
           rel="canonical"
-          href={`${process.env.NEXT_PUBLIC_VERCEL_URL}/for-creators`}
+          href={`${process.env.NEXT_PUBLIC_BASE_URL}/for-creators`}
         />
       </Head>
       <div dangerouslySetInnerHTML={{ __html: html }} />

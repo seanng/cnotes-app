@@ -9,7 +9,7 @@ const CREATOR_SLUGS = gql`
   }
 `
 function generateSiteMap(creators) {
-  const baseUrl = process.env.NEXT_PUBLIC_VERCEL_URL
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL
   return `<?xml version="1.0" encoding="UTF-8"?>
    <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
      <!--We manually set public URLs we know already-->

@@ -8,7 +8,7 @@ const IndexPage: NextPage = () => {
   return (
     <>
       <Head>
-        <link rel="canonical" href={`${process.env.NEXT_PUBLIC_VERCEL_URL}`} />
+        <link rel="canonical" href={`${process.env.NEXT_PUBLIC_BASE_URL}`} />
       </Head>
       <div dangerouslySetInnerHTML={{ __html: html }} />
     </>

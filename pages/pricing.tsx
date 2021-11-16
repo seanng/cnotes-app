@@ -10,7 +10,7 @@ const PricingPage: NextPage = () => {
       <Head>
         <link
           rel="canonical"
-          href={`${process.env.NEXT_PUBLIC_VERCEL_URL}/pricing`}
+          href={`${process.env.NEXT_PUBLIC_BASE_URL}/pricing`}
         />
       </Head>
       <div dangerouslySetInnerHTML={{ __html: html }} />

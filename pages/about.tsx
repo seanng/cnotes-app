@@ -10,7 +10,7 @@ const AboutPage: NextPage = () => {
       <Head>
         <link
           rel="canonical"
-          href={`${process.env.NEXT_PUBLIC_VERCEL_URL}/about`}
+          href={`${process.env.NEXT_PUBLIC_BASE_URL}/about`}
         />
       </Head>
       <div dangerouslySetInnerHTML={{ __html: html }} />

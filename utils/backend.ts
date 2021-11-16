@@ -39,7 +39,7 @@ const getTiktokData = async (items: string[]): Promise<PortfolioItem[]> => {
   }
   const { data } = await axios({
     method: 'post',
-    url: '/api/tiktok-scraper',
+    url: `${process.env.NEXT_PUBLIC_BASE_URL}/api/tiktok-scraper`,
     data: items,
   })
   return data
