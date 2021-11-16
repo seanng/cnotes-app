@@ -4,7 +4,7 @@ import prop from 'ramda/src/prop'
 import map from 'ramda/src/map'
 import groupBy from 'ramda/src/groupBy'
 import getVideoId from 'get-video-id'
-import axios from 'axios'
+// import axios from 'axios'
 import { PortfolioItem } from 'shared/types'
 import youtubeClient from 'lib/youtube'
 
@@ -33,17 +33,17 @@ const getYoutubeData = async (ids: string[]): Promise<PortfolioItem[]> => {
   }))
 }
 
-const getTiktokData = async (items: string[]): Promise<PortfolioItem[]> => {
-  if (!items || items.length === 0) {
-    return []
-  }
-  const { data } = await axios({
-    method: 'post',
-    url: `${process.env.NEXT_PUBLIC_BASE_URL}/api/tiktok-scraper`,
-    data: items,
-  })
-  return data
-}
+// const getTiktokData = async (items: string[]): Promise<PortfolioItem[]> => {
+//   if (!items || items.length === 0) {
+//     return []
+//   }
+//   const { data } = await axios({
+//     method: 'post',
+//     url: `${process.env.NEXT_PUBLIC_BASE_URL}/api/tiktok-scraper`,
+//     data: items,
+//   })
+//   return data
+// }
 
 export const populatePortfolioData = async (
   portfolio: PortfolioItem[]
@@ -72,10 +72,11 @@ export const populatePortfolioData = async (
     }
   }
 
-  const tiktokData = await getTiktokData(tiktokUrls)
+  // const tiktokData = await getTiktokData(tiktokUrls)
   const youtubeData = await getYoutubeData(youtubeIds)
 
-  const tiktokAndYoutubeData = tiktokData.concat(youtubeData)
+  const tiktokAndYoutubeData = youtubeData
+  // const tiktokAndYoutubeData = tiktokData.concat(youtubeData)
   const dataById = groupBy(prop('platformMediaId'), tiktokAndYoutubeData)
   const mergedItems = map<PortfolioItem, PortfolioItem>(item => {
     const populatedItem = dataById[item.platformMediaId]?.[0] || {}
