@@ -102,7 +102,8 @@ const ProfileReel = ({ profile, gridProps }: Props): JSX.Element => {
                         fontWeight={500}
                         color="white"
                       >
-                        {format(new Date(item.publishedAt), 'dd LLLL yyyy')}
+                        {item.publishedAt &&
+                          format(new Date(item.publishedAt), 'dd LLLL yyyy')}
                       </Text>
                       <Button
                         size="sm"
