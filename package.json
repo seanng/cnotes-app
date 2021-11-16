@@ -39,7 +39,7 @@
     "@fontsource/asap": "^4.5.0",
     "@fontsource/roboto-mono": "^4.5.0",
     "@googleapis/youtube": "^2.0.0",
-    "@iconify/react": "^3.0.1",
+    "@iconify/react": "3.0.1",
     "@next/bundle-analyzer": "^11.1.2",
     "@prisma/client": "2.29.1",
     "@segment/snippet": "^4.15.3",
