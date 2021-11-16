@@ -1,7 +1,7 @@
 export interface PortfolioItem {
-  platformMediaId: string
-  url: string
-  thumbnailUrl: string
+  platformMediaId?: string
+  url?: string
+  thumbnailUrl?: string
   isVerified?: boolean
   publishedAt?: string
   companyUrl?: string
@@ -137,11 +137,11 @@ export interface Token {
 }
 
 export interface SettingsFormFieldValues {
-  firstName: string
-  lastName: string
-  alias: string
-  websiteUrl: string
-  about: string
+  firstName?: string
+  lastName?: string
+  alias?: string
+  websiteUrl?: string
+  about?: string
   portfolio?: PortfolioItem[]
   avatarUrl?: string
   bannerUrl?: string
