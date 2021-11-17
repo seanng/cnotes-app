@@ -167,13 +167,13 @@ const ProfileReel = ({ profile, gridProps }: Props): JSX.Element => {
                 />
               </LinkBox>
             </AspectRatio>
-            <Box textStyle="base" mt={3} mb={5} display="inline-block">
+            <Flex textStyle="base" mt={3} mb={5} align="center">
               <Icon
                 mr={2}
                 as={Iconify}
                 icon={platformIconSlugs[item.platform]}
                 fontSize="20px"
-                mb="2px"
+                // mb="2px"
               />
               <Box
                 as="span"
@@ -204,7 +204,7 @@ const ProfileReel = ({ profile, gridProps }: Props): JSX.Element => {
                   </Box>
                 </>
               )}
-            </Box>
+            </Flex>
           </GridItem>
         ))}
       </Grid>
