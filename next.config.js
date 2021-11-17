@@ -5,8 +5,8 @@ const withBundleAnalyzer = require('@next/bundle-analyzer')({
 module.exports = withBundleAnalyzer({
   images: {
     domains: [
-      'cnotes-dev.s3-ap-southeast-1.amazonaws.com',
-      'cnotes-dev.s3.ap-southeast-1.amazonaws.com',
+      'collabski-dev.s3.us-east-1.amazonaws.com',
+      'collabski-prod.s3.us-east-1.amazonaws.com',
       'd29zuagwjyq1tv.cloudfront.net',
       'd2vh08r8g1sliz.cloudfront.net',
       'i.imgur.com',

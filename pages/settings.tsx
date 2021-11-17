@@ -115,6 +115,7 @@ const compress = (payload: File): Promise<Blob> =>
     (resolve, reject) =>
       new Compressor(payload, {
         quality: 0.98,
+        convertSize: 500000, // if exceeds 500kb (default was 5mb)
         success: resolve,
         error: reject,
       })
