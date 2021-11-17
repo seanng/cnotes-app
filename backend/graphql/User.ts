@@ -38,6 +38,7 @@ export const User = objectType({
     t.string('youtubeUrl')
     t.string('instagramUrl')
     t.string('facebookUrl')
+    t.string('twitterUrl')
     t.string('websiteUrl')
     t.string('bannerUrl')
     t.string('avatarUrl')
@@ -126,6 +127,7 @@ export const UserInput = inputObjectType({
     t.string('youtubeUrl')
     t.string('instagramUrl')
     t.string('facebookUrl')
+    t.string('twitterUrl')
   },
 })
 
@@ -138,7 +140,6 @@ export const profileBySlug = queryField('profileBySlug', {
 export const creatorSlugs = queryField('creatorSlugs', {
   type: list('User'),
   resolve: async (_, __) => {
-    console.log('finding.')
     const users = await prisma.user.findMany({
       where: { role: CREATOR },
       select: {

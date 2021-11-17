@@ -59,6 +59,22 @@ const SocialSettings: FC<Props> = ({ errors, register }: Props) => {
         }}
       />
       <FormInput
+        label="Twitter URL (optional)"
+        mb={8}
+        error={errors.twitterUrl}
+        inputProps={{
+          placeholder: 'https://twitter.com/xxxx',
+          ...register('twitterUrl', {
+            pattern: {
+              value:
+                /(https?|http?):\/\/(www\.)?(twitter)\.com\b([-a-zA-Z0-9()@:%_+.~#?&//=]*)/,
+              message:
+                'Enter a full Twitter URL (include "https://twitter.com/")',
+            },
+          }),
+        }}
+      />
+      <FormInput
         label="Instagram URL (optional)"
         mb={8}
         error={errors.instagramUrl}

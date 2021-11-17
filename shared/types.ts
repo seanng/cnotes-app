@@ -59,6 +59,7 @@ export interface User {
   youtubeUrl?: string
   facebookUrl?: string
   instagramUrl?: string
+  twitterUrl?: string
   creatorStats?: CreatorStats
   statsLastVerifiedAt?: string
 }
@@ -148,6 +149,7 @@ export interface SettingsFormFieldValues {
   genre?: string
   tiktokUrl?: string
   youtubeUrl?: string
+  twitterUrl?: string
   facebookUrl?: string
   instagramUrl?: string
   password?: string

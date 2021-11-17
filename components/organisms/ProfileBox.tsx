@@ -33,7 +33,8 @@ const StatNumbers = dynamic(() => import('components/molecules/StatNumbers'), {
 })
 
 const Social = ({ profile, ...props }: Props & FlexProps): JSX.Element => {
-  const { tiktokUrl, youtubeUrl, instagramUrl, facebookUrl } = profile
+  const { tiktokUrl, youtubeUrl, instagramUrl, facebookUrl, twitterUrl } =
+    profile
 
   return (
     <Flex align="center" {...props}>
@@ -54,6 +55,17 @@ const Social = ({ profile, ...props }: Props & FlexProps): JSX.Element => {
             mx={2}
             as={Iconify}
             icon="akar-icons:youtube-fill"
+            height="18px"
+            width="18px"
+          />
+        </a>
+      )}
+      {twitterUrl && (
+        <a href={twitterUrl} target="_blank" rel="noreferrer">
+          <Icon
+            mx={2}
+            as={Iconify}
+            icon="akar-icons:twitter-fill"
             height="18px"
             width="18px"
           />

@@ -42,6 +42,7 @@ const PROFILE_BY_SLUG = gql`
       bannerUrl
       avatarUrl
       tiktokUrl
+      twitterUrl
       youtubeUrl
       instagramUrl
       facebookUrl

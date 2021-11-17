@@ -54,6 +54,7 @@ const defaultValues = {
   about: '',
   tiktokUrl: '',
   youtubeUrl: '',
+  twitterUrl: '',
   genre: '',
   password: '',
   passwordConfirm: '',
@@ -74,6 +75,7 @@ const getFormData = (user: User): SettingsFormFieldValues => {
     about: user.about,
     youtubeUrl: user.youtubeUrl,
     tiktokUrl: user.tiktokUrl,
+    twitterUrl: user.twitterUrl,
     facebookUrl: user.facebookUrl,
     instagramUrl: user.instagramUrl,
     portfolio: user.portfolio,
@@ -192,6 +194,7 @@ const SettingsPage: NextPage<Props> = ({ user }: Props) => {
       tiktokUrl: () => setTabIdx(3),
       instagramUrl: () => setTabIdx(3),
       facebookUrl: () => setTabIdx(3),
+      twitterUrl: () => setTabIdx(3),
     }
     showError[Object.keys(data)[0]]()
   }
