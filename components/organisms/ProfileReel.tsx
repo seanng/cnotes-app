@@ -29,26 +29,38 @@ type Props = {
   gridProps?: GridProps
 }
 
+const getTemplateColumns = (mainUrl = ''): string[] => {
+  if (mainUrl.includes(TIKTOK))
+    return [
+      'repeat(1, 1fr)',
+      null,
+      'repeat(2, 1fr)',
+      'repeat(3, 1fr)',
+      'repeat(4, 1fr)',
+      'repeat(5, 1fr)',
+      'repeat(6, 1fr)',
+    ]
+  // youtube
+  return [
+    'repeat(1, 1fr)',
+    null,
+    'repeat(2, 1fr)',
+    null,
+    'repeat(3, 1fr)',
+    null,
+  ]
+}
+
 const ProfileReel = ({ profile, gridProps }: Props): JSX.Element => {
   const { green, gray } = useColors()
+  const templateColumns = getTemplateColumns(profile.websiteUrl)
+
   return (
     <>
       <Text textStyle="profileSectionHeading" mb={5}>
         Content Reel
       </Text>
-      <Grid
-        templateColumns={[
-          'repeat(1, 1fr)',
-          null,
-          'repeat(2, 1fr)',
-          'repeat(3, 1fr)',
-          'repeat(4, 1fr)',
-          'repeat(5, 1fr)',
-          'repeat(6, 1fr)',
-        ]}
-        gap={6}
-        {...gridProps}
-      >
+      <Grid templateColumns={templateColumns} gap={6} {...gridProps}>
         {profile.portfolio.map((item, i) => (
           <GridItem
             key={i}
