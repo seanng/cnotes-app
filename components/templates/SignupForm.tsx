@@ -6,6 +6,7 @@ import {
   Container,
   Button,
   Flex,
+  SimpleGrid,
   IconButton,
 } from '@chakra-ui/react'
 import omit from 'ramda/src/omit'
@@ -32,6 +33,7 @@ type OnSubmitProps = {
   firstName: string
   lastName: string
   email: string
+  websiteUrl?: string
   password: string
   passwordConfirm: string
   alias: string
@@ -63,6 +65,7 @@ function SignupForm({ isBrand }: TemplateProps): JSX.Element {
 
   const onSubmit = async (data: OnSubmitProps): Promise<void> => {
     try {
+      console.log('data: ', data)
       await signup({
         variables: {
           input: {
@@ -124,56 +127,30 @@ function SignupForm({ isBrand }: TemplateProps): JSX.Element {
           </Flex>
           <Box w={['90%', '60%']}>
             <form onSubmit={handleSubmit(onSubmit)}>
-              <FormInput
-                label="First name"
-                mb={8}
-                error={errors.lastName}
-                inputProps={{
-                  placeholder: 'eg. Steven',
-                  ...register('firstName', {
-                    required: true,
-                  }),
-                }}
-              />
-              <FormInput
-                label="Last name"
-                mb={8}
-                error={errors.lastName}
-                inputProps={{
-                  placeholder: 'eg. Smith',
-                  ...register('lastName', {
-                    required: true,
-                  }),
-                }}
-              />
-              <FormInput
-                label={isBrand ? 'Company name' : 'Creator name'}
-                error={errors.alias}
-                mb={8}
-                inputProps={{
-                  placeholder: isBrand ? 'eg. Spotify Ltd.' : 'eg. Grapplr',
-                  ...register('alias', {
-                    required: true,
-                  }),
-                }}
-              />
-              <FormInput
-                label={isBrand ? 'Company website URL' : 'Main channel URL'}
-                error={errors.websiteUrl}
-                mb={8}
-                inputProps={{
-                  placeholder: isBrand
-                    ? 'eg. https://drop.com'
-                    : 'eg. https://www.youtube.com/channel/UCfRKvxo',
-                  ...register('websiteUrl', {
-                    required: true,
-                    pattern: {
-                      value: URL_REGEX,
-                      message: 'Enter a valid website URL (include https://)',
-                    },
-                  }),
-                }}
-              />
+              <SimpleGrid columns={[1, 2]} spacingX={4}>
+                <FormInput
+                  label="First name"
+                  error={errors.lastName}
+                  mb={8}
+                  inputProps={{
+                    placeholder: 'eg. Steven',
+                    ...register('firstName', {
+                      required: true,
+                    }),
+                  }}
+                />
+                <FormInput
+                  label="Last name"
+                  error={errors.lastName}
+                  mb={8}
+                  inputProps={{
+                    placeholder: 'eg. Smith',
+                    ...register('lastName', {
+                      required: true,
+                    }),
+                  }}
+                />
+              </SimpleGrid>
               <FormInput
                 label="Email address"
                 error={errors.email}
@@ -190,34 +167,65 @@ function SignupForm({ isBrand }: TemplateProps): JSX.Element {
                 }}
               />
               <FormInput
-                label="Password"
-                error={errors.password}
+                label={isBrand ? 'Company name' : 'Creator name'}
+                error={errors.alias}
                 mb={8}
                 inputProps={{
-                  type: 'password',
-                  placeholder: 'Password',
-                  ...register('password', {
+                  placeholder: isBrand ? 'eg. Spotify Ltd.' : 'eg. Grapplr',
+                  ...register('alias', {
                     required: true,
-                    minLength: {
-                      value: 6,
-                      message: 'Password must have at least 6 characters',
-                    },
                   }),
                 }}
               />
-              <FormInput
-                label="Confirm password"
-                error={errors.passwordConfirm}
-                mb={8}
-                inputProps={{
-                  type: 'password',
-                  placeholder: 'Re-enter your password',
-                  ...register('passwordConfirm', {
-                    validate: v =>
-                      v === password || 'The passwords do not match',
-                  }),
-                }}
-              />
+
+              {!isBrand && (
+                <FormInput
+                  label="Main channel URL"
+                  error={errors.websiteUrl}
+                  mb={8}
+                  inputProps={{
+                    placeholder: 'eg. https://www.youtube.com/channel/UCfRKvxo',
+                    ...register('websiteUrl', {
+                      required: true,
+                      pattern: {
+                        value: URL_REGEX,
+                        message: 'Enter a valid website URL (include https://)',
+                      },
+                    }),
+                  }}
+                />
+              )}
+              <SimpleGrid columns={[1, 2]} spacingX={4} mb={5}>
+                <FormInput
+                  label="Password"
+                  error={errors.password}
+                  mb={8}
+                  inputProps={{
+                    type: 'password',
+                    placeholder: 'Password',
+                    ...register('password', {
+                      required: true,
+                      minLength: {
+                        value: 6,
+                        message: 'Password must have at least 6 characters',
+                      },
+                    }),
+                  }}
+                />
+                <FormInput
+                  label="Confirm password"
+                  error={errors.passwordConfirm}
+                  mb={8}
+                  inputProps={{
+                    type: 'password',
+                    placeholder: 'Re-enter your password',
+                    ...register('passwordConfirm', {
+                      validate: v =>
+                        v === password || 'The passwords do not match',
+                    }),
+                  }}
+                />
+              </SimpleGrid>
               <Button type="submit" isLoading={isSubmitting}>
                 Create account
               </Button>
