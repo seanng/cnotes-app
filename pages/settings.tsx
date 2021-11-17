@@ -156,13 +156,16 @@ const SettingsPage: NextPage<Props> = ({ user }: Props) => {
     delete input.passwordConfirm
     try {
       setIsSuccess(true)
+      const baseUrl = process.env.NEXT_PUBLIC_CLOUDFRONT_URL
       if (avatarFile) {
         const file = await compress(avatarFile)
-        input.avatarUrl = await uploadToS3(file, 'avatars', user.id)
+        const key = await uploadToS3(file, 'avatars', user.id)
+        input.avatarUrl = `${baseUrl}/${key}`
       }
       if (bannerFile) {
         const file = await compress(bannerFile)
-        input.bannerUrl = await uploadToS3(file, 'banners', user.id)
+        const key = await uploadToS3(file, 'banners', user.id)
+        input.bannerUrl = `${baseUrl}/${key}`
       }
       await updateUser({ variables: { input } })
       onOpen()

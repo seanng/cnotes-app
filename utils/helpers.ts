@@ -38,8 +38,8 @@ export async function uploadToS3(
     throw new Error('file and dirName must be provided.')
   }
   const ReactS3Client = S3({ dirName })
-  const { location } = await ReactS3Client.uploadFile(file, fileName)
-  return location
+  const { key } = await ReactS3Client.uploadFile(file, fileName)
+  return key
 }
 
 type DeleteResponse = {
