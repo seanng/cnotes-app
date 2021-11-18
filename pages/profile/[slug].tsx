@@ -46,6 +46,7 @@ const PROFILE_BY_SLUG = gql`
       youtubeUrl
       instagramUrl
       facebookUrl
+      websiteUrl
       genre
       createdAt
       creatorStats
