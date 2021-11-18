@@ -59,22 +59,22 @@ function CreatorDashboardCard({ data }: Props): JSX.Element {
               {config.type === DEAL ? (
                 <>
                   <Box />
-                  <Text
+                  <Flex
                     pb={4}
                     pl={4}
                     textStyle="microBold"
+                    align="center"
                     color={config.isUrgent ? 'gray.600' : 'gray.500'}
                   >
                     <Icon
                       as={Iconify}
-                      mb="3px"
                       ml={1}
                       mr={2}
                       fontSize="16px"
                       icon={platformIconSlugs[data.platform]}
                     />
                     <span>{data.deliverable}</span>
-                  </Text>
+                  </Flex>
                 </>
               ) : (
                 <>

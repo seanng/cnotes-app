@@ -24,10 +24,10 @@ function UserLinks({ slug }: { slug: string }): JSX.Element {
         Settings
       </LinkText>
       <LinkText isExternal href={`/profile/${slug}`} mt={4}>
-        My profile
+        My Profile
       </LinkText>
       <Divider my={4} />
-      <LinkText href="/signout">Log out</LinkText>
+      <LinkText href="/signout">Log Out</LinkText>
     </>
   )
 }
