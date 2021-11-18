@@ -35,7 +35,7 @@ model User {
   primaryPlatform     String?
   genre               String?
   listings            Listing[]
-  creatorStats        Json? // { platform, viewership, followers, demographic (male, female), lastVerifiedAt, locations[] }
+  creatorStats        Json? // { viewership, followers, demographic (male, female), lastVerifiedAt, locations[] }
   statsLastVerifiedAt DateTime?
   // brand-speciifc
   offers              Offer[] // brand only. 
