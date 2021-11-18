@@ -6,6 +6,7 @@ import groupBy from 'ramda/src/groupBy'
 import getVideoId from 'get-video-id'
 // import axios from 'axios'
 import { PortfolioItem } from 'shared/types'
+import { YOUTUBE, TIKTOK } from 'shared/constants'
 import youtubeClient from 'lib/youtube'
 
 const getYoutubeData = async (ids: string[]): Promise<PortfolioItem[]> => {
@@ -56,18 +57,26 @@ export const populatePortfolioData = async (
   for (let i = 0; i < items.length; i += 1) {
     const item = items[i]
     const { id, service } = getVideoId(item.url)
-    if (service !== 'youtube' && service !== 'tiktok') {
+    if (service !== YOUTUBE && service !== TIKTOK) {
       throw new ValidationError('Platform not found')
     }
     item.platform = service
     item.platformMediaId = id
     if (!id) {
-      // break if cant get id from getVideoId
-      continue
+      // handle youtube short links ie. https://www.youtube.com/shorts/pUi01oPrN_A/
+      if (service === YOUTUBE && item.url.includes('/shorts/')) {
+        const splittedUrl = item.url.split('/shorts/')
+        item.platformMediaId = splittedUrl[splittedUrl.length - 1]
+          .split('/')[0] // handle end slash
+          .split('?')[0] // handle query params
+      } else {
+        // break if cant get id from getVideoId
+        continue
+      }
     }
-    if (service === 'youtube') {
-      youtubeIds.push(id)
-    } else if (service === 'tiktok') {
+    if (service === YOUTUBE) {
+      youtubeIds.push(item.platformMediaId)
+    } else if (service === TIKTOK) {
       tiktokUrls.push(item.url)
     }
   }
