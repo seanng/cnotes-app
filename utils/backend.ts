@@ -4,56 +4,32 @@ import prop from 'ramda/src/prop'
 import map from 'ramda/src/map'
 import groupBy from 'ramda/src/groupBy'
 import getVideoId from 'get-video-id'
-// import axios from 'axios'
 import { PortfolioItem } from 'shared/types'
 import { YOUTUBE, TIKTOK } from 'shared/constants'
-import youtubeClient from 'lib/youtube'
+import type { NextApiRequest, NextApiResponse, NextApiHandler } from 'next'
+import { getYoutubeData } from 'lib/youtube'
+import { getTiktokData } from 'lib/tiktok'
 
-const getYoutubeData = async (ids: string[]): Promise<PortfolioItem[]> => {
-  if (!ids || ids.length === 0) {
-    return []
-  }
-  const { data } = await youtubeClient.videos.list({
-    id: ids,
-    part: ['statistics', 'id', 'snippet'],
-  })
-
-  return data.items.map(({ id, snippet, statistics }) => ({
-    platformMediaId: id,
-    url: `https://www.youtube.com/watch?v=${id}`,
-    title: snippet.title,
-    thumbnailUrl:
-      snippet?.thumbnails?.standard?.url ||
-      snippet?.thumbnails?.high?.url ||
-      snippet?.thumbnails?.medium?.url,
-    publishedAt: snippet.publishedAt,
-    viewCount: statistics.viewCount,
-    commentCount: statistics.commentCount,
-    likeCount: statistics.likeCount,
-    dislikeCount: statistics.dislikeCount,
-  }))
+export const mergeWithSourceData = async (
+  youtubeIds = [],
+  tiktokUrls = [],
+  listToMutate = []
+): Promise<PortfolioItem[]> => {
+  const youtubeData = await getYoutubeData(youtubeIds)
+  const tiktokData = await getTiktokData(tiktokUrls)
+  const tiktokAndYoutubeData = tiktokData.concat(youtubeData)
+  const dataById = groupBy(prop('mediaId'), tiktokAndYoutubeData)
+  return map<PortfolioItem, PortfolioItem>(item => {
+    const populatedItem = dataById[item.mediaId]?.[0] || {}
+    return merge(item, populatedItem)
+  })(listToMutate)
 }
-
-// const getTiktokData = async (items: string[]): Promise<PortfolioItem[]> => {
-//   if (!items || items.length === 0) {
-//     return []
-//   }
-//   const { data } = await axios({
-//     method: 'post',
-//     url: `${process.env.NEXT_PUBLIC_BASE_URL}/api/tiktok-scraper`,
-//     data: items,
-//   })
-//   return data
-// }
 
 export const populatePortfolioData = async (
   portfolio: PortfolioItem[]
 ): Promise<PortfolioItem[]> => {
-  const items = [...portfolio]
-  const youtubeIds = []
-  const tiktokUrls = []
-
-  // separate portfolio item into youtubeIds or tiktok
+  // Separate portfolio item into youtubeIds or tiktok
+  const [youtubeIds, tiktokUrls, items] = [[], [], [...portfolio]]
   for (let i = 0; i < items.length; i += 1) {
     const item = items[i]
     const { id, service } = getVideoId(item.url)
@@ -61,12 +37,12 @@ export const populatePortfolioData = async (
       throw new ValidationError('Platform not found')
     }
     item.platform = service
-    item.platformMediaId = id
+    item.mediaId = id
     if (!id) {
       // handle youtube short links ie. https://www.youtube.com/shorts/pUi01oPrN_A/
       if (service === YOUTUBE && item.url.includes('/shorts/')) {
         const splittedUrl = item.url.split('/shorts/')
-        item.platformMediaId = splittedUrl[splittedUrl.length - 1]
+        item.mediaId = splittedUrl[splittedUrl.length - 1]
           .split('/')[0] // handle end slash
           .split('?')[0] // handle query params
       } else {
@@ -75,26 +51,38 @@ export const populatePortfolioData = async (
       }
     }
     if (service === YOUTUBE) {
-      youtubeIds.push(item.platformMediaId)
+      youtubeIds.push(item.mediaId)
     } else if (service === TIKTOK) {
       tiktokUrls.push(item.url)
     }
   }
 
-  // const tiktokData = await getTiktokData(tiktokUrls)
-  const youtubeData = await getYoutubeData(youtubeIds)
-
-  const tiktokAndYoutubeData = youtubeData
-  // const tiktokAndYoutubeData = tiktokData.concat(youtubeData)
-  const dataById = groupBy(prop('platformMediaId'), tiktokAndYoutubeData)
-  const mergedItems = map<PortfolioItem, PortfolioItem>(item => {
-    const populatedItem = dataById[item.platformMediaId]?.[0] || {}
-    return merge(item, populatedItem)
-  })(items)
-
+  const mergedItems = await mergeWithSourceData(youtubeIds, tiktokUrls, items)
   return mergedItems
 }
 
-export default function noOp() {
-  // no op
-}
+const API_KEY = 'cnotes123'
+
+export const withApiGuard =
+  (handler: NextApiHandler, method = 'GET') =>
+  async (req: NextApiRequest, res: NextApiResponse): Promise<void> => {
+    if (!req.headers['x-api-key']) {
+      res.status(403).send({
+        message: 'No API Key found in headers',
+      })
+      return
+    }
+    if (req.headers['x-api-key'] !== API_KEY) {
+      res.status(403).send({
+        message: 'Incorrect API Key',
+      })
+      return
+    }
+    if (req.method !== method) {
+      res.status(405).send({
+        message: 'Method not allowed',
+      })
+      return
+    }
+    await handler(req, res)
+  }

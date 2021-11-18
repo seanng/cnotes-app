@@ -20,7 +20,7 @@ export default function ProfileCollabs({
         Collabs
       </Text>
       {collabs.map(collab => (
-        <Flex key={collab.platformMediaId} align="center" mb={7}>
+        <Flex key={collab.mediaId} align="center" mb={7}>
           <Center
             borderRadius="full"
             bgColor="black"

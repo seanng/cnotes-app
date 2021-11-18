@@ -1,5 +1,5 @@
 export interface PortfolioItem {
-  platformMediaId?: string
+  mediaId?: string
   url?: string
   thumbnailUrl?: string
   isVerified?: boolean

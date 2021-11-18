@@ -47,6 +47,7 @@
     "@sendgrid/mail": "^7.4.6",
     "animate.css": "^4.1.1",
     "apollo-server-micro": "3.1.2",
+    "aws-sdk": "^2.1031.0",
     "axios": "^0.24.0",
     "bcryptjs": "^2.4.3",
     "compressorjs": "^1.0.7",
@@ -72,8 +73,8 @@
     "react-hook-form": "^7.13.0",
     "react-markdown": "6.0.3",
     "react-slick": "^0.28.1",
-    "slugify": "^1.6.0",
-    "tiktok-scraper": "^1.4.36"
+    "s3-upload-stream": "^1.0.7",
+    "slugify": "^1.6.0"
   },
   "devDependencies": {
     "@testing-library/react": "^11.2.5",

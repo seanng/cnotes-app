@@ -1,6 +1,6 @@
 // FRONTEND ONLY.
 import type { GetServerSidePropsResult, Redirect } from 'next'
-import S3 from 'lib/s3'
+import S3 from 'lib/s3-react'
 import type { Blob } from 'buffer'
 import { Listing, Deal, User, TransformedProfile } from 'shared/types'
 import { ACTIVE, SELECTING, LISTING, NO_OFFERS } from 'shared/constants'

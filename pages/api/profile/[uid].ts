@@ -1,27 +1,12 @@
 import { MongoClient, ObjectId } from 'mongodb'
+import type { NextApiRequest, NextApiResponse } from 'next'
 import omit from 'ramda/src/omit'
+import { withApiGuard } from 'utils/backend'
 
-export default async function updateUserProfileHandler(req, res) {
-  // Guard the route if incorrect method or password
-  if (!req.headers['x-api-key']) {
-    res.status(403).send({
-      message: 'No API Key found in headers',
-    })
-    return
-  }
-  if (req.headers['x-api-key'] !== 'cnotes123') {
-    res.status(403).send({
-      message: 'Incorrect API Key',
-    })
-    return
-  }
-  if (req.method !== 'PUT') {
-    res.status(405).send({
-      message: 'Method not allowed',
-    })
-    return
-  }
-
+async function updateUserProfileHandler(
+  req: NextApiRequest,
+  res: NextApiResponse
+): Promise<void> {
   // Initialize MongoDB
   const client = new MongoClient(process.env.DATABASE_URL)
   await client.connect()
@@ -31,7 +16,7 @@ export default async function updateUserProfileHandler(req, res) {
   const collection = db.collection('User')
 
   // Omit non-writable fields
-  const { uid } = req.query
+  const { uid } = req.query as { uid: string }
   const data = omit(
     ['password', 'role', 'alias', 'slug', 'id', '_id'],
     req.body
@@ -57,3 +42,5 @@ export default async function updateUserProfileHandler(req, res) {
 
   res.status(200).send({ message })
 }
+
+export default withApiGuard(updateUserProfileHandler)
