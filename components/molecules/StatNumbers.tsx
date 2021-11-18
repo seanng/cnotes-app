@@ -10,7 +10,7 @@ type StatNumbersProps = {
 function formatStatTitle(key: string): string {
   const map = {
     followerCount: '# of followers',
-    verifiedCollabsCount: 'Verified Collabs',
+    totalCollabsCount: 'Total Collabs',
     avgImpressions: 'Avg Impressions',
     avgEngagement: 'Avg Engagement',
   }
@@ -23,7 +23,7 @@ export default function StatNumbers({
 }: StatNumbersProps): JSX.Element {
   const { gray } = useColors()
   const stats = [
-    { key: 'verifiedCollabsCount' },
+    { key: 'totalCollabsCount' },
     { key: 'followerCount' },
     { key: 'avgImpressions', helpText: 'Total Views / Total Videos' },
     { key: 'avgEngagement', helpText: 'Total Comments / Total Views' },
