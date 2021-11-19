@@ -8,7 +8,7 @@ async function videoStatsHandler(
   req: NextApiRequest,
   res: NextApiResponse
 ): Promise<void> {
-  const { urls } = req.query as { urls: string[] }
+  const urls = JSON.parse(req.query.urls as string)
   // Separate portfolio item into youtubeIds or tiktok
   const [list, youtubeIds, tiktokUrls] = [[], [], []]
   for (let i = 0; i < urls.length; i += 1) {
