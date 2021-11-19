@@ -43,4 +43,4 @@ async function updateUserProfileHandler(
   res.status(200).send({ message })
 }
 
-export default withApiGuard(updateUserProfileHandler)
+export default withApiGuard(updateUserProfileHandler, 'PUT')
