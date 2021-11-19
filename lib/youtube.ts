@@ -28,9 +28,9 @@ export const getYoutubeData = async (
       snippet?.thumbnails?.high?.url ||
       snippet?.thumbnails?.medium?.url,
     publishedAt: snippet.publishedAt,
-    viewCount: statistics.viewCount,
-    commentCount: statistics.commentCount,
-    likeCount: statistics.likeCount,
-    dislikeCount: statistics.dislikeCount,
+    viewCount: Number(statistics.viewCount),
+    commentCount: Number(statistics.commentCount),
+    likeCount: Number(statistics.likeCount),
+    dislikeCount: Number(statistics.dislikeCount),
   }))
 }

@@ -32,6 +32,7 @@ export const populatePortfolioData = async (
   const [youtubeIds, tiktokUrls, items] = [[], [], [...portfolio]]
   for (let i = 0; i < items.length; i += 1) {
     const item = items[i]
+    item.url = item.url.trim()
     const { id, service } = getVideoId(item.url)
     if (service !== YOUTUBE && service !== TIKTOK) {
       throw new ValidationError('Platform not found')
@@ -64,7 +65,7 @@ export const populatePortfolioData = async (
 const API_KEY = 'cnotes123'
 
 export const withApiGuard =
-  (handler: NextApiHandler, method = 'GET') =>
+  (handler: NextApiHandler, method: string) =>
   async (req: NextApiRequest, res: NextApiResponse): Promise<void> => {
     if (!req.headers['x-api-key']) {
       res.status(403).send({

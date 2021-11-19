@@ -13,7 +13,7 @@ async function videoStatsHandler(
   const [list, youtubeIds, tiktokUrls] = [[], [], []]
   for (let i = 0; i < urls.length; i += 1) {
     const item = { mediaId: null, platform: null }
-    const url = urls[i]
+    const url = urls[i].trim()
     const { id, service } = getVideoId(url)
     if (service !== YOUTUBE && service !== TIKTOK) {
       list.push({ ...item, url })
@@ -45,4 +45,4 @@ async function videoStatsHandler(
   res.status(200).json(populatedList)
 }
 
-export default withApiGuard(videoStatsHandler)
+export default withApiGuard(videoStatsHandler, 'GET')
