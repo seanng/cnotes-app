@@ -29,7 +29,7 @@ export interface GenderBreakdown {
 export interface CreatorStats {
   genderBreakdown: GenderBreakdown
   locationBreakdown: LocationBreakdown[]
-  verifiedCollabsCount: string
+  totalCollabsCount: string
   followerCount: string
   avgImpressions: string
   avgEngagement: string

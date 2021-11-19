@@ -15,6 +15,7 @@ export const mergeWithSourceData = async (
   tiktokUrls = [],
   listToMutate = []
 ): Promise<PortfolioItem[]> => {
+  if (listToMutate.length === 0) return []
   const youtubeData = await getYoutubeData(youtubeIds)
   const tiktokData = await getTiktokData(tiktokUrls)
   const tiktokAndYoutubeData = tiktokData.concat(youtubeData)

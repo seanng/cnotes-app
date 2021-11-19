@@ -19,6 +19,7 @@
     "lint": "eslint . --ext ts --ext tsx --ext js",
     "seed": "node private/seed.js",
     "start": "next start",
+    "test": "jest",
     "ts-node": "ts-node --compiler-options \"{\\\"module\\\":\\\"commonjs\\\"}\"",
     "type-check": "tsc --pretty --noEmit"
   },
