@@ -65,7 +65,6 @@ function SignupForm({ isBrand }: TemplateProps): JSX.Element {
 
   const onSubmit = async (data: OnSubmitProps): Promise<void> => {
     try {
-      console.log('data: ', data)
       await signup({
         variables: {
           input: {

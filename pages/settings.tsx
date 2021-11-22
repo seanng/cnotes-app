@@ -31,6 +31,7 @@ import AccountSettings from 'components/organisms/AccountSettings'
 import SettingsLoadingSkeleton from 'components/molecules/SettingsLoadingSkeleton'
 import { getUserPayload } from 'utils/auth'
 import { withApollo } from 'lib/apollo-client'
+import AddressSettings from 'components/organisms/AddressSettings'
 
 const Portfolio = dynamic(
   () => import('components/organisms/PortfolioSettings'),
@@ -55,6 +56,7 @@ const SETTINGS_DETAILS = gql`
     twitterUrl
     facebookUrl
     instagramUrl
+    address
     portfolio {
       url
       deliverable
@@ -109,6 +111,10 @@ const creatorTabs = [
   {
     label: 'social',
     Component: SocialSettings,
+  },
+  {
+    label: 'address',
+    Component: AddressSettings,
   },
 ]
 
@@ -201,6 +207,7 @@ const SettingsPage: NextPage<Props> = ({ user }: Props) => {
       instagramUrl: () => setTabIdx(3),
       facebookUrl: () => setTabIdx(3),
       twitterUrl: () => setTabIdx(3),
+      address: () => setTabIdx(4),
     }
     showError[Object.keys(data)[0]]()
   }

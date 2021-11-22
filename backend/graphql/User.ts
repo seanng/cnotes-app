@@ -149,6 +149,9 @@ export const UserInput = inputObjectType({
     t.string('genre')
     t.string('tiktokUrl')
     t.string('youtubeUrl')
+    t.field('address', {
+      type: 'JSON',
+    })
     t.string('instagramUrl')
     t.string('facebookUrl')
     t.string('twitterUrl')

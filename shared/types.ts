@@ -36,12 +36,12 @@ export interface CreatorStats {
 }
 
 export interface Address {
-  country: string
-  city: string
-  state: string
+  country?: string
+  city?: string
+  state?: string
   suite?: string
-  zip: string
-  streetAddress: string
+  zip?: string
+  streetAddress?: string
 }
 
 // should match up with publicfields in Auth.ts.
@@ -164,6 +164,7 @@ export interface SettingsFormFieldValues {
   instagramUrl?: string
   password?: string
   passwordConfirm?: string
+  address?: Address
 }
 
 // Profile Page

@@ -2,7 +2,6 @@ import {
   Box,
   Container,
   Divider,
-  SimpleGrid,
   Grid,
   GridItem,
   Flex,
@@ -25,7 +24,6 @@ import { useQuery, useMutation, gql } from '@apollo/client'
 import { useEffect, useState } from 'react'
 import FormInput from 'components/atoms/FormInput'
 import Textarea from 'components/atoms/Textarea'
-import countries from 'data/countries.json'
 import { NextPage } from 'next'
 import { useColors } from 'hooks'
 import Layout from 'components/organisms/Layout'
@@ -40,6 +38,7 @@ import IconSelector from 'components/molecules/IconSelector'
 // import 'react-datepicker/dist/react-datepicker.css'
 import { S3_LISTING_ICONS_FOLDER } from 'shared/constants'
 import { User, Address } from 'shared/types'
+import AddressForm from 'components/molecules/AddressForm'
 
 const MAX_COL_WIDTH = 600
 
@@ -330,81 +329,23 @@ const CreateListingForm: NextPage<Props> = ({
         <Text textStyle="small" color={gray[600]} mb={8} maxW={MAX_COL_WIDTH}>
           Use a permanent address where you can receive the product.
         </Text>
-        <Grid {...gridProps}>
-          <GridItem colSpan={[1, null, 2]}>
-            <Box maxW={MAX_COL_WIDTH}>
-              <FormControl flex={1} mb={8}>
-                <FormLabel>Country</FormLabel>
-                <Select variant="rounded" {...register('address.country')}>
-                  {countries.map(country => (
-                    <option key={country.code}>{country.name}</option>
-                  ))}
-                </Select>
-              </FormControl>
-              <FormInput
-                label="Street address"
-                error={errors.address?.streetAddress}
-                variant="outline"
-                mb={8}
-                inputProps={{
-                  placeholder: 'eg. 123 Main St.',
-                  ...register('address.streetAddress', {
-                    required: true,
-                  }),
-                }}
-              />
-              <FormInput
-                label="Apt, suite. (optional)"
-                mb={8}
-                variant="outline"
-                inputProps={{
-                  placeholder: 'eg. Apt #7',
-                  ...register('address.suite'),
-                }}
-              />
-              <SimpleGrid spacingY={8} spacingX={5} columns={2} mb={12}>
-                <FormInput
-                  label="City"
-                  error={errors?.address?.city}
-                  variant="outline"
-                  inputProps={{
-                    placeholder: 'eg. Fremont',
-                    ...register('address.city', {
-                      required: true,
-                    }),
-                  }}
-                />
-                <FormInput
-                  label="State"
-                  error={errors?.address?.state}
-                  variant="outline"
-                  inputProps={{
-                    placeholder: 'eg. CA',
-                    ...register('address.state', {
-                      required: true,
-                    }),
-                  }}
-                />
-                <FormInput
-                  label="ZIP / Postal Code"
-                  error={errors?.address?.zip}
-                  variant="outline"
-                  inputProps={{
-                    placeholder: 'eg. 94103',
-                    ...register('address.zip', {
-                      required: true,
-                      minLength: {
-                        value: 5,
-                        message: 'ZIP/Postal code too short',
-                      },
-                    }),
-                  }}
-                />
-              </SimpleGrid>
-            </Box>
-          </GridItem>
-        </Grid>
-
+        <AddressForm
+          register={register}
+          errors={errors}
+          gridProps={gridProps}
+          registerOptions={{
+            streetAddress: { required: true },
+            city: { required: true },
+            state: { required: true },
+            zip: {
+              required: true,
+              minLength: {
+                value: 5,
+                message: 'ZIP/Postal code too short',
+              },
+            },
+          }}
+        />
         <Button
           disabled={isSubmitting}
           type="submit"
