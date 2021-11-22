@@ -4,42 +4,29 @@ const heading = {
   textTransform: 'lowercase',
 }
 
+const body = {
+  fontFamily: 'body',
+  fontWeight: 700,
+}
+
+const h1 = '64px'
+const h2 = '48px'
+const h3 = '40px'
+const h4 = '32px'
+
 export default {
   profileSectionHeading: {
     ...heading,
     fontSize: ['40px', '48px'],
   },
-  hero: {
-    ...heading,
-    fontSize: '80px',
-    lineHeight: '118px',
-  },
-  h1: {
-    ...heading,
-    fontSize: '64px',
-    lineHeight: '94px',
-  },
-  h2: {
-    ...heading,
-    fontSize: '48px',
-    lineHeight: '70px',
-  },
-  h3: {
-    ...heading,
-    fontSize: '40px',
-    lineHeight: '58px',
-  },
-  h4: {
-    ...heading,
-    fontSize: '32px',
-    lineHeight: '46px',
-  },
-  h5: {
-    fontFamily: 'body',
-    fontWeight: 700,
-    fontSize: '32px',
-    lineHeight: '36px',
-  },
+  h1: { ...heading, fontSize: h1 },
+  h1body: { ...body, fontSize: h1 },
+  h2: { ...heading, fontSize: h2 },
+  h2body: { ...body, fontSize: h2 },
+  h3: { ...heading, fontSize: h3 },
+  h3body: { ...body, fontSize: h3 },
+  h4: { ...heading, fontSize: h4 },
+  h4body: { ...body, fontSize: h4 },
   xLarge: {
     fontFamily: 'body',
     fontSize: '24px',

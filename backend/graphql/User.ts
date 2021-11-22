@@ -14,14 +14,19 @@ import {
 import slugify from 'slugify'
 import prisma from 'lib/prisma'
 import { ALIAS_TAKEN, userPublicFields } from 'shared/constants'
-import {
-  encryptToken,
-  serializeCookie,
-  isCreator,
-  createPassword,
-} from 'utils/auth'
+import { isCreator, createPassword } from 'utils/auth'
 import { populatePortfolioData } from 'utils/backend'
 import { CREATOR } from 'shared/constants'
+
+export const UserPortfolio = objectType({
+  name: 'UserPortfolio',
+  definition(t) {
+    t.string('url')
+    t.string('deliverable')
+    t.string('companyName')
+    t.string('companyUrl')
+  },
+})
 
 export const User = objectType({
   name: 'User',
@@ -42,12 +47,17 @@ export const User = objectType({
     t.string('websiteUrl')
     t.string('bannerUrl')
     t.string('avatarUrl')
-    t.field('portfolio', {
-      type: list('JSON'),
+    t.list.field('portfolio', {
+      type: 'UserPortfolio',
+      resolve: async parent => {
+        const offer = await prisma.user.findUnique({
+          where: { id: parent.id },
+        })
+        return offer.portfolio
+      },
     })
-    t.field('creatorStats', {
-      type: 'JSON',
-    })
+    t.field('creatorStats', { type: 'JSON' })
+    t.field('address', { type: 'JSON' })
     t.nonNull.string('alias')
     t.nonNull.string('slug')
     t.nonNull.string('status')
@@ -63,12 +73,23 @@ export const User = objectType({
   },
 })
 
+export const me = queryField('me', {
+  type: 'User',
+  resolve: async (_, __, { user }) => {
+    if (!user) throw new ForbiddenError('Not authorized')
+    const foundUser = await prisma.user.findUnique({
+      where: { id: user.id },
+    })
+    return pick(userPublicFields, foundUser)
+  },
+})
+
 export const updateUser = mutationField('updateUser', {
   type: 'User',
   args: {
     input: arg({ type: 'UserInput' }),
   },
-  resolve: async (_, { input }, { user, res }) => {
+  resolve: async (_, { input }, { user }) => {
     if (!user) throw new ForbiddenError('Not authorized')
     const now = new Date()
     const data = omit(['password'], input)
@@ -101,9 +122,6 @@ export const updateUser = mutationField('updateUser', {
       },
     })
     const userObj = pick(userPublicFields, updated) as UserType
-    const token = encryptToken(userObj)
-
-    res.setHeader('Set-Cookie', serializeCookie(token))
     return userObj
   },
 })
@@ -146,7 +164,6 @@ export const creatorSlugs = queryField('creatorSlugs', {
         slug: true,
       },
     })
-    console.log('users: ', users)
     return users
   },
 })

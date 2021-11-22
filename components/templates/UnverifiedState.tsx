@@ -12,7 +12,7 @@ const UnverifiedState: NextPage<Props> = ({ user }: Props) => {
   return (
     <Layout user={user}>
       <Container pt={9}>
-        <Text mb={8} textStyle="h5">
+        <Text mb={8} textStyle="h4body">
           Your account has not yet been verified.
         </Text>
         <Text textStyle="base" mb={4}>

@@ -48,13 +48,7 @@ export default function NotFound(): JSX.Element {
         align="center"
         pt={5}
       >
-        <Text
-          mb={10}
-          fontSize={['32px', '40px']}
-          fontFamily="body"
-          fontWeight={700}
-          textTransform="capitalize"
-        >
+        <Text mb={10} textStyle={['h4body', 'h3body']}>
           Page Not Found
         </Text>
         <Box width="50%" mb={10}>

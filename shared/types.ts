@@ -35,6 +35,15 @@ export interface CreatorStats {
   avgEngagement: string
 }
 
+export interface Address {
+  country: string
+  city: string
+  state: string
+  suite?: string
+  zip: string
+  streetAddress: string
+}
+
 // should match up with publicfields in Auth.ts.
 export interface User {
   id: string
@@ -45,6 +54,7 @@ export interface User {
   alias: string
   slug: string
   email: string
+  address?: Address
   portfolio?: PortfolioItem[] | any // prisma is complaining
   password?: string // omitted unless it's in the password reset token
   viewerCount?: number

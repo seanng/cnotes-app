@@ -36,6 +36,7 @@ model User {
   genre               String?
   listings            Listing[]
   creatorStats        Json? // { viewership, followers, demographic (male, female), lastVerifiedAt, locations[] }
+  address        Json? // { country, city, state, streetAddress, suite, zip }
   statsLastVerifiedAt DateTime?
   // brand-speciifc
   offers              Offer[] // brand only. 

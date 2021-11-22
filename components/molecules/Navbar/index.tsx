@@ -19,7 +19,7 @@ function Logo({ isLightMode }: { isLightMode: boolean }): JSX.Element {
     <LinkText
       href="/dashboard"
       fontWeight={700}
-      textStyle="h5"
+      textStyle="h4body"
       color={isLightMode ? 'black' : 'white'}
     >
       collabski

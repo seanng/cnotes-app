@@ -130,7 +130,7 @@ const DiscoverPage: NextPage<Props> = ({ user }: Props) => {
             </Text>
             {listings.length === 0 ? (
               <>
-                <Text mb={8} textStyle="h5">
+                <Text mb={8} textStyle="h4body">
                   There are currently no ongoing listings.
                 </Text>
                 <Text textStyle="base" mb={4}>
@@ -210,7 +210,7 @@ const DiscoverPage: NextPage<Props> = ({ user }: Props) => {
                         </Avatar>
                         <Text
                           textAlign="center"
-                          textStyle="h5"
+                          textStyle="h4body"
                           fontSize="26px"
                           isTruncated
                           w="full"

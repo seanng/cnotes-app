@@ -61,13 +61,7 @@ const ForgotPasswordPage: NextPage = () => {
       <Layout>
         <Container py={[16, 20]}>
           <Box as="form" onSubmit={handleSubmit(onSubmit)} w={500} maxW="100%">
-            <c.h2
-              textStyle="h2"
-              fontFamily="body"
-              mb={16}
-              textTransform="capitalize"
-              fontWeight={700}
-            >
+            <c.h2 textStyle="h2body" mb={16}>
               Forgot Password?
             </c.h2>
             <FormInput

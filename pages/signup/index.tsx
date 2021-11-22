@@ -85,14 +85,7 @@ const SignupFoyer: NextPage = () => {
               router.back()
             }}
           />
-          <c.h2
-            textStyle="h2"
-            fontFamily="body"
-            textTransform="none"
-            fontWeight={700}
-          >
-            Sign up
-          </c.h2>
+          <c.h2 textStyle="h2body">Sign up</c.h2>
         </Flex>
         <Flex justify="center" textStyle="small">
           <Box mr={2}>Already have an account?</Box>

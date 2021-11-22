@@ -146,7 +146,7 @@ export default function SelectingStage({ listing }: Props): JSX.Element {
         >
           <Container>
             <Flex justify="space-between">
-              <Text textStyle="h5">{`${selectCount} offer${
+              <Text textStyle="h4body">{`${selectCount} offer${
                 selectCount > 1 ? 's' : ''
               } selected`}</Text>
               <Button

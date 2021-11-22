@@ -106,12 +106,7 @@ function SignupForm({ isBrand }: TemplateProps): JSX.Element {
                 router.back()
               }}
             />
-            <c.h2
-              textStyle="h3"
-              fontFamily="body"
-              textTransform="none"
-              fontWeight={700}
-            >
+            <c.h2 textStyle="h3body">
               {`Sign up as a ${isBrand ? 'brand' : 'creator'}`}
             </c.h2>
           </Flex>

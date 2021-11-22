@@ -83,7 +83,7 @@ const Login: NextPage = () => {
           py={120}
           bgColor={gray[900]}
         >
-          <Box fontWeight={700} textStyle="h1" fontFamily="body" mb={4}>
+          <Box textStyle="h1body" mb={4}>
             collabski
           </Box>
           <Box textStyle="base" fontWeight={500}>
@@ -97,7 +97,7 @@ const Login: NextPage = () => {
             m="auto"
             noValidate
           >
-            <Flex textStyle="h5" mb={[8, 12]} align="center">
+            <Flex textStyle="h4body" mb={[8, 12]} align="center">
               <IconButton
                 size="lg"
                 fontSize="24px"

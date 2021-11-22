@@ -122,6 +122,15 @@ export const createListing = mutationField('createListing', {
       input.platformAndDeliverable
     )
 
+    // update shipping address
+    await prisma.user.update({
+      where: { id: user.id },
+      data: {
+        address: input.address,
+        updatedAt: now,
+      },
+    })
+
     const listing = await prisma.listing.create({
       data: {
         deliverable,
@@ -162,6 +171,7 @@ export const createListingInput = inputObjectType({
     t.nonNull.string('name')
     t.string('platformAndDeliverable')
     t.field('specs', { type: 'JSON' })
+    t.field('address', { type: 'JSON' })
   },
 })
 

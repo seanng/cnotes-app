@@ -227,7 +227,7 @@ const BrandListing: NextPage<Props> = ({ user, listingId }: Props) => {
               mr={5}
             />
             <Box>
-              <Text textStyle="h5">{listing.profile?.alias}</Text>
+              <Text textStyle="h4body">{listing.profile?.alias}</Text>
               {listing.profile?.genre && (
                 <Text textStyle="microBold">{listing.profile?.genre}</Text>
               )}

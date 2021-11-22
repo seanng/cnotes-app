@@ -12,7 +12,7 @@ const newVariant = props => {
     header: {
       textAlign: 'center',
       pt: 7,
-      ...textStyles.h5,
+      ...textStyles.h4body,
     },
     footer: {
       pb: 8,
