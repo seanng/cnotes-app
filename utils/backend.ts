@@ -10,6 +10,29 @@ import type { NextApiRequest, NextApiResponse, NextApiHandler } from 'next'
 import { getYoutubeData } from 'lib/youtube'
 import { getTiktokData } from 'lib/tiktok'
 
+// Separates NEW from already-added portfolio items
+export const getNewlyAddedVideos = (
+  input: PortfolioItem[],
+  oldPortfolio: PortfolioItem[]
+): { existingVideos: PortfolioItem[]; addedVideos: PortfolioItem[] } => {
+  const [existingVideos, addedVideos] = [[], []]
+  // object of url-portfolioitem key-value pairs
+  const oldPortfolioDict = groupBy(prop('url'), oldPortfolio)
+  for (let i = 0; i < input.length; i += 1) {
+    const inputItem = input[i]
+    if (!inputItem.url) {
+      throw new ValidationError('Portfolio Item URL not found')
+    }
+    const existingVid = oldPortfolioDict[inputItem.url.trim()]
+    if (existingVid) {
+      existingVideos.push({ ...existingVid[0], ...inputItem })
+    } else {
+      addedVideos.push(inputItem)
+    }
+  }
+  return { existingVideos, addedVideos }
+}
+
 export const mergeWithSourceData = async (
   youtubeIds = [],
   tiktokUrls = [],

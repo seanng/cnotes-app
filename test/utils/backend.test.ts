@@ -1,6 +1,11 @@
 import { getYoutubeData } from 'lib/youtube'
+import pick from 'ramda/src/pick'
 import { getTiktokData } from 'lib/tiktok'
-import { mergeWithSourceData, populatePortfolioData } from 'utils/backend'
+import {
+  mergeWithSourceData,
+  populatePortfolioData,
+  getNewlyAddedVideos,
+} from 'utils/backend'
 
 jest.mock('lib/youtube', () => ({
   getYoutubeData: jest.fn(),
@@ -10,11 +15,14 @@ jest.mock('lib/tiktok', () => ({
   getTiktokData: jest.fn(),
 }))
 
+const fakeUrl1 = 'https://youtube.com/watch?v=abcdefg12345'
+const fakeUrl2 = 'https://www.tiktok.com/@tsukislice/video/6977600504406871302'
+
 const fakeYoutubeData = [
   {
     mediaId: 'abcdefg',
     title: 'Fake Youtube Vid',
-    url: 'https://youtube.com/watch?v=abcdefg12345',
+    url: fakeUrl1,
     thumbnailUrl: 'https://i.ytimg.com/vi/pUi01oPrN_A/sddefault.jpg',
     viewCount: 123456,
     likeCount: 123456,
@@ -24,7 +32,7 @@ const fakeYoutubeData = [
   {
     mediaId: 'abcdefg123',
     title: 'Fake Youtube Vid 2',
-    url: 'https://youtube.com/watch?v=abcdefg12345',
+    url: fakeUrl1,
     thumbnailUrl: 'https://i.ytimg.com/vi/pUi01oPrN_A/sddefault.jpg',
     viewCount: 123456,
     likeCount: 123456,
@@ -34,7 +42,7 @@ const fakeYoutubeData = [
   {
     mediaId: 'abcdefg456',
     title: 'Fake Youtube Vid 3',
-    url: 'https://youtube.com/watch?v=abcdefg12345',
+    url: fakeUrl1,
     thumbnailUrl: 'https://i.ytimg.com/vi/pUi01oPrN_A/sddefault.jpg',
     viewCount: 123456,
     likeCount: 123456,
@@ -45,7 +53,7 @@ const fakeYoutubeData = [
 
 const fakeTiktokData = [
   {
-    url: 'https://www.tiktok.com/@tsukislice/video/6977600504406871302',
+    url: fakeUrl2,
     mediaId: '6977600504406871302',
     viewCount: 1234,
     likeCount: 122,
@@ -85,12 +93,79 @@ describe('utils/backend', () => {
       expect(mergedItems[0]).toHaveProperty('commentCount')
     })
   })
-
   describe('populatePortfolioData', () => {
     it('returns an empty array if no portfoliodata', async () => {
       const data = await populatePortfolioData([])
       expect(Array.isArray(data)).toBe(true)
       expect(data).toHaveLength(0)
+    })
+  })
+
+  describe('getNewlyAddedVideos', () => {
+    const oldPortfolio = [fakeYoutubeData[0], fakeTiktokData[0]]
+    const props = ['url', 'title']
+
+    describe('input has same URLs as old portfolio', () => {
+      const input = [
+        pick(props, fakeYoutubeData[0]),
+        pick(props, fakeTiktokData[0]),
+      ]
+      const { addedVideos, existingVideos } = getNewlyAddedVideos(
+        input,
+        oldPortfolio
+      )
+      it('returns no addedVideos', () => {
+        expect(addedVideos).toHaveLength(0)
+      })
+      it('returns existing videos with all fields', () => {
+        expect(existingVideos).toMatchObject(oldPortfolio)
+      })
+    })
+
+    describe('no newly added videos exist in old portfolio', () => {
+      const input = [
+        { url: 'https://youtube.com/watch?video=grapplr69', title: 'Title A' },
+        {
+          url: 'https://youtube.com/watch?video=grapplr69420',
+          title: 'Title B',
+        },
+      ]
+      const { addedVideos, existingVideos } = getNewlyAddedVideos(
+        input,
+        oldPortfolio
+      )
+
+      it('returns the same addedVideos as input', () => {
+        expect(addedVideos).toMatchObject(input)
+      })
+      it('returns no existingVideos', () => {
+        expect(existingVideos).toHaveLength(0)
+      })
+    })
+
+    describe('some old videos and some new videos', () => {
+      const newVid = {
+        url: 'https://youtube.com/watch?video=grapplr69',
+        title: 'Title A',
+      }
+      const input = [
+        pick(props, fakeYoutubeData[0]),
+        pick(props, fakeTiktokData[0]),
+        newVid,
+      ]
+      const { addedVideos, existingVideos } = getNewlyAddedVideos(
+        input,
+        oldPortfolio
+      )
+      it('returns the correct format of added videos', () => {
+        expect(addedVideos).toHaveLength(1)
+        expect(addedVideos[0]).toMatchObject(newVid)
+      })
+      it('returns the correct format of exisitng videos', () => {
+        expect(existingVideos).toHaveLength(2)
+        expect(existingVideos[0]).toMatchObject(fakeYoutubeData[0])
+        expect(existingVideos[1]).toMatchObject(fakeTiktokData[0])
+      })
     })
   })
 })

@@ -15,8 +15,9 @@ import slugify from 'slugify'
 import prisma from 'lib/prisma'
 import { ALIAS_TAKEN, userPublicFields } from 'shared/constants'
 import { isCreator, createPassword } from 'utils/auth'
-import { populatePortfolioData } from 'utils/backend'
+import { getNewlyAddedVideos, populatePortfolioData } from 'utils/backend'
 import { CREATOR } from 'shared/constants'
+import { PortfolioItem } from 'shared/types'
 
 export const UserPortfolio = objectType({
   name: 'UserPortfolio',
@@ -105,7 +106,12 @@ export const updateUser = mutationField('updateUser', {
 
     if (isCreator(user)) {
       if (input.portfolio) {
-        data.portfolio = await populatePortfolioData(input.portfolio)
+        const { addedVideos, existingVideos } = getNewlyAddedVideos(
+          input.portfolio,
+          aliasUser.portfolio as PortfolioItem[]
+        )
+        const newPortfolio = await populatePortfolioData(addedVideos)
+        data.portfolio = existingVideos.concat(newPortfolio)
       }
 
       if (input.websiteUrl !== user.websiteUrl) {
