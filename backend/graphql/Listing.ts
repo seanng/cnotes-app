@@ -147,6 +147,14 @@ export const createListing = mutationField('createListing', {
         createdAt: now,
         updatedAt: now,
       },
+      include: {
+        creator: {
+          select: {
+            id: true,
+            address: true,
+          },
+        },
+      },
     })
     if (process.env.VERCEL_ENV === 'production') {
       await sendListingNotificationEmail(user, {
@@ -156,9 +164,10 @@ export const createListing = mutationField('createListing', {
         description: input.description,
         specs: input.specs,
       })
+      // send email to creator
+      // send email to brands
     }
 
-    // send email
     return listing
   },
 })

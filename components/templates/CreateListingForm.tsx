@@ -1,6 +1,8 @@
 import {
   Box,
   Container,
+  Divider,
+  SimpleGrid,
   Grid,
   GridItem,
   Flex,
@@ -19,10 +21,11 @@ import {
   Select,
   FlexProps,
 } from '@chakra-ui/react'
-import { useMutation, gql } from '@apollo/client'
-import { useState } from 'react'
+import { useQuery, useMutation, gql } from '@apollo/client'
+import { useEffect, useState } from 'react'
 import FormInput from 'components/atoms/FormInput'
 import Textarea from 'components/atoms/Textarea'
+import countries from 'data/countries.json'
 import { NextPage } from 'next'
 import { useColors } from 'hooks'
 import Layout from 'components/organisms/Layout'
@@ -36,14 +39,27 @@ import IconSelector from 'components/molecules/IconSelector'
 // import DatePicker from 'components/atoms/DatePicker'
 // import 'react-datepicker/dist/react-datepicker.css'
 import { S3_LISTING_ICONS_FOLDER } from 'shared/constants'
-import { User } from 'shared/types'
+import { User, Address } from 'shared/types'
 
 const MAX_COL_WIDTH = 600
+
+const MY_ADDRESS = gql`
+  query me {
+    me {
+      id
+      address
+    }
+  }
+`
 
 const CREATE_LISTING = gql`
   mutation createListing($input: CreateListingInput!) {
     createListing(input: $input) {
       id
+      creator {
+        id
+        address
+      }
     }
   }
 `
@@ -58,6 +74,7 @@ type OnSubmitProps = {
   willFollowScript: string
   previewTime: string
   numberOfRevisions: string
+  address: Address
 }
 
 interface Props {
@@ -111,13 +128,21 @@ const CreateListingForm: NextPage<Props> = ({
   onListingSubmit,
 }: Props) => {
   const [selectedIconIdx, setSelectedIconIdx] = useState(0)
+  const { data } = useQuery(MY_ADDRESS, {
+    fetchPolicy: 'cache-and-network',
+  })
   const [createListing] = useMutation(CREATE_LISTING)
   const {
     handleSubmit,
+    reset,
     register,
     formState: { errors, isSubmitting },
   } = useForm()
   const { gray } = useColors()
+
+  useEffect(() => {
+    if (data?.me) reset({ address: data.me.address })
+  }, [data])
 
   const onSubmit = async (data: OnSubmitProps): Promise<void> => {
     try {
@@ -137,7 +162,6 @@ const CreateListingForm: NextPage<Props> = ({
         canReuse: data.canReuse,
         willFollowScript: data.willFollowScript,
       }
-
       await createListing({
         variables: { input: { ...input, iconUrl: icons[selectedIconIdx].url } },
       })
@@ -152,25 +176,27 @@ const CreateListingForm: NextPage<Props> = ({
     setSelectedIconIdx(idx)
   }
 
+  const gridProps = {
+    templateColumns: [
+      'repeat(1, 1fr)',
+      null,
+      'repeat(3, 1fr)',
+      'repeat(4, 1fr)',
+    ],
+    columnGap: 10,
+  }
+
   return (
     <Layout user={user}>
       <Container as="form" py={9} onSubmit={handleSubmit(onSubmit)}>
-        <chakra.h2 textStyle={['h4', 'h2']} mb={6}>
+        <chakra.h2 textStyle={['h4body', 'h2body']} mb={6}>
           Create a Sponsorship Listing
         </chakra.h2>
         <Text textStyle="small" color={gray[600]} mb={10} maxW={MAX_COL_WIDTH}>
           Fill out this form to get sponsored! We will reach out to you
           afterwards to verify your sponsorship listing.
         </Text>
-        <Grid
-          templateColumns={[
-            'repeat(1, 1fr)',
-            null,
-            'repeat(3, 1fr)',
-            'repeat(4, 1fr)',
-          ]}
-          columnGap={10}
-        >
+        <Grid {...gridProps}>
           <GridItem colSpan={[1, null, 2]}>
             <Flex maxW={MAX_COL_WIDTH} mb={8}>
               <FormInput
@@ -202,7 +228,7 @@ const CreateListingForm: NextPage<Props> = ({
                 </Select>
               </FormControl>
             </Flex>
-            <FormControl maxW={MAX_COL_WIDTH} isInvalid={errors.description}>
+            <FormControl maxW={MAX_COL_WIDTH} isInvalid={!!errors.description}>
               <FormLabel htmlFor="description">
                 Describe what you&apos;d like to do for a sponsorship?
               </FormLabel>
@@ -225,7 +251,7 @@ const CreateListingForm: NextPage<Props> = ({
           </GridItem>
         </Grid>
         {/* advanced options */}
-        <Accordion allowToggle maxW={MAX_COL_WIDTH + 100} mb={8}>
+        <Accordion allowToggle maxW={MAX_COL_WIDTH + 100}>
           <AccordionItem>
             <h2>
               <AccordionButton mb={6}>
@@ -296,12 +322,95 @@ const CreateListingForm: NextPage<Props> = ({
             </AccordionPanel>
           </AccordionItem>
         </Accordion>
+        <Divider mb={8} maxW={MAX_COL_WIDTH + 100} />
+        {/* Address section */}
+        <Text textStyle={'xLarge'} fontWeight={700} mb={4}>
+          Shipping Address
+        </Text>
+        <Text textStyle="small" color={gray[600]} mb={8} maxW={MAX_COL_WIDTH}>
+          Use a permanent address where you can receive the product.
+        </Text>
+        <Grid {...gridProps}>
+          <GridItem colSpan={[1, null, 2]}>
+            <Box maxW={MAX_COL_WIDTH}>
+              <FormControl flex={1} mb={8}>
+                <FormLabel>Country</FormLabel>
+                <Select variant="rounded" {...register('address.country')}>
+                  {countries.map(country => (
+                    <option key={country.code}>{country.name}</option>
+                  ))}
+                </Select>
+              </FormControl>
+              <FormInput
+                label="Street address"
+                error={errors.address?.streetAddress}
+                variant="outline"
+                mb={8}
+                inputProps={{
+                  placeholder: 'eg. 123 Main St.',
+                  ...register('address.streetAddress', {
+                    required: true,
+                  }),
+                }}
+              />
+              <FormInput
+                label="Apt, suite. (optional)"
+                mb={8}
+                variant="outline"
+                inputProps={{
+                  placeholder: 'eg. Apt #7',
+                  ...register('address.suite'),
+                }}
+              />
+              <SimpleGrid spacingY={8} spacingX={5} columns={2} mb={12}>
+                <FormInput
+                  label="City"
+                  error={errors?.address?.city}
+                  variant="outline"
+                  inputProps={{
+                    placeholder: 'eg. Fremont',
+                    ...register('address.city', {
+                      required: true,
+                    }),
+                  }}
+                />
+                <FormInput
+                  label="State"
+                  error={errors?.address?.state}
+                  variant="outline"
+                  inputProps={{
+                    placeholder: 'eg. CA',
+                    ...register('address.state', {
+                      required: true,
+                    }),
+                  }}
+                />
+                <FormInput
+                  label="ZIP / Postal Code"
+                  error={errors?.address?.zip}
+                  variant="outline"
+                  inputProps={{
+                    placeholder: 'eg. 94103',
+                    ...register('address.zip', {
+                      required: true,
+                      minLength: {
+                        value: 5,
+                        message: 'ZIP/Postal code too short',
+                      },
+                    }),
+                  }}
+                />
+              </SimpleGrid>
+            </Box>
+          </GridItem>
+        </Grid>
+
         <Button
           disabled={isSubmitting}
           type="submit"
           rightIcon={<ArrowForwardIcon />}
         >
-          Apply
+          Create Listing
         </Button>
       </Container>
     </Layout>

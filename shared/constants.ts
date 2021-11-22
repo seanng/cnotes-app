@@ -63,6 +63,7 @@ export const userPublicFields = [
   'genre',
   'websiteUrl',
   'avatarUrl',
+  'address',
   'bannerUrl',
   'youtubeUrl',
   'tiktokUrl',

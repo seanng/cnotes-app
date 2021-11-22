@@ -50,10 +50,10 @@ export const User = objectType({
     t.list.field('portfolio', {
       type: 'UserPortfolio',
       resolve: async parent => {
-        const offer = await prisma.user.findUnique({
+        const user = await prisma.user.findUnique({
           where: { id: parent.id },
         })
-        return offer.portfolio
+        return user.portfolio
       },
     })
     t.field('creatorStats', { type: 'JSON' })
