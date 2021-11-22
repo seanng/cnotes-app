@@ -51,7 +51,7 @@ const getTemplateColumns = (mainUrl = ''): string[] => {
 
 const ProfileReel = ({ profile, gridProps }: Props): JSX.Element => {
   const { green, gray } = useColors()
-  const templateColumns = getTemplateColumns(profile.websiteUrl)
+  const templateColumns = getTemplateColumns(profile.websiteUrl ?? '')
 
   return (
     <>

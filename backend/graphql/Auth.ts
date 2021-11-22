@@ -17,7 +17,7 @@ import {
   INCORRECT_PASSWORD,
   INVALID_TOKEN,
   UNVERIFIED,
-  userPublicFields,
+  userTokenFields,
   USER_NOT_FOUND,
 } from 'shared/constants'
 import {
@@ -69,7 +69,7 @@ export const Signup = mutationField('signup', {
       // TODO: send creator welcome email.
       await sendUserActivityNotificationEmail(user, now, 'SIGN UP')
     }
-    const userObj = pick(userPublicFields, user) as User
+    const userObj = pick(userTokenFields, user) as User
     const token = encryptToken(userObj)
     res.setHeader('Set-Cookie', serializeCookie(token))
     return { token, user }
@@ -92,7 +92,7 @@ export const Login = mutationField('login', {
     if (!isCorrectPassword(password, user.password)) {
       throw new UserInputError(INCORRECT_PASSWORD)
     }
-    const userObj = pick(userPublicFields, user) as User
+    const userObj = pick(userTokenFields, user) as User
     const token = encryptToken(userObj)
     res.setHeader('Set-Cookie', serializeCookie(token))
     if (process.env.VERCEL_ENV === 'production') {
@@ -153,7 +153,7 @@ export const ResetPassword = mutationField('resetPassword', {
           updatedAt: new Date(),
         },
       })
-      const userObj = pick(userPublicFields, newUser) as User
+      const userObj = pick(userTokenFields, newUser) as User
       const newToken = encryptToken(userObj)
       res.setHeader('Set-Cookie', serializeCookie(newToken))
       return true

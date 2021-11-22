@@ -57,12 +57,7 @@ const SETTINGS_DETAILS = gql`
     facebookUrl
     instagramUrl
     address
-    portfolio {
-      url
-      deliverable
-      companyName
-      companyUrl
-    }
+    portfolio
   }
 `
 

@@ -19,16 +19,6 @@ import { getNewlyAddedVideos, populatePortfolioData } from 'utils/backend'
 import { CREATOR } from 'shared/constants'
 import { PortfolioItem } from 'shared/types'
 
-export const UserPortfolio = objectType({
-  name: 'UserPortfolio',
-  definition(t) {
-    t.string('url')
-    t.string('deliverable')
-    t.string('companyName')
-    t.string('companyUrl')
-  },
-})
-
 export const User = objectType({
   name: 'User',
   definition(t) {
@@ -48,15 +38,7 @@ export const User = objectType({
     t.string('websiteUrl')
     t.string('bannerUrl')
     t.string('avatarUrl')
-    t.list.field('portfolio', {
-      type: 'UserPortfolio',
-      resolve: async parent => {
-        const user = await prisma.user.findUnique({
-          where: { id: parent.id },
-        })
-        return user.portfolio
-      },
-    })
+    t.field('portfolio', { type: list('JSON') })
     t.field('creatorStats', { type: 'JSON' })
     t.field('address', { type: 'JSON' })
     t.nonNull.string('alias')

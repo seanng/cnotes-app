@@ -49,6 +49,16 @@ export const FROM_ADDRESS = 'no-reply@collabski.com'
 export const YOUTUBE = 'youtube'
 export const TIKTOK = 'tiktok'
 
+export const userTokenFields = [
+  'id',
+  'role',
+  'firstName',
+  'alias',
+  'slug',
+  'email',
+  'status',
+]
+
 // should match up with User.
 export const userPublicFields = [
   'id',
