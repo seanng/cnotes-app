@@ -1,6 +1,7 @@
+import omit from 'ramda/src/omit'
 import dynamic from 'next/dynamic'
 // import { useWarningOnExit } from 'hooks'
-import { gql, useMutation } from '@apollo/client'
+import { gql, useQuery, useMutation } from '@apollo/client'
 import { GetServerSideProps, NextPage } from 'next'
 import {
   HStack,
@@ -18,8 +19,7 @@ import {
 } from '@chakra-ui/react'
 import FeedbackModal from 'components/molecules/FeedbackModal'
 import Layout from 'components/organisms/Layout'
-import { useRouter } from 'next/router'
-import { ChangeEventHandler, useState } from 'react'
+import { ChangeEventHandler, useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { SettingsFormFieldValues, User } from 'shared/types'
 import { getErrorMessage, redirTo, uploadToS3 } from 'utils/helpers'
@@ -28,6 +28,7 @@ import { ALIAS_TAKEN, CREATOR } from 'shared/constants'
 import ProfileSettings from 'components/organisms/ProfileSettings'
 import SocialSettings from 'components/organisms/SocialSettings'
 import AccountSettings from 'components/organisms/AccountSettings'
+import SettingsLoadingSkeleton from 'components/molecules/SettingsLoadingSkeleton'
 import { getUserPayload } from 'utils/auth'
 import { withApollo } from 'lib/apollo-client'
 
@@ -38,49 +39,48 @@ const Portfolio = dynamic(
   }
 )
 
-const UPDATE_USER = gql`
-  mutation updateUser($input: UserInput!) {
-    updateUser(input: $input) {
-      id
+const SETTINGS_DETAILS = gql`
+  fragment SettingsDetails on User {
+    id
+    alias
+    genre
+    websiteUrl
+    avatarUrl
+    bannerUrl
+    firstName
+    lastName
+    about
+    youtubeUrl
+    tiktokUrl
+    twitterUrl
+    facebookUrl
+    instagramUrl
+    portfolio {
+      url
+      deliverable
+      companyName
+      companyUrl
     }
   }
 `
 
-const defaultValues = {
-  alias: '',
-  websiteUrl: '',
-  firstName: '',
-  lastName: '',
-  about: '',
-  tiktokUrl: '',
-  youtubeUrl: '',
-  twitterUrl: '',
-  genre: '',
-  password: '',
-  passwordConfirm: '',
-  portfolio: [],
-}
-
-// refactor out to helpers for use with profile.. use on getServerSideProps
-const getFormData = (user: User): SettingsFormFieldValues => {
-  if (!user) return defaultValues
-
-  return {
-    ...defaultValues,
-    alias: user.alias,
-    genre: user.genre,
-    websiteUrl: user.websiteUrl,
-    firstName: user.firstName,
-    lastName: user.lastName,
-    about: user.about,
-    youtubeUrl: user.youtubeUrl,
-    tiktokUrl: user.tiktokUrl,
-    twitterUrl: user.twitterUrl,
-    facebookUrl: user.facebookUrl,
-    instagramUrl: user.instagramUrl,
-    portfolio: user.portfolio,
+const ME = gql`
+  ${SETTINGS_DETAILS}
+  query me {
+    me {
+      ...SettingsDetails
+    }
   }
-}
+`
+
+const UPDATE_USER = gql`
+  ${SETTINGS_DETAILS}
+  mutation updateUser($input: UserInput!) {
+    updateUser(input: $input) {
+      ...SettingsDetails
+    }
+  }
+`
 
 const brandTabs = [
   {
@@ -134,16 +134,19 @@ const SettingsPage: NextPage<Props> = ({ user }: Props) => {
   const [avatarFile, setAvatarFile] = useState(null)
   const [bannerFile, setBannerFile] = useState(null)
   const [tabIdx, setTabIdx] = useState<number>(0)
-  const router = useRouter()
+  const { data, loading } = useQuery(ME)
   const {
     handleSubmit,
     register,
     setError,
     control,
+    reset,
     formState: { errors, isSubmitting, isDirty },
-  } = useForm<SettingsFormFieldValues>({
-    defaultValues: getFormData(user),
-  })
+  } = useForm<SettingsFormFieldValues>()
+
+  useEffect(() => {
+    if (data?.me) reset(omit(['__typename', 'id'], data.me))
+  }, [data])
 
   // Commented out because success modal forces page reload
   // useWarningOnExit(
@@ -244,13 +247,7 @@ const SettingsPage: NextPage<Props> = ({ user }: Props) => {
       <Layout user={user}>
         <Container py={[16, 20]}>
           <Box as="form" onSubmit={handleSubmit(onSubmit, onError)}>
-            <Text
-              textStyle="h3"
-              textTransform="none"
-              fontWeight={700}
-              fontFamily="body"
-              mb={12}
-            >
+            <Text textStyle="h3body" mb={12}>
               Settings
             </Text>
             <Tabs
@@ -273,7 +270,11 @@ const SettingsPage: NextPage<Props> = ({ user }: Props) => {
               <TabPanels>
                 {tabs.map(({ label, Component }) => (
                   <TabPanel key={label}>
-                    <Component {...allProps} />
+                    {loading ? (
+                      <SettingsLoadingSkeleton />
+                    ) : (
+                      <Component {...allProps} />
+                    )}
                   </TabPanel>
                 ))}
               </TabPanels>
@@ -312,9 +313,7 @@ const SettingsPage: NextPage<Props> = ({ user }: Props) => {
         isOpen={isOpen}
         button={isSuccess ? 'Okay' : 'Close'}
         onClose={onClose}
-        onConfirm={(): void => {
-          isSuccess ? router.reload() : onClose()
-        }}
+        onConfirm={onClose}
       />
     </>
   )
