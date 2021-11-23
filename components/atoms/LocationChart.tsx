@@ -1,3 +1,5 @@
+import { Doughnut } from 'react-chartjs-2'
+import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js'
 import { useColors } from 'hooks'
 import { LocationBreakdown } from 'shared/types'
 import { Flex, Text, Box, BoxProps } from '@chakra-ui/react'
@@ -5,6 +7,8 @@ import { Flex, Text, Box, BoxProps } from '@chakra-ui/react'
 type Props = {
   data: LocationBreakdown[]
 } & BoxProps
+
+ChartJS.register(ArcElement, Tooltip, Legend)
 
 const hexColors = ['#33F3FF', '#FF1577', '#FFBD15', '#7A0EE5']
 
@@ -18,8 +22,7 @@ export default function LocationChart({ data, ...props }: Props): JSX.Element {
       </Text>
       <Flex justify="space-between" mb={2}>
         <Box w={120}>
-          {/* todo: re-implement chart with small bundle size */}
-          {/* <Doughnut
+          <Doughnut
             options={{
               plugins: {
                 legend: {
@@ -39,7 +42,7 @@ export default function LocationChart({ data, ...props }: Props): JSX.Element {
                 },
               ],
             }}
-          /> */}
+          />
         </Box>
         <Flex w={110} direction="column" justify="center">
           {data.map((item, i) => (

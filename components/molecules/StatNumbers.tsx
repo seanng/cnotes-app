@@ -26,7 +26,7 @@ export default function StatNumbers({
     { key: 'totalCollabsCount' },
     { key: 'followerCount' },
     { key: 'avgImpressions', helpText: 'Total Views / Total Videos' },
-    { key: 'avgEngagement', helpText: 'Total Comments / Total Views' },
+    { key: 'avgEngagement', helpText: 'Comments + Likes / Views' },
   ]
   return (
     <SimpleGrid columns={2} spacingX={8} spacingY={5} {...props}>
