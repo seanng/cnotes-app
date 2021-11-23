@@ -12,6 +12,9 @@ export const URL_REGEX =
 export const PLATFORM_URL_REGEX =
   /(https?|http?):\/\/(www\.)?(tiktok|youtube)\.com\b([-a-zA-Z0-9()@:%_+.~#?&//=]*)/
 
+export const TIKTOK_URL_REGEX =
+  /(https?|http?):\/\/(www\.)?(tiktok)\.com\b([-a-zA-Z0-9()@:%_+.~#?&//=]*)/
+
 // error messages
 export const EMAIL_TAKEN = 'This email has already been registered.'
 export const ALIAS_TAKEN = 'This alias is already being used by someone else.'

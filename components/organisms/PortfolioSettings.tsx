@@ -20,7 +20,11 @@ import {
   FieldError,
 } from 'react-hook-form'
 import FormInput from 'components/atoms/FormInput'
-import { PLATFORM_URL_REGEX, URL_REGEX } from 'shared/constants'
+import {
+  PLATFORM_URL_REGEX,
+  TIKTOK_URL_REGEX,
+  URL_REGEX,
+} from 'shared/constants'
 
 type Props = {
   user: User
@@ -29,14 +33,43 @@ type Props = {
   errors: DeepMap<SettingsFormFieldValues, FieldError>
 }
 
-const SponsoredFields = ({ control, i, field, errors, register, children }) => {
+const ReactiveFields = ({ control, i, field, errors, register, children }) => {
   const value = useWatch<SettingsFormFieldValues>({
     name: 'portfolio',
     control,
   })
   const required = value?.[i]?.deliverable !== ''
+  const isTikTok = TIKTOK_URL_REGEX.test(value?.[i]?.url)
   return (
     <>
+      <FormControl
+        maxW={150}
+        mr={4}
+        mb={4}
+        display="inline-block"
+        verticalAlign="top"
+      >
+        <FormLabel>Deliverable</FormLabel>
+        <Select variant="rounded" {...register(`portfolio.${i}.deliverable`)}>
+          {isTikTok ? (
+            <>
+              <option value={''}>Not sponsored</option>
+              <option>Dedicated</option>
+            </>
+          ) : (
+            <>
+              <option value={''}>Not sponsored</option>
+              <option>Dedicated</option>
+              <option>Pre-roll</option>
+              <option>Post-roll</option>
+              <option>Mid-roll</option>
+              <option>Stream</option>
+              <option>Short</option>
+              <option>I don&apos;t know</option>
+            </>
+          )}
+        </Select>
+      </FormControl>
       {required && (
         <FormInput
           display="inline-block"
@@ -130,29 +163,7 @@ const Portfolio: FC<Props> = ({ register, control, errors }: Props) => {
                 }),
               }}
             />
-            <FormControl
-              maxW={150}
-              mr={4}
-              mb={4}
-              display="inline-block"
-              verticalAlign="top"
-            >
-              <FormLabel>Deliverable</FormLabel>
-              <Select
-                variant="rounded"
-                {...register(`portfolio.${i}.deliverable`)}
-              >
-                <option value={''}>Not sponsored</option>
-                <option>Dedicated</option>
-                <option>Pre-roll</option>
-                <option>Post-roll</option>
-                <option>Mid-roll</option>
-                <option>Stream</option>
-                <option>Short</option>
-                <option>I don&apos;t know</option>
-              </Select>
-            </FormControl>
-            <SponsoredFields {...{ control, i, field, errors, register }}>
+            <ReactiveFields {...{ control, i, field, errors, register }}>
               <IconButton
                 size="sm"
                 // chakra overrides with marginTop:0 due to a pseudo :not class
@@ -164,7 +175,7 @@ const Portfolio: FC<Props> = ({ register, control, errors }: Props) => {
                 }}
                 icon={<CloseIcon color="red" fontSize="12px" />}
               />
-            </SponsoredFields>
+            </ReactiveFields>
           </Box>
         )
       })}
