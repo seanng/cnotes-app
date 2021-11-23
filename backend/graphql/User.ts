@@ -15,9 +15,9 @@ import slugify from 'slugify'
 import prisma from 'lib/prisma'
 import { ALIAS_TAKEN, userPublicFields } from 'shared/constants'
 import { isCreator, createPassword } from 'utils/auth'
-import { getNewlyAddedVideos, populatePortfolioData } from 'utils/backend'
+// import { getNewlyAddedVideos, populatePortfolioData } from 'utils/backend'
 import { CREATOR } from 'shared/constants'
-import { PortfolioItem } from 'shared/types'
+// import { PortfolioItem } from 'shared/types'
 
 export const User = objectType({
   name: 'User',
@@ -87,14 +87,15 @@ export const updateUser = mutationField('updateUser', {
     }
 
     if (isCreator(user)) {
-      if (input.portfolio) {
-        const { addedVideos, existingVideos } = getNewlyAddedVideos(
-          input.portfolio,
-          aliasUser.portfolio as PortfolioItem[]
-        )
-        const newPortfolio = await populatePortfolioData(addedVideos)
-        data.portfolio = existingVideos.concat(newPortfolio)
-      }
+      // Disable for now
+      // if (input.portfolio) {
+      //   const { addedVideos, existingVideos } = getNewlyAddedVideos(
+      //     input.portfolio,
+      //     aliasUser.portfolio as PortfolioItem[]
+      //   )
+      //   const newPortfolio = await populatePortfolioData(addedVideos)
+      //   data.portfolio = existingVideos.concat(newPortfolio)
+      // }
 
       if (input.websiteUrl !== user.websiteUrl) {
         // TODO: if video is youtube or tiktok, update creatorStats from parsing url.
