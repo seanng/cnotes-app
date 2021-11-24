@@ -1,3 +1,4 @@
+import { withSentry } from '@sentry/nextjs'
 import type { NextApiRequest, NextApiResponse } from 'next'
 import getVideoId from 'get-video-id'
 import { YOUTUBE, TIKTOK } from 'shared/constants'
@@ -45,4 +46,4 @@ async function videoStatsHandler(
   res.status(200).json(populatedList)
 }
 
-export default withApiGuard(videoStatsHandler, 'GET')
+export default withSentry(withApiGuard(videoStatsHandler, 'GET'))

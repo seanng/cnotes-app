@@ -1,3 +1,4 @@
+import * as Sentry from '@sentry/nextjs'
 import { GetServerSideProps, NextPage } from 'next'
 import dynamic from 'next/dynamic'
 // import 'react-datepicker/dist/react-datepicker.css'
@@ -32,9 +33,10 @@ const CreatePage: NextPage<Props> = ({ user }: Props) => {
 export const getServerSideProps: GetServerSideProps = async ctx => {
   const user = getUserPayload(ctx.req.headers.cookie)
   if (!isCreator(user)) {
+    Sentry.configureScope(scope => scope.setUser(null))
     return redirTo('/')
   }
-
+  Sentry.setUser(user)
   return { props: { user } }
 }
 

@@ -1,3 +1,4 @@
+import * as Sentry from '@sentry/nextjs'
 import omit from 'ramda/src/omit'
 import dynamic from 'next/dynamic'
 // import { useWarningOnExit } from 'hooks'
@@ -181,6 +182,7 @@ const SettingsPage: NextPage<Props> = ({ user }: Props) => {
         })
         return
       }
+      Sentry.captureException(error)
       // error could come from alias taken.
       setIsSuccess(false)
       onOpen()
@@ -326,7 +328,9 @@ export default withApollo(SettingsPage)
 export const getServerSideProps: GetServerSideProps = async ctx => {
   const user = getUserPayload(ctx.req.headers.cookie)
   if (!user) {
+    Sentry.configureScope(scope => scope.setUser(null))
     return redirTo('/login')
   }
+  Sentry.setUser(user)
   return { props: { user } }
 }

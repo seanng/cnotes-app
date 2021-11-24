@@ -1,3 +1,4 @@
+import * as Sentry from '@sentry/nextjs'
 import { useEffect } from 'react'
 import { useMutation, useApolloClient, gql } from '@apollo/client'
 import { useRouter } from 'next/router'
@@ -18,6 +19,7 @@ const SignOut: NextPage = () => {
   useEffect(() => {
     signOut().then(() => {
       client.clearStore().then(() => {
+        Sentry.configureScope(scope => scope.setUser(null))
         window.location.replace('/')
       })
     })

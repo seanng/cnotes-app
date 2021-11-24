@@ -1,3 +1,4 @@
+import { withSentry } from '@sentry/nextjs'
 import { MongoClient, ObjectId } from 'mongodb'
 import type { NextApiRequest, NextApiResponse } from 'next'
 import omit from 'ramda/src/omit'
@@ -43,4 +44,4 @@ async function updateUserProfileHandler(
   res.status(200).send({ message })
 }
 
-export default withApiGuard(updateUserProfileHandler, 'PUT')
+export default withSentry(withApiGuard(updateUserProfileHandler, 'PUT'))

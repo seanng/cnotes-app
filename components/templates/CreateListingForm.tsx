@@ -1,3 +1,4 @@
+import * as Sentry from '@sentry/nextjs'
 import {
   Box,
   Container,
@@ -167,6 +168,7 @@ const CreateListingForm: NextPage<Props> = ({
       onListingSubmit()
       // submit and then navigate (or render) create success
     } catch (error) {
+      Sentry.captureException(error)
       console.log('error: ', error)
     }
   }

@@ -1,3 +1,4 @@
+import * as Sentry from '@sentry/nextjs'
 import { useRouter } from 'next/router'
 import { NextPage, GetServerSideProps } from 'next'
 import { BRAND } from 'shared/constants'
@@ -38,5 +39,6 @@ export const getServerSideProps: GetServerSideProps = async ctx => {
   if (!user) {
     return redirTo('/login')
   }
+  Sentry.setUser(user)
   return { props: { user } }
 }

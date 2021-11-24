@@ -1,3 +1,4 @@
+import * as Sentry from '@sentry/nextjs'
 import axios from 'axios'
 import { PortfolioItem } from 'shared/types'
 import { uploadUrl } from 'lib/s3-node'
@@ -51,6 +52,7 @@ export const getTiktokData = async (
       })
     } catch (error) {
       console.error('axios error: ', error)
+      Sentry.captureException(error)
       retVal.push({ url, mediaId })
     }
   }

@@ -1,3 +1,4 @@
+import * as Sentry from '@sentry/nextjs'
 import { useMutation, gql } from '@apollo/client'
 import {
   Modal,
@@ -154,11 +155,15 @@ export default function OfferModal({
 
   const onConfirm = async (): Promise<void> => {
     // show are you sure modal.
-    await placeOffer({
-      variables: {
-        input: storedInput,
-      },
-    })
+    try {
+      await placeOffer({
+        variables: {
+          input: storedInput,
+        },
+      })
+    } catch (error) {
+      Sentry.captureException(error)
+    }
     setShowConfirm(false)
     setShowSuccess(true)
   }

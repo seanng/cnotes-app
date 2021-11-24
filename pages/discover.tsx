@@ -1,3 +1,4 @@
+import * as Sentry from '@sentry/nextjs'
 import NextLink from 'next/link'
 import AwkwardPhoto from 'components/molecules/AwkwardPhoto'
 import { useQuery, gql } from '@apollo/client'
@@ -297,8 +298,10 @@ export default withApollo(DiscoverPage)
 export const getServerSideProps: GetServerSideProps = async ctx => {
   const user = getUserPayload(ctx.req.headers.cookie)
   if (!user) {
+    Sentry.configureScope(scope => scope.setUser(null))
     redirTo('/login')
   } else {
+    Sentry.setUser(user)
     return { props: { user } }
   }
 }

@@ -1,3 +1,4 @@
+import * as Sentry from '@sentry/nextjs'
 import Head from 'next/head'
 import { IconButton, chakra as c, Box, Flex, Button } from '@chakra-ui/react'
 import { useMutation, gql } from '@apollo/client'
@@ -182,5 +183,6 @@ export const getServerSideProps: GetServerSideProps = async ctx => {
   if (getUserPayload(ctx.req.headers?.cookie)) {
     return redirTo('/dashboard')
   }
+  Sentry.configureScope(scope => scope.setUser(null))
   return { props: {} }
 }

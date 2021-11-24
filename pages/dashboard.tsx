@@ -1,3 +1,4 @@
+import * as Sentry from '@sentry/nextjs'
 import { withApollo } from 'lib/apollo-client'
 import { NextPage, GetServerSideProps } from 'next'
 import { BRAND, UNVERIFIED } from 'shared/constants'
@@ -29,7 +30,9 @@ export default withApollo(DashboardPage)
 export const getServerSideProps: GetServerSideProps = async ctx => {
   const user = getUserPayload(ctx.req?.headers?.cookie)
   if (!user) {
+    Sentry.configureScope(scope => scope.setUser(null))
     return redirTo('/login')
   }
+  Sentry.setUser(user)
   return { props: { user } }
 }

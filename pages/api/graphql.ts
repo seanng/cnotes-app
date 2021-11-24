@@ -1,3 +1,4 @@
+import { withSentry } from '@sentry/nextjs'
 import { ApolloServer } from 'apollo-server-micro'
 import { NextApiHandler } from 'next'
 import cors from 'micro-cors'
@@ -43,4 +44,4 @@ const handler: NextApiHandler = async (req, res) => {
   return apolloServerHandler(req, res)
 }
 
-export default cors()(handler)
+export default withSentry(cors()(handler))

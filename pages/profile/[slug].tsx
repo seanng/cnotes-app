@@ -1,3 +1,4 @@
+import * as Sentry from '@sentry/nextjs'
 import Head from 'next/head'
 import { gql, useQuery } from '@apollo/client'
 import { Box, Text, Container } from '@chakra-ui/react'
@@ -145,6 +146,7 @@ export default withApollo(ProfilePage)
 // TODO: change to getStaticProps for better SEO and page optimization
 // TODO: https://nextjs.org/docs/advanced-features/preview-mode
 export const getServerSideProps: GetServerSideProps = async ctx => {
-  const user = getUserPayload(ctx.req.headers.cookie)
+  const user = getUserPayload(ctx.req?.headers?.cookie)
+  Sentry.configureScope(scope => scope.setUser(user || null))
   return { props: { user, slug: ctx.params.slug } }
 }
