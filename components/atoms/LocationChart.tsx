@@ -10,7 +10,24 @@ type Props = {
 
 ChartJS.register(ArcElement, Tooltip, Legend)
 
-const hexColors = ['#33F3FF', '#FF1577', '#FFBD15', '#7A0EE5']
+const hexColors = [
+  '#33F3FF',
+  '#FF1577',
+  '#FFBD15',
+  '#7A0EE5',
+  '#004BFF',
+  '#18E739',
+  '#8C92A1',
+  '#BC103A',
+  '#C4A0E8',
+  '#B8CDFF',
+  '#664900',
+  '#FFEBB8',
+  '#001E66',
+  '#BEC2CA',
+  '#331452',
+  '#66002B',
+]
 
 export default function LocationChart({ data, ...props }: Props): JSX.Element {
   const { gray } = useColors()
