@@ -117,9 +117,9 @@ export const updateUser = mutationField('updateUser', {
 export const UserInput = inputObjectType({
   name: 'UserInput',
   definition(t) {
-    t.nonNull.string('firstName')
-    t.nonNull.string('lastName')
-    t.nonNull.string('alias')
+    t.string('firstName')
+    t.string('lastName')
+    t.string('alias')
     t.string('websiteUrl')
     t.string('avatarUrl')
     t.string('password')

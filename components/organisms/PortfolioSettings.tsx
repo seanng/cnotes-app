@@ -24,6 +24,7 @@ import {
   UseFormTrigger,
   UseFormGetValues,
   UseFormSetError,
+  UseFormSetValue,
 } from 'react-hook-form'
 import FormInput from 'components/atoms/FormInput'
 import {
@@ -50,6 +51,7 @@ type Props = {
   errors: DeepMap<SettingsFormFieldValues, FieldError>
   trigger: UseFormTrigger<SettingsFormFieldValues>
   getValues: UseFormGetValues<SettingsFormFieldValues>
+  setValue: UseFormSetValue<SettingsFormFieldValues>
   setError: UseFormSetError<SettingsFormFieldValues>
 }
 
@@ -141,10 +143,13 @@ const Portfolio: FC<Props> = ({
   control,
   setError,
   getValues,
+  setValue,
   errors,
   trigger,
 }: Props) => {
-  const [updateUser, { loading }] = useMutation(UPDATE_USER_PORTFOLIO)
+  const [updateUser, { loading }] = useMutation(UPDATE_USER_PORTFOLIO, {
+    fetchPolicy: 'no-cache',
+  })
   const { fields, append, remove } = useFieldArray({
     name: 'portfolio',
     control,
@@ -227,6 +232,7 @@ const Portfolio: FC<Props> = ({
                 variant="unstyled"
                 aria-label="Remove"
                 onClick={(): void => {
+                  setValue(`portfolio.${i}`, {})
                   remove(i)
                 }}
                 icon={<CloseIcon color="red" fontSize="12px" />}

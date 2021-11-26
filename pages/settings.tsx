@@ -146,11 +146,18 @@ const SettingsPage: NextPage<Props> = ({ user }: Props) => {
     reset,
     trigger,
     getValues,
+    setValue,
     formState: { errors, isSubmitting, isDirty },
   } = useForm<SettingsFormFieldValues>()
 
   useEffect(() => {
-    if (data?.me) reset(omit(['__typename', 'id'], data.me))
+    if (data?.me) {
+      reset({
+        password: '',
+        passwordConfirm: '',
+        ...omit(['__typename', 'id'], data.me),
+      })
+    }
   }, [data])
 
   useWarningOnExit(
@@ -260,6 +267,7 @@ const SettingsPage: NextPage<Props> = ({ user }: Props) => {
     user,
     setError,
     getValues,
+    setValue,
     trigger,
   }
 

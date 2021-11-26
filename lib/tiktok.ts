@@ -48,7 +48,7 @@ export const getTiktokData = async (
         commentCount: info.stats.commentCount,
         viewCount: info.stats.playCount,
         title: data.shareMeta.title,
-        publishedAt: new Date(info.createTime * 1000).toString(),
+        publishedAt: new Date(info.createTime * 1000).toISOString(),
         thumbnailUrl: `${process.env.NEXT_PUBLIC_CLOUDFRONT_URL}/${dir}/${key}`,
       })
     } catch (error) {
