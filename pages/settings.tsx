@@ -1,7 +1,8 @@
 import * as Sentry from '@sentry/nextjs'
 import omit from 'ramda/src/omit'
+import pick from 'ramda/src/pick'
 import dynamic from 'next/dynamic'
-// import { useWarningOnExit } from 'hooks'
+import { useWarningOnExit } from 'hooks'
 import { gql, useQuery, useMutation } from '@apollo/client'
 import { GetServerSideProps, NextPage } from 'next'
 import {
@@ -25,7 +26,7 @@ import { useForm } from 'react-hook-form'
 import { SettingsFormFieldValues, User } from 'shared/types'
 import { getErrorMessage, redirTo, uploadToS3 } from 'utils/helpers'
 import Compressor from 'compressorjs'
-import { ALIAS_TAKEN, CREATOR } from 'shared/constants'
+import { ALIAS_TAKEN, CREATOR, portfolioItemFields } from 'shared/constants'
 import ProfileSettings from 'components/organisms/ProfileSettings'
 import SocialSettings from 'components/organisms/SocialSettings'
 import AccountSettings from 'components/organisms/AccountSettings'
@@ -143,6 +144,8 @@ const SettingsPage: NextPage<Props> = ({ user }: Props) => {
     setError,
     control,
     reset,
+    trigger,
+    getValues,
     formState: { errors, isSubmitting, isDirty },
   } = useForm<SettingsFormFieldValues>()
 
@@ -150,15 +153,28 @@ const SettingsPage: NextPage<Props> = ({ user }: Props) => {
     if (data?.me) reset(omit(['__typename', 'id'], data.me))
   }, [data])
 
-  // Commented out because success modal forces page reload
-  // useWarningOnExit(
-  //   isDirty,
-  //   'You have unsaved changes. Are you sure you want to leave this page?'
-  // )
+  useWarningOnExit(
+    isDirty,
+    'You have unsaved changes. Are you sure you want to leave this page?'
+  )
 
   const onSubmit = async (data: SettingsFormFieldValues): Promise<void> => {
     const input = { ...data }
     delete input.passwordConfirm
+    // Make sure no duplicate urls
+    const dict = {}
+    for (let i = 0; i < data.portfolio.length; i++) {
+      const { url } = data.portfolio[i]
+      if (dict[url]) {
+        setError(`portfolio.${i}.url`, {
+          type: 'manual',
+          message: 'URL already exists in a previous row.',
+        })
+        return
+      }
+      dict[url] = true
+    }
+    input.portfolio = data.portfolio.map(pick(portfolioItemFields))
     try {
       setIsSuccess(true)
       const baseUrl = process.env.NEXT_PUBLIC_CLOUDFRONT_URL
@@ -242,6 +258,9 @@ const SettingsPage: NextPage<Props> = ({ user }: Props) => {
     control,
     errors,
     user,
+    setError,
+    getValues,
+    trigger,
   }
 
   const tabs = user.role === CREATOR ? creatorTabs : brandTabs

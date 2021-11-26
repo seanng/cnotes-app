@@ -20,9 +20,7 @@ export const getNewlyAddedVideos = (
   const oldPortfolioDict = groupBy(prop('url'), oldPortfolio)
   for (let i = 0; i < input.length; i += 1) {
     const inputItem = input[i]
-    if (!inputItem.url) {
-      throw new ValidationError('Portfolio Item URL not found')
-    }
+    if (!inputItem.url) continue
     const existingVid = oldPortfolioDict[inputItem.url.trim()]
     if (existingVid) {
       existingVideos.push({ ...existingVid[0], ...inputItem })

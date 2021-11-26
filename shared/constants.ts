@@ -85,5 +85,22 @@ export const userPublicFields = [
   'portfolio',
 ]
 
+export const portfolioItemFields = [
+  'platform',
+  'isVerified',
+  'companyName',
+  'companyUrl',
+  'deliverable',
+  'mediaId',
+  'url',
+  'likeCount',
+  'dislikeCount',
+  'commentCount',
+  'viewCount',
+  'title',
+  'thumbnailUrl',
+  'publishedAt',
+]
+
 export const PLACEHOLDER_BANNER_URL = `${process.env.NEXT_PUBLIC_CLOUDFRONT_URL}/placeholders/bg-profile.jpg`
 export const S3_LISTING_ICONS_FOLDER = `${process.env.NEXT_PUBLIC_CLOUDFRONT_URL}/assets/mnemonics`

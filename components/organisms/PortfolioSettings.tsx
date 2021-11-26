@@ -1,6 +1,9 @@
+import * as Sentry from '@sentry/nextjs'
+import pick from 'ramda/src/pick'
+import { gql, useMutation } from '@apollo/client'
 import { FC } from 'react'
 import { CloseIcon } from '@chakra-ui/icons'
-import { SettingsFormFieldValues, User } from 'shared/types'
+import { PortfolioItem, SettingsFormFieldValues, User } from 'shared/types'
 import {
   Box,
   Button,
@@ -18,19 +21,36 @@ import {
   UseFormRegister,
   DeepMap,
   FieldError,
+  UseFormTrigger,
+  UseFormGetValues,
+  UseFormSetError,
 } from 'react-hook-form'
 import FormInput from 'components/atoms/FormInput'
 import {
   PLATFORM_URL_REGEX,
+  portfolioItemFields,
   TIKTOK_URL_REGEX,
   URL_REGEX,
 } from 'shared/constants'
+
+const UPDATE_USER_PORTFOLIO = gql`
+  mutation updateUser($input: UserInput!) {
+    updateUser(input: $input) {
+      id
+      alias
+      portfolio
+    }
+  }
+`
 
 type Props = {
   user: User
   register: UseFormRegister<SettingsFormFieldValues>
   control: Control<SettingsFormFieldValues>
   errors: DeepMap<SettingsFormFieldValues, FieldError>
+  trigger: UseFormTrigger<SettingsFormFieldValues>
+  getValues: UseFormGetValues<SettingsFormFieldValues>
+  setError: UseFormSetError<SettingsFormFieldValues>
 }
 
 const ReactiveFields = ({ control, i, field, errors, register, children }) => {
@@ -116,7 +136,15 @@ const ReactiveFields = ({ control, i, field, errors, register, children }) => {
   )
 }
 
-const Portfolio: FC<Props> = ({ register, control, errors }: Props) => {
+const Portfolio: FC<Props> = ({
+  register,
+  control,
+  setError,
+  getValues,
+  errors,
+  trigger,
+}: Props) => {
+  const [updateUser, { loading }] = useMutation(UPDATE_USER_PORTFOLIO)
   const { fields, append, remove } = useFieldArray({
     name: 'portfolio',
     control,
@@ -124,6 +152,33 @@ const Portfolio: FC<Props> = ({ register, control, errors }: Props) => {
   })
 
   const { gray } = useColors()
+
+  const handleAddClick = async (): Promise<void> => {
+    try {
+      // Trigger portfolio form validation
+      const isValidated = await trigger('portfolio')
+      if (!isValidated) return
+      const values = getValues('portfolio') as PortfolioItem[]
+      // Make sure no duplicate urls
+      const dict = {}
+      for (let i = 0; i < values.length; i++) {
+        const { url } = values[i]
+        if (dict[url]) {
+          setError(`portfolio.${i}.url`, {
+            type: 'manual',
+            message: 'URL already exists in a previous row.',
+          })
+          return
+        }
+        dict[url] = true
+      }
+      const portfolio = values.map(pick(portfolioItemFields))
+      await updateUser({ variables: { input: { portfolio } } })
+      append({})
+    } catch (error) {
+      Sentry.captureException(error)
+    }
+  }
 
   return (
     <Box>
@@ -154,6 +209,7 @@ const Portfolio: FC<Props> = ({ register, control, errors }: Props) => {
                 defaultValue: field.url,
                 placeholder: 'eg. https://youtube.com/watch?v=l7FV87ocmwM',
                 ...register(`portfolio.${i}.url` as const, {
+                  setValueAs: v => v.trim(),
                   required: true,
                   pattern: {
                     value: PLATFORM_URL_REGEX,
@@ -179,13 +235,7 @@ const Portfolio: FC<Props> = ({ register, control, errors }: Props) => {
           </Box>
         )
       })}
-      <Button
-        size="sm"
-        onClick={(): void => {
-          append({})
-        }}
-        mb={16}
-      >
+      <Button size="sm" onClick={handleAddClick} mb={16} isLoading={loading}>
         Add
       </Button>
     </Box>

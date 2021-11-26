@@ -1,4 +1,3 @@
-// import { withSentry } from '@sentry/nextjs'
 import { ApolloServer } from 'apollo-server-micro'
 import { NextApiHandler } from 'next'
 import cors from 'micro-cors'
