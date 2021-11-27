@@ -44,4 +44,4 @@ async function updateUserProfileHandler(
   res.status(200).send({ message })
 }
 
-export default withSentry(withApiGuard(updateUserProfileHandler, 'PUT'))
+export default withSentry(withApiGuard(updateUserProfileHandler, ['PUT']))

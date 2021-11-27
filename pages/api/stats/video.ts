@@ -46,4 +46,4 @@ async function videoStatsHandler(
   res.status(200).json(populatedList)
 }
 
-export default withSentry(withApiGuard(videoStatsHandler, 'GET'))
+export default withSentry(withApiGuard(videoStatsHandler, ['GET']))

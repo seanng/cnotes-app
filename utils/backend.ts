@@ -87,7 +87,7 @@ export const populatePortfolioData = async (
 const API_KEY = 'cnotes123'
 
 export const withApiGuard =
-  (handler: NextApiHandler, method: string) =>
+  (handler: NextApiHandler, methods: string[]) =>
   async (req: NextApiRequest, res: NextApiResponse): Promise<void> => {
     if (!req.headers['x-api-key']) {
       res.status(403).send({
@@ -101,7 +101,7 @@ export const withApiGuard =
       })
       return
     }
-    if (req.method !== method) {
+    if (!methods.includes(req.method)) {
       res.status(405).send({
         message: 'Method not allowed',
       })

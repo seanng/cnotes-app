@@ -50,6 +50,7 @@ export const getTiktokData = async (
         title: data.shareMeta.title,
         publishedAt: new Date(info.createTime * 1000).toISOString(),
         thumbnailUrl: `${process.env.NEXT_PUBLIC_CLOUDFRONT_URL}/${dir}/${key}`,
+        updatedAt: new Date().toISOString(),
       })
     } catch (error) {
       console.error('axios error: ', error)

@@ -32,5 +32,6 @@ export const getYoutubeData = async (
     commentCount: Number(statistics.commentCount),
     likeCount: Number(statistics.likeCount),
     dislikeCount: Number(statistics.dislikeCount),
+    updatedAt: new Date().toISOString(),
   }))
 }
