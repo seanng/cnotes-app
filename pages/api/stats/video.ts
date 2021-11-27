@@ -3,13 +3,14 @@ import type { NextApiRequest, NextApiResponse } from 'next'
 import getVideoId from 'get-video-id'
 import { YOUTUBE, TIKTOK } from 'shared/constants'
 import { mergeWithSourceData, withApiGuard } from 'utils/backend'
+import qs from 'qs'
 
 // TODO: Refactor with populatePortfolioData
 async function videoStatsHandler(
   req: NextApiRequest,
   res: NextApiResponse
 ): Promise<void> {
-  const urls = JSON.parse(req.query.urls as string)
+  const { urls = [] } = qs.parse(req.query)
   // Separate portfolio item into youtubeIds or tiktok
   const [list, youtubeIds, tiktokUrls] = [[], [], []]
   for (let i = 0; i < urls.length; i += 1) {

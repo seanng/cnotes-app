@@ -1,5 +1,4 @@
 import * as Sentry from '@sentry/nextjs'
-import pick from 'ramda/src/pick'
 import { gql, useMutation } from '@apollo/client'
 import { FC } from 'react'
 import { CloseIcon } from '@chakra-ui/icons'
@@ -29,10 +28,10 @@ import {
 import FormInput from 'components/atoms/FormInput'
 import {
   PLATFORM_URL_REGEX,
-  portfolioItemFields,
   TIKTOK_URL_REGEX,
   URL_REGEX,
 } from 'shared/constants'
+import { portfolioTransformer } from 'utils/helpers'
 
 const UPDATE_USER_PORTFOLIO = gql`
   mutation updateUser($input: UserInput!) {
@@ -177,7 +176,7 @@ const Portfolio: FC<Props> = ({
         }
         dict[url] = true
       }
-      const portfolio = values.map(pick(portfolioItemFields))
+      const portfolio = portfolioTransformer(values)
       await updateUser({ variables: { input: { portfolio } } })
       append({})
     } catch (error) {

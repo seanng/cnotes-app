@@ -1,9 +1,28 @@
 // FRONTEND ONLY.
+import pick from 'ramda/src/pick'
+import pipe from 'ramda/src/pipe'
+import map from 'ramda/src/map'
+import over from 'ramda/src/over'
+import lensProp from 'ramda/src/lensProp'
+import split from 'ramda/src/split'
+import head from 'ramda/src/head'
 import type { GetServerSidePropsResult, Redirect } from 'next'
 import S3 from 'lib/s3-react'
 import type { Blob } from 'buffer'
-import { Listing, Deal, User, TransformedProfile } from 'shared/types'
-import { ACTIVE, SELECTING, LISTING, NO_OFFERS } from 'shared/constants'
+import {
+  Listing,
+  Deal,
+  User,
+  TransformedProfile,
+  PortfolioItem,
+} from 'shared/types'
+import {
+  ACTIVE,
+  SELECTING,
+  LISTING,
+  NO_OFFERS,
+  portfolioItemFields,
+} from 'shared/constants'
 
 export function getErrorMessage(error: Record<string, any>): string {
   if (error.graphQLErrors) {
@@ -127,3 +146,8 @@ export function profileTransformer(data: User): TransformedProfile {
     collabs: portfolio.filter(item => !!item.companyName),
   }
 }
+
+// picks necessary fields + removes query parameters from URL
+export const portfolioTransformer = map<PortfolioItem, PortfolioItem>(
+  pipe(pick(portfolioItemFields), over(lensProp('url'), pipe(split('?'), head)))
+)

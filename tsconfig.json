@@ -26,6 +26,7 @@
     "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx",
-    "components/imports/Crisp.js"
+    "components/imports/Crisp.js",
+    "cron.js"
   ]
 }

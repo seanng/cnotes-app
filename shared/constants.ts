@@ -7,13 +7,13 @@ export const EMAIL_REGEX =
 
 export const URL_REGEX =
   // eslint-disable-next-line
-  /(https?|http?):\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,15}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)/
+  /^(https?|http?):\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,15}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)/
 
 export const PLATFORM_URL_REGEX =
-  /(https?|http?):\/\/(www\.)?(tiktok|youtube)\.com\b([-a-zA-Z0-9()@:%_+.~#?&//=]*)/
+  /^(https?|http?):\/\/(www\.)?(tiktok|youtube)\.com\b([-a-zA-Z0-9()@:%_+.~#?&//=]*)/
 
 export const TIKTOK_URL_REGEX =
-  /(https?|http?):\/\/(www\.)?(tiktok)\.com\b([-a-zA-Z0-9()@:%_+.~#?&//=]*)/
+  /^(https?|http?):\/\/(www\.)?(tiktok)\.com\b([-a-zA-Z0-9()@:%_+.~#?&//=]*)/
 
 // error messages
 export const EMAIL_TAKEN = 'This email has already been registered.'

@@ -1,6 +1,5 @@
 import * as Sentry from '@sentry/nextjs'
 import omit from 'ramda/src/omit'
-import pick from 'ramda/src/pick'
 import dynamic from 'next/dynamic'
 import { useWarningOnExit } from 'hooks'
 import { gql, useQuery, useMutation } from '@apollo/client'
@@ -24,9 +23,14 @@ import Layout from 'components/organisms/Layout'
 import { ChangeEventHandler, useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { SettingsFormFieldValues, User } from 'shared/types'
-import { getErrorMessage, redirTo, uploadToS3 } from 'utils/helpers'
+import {
+  getErrorMessage,
+  portfolioTransformer,
+  redirTo,
+  uploadToS3,
+} from 'utils/helpers'
 import Compressor from 'compressorjs'
-import { ALIAS_TAKEN, CREATOR, portfolioItemFields } from 'shared/constants'
+import { ALIAS_TAKEN, CREATOR } from 'shared/constants'
 import ProfileSettings from 'components/organisms/ProfileSettings'
 import SocialSettings from 'components/organisms/SocialSettings'
 import AccountSettings from 'components/organisms/AccountSettings'
@@ -181,7 +185,7 @@ const SettingsPage: NextPage<Props> = ({ user }: Props) => {
       }
       dict[url] = true
     }
-    input.portfolio = data.portfolio.map(pick(portfolioItemFields))
+    input.portfolio = portfolioTransformer(data.portfolio)
     try {
       setIsSuccess(true)
       const baseUrl = process.env.NEXT_PUBLIC_CLOUDFRONT_URL
