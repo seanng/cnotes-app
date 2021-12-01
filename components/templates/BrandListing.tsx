@@ -179,12 +179,17 @@ const BrandListing: NextPage<Props> = ({ user, listingId }: Props) => {
               <Box
                 borderRadius="xl"
                 p={[5, null, 10]}
-                display={['block', null, null, 'flex']}
+                display={['block', null, null, null, 'flex']}
                 bgColor={gray[100]}
                 mb={10}
               >
                 <StatNumbers data={listing?.profile?.creatorStats} />
-                <Box>
+                <Box
+                  mt={[10, null, null, null, 0]}
+                  maxW={300}
+                  minW={250}
+                  ml={[0, null, null, null, 10]}
+                >
                   {genderChart && <GenderChart mb={10} data={genderChart} />}
                   {locationChart && <LocationChart data={locationChart} />}
                 </Box>
@@ -192,7 +197,6 @@ const BrandListing: NextPage<Props> = ({ user, listingId }: Props) => {
               {listing?.profile?.collabs && (
                 <ProfileCollabs collabs={listing?.profile.collabs} mb={12} />
               )}
-
               <ProfileReel
                 profile={listing.profile}
                 gridProps={{
