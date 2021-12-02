@@ -1,9 +1,11 @@
 const { withSentryConfig } = require('@sentry/nextjs')
 
+// Your existing module.exports
 const moduleExports = require('@next/bundle-analyzer')({
   enabled: process.env.ANALYZE === 'true',
 })({
-  // Your existing module.exports
+  // https://nextjs.org/docs/advanced-features/output-file-tracing
+  outputFileTracing: false,
   images: {
     domains: [
       'collabski-dev.s3.us-east-1.amazonaws.com',
