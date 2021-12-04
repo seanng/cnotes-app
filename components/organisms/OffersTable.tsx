@@ -88,7 +88,7 @@ export default function OffersTable(): JSX.Element {
   const { gray } = useColors()
 
   useEffect(() => {
-    if (data && data.brandDashOffers && isLoading) {
+    if (data?.brandDashOffers) {
       // sort by last offer time
       const sortedOffers = [...data.brandDashOffers].sort((a, b) => {
         const aOfferDate = new Date(
@@ -100,7 +100,9 @@ export default function OffersTable(): JSX.Element {
         return aOfferDate.getTime() - bOfferDate.getTime()
       })
       setOffers(sortedOffers)
-      setIsLoading(false)
+      if (isLoading) {
+        setIsLoading(false)
+      }
     }
   }, [data])
 
