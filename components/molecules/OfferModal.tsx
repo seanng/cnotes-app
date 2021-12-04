@@ -115,7 +115,7 @@ export default function OfferModal({
     reset,
     watch,
     setValue,
-    formState: { isSubmitting, errors },
+    formState: { errors },
   } = useForm({
     defaultValues,
   })
@@ -124,6 +124,7 @@ export default function OfferModal({
   const hasproductMSRP = productMSRP > 0
   const [minTotalValue, setMinTotalValue] = useState(0)
   const [showMinValueError, setShowMinValueError] = useState(false)
+  const [isSubmitting, setIsSubmitting] = useState(false)
   const [showSuccess, setShowSuccess] = useState(false)
   const [showConfirm, setShowConfirm] = useState(false)
   const [storedInput, setStoredInput] = useState<Input>(defaultDefaultValues)
@@ -132,6 +133,8 @@ export default function OfferModal({
   const { gray } = useColors()
 
   useEffect(() => {
+    setShowSuccess(false)
+    setShowMinValueError(false)
     reset(defaultValues)
     setMinTotalValue(defaultValues.cashValue + defaultValues.productMSRP)
   }, [defaultValues, reset])
@@ -156,11 +159,13 @@ export default function OfferModal({
   const onConfirm = async (): Promise<void> => {
     // show are you sure modal.
     try {
+      setIsSubmitting(true)
       await placeOffer({
         variables: {
           input: storedInput,
         },
       })
+      setIsSubmitting(false)
     } catch (error) {
       Sentry.captureException(error)
     }
@@ -172,12 +177,6 @@ export default function OfferModal({
 
   const handleConfirmModalClose = () => {
     setShowConfirm(false)
-  }
-
-  const handleClose = () => {
-    onClose()
-    setShowSuccess(false)
-    setShowMinValueError(false)
   }
 
   const handleNumberInputBlur = e => {
@@ -195,9 +194,10 @@ export default function OfferModal({
   return (
     <>
       <Modal
-        onClose={handleClose}
+        onClose={onClose}
         isOpen={isOpen}
         closeOnOverlayClick={false}
+        isCentered
         variant="new"
         size={showSuccess ? 'md' : 'xl'}
       >
@@ -221,7 +221,7 @@ export default function OfferModal({
                 } offer.`}
               </ModalBody>
               <ModalFooter>
-                <Button isFullWidth onClick={handleClose}>
+                <Button isFullWidth onClick={onClose}>
                   Close
                 </Button>
               </ModalFooter>
@@ -357,13 +357,13 @@ export default function OfferModal({
                   <Button
                     colorScheme="gray"
                     isFullWidth
-                    onClick={handleClose}
+                    onClick={onClose}
                     mr={4}
                   >
                     Cancel
                   </Button>
                   <Button
-                    disabled={showMinValueError || isSubmitting}
+                    disabled={showMinValueError}
                     isFullWidth
                     type="submit"
                   >
@@ -380,6 +380,7 @@ export default function OfferModal({
         isOpen={showConfirm}
         variant="new"
         size={'sm'}
+        closeOnOverlayClick={false}
         isCentered
         blockScrollOnMount={false}
       >
@@ -399,13 +400,14 @@ export default function OfferModal({
               <Button
                 colorScheme="gray"
                 isFullWidth
+                disabled={isSubmitting}
                 onClick={handleConfirmModalClose}
                 mr={4}
               >
                 No
               </Button>
               <Button
-                disabled={showMinValueError || isSubmitting}
+                disabled={isSubmitting}
                 isFullWidth
                 isLoading={isSubmitting}
                 onClick={onConfirm}
