@@ -226,7 +226,7 @@ const DiscoverPage: NextPage<Props> = ({ user }: Props) => {
                         >
                           {listing.creator.genre}
                         </Text>
-                        <Text textStyle="mini" zIndex={1} my={3}>
+                        <Flex align="center" textStyle="mini" zIndex={1} my={3}>
                           {listing.creator.creatorStats?.avgImpressions && (
                             <Stat
                               helpText="Average no. of views per video"
@@ -256,7 +256,7 @@ const DiscoverPage: NextPage<Props> = ({ user }: Props) => {
                             label={`${listing.offers?.length || 0} offers`}
                             ml={2}
                           />
-                        </Text>
+                        </Flex>
                         <Text
                           color={gray[600]}
                           isTruncated
