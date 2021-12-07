@@ -390,9 +390,7 @@ export default function OfferModal({
             <Text textStyle="large" fontWeight={500}>
               {`Are you sure you want to ${
                 isUpdate ? 'update your' : 'place an'
-              } offer? ($${storedInput.cashValue} Cash + $${
-                storedInput.productMSRP
-              } MSRP)`}
+              } offer? ($${storedInput.cashValue.toLocaleString()} Cash + $${storedInput.productMSRP.toLocaleString()} MSRP)`}
             </Text>
           </ModalHeader>
           <ModalFooter>
