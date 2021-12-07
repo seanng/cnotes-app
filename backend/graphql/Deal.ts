@@ -12,6 +12,7 @@ import {
 import prisma from 'lib/prisma'
 import { PAYING, CANCELLED, COMPLETED } from 'shared/constants'
 import { isBrand } from 'utils/auth'
+import { sendUrlSubmittedEmail } from 'utils/emails'
 
 export const Deal = objectType({
   name: 'Deal',
@@ -122,23 +123,47 @@ export const updateDeal = mutationField('updateDeal', {
     id: idArg(),
     payload: arg({ type: 'UpdateDealInput' }),
   },
-  resolve: async (_, { id, payload }) => {
+  resolve: async (_, { id, payload }, { user }) => {
     const now = new Date()
 
-    const data = {
-      ...payload,
-      ...(payload.status === PAYING && {
-        submittedAt: now,
-      }),
-      ...(payload.status === COMPLETED && {
-        paidAt: now,
-      }),
-      updatedAt: now,
-    }
-    return prisma.deal.update({
+    const deal = await prisma.deal.update({
       where: { id },
-      data,
+      data: {
+        ...payload,
+        ...(payload.status === PAYING && {
+          submittedAt: now,
+        }),
+        ...(payload.status === COMPLETED && {
+          paidAt: now,
+        }),
+        updatedAt: now,
+      },
+      include: {
+        brand: {
+          select: {
+            email: true,
+            firstName: true,
+          },
+        },
+      },
     })
+
+    if (process.env.VERCEL_ENV === 'production' && user) {
+      if (payload.status === PAYING && payload.submittedUrl) {
+        // notify brand that creator just submitted url
+        await sendUrlSubmittedEmail({
+          brand: deal.brand,
+          creator: user,
+          submittedUrl: payload.submittedUrl,
+        })
+      }
+
+      if (payload.status === COMPLETED) {
+        // email
+      }
+    }
+
+    return deal
   },
 })
 

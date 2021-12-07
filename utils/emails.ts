@@ -9,7 +9,7 @@ export async function sendBrandWelcomeEmail(
   await sgMail.send({
     from: FROM_ADDRESS,
     to,
-    subject: `Welcome to Collabski! We're pleased to meet you.`,
+    subject: `[Collabski] Welcome! We're pleased to meet you.`,
     html: `
         <p>Hi ${firstName},</p>
         <p>Sean here, co-founder of Collabski. I want to personally welcome you to our platform. I'm happy you decided to give us a try!</p>
@@ -29,7 +29,7 @@ export async function sendForgotPasswordEmail(
   await sgMail.send({
     from: FROM_ADDRESS,
     to,
-    subject: `Collabski: Password Reset link`,
+    subject: `[Collabski] Password Reset link`,
     html: `
         <h1>Collabski Password Reset</h1>
         <p>Forgot something did you? Please click <a href="https://${process.env.VERCEL_URL}/reset-password?token=${token}">here</a> to reset your password.</p>
@@ -54,8 +54,8 @@ export async function sendListingNotificationEmail(
 ): Promise<void> {
   await sgMail.send({
     from: FROM_ADDRESS,
-    to: ['shonum@gmail.com', 'michael@collabski.com'],
-    subject: `Collabski: ${creator.alias} has submitted an listing`,
+    to: ['sean@collabski.com', 'michael@collabski.com'],
+    subject: `[Collabski] ${creator.alias} has submitted an listing`,
     html: `
           <h1>${creator.alias} has submitted an listing:</h1>
           <p>User ID: ${creator.id} </p>
@@ -78,8 +78,8 @@ export async function sendUserActivityNotificationEmail(
 ): Promise<void> {
   await sgMail.send({
     from: FROM_ADDRESS,
-    to: ['shonum@gmail.com', 'michael@collabski.com'],
-    subject: `New Collabski Activity: ${user.alias} (${user.role}) - ${activity}`,
+    to: ['sean@collabski.com', 'michael@collabski.com'],
+    subject: `[Collabski] ${user.alias} (${user.role}) - ${activity}`,
     html: `
           <h1>${user.alias} (${user.role})!</h1>
           <p>User Activity: ${activity} </p>
@@ -89,5 +89,33 @@ export async function sendUserActivityNotificationEmail(
           <p>Email: ${user.email} </p>
           <hr />
         `,
+  })
+}
+
+interface UrlSubmittedEmailProps {
+  brand: {
+    email: string
+    firstName: string
+  }
+  creator: User
+  submittedUrl: string
+}
+
+export async function sendUrlSubmittedEmail({
+  brand,
+  creator,
+  submittedUrl,
+}: UrlSubmittedEmailProps): Promise<void> {
+  await sgMail.send({
+    from: FROM_ADDRESS,
+    subject: `[Collabski] ${creator.alias} just submitted the Media URL`,
+    to: brand.email,
+    bcc: ['sean@collabski.com', 'michael@collabski.com'],
+    html: `
+    <p>Hi ${brand.firstName},</p>
+    <p>${creator.alias} has just submitted the Media URL. You can view it <a href="${submittedUrl}" target="_blank">here</a>.</p>
+    <p>Please transmit payment to ${creator.alias} on approval, as per the steps highlighted in the previous Introduction Email.</p>
+    <p>Sincerely, <br />Team Collabski</p>
+    `,
   })
 }
