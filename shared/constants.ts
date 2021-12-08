@@ -47,7 +47,7 @@ export const HISTORY = 'history'
 export const WON = 'won'
 export const AWAITING = 'awaiting'
 
-export const FROM_ADDRESS = 'no-reply@collabski.com'
+export const FROM_ADDRESS = 'sean@collabski.com'
 
 export const YOUTUBE = 'youtube'
 export const TIKTOK = 'tiktok'

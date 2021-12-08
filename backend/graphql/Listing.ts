@@ -10,7 +10,10 @@ import {
   idArg,
 } from 'nexus'
 import prisma from 'lib/prisma'
-import { sendListingNotificationEmail } from 'utils/emails'
+import {
+  sendIntroductoryEmail,
+  sendListingNotificationEmail,
+} from 'utils/emails'
 import { ACTIVE, UNVERIFIED, DECIDED } from 'shared/constants'
 import { SUBMITTING } from 'shared/constants'
 import { isCreator } from 'utils/auth'
@@ -164,8 +167,6 @@ export const createListing = mutationField('createListing', {
         description: input.description,
         specs: input.specs,
       })
-      // send email to creator
-      // send email to brands
     }
 
     return listing
@@ -311,24 +312,51 @@ export const completeListing = mutationField('completeListing', {
     if (!isCreator(user)) throw new ForbiddenError('Not a creator')
     const now = new Date()
 
-    await prisma.deal.createMany({
-      data: input.map(item => ({
-        ...item,
-        listingId: id,
-        status: SUBMITTING,
-        updatedAt: now,
-        createdAt: now,
-      })),
-    })
-
-    if (process.env.VERCEL_ENV === 'production') {
-      // TODO: create email chain between brand and creator.
-    }
-
     const listing = await prisma.listing.update({
       where: { id },
       data: { status: DECIDED, decidedAt: now },
+      include: {
+        creator: {
+          select: {
+            email: true,
+            address: true,
+            alias: true,
+            firstName: true,
+          },
+        },
+      },
     })
+
+    for (const item of input) {
+      const { brand } = await prisma.deal.create({
+        data: {
+          ...item,
+          listingId: id,
+          status: SUBMITTING,
+          updatedAt: now,
+          createdAt: now,
+        },
+        select: {
+          brand: {
+            select: {
+              firstName: true,
+              alias: true,
+              email: true,
+            },
+          },
+        },
+      })
+      if (process.env.VERCEL_ENV === 'production') {
+        // create email chain
+        await sendIntroductoryEmail({
+          creator: listing.creator,
+          deliverable: listing.deliverable,
+          platform: listing.platform,
+          specs: listing.specs,
+          brand,
+        })
+      }
+    }
 
     return listing
   },

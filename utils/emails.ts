@@ -119,3 +119,46 @@ export async function sendUrlSubmittedEmail({
     `,
   })
 }
+
+interface IntroductoryEmailProps {
+  creator: {
+    firstName: string
+    alias: string
+    email: string
+    address: any
+  }
+  brand: {
+    firstName: string
+    alias: string
+    email: string
+  }
+  platform: string
+  deliverable: string
+  specs: any
+}
+
+function capitalizeFirstLetter(string: string): string {
+  return string.charAt(0).toUpperCase() + string.slice(1)
+}
+
+// Template ID: d-594ffc1a85f94ca0bd3bdc18b866ee8d
+export async function sendIntroductoryEmail({
+  creator,
+  brand,
+  platform,
+  deliverable,
+  specs,
+}: IntroductoryEmailProps): Promise<void> {
+  await sgMail.send({
+    from: FROM_ADDRESS,
+    to: [brand.email, creator.email],
+    templateId: 'd-594ffc1a85f94ca0bd3bdc18b866ee8d',
+    dynamicTemplateData: {
+      creator,
+      brand,
+      platform: capitalizeFirstLetter(platform),
+      deliverable,
+      specs,
+    },
+  })
+}
