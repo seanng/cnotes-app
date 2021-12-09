@@ -9,16 +9,8 @@ export async function sendBrandWelcomeEmail(
   await sgMail.send({
     from: FROM_ADDRESS,
     to,
-    subject: `[Collabski] Welcome! We're pleased to meet you.`,
-    html: `
-        <p>Hi ${firstName},</p>
-        <p>Sean here, co-founder of Collabski. I want to personally welcome you to our platform. I'm happy you decided to give us a try!</p>
-        <p>I want to make sure you get the most out of your experience and see firsthand how we can help your business grow through sponsorship marketing.</p>
-        <p>Please expect an email from a member of our team over the next few days if we haven't yet verified your account.</p>
-        <p>After we've verified your account, you'll be able to view and place offers for creators. In the meantime, you can update information relating to your account profile in the settings page.</p>
-        <p>Once again, thank you for signing up to our platform!</p>
-        <p>Warmly, <br />Sean</p>
-      `,
+    templateId: 'd-8b9b8de73d304abb8abc93de546bbcb5',
+    dynamicTemplateData: { firstName },
   })
 }
 
@@ -29,12 +21,10 @@ export async function sendForgotPasswordEmail(
   await sgMail.send({
     from: FROM_ADDRESS,
     to,
-    subject: `[Collabski] Password Reset link`,
-    html: `
-        <h1>Collabski Password Reset</h1>
-        <p>Forgot something did you? Please click <a href="https://${process.env.VERCEL_URL}/reset-password?token=${token}">here</a> to reset your password.</p>
-        <hr />
-      `,
+    templateId: 'd-9b6217e592934775a1cf5ba9d9f3b199',
+    dynamicTemplateData: {
+      link: `https://${process.env.NEXT_PUBLIC_BASE_URL}/reset-password?token=${token}`,
+    },
   })
 }
 
